@@ -21,6 +21,7 @@
         <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700" rel="stylesheet" type="text/css" />
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="{{asset('css/styles.css')}}" rel="stylesheet" />
+        <link href="{{asset('css/main.css')}}" rel="stylesheet" />
     </head>
     <body id="page-top">
     
@@ -59,9 +60,58 @@
         <!-- Masthead-->
         <header class="masthead">
             <div class="container">
-                <div class="masthead-subheading">Welcome To Our Studio!</div>
-                <div class="masthead-heading text-uppercase">It's Nice To Meet You</div>
-                <a class="btn btn-primary btn-xl text-uppercase" href="#services">Tell Me More</a>
+                <div class="masthead-subheading">
+                    <div class="selectBox2">
+                        <button class="label">출발지</button>
+                        <ul class="optionList">
+                          <li class="optionItem">원주</li>
+                          <li class="optionItem">군산</li>
+                          <li class="optionItem">광주</li>
+                          <li class="optionItem">여수</li>
+                          <li class="optionItem">사천</li>
+                          <li class="optionItem">울산</li>
+                          <li class="optionItem">포항경주</li>
+                        </ul>
+                      </div>
+                      <div class="selectBox2">
+                        <button class="label">도착지</button>
+                        <ul class="optionList">
+                          <li class="optionItem">원주</li>
+                          <li class="optionItem">군산</li>
+                          <li class="optionItem">광주</li>
+                          <li class="optionItem">여수</li>
+                          <li class="optionItem">사천</li>
+                          <li class="optionItem">울산</li>
+                          <li class="optionItem">포항경주</li>
+                        </ul>
+                      </div>
+                      <div class="selectBox2">
+                        <button class="label">출발날짜</button>
+                        <ul class="optionList">
+                          <li class="optionItem">원주</li>
+                          <li class="optionItem">군산</li>
+                          <li class="optionItem">광주</li>
+                          <li class="optionItem">여수</li>
+                          <li class="optionItem">사천</li>
+                          <li class="optionItem">울산</li>
+                          <li class="optionItem">포항경주</li>
+                        </ul>
+                      </div>
+                      <div class="selectBox2">
+                        <button class="label">도착날짜</button>
+                        <ul class="optionList">
+                          <li class="optionItem">원주</li>
+                          <li class="optionItem">군산</li>
+                          <li class="optionItem">광주</li>
+                          <li class="optionItem">여수</li>
+                          <li class="optionItem">사천</li>
+                          <li class="optionItem">울산</li>
+                          <li class="optionItem">포항경주</li>
+                        </ul>
+                      </div>
+                </div>
+                
+                <a class="btn btn-primary btn-xl text-uppercase" href="#services">항공편 검색</a>
             </div>
         </header>
         <!-- Services-->
@@ -619,6 +669,29 @@
         </div>
         <!-- Bootstrap core JS-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+        <script>
+            /* 일반함수 */
+const label = document.querySelector('.label');
+const options = document.querySelectorAll('.optionItem');
+// 클릭한 옵션의 텍스트를 라벨 안에 넣음
+const handleSelect = function(item) {
+  label.innerHTML = item.textContent;
+  label.parentNode.classList.remove('active');
+}
+// 옵션 클릭시 클릭한 옵션을 넘김
+options.forEach(function(option){
+  option.addEventListener('click', function(){handleSelect(option)})
+})
+// 라벨을 클릭시 옵션 목록이 열림/닫힘
+label.addEventListener('click', function(){
+  if(label.parentNode.classList.contains('active')) {
+    label.parentNode.classList.remove('active');
+  } else {
+    label.parentNode.classList.add('active');
+  }
+});
+
+        </script>
         <!-- Core theme JS-->
         <script src="{{asset('js/scripts.js')}}"></script>
         <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
