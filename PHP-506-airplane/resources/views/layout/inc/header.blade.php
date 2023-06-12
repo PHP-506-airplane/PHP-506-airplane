@@ -10,6 +10,8 @@
                 <li class="nav-item"><a class="nav-link" href="#services">예약</a></li>
                 <li class="nav-item"><a class="nav-link" href="#portfolio">서비스</a></li>
                 <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+                <li class="nav-item"><a href="{{route('users.login')}}">로그인</a></li>
+                <li class="nav-item"><a href="{{route('users.registration')}}">회원가입</a></li>
             </ul>
         </div>
     </div>

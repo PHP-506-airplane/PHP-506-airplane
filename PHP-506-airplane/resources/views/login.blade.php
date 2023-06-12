@@ -1,6 +1,6 @@
-{{-- @extends('layout.layout') --}}
+@extends('layout.header')
 
-{{-- @section('title', 'Login') --}}
+@section('title', 'Login')
 
 @section('contents')
     <h1>로그인</h1>
@@ -18,4 +18,6 @@
         <button type="submit">Login</button>
         <button type="button" onclick="location.href = '{{route('users.registration')}}'">Registration</button>
     </form>
+
+@extends('layout.footer')
 @endsection
