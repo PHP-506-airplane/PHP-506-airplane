@@ -18,4 +18,6 @@
         <button type="submit">Login</button>
         <button type="button" onclick="location.href = '{{route('users.registration')}}'">Registration</button>
     </form>
+
 @endsection
+

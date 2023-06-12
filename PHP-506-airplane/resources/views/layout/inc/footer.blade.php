@@ -1,4 +1,4 @@
-<footer class="footer py-4">
+<footer class="footer py-4" mt-auto>
     <div class="container">
         <div class="row align-items-center">
             <div class="col-lg-4 text-lg-start">Copyright &copy; Your Website 2023</div>

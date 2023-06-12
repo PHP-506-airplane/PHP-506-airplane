@@ -10,8 +10,13 @@
                 <li class="nav-item"><a class="nav-link" href="#services">예약</a></li>
                 <li class="nav-item"><a class="nav-link" href="#portfolio">서비스</a></li>
                 <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
-                <li class="nav-item"><a href="{{route('users.login')}}">로그인</a></li>
-                <li class="nav-item"><a href="{{route('users.registration')}}">회원가입</a></li>
+                @if(session('name') !== null)
+                    <li class="nav-item"><a href="{{route('users.login')}}">회원정보 수정</a></li>
+                @else
+                    <li class="nav-item"><a href="{{route('users.login')}}">로그인</a></li>
+                    <li class="nav-item"><a href="{{route('users.registration')}}">회원가입</a></li>
+                @endif
+                
             </ul>
         </div>
     </div>
