@@ -1,0 +1,19 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* 헤더 */
+.navHeader {
+    width: 100vw;
+    height: 10vh;
+    position: sticky;
+    background-color: aliceblue;
+}
+
+.imgLogo {
+    width: 272px;
+    height: 68px;
+}
+/* /헤더 */
