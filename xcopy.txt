@@ -1,0 +1,1 @@
+xcopy D:\workspace\PHP-506-airplane C:\Apache24\htdocs\PHP-506-airplane /H /Y /F /E /exclude:D:\workspace\PHP-506-airplane\exclude.txt

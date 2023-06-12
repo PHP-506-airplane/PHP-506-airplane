@@ -1,0 +1,4 @@
+.git
+bootstrap
+storage
+PHP-506-airplane\vendor
