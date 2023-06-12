@@ -20,16 +20,25 @@
 
 /* 푸터 */
 footer{
-    height: 55px;
+    height: 50px;
     width: 100%;
-    background-color: rgb(0, 0, 0);
-    color: white;
-    position: fixed;
-    bottom: 0;
+    background-color: rgba(75, 75, 75, 0.089);
+    color: rgb(0, 0, 0);
     z-index: 999999;
 }
 
 .footerContainer {
-    padding-top: 15px;    
+    padding-top: 13px;    
+}
+
+.footerFixed {
+    position: fixed;
+    bottom: 0;
 }
 /* /푸터 */
+
+/* 글자 중앙정렬 */
+.textCenter {
+    text-align: center;
+}
+/* /글자 중앙정렬 */
