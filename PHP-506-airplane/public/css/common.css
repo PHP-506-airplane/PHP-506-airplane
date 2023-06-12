@@ -17,3 +17,16 @@
     height: 68px;
 }
 /* /헤더 */
+
+/* 푸터 */
+footer{
+    height: 50px;
+    width: 100%;
+    position : absolute;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.068);
+}
+.footerContainer {
+    margin-top: 10px;
+}
+/* /푸터 */
