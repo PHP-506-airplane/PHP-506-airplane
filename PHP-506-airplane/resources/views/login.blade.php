@@ -1,4 +1,4 @@
-@extends('layout.header')
+@extends('layout.layout')
 
 @section('title', 'Login')
 
@@ -18,6 +18,4 @@
         <button type="submit">Login</button>
         <button type="button" onclick="location.href = '{{route('users.registration')}}'">Registration</button>
     </form>
-
-@extends('layout.footer')
 @endsection

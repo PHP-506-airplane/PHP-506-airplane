@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\NoticeController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -25,3 +27,7 @@ Route::get('/users/logout', [UserController::class, 'logout'])->name('users.logo
 Route::get('/users/withdraw', [UserController::class, 'withdraw'])->name('users.withdraw');
 Route::get('/users/useredit', [UserController::class, 'useredit'])->name('users.useredit');
 Route::post('/users/usereditpost', [UserController::class, 'usereditpost'])->name('users.useredit.post');
+
+
+// 0612 add 이동호
+Route::get('/notice/list', [NoticeController::class, 'index'])->name('notice.index');

@@ -7,7 +7,6 @@
 @endsection
 
 @section('contents')
-    {{-- 각 페이지별 내용 --}}
     <div class="container">
         
     </div>
