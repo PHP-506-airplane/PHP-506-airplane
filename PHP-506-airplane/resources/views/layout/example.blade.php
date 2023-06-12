@@ -7,7 +7,7 @@
 @endsection
 
 @section('contents')
-
+    {{-- 각 페이지별 내용 --}}
 @endsection
 
 @section('js')
