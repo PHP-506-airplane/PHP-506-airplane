@@ -3,6 +3,16 @@
 @section('title','Main')
 
 @section('css')
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+{{-- datepicker moment --}}
+<script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+{{-- daterangepicker --}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
+<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
+{{-- css --}}
     <link rel="stylesheet" href="{{asset('css/styles.css')}}">
     <link rel="stylesheet" href="{{asset('css/main.css')}}">
 @endsection
@@ -43,28 +53,17 @@
                                     </ul>
                                 </div>
                                 <div class="selectBox2">
-                                    <button class="label">출발날짜</button>
-                                    <ul class="optionList">
-                                    <li class="optionItem">원주</li>
-                                    <li class="optionItem">군산</li>
-                                    <li class="optionItem">광주</li>
-                                    <li class="optionItem">여수</li>
-                                    <li class="optionItem">사천</li>
-                                    <li class="optionItem">울산</li>
-                                    <li class="optionItem">포항경주</li>
-                                    </ul>
+                                    <div class="input-group date" id="datepicker">
+                                        <input type="text" id="startDate" class="form-control">
+                                        <span class="input-group-append">
+                                            <span class="input-group-text bg-white d-block">
+                                                <i class="fa fa-calendar"></i>
+                                            </span>
+                                        </span>
+                                    </div>
                                 </div>
                                 <div class="selectBox2">
-                                    <button class="label">도착날짜</button>
-                                    <ul class="optionList">
-                                    <li class="optionItem">원주</li>
-                                    <li class="optionItem">군산</li>
-                                    <li class="optionItem">광주</li>
-                                    <li class="optionItem">여수</li>
-                                    <li class="optionItem">사천</li>
-                                    <li class="optionItem">울산</li>
-                                    <li class="optionItem">포항경주</li>
-                                    </ul>
+                                    <input type="text" name="datefilter" value="" />
                                 </div>
                             </div>
                         </div>
@@ -134,7 +133,10 @@
 @endsection
         
 @section('js')
+    {{-- 카카오맵api --}}
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=ec157c40a3e8affeb7c7cd7bc375b9fc"></script>
+    
     <script src="{{asset('js/scripts.js')}}"></script>
     <script src="{{asset('js/main.js')}}"></script>
+
 @endsection

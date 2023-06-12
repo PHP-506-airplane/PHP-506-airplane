@@ -29,7 +29,7 @@ a{
   cursor: pointer;
 }
 .tabs .tabs-list li a {
-  text-decoration: none;
+  font-size: 22px;
   color: white;
 }
 /* Tab Content */
@@ -58,6 +58,7 @@ a{
   align-items: center;
   width: 100%;
   height: 200px;
+  border-radius: 0 15px 15px 15px;
   background-color: #efeff6;
 }
 /* Tab on */
@@ -70,6 +71,11 @@ a{
 }
 .on a {
   color: black !important;
+  text-decoration: underline !important;
+}
+.form-control{
+  background-color: transparent;
+  border: none;
 }
 .selectBox2 * { box-sizing: border-box; }
 .selectBox2 {
