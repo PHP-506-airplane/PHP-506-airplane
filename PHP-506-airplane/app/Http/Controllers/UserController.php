@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\SendEmail;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 
 class UserController extends Controller
@@ -111,5 +113,33 @@ class UserController extends Controller
         Session::flush();
         Auth::logout();
         return redirect()->route('users.login');
+    }
+
+    //이메일 인증
+    function emailverify($code, $email) {
+
+        $user = User::where('verification_code', $code)->where('email', $email)->first();
+
+        if (!$user) {
+            $error = '유효하지 않은 이메일 주소입니다.';
+            return redirect()->route('users.login')->with('error', $error);
+        }
+
+        $currentTime = now();
+        $validityPeriod = $user->validity_period;
+
+        if ($currentTime > $validityPeriod) {
+            $error = '인증 유효시간이 만료되었습니다.';
+            $resendEmailUrl = route('resend.email', ['email' => $user->email]);
+            return redirect()->back()->with('error', $error)->with('resend_email', true)->with('resend_email_url', $resendEmailUrl);
+        }
+
+        $user->verification_code = null;
+        $user->validity_period = null;
+        $user->email_verified_at = now();
+        $user->save();
+
+        $success = '이메일 인증이 완료되었습니다.<br>가입하신 아이디와 비밀번호로 로그인 해 주십시오.';
+        return redirect()->route('users.login')->with('success', $success);
     }
 }

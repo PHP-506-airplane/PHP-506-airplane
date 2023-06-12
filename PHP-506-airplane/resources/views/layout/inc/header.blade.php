@@ -7,9 +7,9 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
-                <li class="nav-item"><a class="nav-link" href="#services">예약</a></li>
-                <li class="nav-item"><a class="nav-link" href="#portfolio">서비스</a></li>
-                <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+                <li class="nav-item"><a href="#services">예약</a></li>
+                <li class="nav-item"><a href="#portfolio">서비스</a></li>
+                <li class="nav-item"><a href="#about">About</a></li>
                 @if(session('name' !== null)) {
                     <li class="nav-item"><a href="{{route('users.login')}}">회원정보 수정</a></li>
                 }
