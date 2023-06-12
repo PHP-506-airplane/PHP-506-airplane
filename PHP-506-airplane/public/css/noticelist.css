@@ -1,0 +1,20 @@
+/* 테두리 */
+.nListContainer {
+    margin: 10px auto;
+    border: 1px solid #46A0AC;
+    border-radius: 10px;
+    width: 80vw;
+    min-height: 50vh;
+}
+/* /테두리 */
+
+/* 번호, 제목, 작성일 */
+.textCenter {
+    text-align: center;
+}
+
+.afterLine::after {
+    content: "|";
+    float: right;
+}
+/* /번호, 제목, 작성일 */
