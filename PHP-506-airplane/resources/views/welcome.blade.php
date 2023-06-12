@@ -61,7 +61,7 @@
                         <ul class="tabs-list">
                             <li class="on"><a href="#tab1">왕복</a></li>
                             <li><a href="#tab2">편도</a></li>
-                         </ul>
+                        </ul>
                         <div id="tab1"class="tab on">
                             <div class="round-way">
                                 <div class="selectBox2">
@@ -222,7 +222,7 @@
                                 image : markerImage // 마커 이미지 
                             });
                         }
-	                </script>
+                    </script>
                 </div>
             </div>
         </section>
