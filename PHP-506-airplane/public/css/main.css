@@ -74,13 +74,17 @@ a{
   text-decoration: underline !important;
 }
 .form-control{
+  width: 13rem;
+  height: 60px;
+  font-size: 16px;
+  font-weight: 700;
   background-color: transparent;
   border: none;
 }
 .selectBox2 * { box-sizing: border-box; }
 .selectBox2 {
   position: relative;
-  width: 250px;
+  width: 260px;
   height: 60px;
   border-radius: 4px;
   background: url('https://contents-image.twayair.com/homepage/images/ico/ico_btn_pin.png')calc(100% - 7px) center no-repeat;
@@ -88,7 +92,6 @@ a{
   margin-right: 15px;
   cursor: pointer;
   font-size: 24px;
-  
 }
 .selectBox2:after {
   content: '';

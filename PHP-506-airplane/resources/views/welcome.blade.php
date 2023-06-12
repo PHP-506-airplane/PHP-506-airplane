@@ -53,18 +53,9 @@
                                     </ul>
                                 </div>
                                 <div class="selectBox2">
-                                    <div class="input-group date" id="datepicker">
-                                        <input type="text" id="startDate" class="form-control">
-                                        <span class="input-group-append">
-                                            <span class="input-group-text bg-white d-block">
-                                                <i class="fa fa-calendar"></i>
-                                            </span>
-                                        </span>
-                                    </div>
+                                    <input type="text" id="txtDate" class="form-control" name="datefilter" value="" />
                                 </div>
-                                <div class="selectBox2">
-                                    <input type="text" name="datefilter" value="" />
-                                </div>
+                                
                             </div>
                         </div>
                         <div id="tab2"class="tab">
