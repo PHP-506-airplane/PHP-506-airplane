@@ -9,7 +9,7 @@ use App\Mail\SendEmail;
 class MailController extends Controller
 {
     public static function sendSignupEmail() {
-        return view('sendemail');
+        return view('email');
     }
     public static function sendSignupEmailpost(Request $req){
         

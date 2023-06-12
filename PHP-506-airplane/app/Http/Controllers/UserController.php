@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Str;
 
 class UserController extends Controller
 {
@@ -116,9 +117,9 @@ class UserController extends Controller
     }
 
     //이메일 인증
-    function emailverify($code, $email) {
+    function emailverify($code) {
 
-        $user = User::where('verification_code', $code)->where('email', $email)->first();
+        $user = User::where('verification_code', $code)->first();
 
         if (!$user) {
             $error = '유효하지 않은 이메일 주소입니다.';
@@ -141,5 +142,31 @@ class UserController extends Controller
 
         $success = '이메일 인증이 완료되었습니다.<br>가입하신 아이디와 비밀번호로 로그인 해 주십시오.';
         return redirect()->route('users.login')->with('success', $success);
+    }
+
+    function emailverify_resend(Request $req) {
+        $user = User::where('email', $req->email)->first();
+
+        if (!$user) {
+            $error = '해당 이메일로 가입된 계정이 없습니다.';
+            return redirect()->back()->with('error', $error);
+        }
+
+        if ($user->email_verified_at) {
+            $error = '해당 계정은 이미 이메일 인증이 완료되었습니다.';
+            return redirect()->back()->with('error', $error);
+        }
+
+        $verification_code = Str::random(30);
+        $validity_period = now()->addMinutes(1);
+
+        $user->verification_code = $verification_code;
+        $user->validity_period = $validity_period;
+        $user->save();
+
+        Mail::to($user->email)->send(new SendEmail($user));
+
+        $success = '이메일 인증 메일을 재전송하였습니다.<br>이메일을 확인하여 계정을 활성화해 주세요.';
+        return redirect()->back()->with('success', $success);
     }
 }
