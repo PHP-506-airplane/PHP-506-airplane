@@ -37,6 +37,12 @@ footer{
 }
 /* /푸터 */
 
+/* 페이징 */
+.pageHidden {
+    visibility: hidden;
+}
+/* /페이징 */
+
 /* 글자 중앙정렬 */
 .textCenter {
     text-align: center;

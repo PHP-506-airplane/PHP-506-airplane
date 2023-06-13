@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\NoticeInfo;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class NoticeController extends Controller
 {
@@ -13,7 +15,8 @@ class NoticeController extends Controller
      */
     public function index()
     {
-        return view('noticelist');
+        $data = NoticeInfo::select(['notice_no', 'notice_title', 'created_at', 'updated_at'])->orderBy('notice_no', 'DESC')->paginate(10);
+        return view('noticelist', compact('data'));
     }
 
     /**
@@ -32,9 +35,13 @@ class NoticeController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $req)
     {
-        //
+        $boards = new NoticeInfo([
+            'title'     => $req->input('title')
+            ,'content'  => $req->input('content')
+        ]);
+        $boards->save();
     }
 
     /**

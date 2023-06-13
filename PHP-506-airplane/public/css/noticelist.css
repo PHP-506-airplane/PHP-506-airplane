@@ -1,16 +1,46 @@
-/* 테두리 */
+/* 안내메세지 */
+.noticeMsg {
+    margin: 5vh auto 5vh 10vw;
+    /* margin-left: 10vw; */
+}
+/* /안내메세지 */
+
+/* 상하단 가로선 */
 .nListContainer {
     margin: 10px auto;
-    border: 1px solid #46A0AC;
-    border-radius: 10px;
+    border-top: 1px solid #000000;
+    border-bottom: 1px solid #000000;
     width: 80vw;
     min-height: 50vh;
 }
-/* /테두리 */
+/* /상하단 가로선 */
 
-/* 번호, 제목, 작성일 */
-.afterLine::after {
-    content: "|";
-    float: right;
+/* hr */
+hr {
+    margin: 0;
 }
-/* /번호, 제목, 작성일 */
+/* /hr */
+
+/* 번호, 게목, 등록일 */
+.listInfo {
+    height: 50px;
+    line-height: 50px;
+    width: 80vw;
+    background-color: #f7f7f6;
+    margin-left: 0;
+}
+/* /번호, 게목, 등록일 */
+
+/* 내용 */
+.mainContents {
+    margin-left: 0;
+    height: 50px;
+    line-height: 50px;
+}
+/* /내용 */
+
+/* 페이징 */
+.paginate {
+    text-align: center;
+}
+/* /페이징 */

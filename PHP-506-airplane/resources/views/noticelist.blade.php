@@ -16,20 +16,36 @@
 @endsection
 
 @section('contents')
-        <div class="nListContainer">
-            <div class="listInfo row">
-                <div class="col-2 textCenter afterLine">번호</div>
-                <div class="col-7 afterLine">제목</div>
-                <div class="col-3 textCenter">작성일</div>
-            </div>
-            <div class="listContents row">
-                {{-- TODO : DB select 후 foreach --}}
-                <div class="col-2 textCenter afterLine">1</div>
-                <div class="col-7 afterLine">제목제목제목</div>
-                <div class="col-3 textCenter">2023-06-12</div>
-            </div>
+    <div class="noticeMsg">
+        <h1>공지사항</h1>
+        <span>종이비행기 항공의 다양한 소식을 알려드립니다.</span>
+    </div>
+    <div class="nListContainer">
+        <div class="listInfo row textCenter">
+            <div class="col-2 afterLine">번호</div>
+            <div class="col-8 afterLine">제목</div>
+            <div class="col-2">등록일</div>
         </div>
-            {{-- TODO : 페이징 --}}
+        @forelse($data as $item)
+        <hr>
+        <div class="row mainContents">
+            <div class="col-2 textCenter afterLine">{{$item->notice_no}}</div>
+            <div class="col-8 afterLine">{{$item->notice_title}}</div>
+            {{-- <div class="col colTitle"><a href="{{route('boards.show', ['board' => $item->id])}}" class="aTagNone">{{$item->title}}</a></div> --}}
+            <div class="col-2 textCenter">{{mb_substr($item->created_at, 0, 10)}}</div>
+        </div>
+        @empty
+        <div class="row">
+            <div class="col"></div>
+            <div class="col">게시글 없음</div>
+            <div class="col"></div>
+            <div class="col"></div>
+        </div>
+        @endforelse
+    </div>
+    <div class="paginate">
+        {{ $data->links('vendor.pagination.custom') }}
+    </div>
 @endsection
 
 @section('js')
