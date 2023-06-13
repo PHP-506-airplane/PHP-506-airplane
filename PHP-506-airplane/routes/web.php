@@ -67,7 +67,6 @@ Route::post('/users/changepasswordpost', [UserController::class, 'changepassword
 // v002 이동호
 // 메인페이지
 Route::get('/reservation/main', [ReservationController::class, 'main'])->name('reservation.main');
-// 공지사항 리스트 v002
-Route::get('/notice/list', [NoticeController::class, 'index'])->name('notice.index');
+// 공지사항 v002
+Route::resource('/notice', NoticeController::class);
 // 공지사항 상세
-Route::get('/notice/detail', [NoticeController::class, 'show'])->name('notice.show');

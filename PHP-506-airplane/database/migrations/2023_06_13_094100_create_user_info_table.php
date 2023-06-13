@@ -13,14 +13,15 @@ return new class extends Migration
     {
         Schema::create('user_info', function (Blueprint $table) {
             $table->id('u_no');
-            $table->string('u_email', 50);
+            $table->string('u_email', 50)->unique();
             $table->string('u_pw', 20);
             $table->char('u_gender', 1);
+            $table->string('u_name', 30);
             $table->date('u_birth');
-            $table->datetime('deleted_at');
-            $table->timestamps();
             $table->integer('qa_no');
             $table->string('qa_answer', 20);
+            $table->timestamps();
+            $table->softDeletes();
         });
     }
 

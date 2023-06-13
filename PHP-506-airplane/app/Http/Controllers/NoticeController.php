@@ -50,9 +50,10 @@ class NoticeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($notice_no)
     {
-        //
+        $notice = NoticeInfo::select('*')->where('notice_no', $notice_no)->get();
+        return $notice;
     }
 
     /**
