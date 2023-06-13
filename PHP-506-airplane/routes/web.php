@@ -40,5 +40,14 @@ Route::get('/users/emailverify/{code}', [UserController::class, 'emailverify'])-
 // 이메일 재인증
 Route::get('/users/emailverify_resend', [UserController::class, 'emailverify_resend'])->name('emailverifys_resend.emailverify_resend');
 
+// 이메일 찾기
+Route::get('/users/findemail', [UserController::class, 'findemail'])->name('findemails.findemail');
+
+// 비밀번호 찾기
+Route::get('/users/findpassword', [UserController::class, 'password'])->name('passwords.password');
+
+// 비밀번호 변경
+Route::post('/users/changepassword', [UserController::class, 'changepassword'])->name('changepasswords.changepassword');
+
 // 0612 add 이동호
 Route::get('/notice/list', [NoticeController::class, 'index'])->name('notice.index');

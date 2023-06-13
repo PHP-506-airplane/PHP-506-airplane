@@ -11,6 +11,10 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
+use Illuminate\Auth\Events\PasswordReset; // 패스워드 변경 이벤트
+use Illuminate\Support\Facades\Password;
+use Illuminate\Validation\Rules;
+use Illuminate\Validation\ValidationException;
 
 class UserController extends Controller
 {
@@ -169,4 +173,64 @@ class UserController extends Controller
         $success = '이메일 인증 메일을 재전송하였습니다.<br>이메일을 확인하여 계정을 활성화해 주세요.';
         return redirect()->back()->with('success', $success);
     }
-}
+
+    // 이메일 찾기
+    function findemail(Request $req) {
+
+    }
+    // 비밀번호 찾기
+    function findpassword(Request $req) {
+        
+    }
+
+    //비밀번호 변경
+    public function resetPassword(Request $request)
+    {
+        $request->validate([
+            'token' => ['required'],
+            'email' => ['required', 'email'],
+            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+        ]);
+
+        $status = Password::reset(
+            $request->only('email', 'password', 'password_confirmation', 'token'),
+            function ($user) use ($request) {
+                $user->forceFill([
+                    'password' => Hash::make($request->password),
+                    'remember_token' => Str::random(60),
+                ])->save();
+
+                event(new PasswordReset($user));
+            }
+        );
+
+        if ($status != Password::PASSWORD_RESET) {
+            throw ValidationException::withMessages([
+                'email' => [__($status)],
+            ]);
+        }
+
+        return response()->json(['status' => __($status)]);
+    }
+
+    // 비밀번호 찾기(수신된 이메일에서 버튼 클릭시 새비번 입력할 수 있느느 페이지로 이동(이거 아님))
+    public function forgotPassword(Request $req)
+    {
+        $req->validate([
+            'email' => 'required|email'
+        ], $req->all());
+
+        $status = Password::sendResetLink(
+            $req->only('email')
+        );
+
+        if ($status != Password::RESET_LINK_SENT) {
+            throw ValidationException::withMessages([
+                'email' => [__($status)],
+            ]);
+        }
+
+        return response()->json(['status' => __($status)]);
+    }
+} 
+
