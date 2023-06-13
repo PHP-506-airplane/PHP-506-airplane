@@ -17,4 +17,8 @@ class MailController extends Controller
 
         return "갔나?";
     }
+
+    public function emailanswer(Request $req) {
+        
+    }
 }

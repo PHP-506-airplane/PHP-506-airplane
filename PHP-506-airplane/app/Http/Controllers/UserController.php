@@ -105,6 +105,7 @@ class UserController extends Controller
         ];
     }
 
+    //탈퇴
     function withdraw() {
         $id = session('id');
 
@@ -113,6 +114,7 @@ class UserController extends Controller
         Auth::logout();
     }
     
+    //로그아웃
     function logout() {
         
         Session::flush();
@@ -175,12 +177,12 @@ class UserController extends Controller
     }
 
     // 이메일 찾기
-    function findemail(Request $req) {
-
+    function findemail() {
+        return view('findemail');
     }
     // 비밀번호 찾기
-    function findpassword(Request $req) {
-        
+    function findpassword() {
+        return view('findpassword');
     }
 
     //비밀번호 변경

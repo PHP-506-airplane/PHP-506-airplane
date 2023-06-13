@@ -1,28 +1,24 @@
 @extends('layout.layout')
 
-@section('title', 'Registration')
+@section('title', 'Login')
 
 @section('contents')
-    <h1>회원가입</h1>
-    {{-- @include('layout.errorsvalidate') --}}
-    <form action="{{route('users.registration.post')}}" method="post">
+    <h1>이메일 찾기</h1>
+    <br>
+    <form action="{{route('users.login.post')}}" method="post">
         @csrf
-        <label for="name">name : </label>
+        <label for="name">Name : </label>
         <input type="text" name="name" id="name">
         <br>
         <label for="email">Email : </label>
         <input type="text" name="email" id="email">
         <br>
-        <label for="password">password : </label>
-        <input type="password" name="password" id="password">
         <br>
-        <label for="passwordchk">password : </label>
-        <input type="password" name="passwordchk" id="passwordchk">
-        <br>
+
         <div>
             <span>이메일 찾기 힌트를 선택해주세요</span>
         </div>
-        <br>
+
         <select name="myselect" id="myselect">
             <option value="1"  selected='selected'>기억에 남는 추억의 장소는?</option>
             <option value="2">나의 보물 제1호는?</option>
@@ -35,7 +31,10 @@
             <input type="text" name="answer" id="answer">
         </form>
         <br>
-        <button type="submit">Registration</button>
-        <button type="button" onclick="location.href = '{{route('users.login')}}'">Cancel</button>
+
+        <button type="submit" onclick="location.href = '{{route('emails.email')}}'">이메일 발송</button>
+        <button type="button" onclick="location.href = '{{route('users.login')}}'">취소</button>
     </form>
+
 @endsection
+

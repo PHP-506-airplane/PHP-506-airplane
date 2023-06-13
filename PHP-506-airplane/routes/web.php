@@ -51,8 +51,11 @@ Route::get('/users/emailverify_resend', [UserController::class, 'emailverify_res
 // 이메일 찾기
 Route::get('/users/findemail', [UserController::class, 'findemail'])->name('findemails.findemail');
 
+// 이메일 찾기 페이지 select, answer
+Route::post('/users/emailanswer', [UserController::class, 'emailanswer'])->name('emailanswers.emailanswer');
+
 // 비밀번호 찾기
-Route::get('/users/findpassword', [UserController::class, 'password'])->name('passwords.password');
+Route::get('/users/findpassword', [UserController::class, 'findpassword'])->name('findpasswords.findpassword');
 
 // 비밀번호 변경
 Route::post('/users/changepassword', [UserController::class, 'changepassword'])->name('changepasswords.changepassword');
