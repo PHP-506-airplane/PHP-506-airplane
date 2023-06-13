@@ -14,8 +14,12 @@ return new class extends Migration
     public function up()
     {
         Schema::create('notice_info', function (Blueprint $table) {
-            $table->id();
+            $table->id('notice_no');
+            $table->bigInteger('adm_no');
+            $table->string('notice_title', 50);
+            $table->string('notice_content', 4000);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

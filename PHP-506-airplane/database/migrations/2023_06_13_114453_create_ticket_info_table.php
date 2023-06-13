@@ -13,12 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('admin_info', function (Blueprint $table) {
-            $table->id('adm_no');
-            $table->string('adm_email', 50);
-            $table->string('adm_pw', 255);
-            $table->char('adm_flg', 1);
-            $table->timestamps();
+        Schema::create('ticket_info', function (Blueprint $table) {
+            $table->id('t_no');
+            $table->bigInteger('u_no');
+            $table->bigInteger('reserve_seat_num');
+            $table->bigInteger('fly_no');
+            $table->integer('reserve_no');
             $table->softDeletes();
         });
     }
@@ -30,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('admin_info');
+        Schema::dropIfExists('ticket_info');
     }
 };

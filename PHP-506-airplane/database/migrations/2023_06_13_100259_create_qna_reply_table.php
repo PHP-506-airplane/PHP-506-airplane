@@ -18,8 +18,8 @@ return new class extends Migration
             $table->string('reply_content', 1000);
             $table->timestamps();
             $table->softDeletes();
-            // TODO : qna_info 테이블 qna_no PK & FK 추가
-            // TODO : admin_info 테이블 adm_no FK 추가
+            $table->bigInteger('adm_no');
+            $table->bigInteger('qna_no');
         });
     }
 

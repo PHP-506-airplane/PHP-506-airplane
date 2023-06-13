@@ -13,13 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('admin_info', function (Blueprint $table) {
-            $table->id('adm_no');
-            $table->string('adm_email', 50);
-            $table->string('adm_pw', 255);
-            $table->char('adm_flg', 1);
-            $table->timestamps();
-            $table->softDeletes();
+        Schema::create('failed_jobs', function (Blueprint $table) {
+            $table->id();
+            $table->string('uuid')->unique();
+            $table->text('connection');
+            $table->text('queue');
+            $table->longText('payload');
+            $table->longText('exception');
+            $table->timestamp('failed_at')->useCurrent();
         });
     }
 
@@ -30,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('admin_info');
+        Schema::dropIfExists('failed_jobs');
     }
 };

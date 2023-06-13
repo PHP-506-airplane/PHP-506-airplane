@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('qna_content', 50);
             $table->timestamps();
             $table->softDeletes();
-            // TODO : user_onfo 테이블 u_no FK 추가
+            $table->bigInteger('u_no');
         });
     }
 

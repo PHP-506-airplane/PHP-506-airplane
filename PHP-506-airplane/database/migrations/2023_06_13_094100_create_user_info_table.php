@@ -19,7 +19,7 @@ return new class extends Migration
             $table->date('u_birth');
             $table->datetime('deleted_at');
             $table->timestamps();
-            $table->int('qa_no');
+            $table->integer('qa_no');
             $table->string('qa_answer', 20);
         });
     }
