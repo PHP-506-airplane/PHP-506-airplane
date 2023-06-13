@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\SendEmail;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class MailController extends Controller
 {
@@ -19,6 +21,11 @@ class MailController extends Controller
     }
 
     public function emailanswer(Request $req) {
+
+        $baseUser  = User::find(Auth::User()->id);
         
+        if($req->answer !== $baseUser->answer) {
+            return "이메일 인증 답변이 일치하지 않ㅅㅂ니다^^";
+        }
     }
 }

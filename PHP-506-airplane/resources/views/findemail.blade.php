@@ -1,6 +1,14 @@
+{{-- 
+/**************************************************
+ * 프로젝트명   : PHP-506-airplane
+ * 디렉토리     : views
+ * 파일명       : findemail.blade.php
+ * 이력         :   v001 0613 박수연 new
+**************************************************/
+--}}
 @extends('layout.layout')
 
-@section('title', 'Login')
+@section('title', '이메일 찾기')
 
 @section('contents')
     <h1>이메일 찾기</h1>
@@ -26,7 +34,7 @@
             <option value="4">우리집 애완동물의 이름은?</option>
         </select>
         <br>
-        <form action="{{route('users.emailanswer.post')}}" method="post">
+        <form action="{{route('emailanswers.emailanswer')}}" method="post">
             <label for="answer">답 : </label>
             <input type="text" name="answer" id="answer">
         </form>

@@ -50,15 +50,18 @@ Route::get('/users/emailverify_resend', [UserController::class, 'emailverify_res
 
 // 이메일 찾기
 Route::get('/users/findemail', [UserController::class, 'findemail'])->name('findemails.findemail');
+Route::post('/users/findemailpost', [UserController::class, 'findemail'])->name('findemails.findemail.post');
 
-// 이메일 찾기 페이지 select, answer
+// 이메일 찾기 답변
 Route::post('/users/emailanswer', [UserController::class, 'emailanswer'])->name('emailanswers.emailanswer');
 
 // 비밀번호 찾기
 Route::get('/users/findpassword', [UserController::class, 'findpassword'])->name('findpasswords.findpassword');
+Route::post('/users/findpasswordpost', [UserController::class, 'findpasswordpost'])->name('findpasswords.findpassword.post');
 
 // 비밀번호 변경
-Route::post('/users/changepassword', [UserController::class, 'changepassword'])->name('changepasswords.changepassword');
+Route::get('/users/changepassword', [UserController::class, 'changepassword'])->name('changepasswords.changepassword');
+Route::post('/users/changepasswordpost', [UserController::class, 'changepassword'])->name('changepasswords.changepassword.post');
 
 // 0612 add 이동호
 // v002 이동호

@@ -18,6 +18,7 @@ use Illuminate\Validation\ValidationException;
 
 class UserController extends Controller
 {
+    //로그인
     function login() {
         return view('login');
     }
@@ -38,14 +39,15 @@ class UserController extends Controller
         Auth::login($user);
         if(Auth::check()) {
             //로그인 성공
-            session($user->only('id'));
-            return redirect()->intended(route('boards.index'));
+            session($user->only('email'));
+            return redirect()->intended(route('reservation.main'));
         } else {
             $errors = '인증작업 에러';
             return redirect()->back()->with('error', $errors);
         }
     }
 
+    //회원가입
     function registration() {
         return view('registration');
     }
@@ -75,6 +77,7 @@ class UserController extends Controller
             ->with('success', '회원가입을 완료했습니다.<br>가입하신 아이디와 비밀번호로 로그인해 주세요.');
     }
 
+    //회원정보 수정
     function useredit() {
         $user  = User::find(Auth::User()->id);
         
@@ -103,6 +106,8 @@ class UserController extends Controller
             ,'bpassword' => 'regex:/^(?=.*[a-zA-Z])(?=.*[!@#$%^*-])(?=.*[0-9]).{8,20}$/'
             ,'password' => 'same:passwordchk|regex:/^(?=.*[a-zA-Z])(?=.*[!@#$%^*-])(?=.*[0-9]).{8,20}$/'
         ];
+
+        return redirect()->back() ->with('alert', '업데이트 되었습니다!');
     }
 
     //탈퇴
@@ -180,25 +185,60 @@ class UserController extends Controller
     function findemail() {
         return view('findemail');
     }
+
+    function findemailpost() {
+
+    }
+
     // 비밀번호 찾기
     function findpassword() {
         return view('findpassword');
     }
 
+    function findpasswordpost() {
+        
+    }
+
+    // 비밀번호 확인
+    function chkpassword() {
+        return view('chkpassword');
+    }
+
+    function chkpasswordpost(Request $req) {
+
+        $arrKey = [];
+
+        $baseUser  = User::find(Auth::User()->id);
+            
+        //현재 비밀번호 확인
+        if(!Hash::check($req->password, $baseUser->password)) {
+            return redirect()->back()->with('error', '비밀번호가 일치하지 않습니다.');
+        }
+
+        if(!isset($req->password)) {
+            $arrKey[] = 'password';
+        }   
+
+        //유효성체크를 하는 모든 항목 리스트:
+        $chkList = [
+            'password' => 'same:passwordchk|regex:/^(?=.*[a-zA-Z])(?=.*[!@#$%^*-])(?=.*[0-9]).{8,20}$/'
+        ];
+    }
+
     //비밀번호 변경
-    public function resetPassword(Request $request)
+    public function resetPassword(Request $req)
     {
-        $request->validate([
+        $req->validate([
             'token' => ['required'],
             'email' => ['required', 'email'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
         $status = Password::reset(
-            $request->only('email', 'password', 'password_confirmation', 'token'),
-            function ($user) use ($request) {
+            $req->only('email', 'password', 'password_confirmation', 'token'),
+            function ($user) use ($req) {
                 $user->forceFill([
-                    'password' => Hash::make($request->password),
+                    'password' => Hash::make($req->password),
                     'remember_token' => Str::random(60),
                 ])->save();
 
@@ -213,9 +253,10 @@ class UserController extends Controller
         }
 
         return response()->json(['status' => __($status)]);
+        // return redirect()->back() ->with('alert', '변경 되었습니다!');
     }
 
-    // 비밀번호 찾기(수신된 이메일에서 버튼 클릭시 새비번 입력할 수 있느느 페이지로 이동(이거 아님))
+    // 비밀번호 찾기(수신된 이메일에서 버튼 클릭시 새비번 입력할 수 있는 페이지로 이동(이거 아님))
     public function forgotPassword(Request $req)
     {
         $req->validate([

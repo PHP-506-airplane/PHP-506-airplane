@@ -6,7 +6,6 @@
     <h1>로그인</h1>
     {{-- @include('layout.errorsvalidate') --}}
 
-    {{-- <div>{!!session()->has('success') ? session('success') : ""!!}</div> --}}
     <form action="{{route('users.login.post')}}" method="post">
         @csrf
         <label for="email">Email : </label>
