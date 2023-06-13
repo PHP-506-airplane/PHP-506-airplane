@@ -15,14 +15,14 @@ return new class extends Migration
     {
         Schema::create('flight_info', function (Blueprint $table) {
             $table->id('fly_no');
-            $table->DATETIME('fly_date');
+            $table->date('fly_date');
             $table->integer('price');
             $table->biginteger('dep_port_no'); 
             $table->biginteger('arr_port_no');
             $table->biginteger('line_no');
             $table->string('flight_num',30);
-            $table->DATETIME('dep_time');
-            $table->DATETIME('arr_time');
+            $table->char('dep_time', 4);
+            $table->char('arr_time', 4);
             $table->biginteger('plane_no');
         });
     }
