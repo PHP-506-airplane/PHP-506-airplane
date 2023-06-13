@@ -70,3 +70,7 @@ Route::get('/reservation/main', [ReservationController::class, 'main'])->name('r
 // 공지사항 v002
 Route::resource('/notice', NoticeController::class);
 // 공지사항 상세
+
+// 0613 add 오재훈
+// 예약 조회(항공편 선택) 페이지
+Route::get('/reservation/check', [ReservationController::class, 'check'])->name('reservation.check');

@@ -1,23 +1,47 @@
  /* 일반함수 */
- const label = document.querySelector('.label');
- const optionItem = document.querySelectorAll('.optionItem');
+const sta_label = document.querySelector('.sta_label');
+const arr_label = document.querySelector('.arr_label');
+const sta_optionItem = document.querySelectorAll('.sta_optionItem');
+const arr_optionItem = document.querySelectorAll('.arr_optionItem');
+
  // 클릭한 옵션의 텍스트를 라벨 안에 넣음
- const handleSelect = function(item) {
-     label.innerHTML = item.textContent;
-     label.parentNode.classList.remove('active');
- }
+const handleSelect = function(item) {
+    // 출발지
+    sta_label.value = item.textContent;
+    sta_label.parentNode.classList.remove('active');
+}
  // 옵션 클릭시 클릭한 옵션을 넘김
- optionItem.forEach(function(option){
- option.addEventListener('click', function(){handleSelect(option)})
- })
- // 라벨을 클릭시 옵션 목록이 열림/닫힘
- label.addEventListener('click', function(){
- if(label.parentNode.classList.contains('active')) {
-     label.parentNode.classList.remove('active');
- } else {
-     label.parentNode.classList.add('active');
- }
- });
+ sta_optionItem.forEach(function(option){
+    option.addEventListener('click', function(){handleSelect(option)})
+})
+ // 클릭한 옵션의 텍스트를 라벨 안에 넣음
+ const handleSelect2 = function(item) {
+    // 도착지
+    arr_label.value = item.textContent;
+    arr_label.parentNode.classList.remove('active');
+}
+ // 옵션 클릭시 클릭한 옵션을 넘김
+ arr_optionItem.forEach(function(option){
+    option.addEventListener('click', function(){handleSelect2(option)})
+})
+ // 라벨을 클릭시 출발지 옵션 목록이 열림/닫힘
+sta_label.addEventListener('click', function(){
+    sta_label.parentNode.classList.toggle('active');
+    // if(sta_label.parentNode.classList.contains('active')) {
+    //     sta_label.parentNode.classList.remove('active');
+    // } else {
+    //     sta_label.parentNode.classList.add('active');
+    // }
+});
+ // 라벨을 클릭시 도착지 옵션 목록이 열림/닫힘
+arr_label.addEventListener('click', function(){
+    arr_label.parentNode.classList.toggle('active');
+    // if(arr_label.parentNode.classList.contains('active')) {
+    //     arr_label.parentNode.classList.remove('active');
+    // } else {
+    //     arr_label.parentNode.classList.add('active');
+    // }
+});
 
 // Tabs
 var links = document.querySelectorAll(".tabs-list li a");
@@ -38,7 +62,7 @@ for (var i = 0; i < items.length; i++) {
      this.classList.add("on");
  };
 }
-
+// 카카오맵 api
 var container = document.getElementById('map');
     var options = {
         center : new kakao.maps.LatLng(36.2683, 127.6358), // 지도의 중심좌표 
@@ -46,8 +70,9 @@ var container = document.getElementById('map');
     };
     
     var map = new kakao.maps.Map(container, options);
-    map.setDraggable(false); // 맵 이동 막기
-    map.setZoomable(false);// 확대,축소 막기 
+    map.setDraggable(false);  // 맵 이동 막기
+    map.setZoomable(false); // 확대,축소 막기 
+
     // 마커를 표시할 위치와 title 객체 배열입니다 
     var positions = [
         {
@@ -149,13 +174,7 @@ var container = document.getElementById('map');
         // 커스텀 오버레이를 지도에 표시합니다
         customOverlay.setMap(map);
     }
-
-    
-    // $(function() {
-    //     $('#datepicker').datepicker();
-    //     $('#datepicker1').datepicker();
-    // });
-
+// 달력
       $("#txtDate").daterangepicker({
         locale: {
         "separator": " ~ ",                     // 시작일시와 종료일시 구분자
@@ -169,11 +188,21 @@ var container = document.getElementById('map');
         autoApply: true,                         // 확인/취소 버튼 사용여부
         // singleDatePicker: true                   // 하나의 달력 사용 여부
     });
-     
-    $("#txtDate").on('show.daterangepicker', function (ev, picker) {
-        $(".yearselect").css("float", "left");
-        $(".monthselect").css("float", "right");
-        $(".cancelBtn").css("float", "right");
+
+    $("#txtDate1").daterangepicker({
+        locale: {
+        "separator": " ~ ",                     // 시작일시와 종료일시 구분자
+        "format": 'YYYY-MM-DD',     // 일시 노출 포맷
+        "applyLabel": "확인",                    // 확인 버튼 텍스트
+        "cancelLabel": "취소",                   // 취소 버튼 텍스트
+        "daysOfWeek": ["일", "월", "화", "수", "목", "금", "토"],
+        "monthNames": ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"]
+        },
+        showDropdowns: true,                     // 년월 수동 설정 여부
+        autoApply: true,                         // 확인/취소 버튼 사용여부
+        singleDatePicker: true                   // 하나의 달력 사용 여부
     });
+     
+    
     
     

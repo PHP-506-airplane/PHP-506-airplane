@@ -81,7 +81,9 @@ a{
   background-color: transparent;
   border: none;
 }
-.selectBox2 * { box-sizing: border-box; }
+.selectBox2 * {
+   box-sizing: border-box; 
+}
 .selectBox2 {
   position: relative;
   width: 260px;
@@ -133,17 +135,17 @@ a{
   max-height: 500px;
 }
 
-.selectBox2 .optionItem {
+.selectBox2 .sta_optionItem, .selectBox2 .arr_optionItem{
   border-bottom: 1px dashed rgb(170, 72, 72);
   padding: 5px 15px 5px;
   transition: .1s;
 }
 
-.selectBox2 .optionItem:hover {
+.selectBox2 .sta_optionItem:hover, .selectBox2 .arr_optionItem:hover {
   background: rgb(175, 93, 93);
 }
 
-.selectBox2 .optionItem:last-child {
+.selectBox2 .sta_optionItem:last-child, .selectBox2 .arr_optionItem:last-child {
   border-bottom: 0 none;
 }
 

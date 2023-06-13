@@ -5,6 +5,7 @@
 @section('css')
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+{{-- jquery --}}
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 {{-- datepicker moment --}}
 <script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
@@ -21,39 +22,41 @@
         <header class="masthead">
             <div class="container">
                 <div class="masthead-subheading">
+                    {{-- 왕복,편도 탭 메뉴 --}}
                     <div class="tabs">
                         <ul class="tabs-list">
                             <li class="on"><a href="#tab1">왕복</a></li>
                             <li><a href="#tab2">편도</a></li>
                         </ul>
                         <div id="tab1"class="tab on">
+                            {{-- 왕복 --}}
                             <div class="round-way">
                                 <div class="selectBox2">
-                                    <button class="label">출발지</button>
+                                    <input type="text" placeholder="출발지" class="sta_label form-control"  readonly>
                                     <ul class="optionList">
-                                    <li class="optionItem">원주</li>
-                                    <li class="optionItem">군산</li>
-                                    <li class="optionItem">광주</li>
-                                    <li class="optionItem">여수</li>
-                                    <li class="optionItem">사천</li>
-                                    <li class="optionItem">울산</li>
-                                    <li class="optionItem">포항경주</li>
+                                        <li class="sta_optionItem">원주</li>
+                                        <li class="sta_optionItem">군산</li>
+                                        <li class="sta_optionItem">광주</li>
+                                        <li class="sta_optionItem">여수</li>
+                                        <li class="sta_optionItem">사천</li>
+                                        <li class="sta_optionItem">울산</li>
+                                        <li class="sta_optionItem">포항경주</li>
                                     </ul>
                                 </div>
                                 <div class="selectBox2">
-                                    <button class="label">도착지</button>
+                                    <input type="text" placeholder="도착지" class="arr_label form-control" readonly>
                                     <ul class="optionList">
-                                    <li class="optionItem">원주</li>
-                                    <li class="optionItem">군산</li>
-                                    <li class="optionItem">광주</li>
-                                    <li class="optionItem">여수</li>
-                                    <li class="optionItem">사천</li>
-                                    <li class="optionItem">울산</li>
-                                    <li class="optionItem">포항경주</li>
+                                        <li class="arr_optionItem">군산</li>
+                                        <li class="arr_optionItem">원주</li>
+                                        <li class="arr_optionItem">광주</li>
+                                        <li class="arr_optionItem">여수</li>
+                                        <li class="arr_optionItem">사천</li>
+                                        <li class="arr_optionItem">울산</li>
+                                        <li class="arr_optionItem">포항경주</li>
                                     </ul>
                                 </div>
                                 <div class="selectBox2">
-                                    <input type="text" id="txtDate" class="form-control" name="datefilter" value="" />
+                                    <input type="text" id="txtDate" class="form-control" value="" />
                                 </div>
                                 
                             </div>
@@ -85,22 +88,13 @@
                                     </ul>
                                 </div>
                                 <div class="selectBox2">
-                                    <button class="label">출발날짜</button>
-                                    <ul class="optionList">
-                                    <li class="optionItem">원주</li>
-                                    <li class="optionItem">군산</li>
-                                    <li class="optionItem">광주</li>
-                                    <li class="optionItem">여수</li>
-                                    <li class="optionItem">사천</li>
-                                    <li class="optionItem">울산</li>
-                                    <li class="optionItem">포항경주</li>
-                                    </ul>
+                                    <input type="text" id="txtDate1" class="form-control" name="datefilter" value="" />
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <a class="btn btn-primary btn-xl text-uppercase" href="#services">항공편 검색</a>
+                <a class="btn btn-primary btn-xl text-uppercase" href="{{route('reservation.check')}}">항공편 검색</a>
             </div>
         </header>
         <!-- Services-->
