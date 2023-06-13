@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Mail\SendEmail;
 use App\Models\User;
+use App\Models\Userinfo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -29,7 +30,7 @@ class UserController extends Controller
             ,'password' => 'required|regex:/^(?=.*[a-zA-Z])(?=.*[!@#$%^*-])(?=.*[0-9]).{8,20}$/'
         ]);
 
-        $user = User::where('email', $req->email)->first();
+        $user = Userinfo::where('email', $req->email)->first();
         if(!$user || !(Hash::check($req->password, $user->password))){
             Log::debug($req->password . ' : '.$user->password);
             $errors = '아이디와 비밀번호를 확인하세요';
@@ -55,15 +56,19 @@ class UserController extends Controller
     function registrationpost(Request $req) {
         $req->validate([
             'name'      => 'required|regex:/^[가-힣]+$/|min:2|max:30'
-            ,'email'    => 'required|email|max:100'  
+            ,'email'    => 'required|email|min:5|max:30'  
             ,'password' => 'required_with:passwordchk|same:passwordchk|regex:/^(?=.*[a-zA-Z])(?=.*[!@#$%^*-])(?=.*[0-9]).{8,20}$/'
         ]);
 
-        $data['name'] = $req->name;
-        $data['email'] = $req->email;
-        $data['password'] = Hash::make($req->password);
+        $data['u_name'] = $req->name;
+        $data['u_email'] = $req->email;
+        $data['u_gender'] = $req->gender;
+        $data['u_pw'] = Hash::make($req->password);
+        $data['u_birth'] = $req->birth;
+        $data['qa_no'] = $req->myselect;
+        $data['qa_answer'] = $req->answer;
 
-        $user = User::create($data);
+        $user = Userinfo::create($data);
         if(!$user) {
             $errors = '시스템 에러가 발생하여, 회원가입에 실패했습니다.<br>잠시 후에 다시 시도해주세요~.';
             return redirect()
@@ -79,7 +84,7 @@ class UserController extends Controller
 
     //회원정보 수정
     function useredit() {
-        $user  = User::find(Auth::User()->id);
+        $user  = Userinfo::find(Auth::User()->id);
         
         return view('useredit')->with('data', $user);
     }
@@ -87,7 +92,7 @@ class UserController extends Controller
     function usereditpost(Request $req) {
         $arrKey = [];
 
-        $baseUser  = User::find(Auth::User()->id);
+        $baseUser  = Userinfo::find(Auth::User()->id);
             
         //기존 비번 틀렸을 때 에러처리
         if(!Hash::check($req->password, $baseUser->password)) {
@@ -114,7 +119,7 @@ class UserController extends Controller
     function withdraw() {
         $id = session('id');
 
-        $result = User::destroy('id');
+        $result = Userinfo::destroy('id');
         Session::flush();
         Auth::logout();
     }
@@ -130,7 +135,7 @@ class UserController extends Controller
     //이메일 인증
     function emailverify($code) {
 
-        $user = User::where('verification_code', $code)->first();
+        $user = Userinfo::where('verification_code', $code)->first();
 
         if (!$user) {
             $error = '유효하지 않은 이메일 주소입니다.';
@@ -156,7 +161,7 @@ class UserController extends Controller
     }
 
     function emailverify_resend(Request $req) {
-        $user = User::where('email', $req->email)->first();
+        $user = Userinfo::where('email', $req->email)->first();
 
         if (!$user) {
             $error = '해당 이메일로 가입된 계정이 없습니다.';
@@ -208,7 +213,7 @@ class UserController extends Controller
 
         $arrKey = [];
 
-        $baseUser  = User::find(Auth::User()->id);
+        $baseUser  = Userinfo::find(Auth::User()->id);
             
         //현재 비밀번호 확인
         if(!Hash::check($req->password, $baseUser->password)) {

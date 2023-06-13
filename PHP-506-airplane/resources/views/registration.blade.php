@@ -28,11 +28,12 @@
         <label for="passwordchk">비밀번호 확인 : </label>
         <input type="password" name="passwordchk" id="passwordchk">
         <br>
+        <label for="birth">생년월일 : </label>
+        <input type="date" name="birth" value="xxx" min="1900-01-01" max="now()">
         <br>
         <label for="gender">성별 : </label>
-        <input type="radio" name="gender" id="gender">남성
-        <input type="radio" name="gender" id="gender">여성
-        <input type="radio" name="gender" id="gender">그 외
+        <input type="radio" name="gender" id="gender_m" value="M">M
+        <input type="radio" name="gender" id="gender_f" value="F">F
         <br>
         <div>
             <span>이메일 찾기 힌트를 선택해주세요</span>
@@ -49,7 +50,7 @@
             <label for="answer">답 : </label>
             <input type="text" name="answer" id="answer">
         <br>
-        <button type="submit">Registration</button>
+        <button type="submit">가입하기</button>
         <button type="button" onclick="location.href = '{{route('users.login')}}'">Cancel</button>
     </form>
 @endsection
