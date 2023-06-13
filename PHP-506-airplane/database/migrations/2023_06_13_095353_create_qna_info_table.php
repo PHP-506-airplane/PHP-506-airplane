@@ -13,14 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('failed_jobs', function (Blueprint $table) {
-            $table->id();
-            $table->string('uuid')->unique();
-            $table->text('connection');
-            $table->text('queue');
-            $table->longText('payload');
-            $table->longText('exception');
-            $table->timestamp('failed_at')->useCurrent();
+        Schema::create('qna_info', function (Blueprint $table) {
+            $table->id('qna_no');
+            $table->string('qna_title', 50);
+            $table->string('qna_content', 50);
+            $table->timestamps();
+            $table->softDeletes();
+            // TODO : user_onfo 테이블 u_no FK 추가
         });
     }
 
@@ -31,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('failed_jobs');
+        Schema::dropIfExists('qna_info');
     }
 };
