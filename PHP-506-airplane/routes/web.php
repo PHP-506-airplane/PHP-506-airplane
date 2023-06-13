@@ -48,7 +48,6 @@ Route::get('/users/emailverify/{code}', [UserController::class, 'emailverify'])-
 // 이메일 재인증
 Route::get('/users/emailverify_resend', [UserController::class, 'emailverify_resend'])->name('emailverifys_resend.emailverify_resend');
 
-<<<<<<< HEAD
 // 이메일 찾기
 Route::get('/users/findemail', [UserController::class, 'findemail'])->name('findemails.findemail');
 
@@ -59,10 +58,8 @@ Route::get('/users/findpassword', [UserController::class, 'password'])->name('pa
 Route::post('/users/changepassword', [UserController::class, 'changepassword'])->name('changepasswords.changepassword');
 
 // 0612 add 이동호
-=======
 // v002 이동호
 // 메인페이지
 Route::get('/reservation/main', [ReservationController::class, 'main'])->name('reservation.main');
 // 공지사항 리스트 v002
->>>>>>> 3bf4ab357c69235bcbd7ca790469112c2d76fd3f
 Route::get('/notice/list', [NoticeController::class, 'index'])->name('notice.index');
