@@ -107,7 +107,8 @@
         <section class="page-section" id="services">
             <div class="container sec2">
                 <div class="notice">
-                    <h2>공지사항</h2>
+                    {{-- 0613 add 이동호 --}}
+                    <h2><a href="{{route('notice.index')}}">공지사항</a></h2>
                     <ul>
                         <li><a href="#"><span>공지1</span><span class="notice-date">2023.06.11</span></a></li>
                         <li><a href="#"><span>공지2</span><span class="notice-date">2023.06.12</span></a></li>
