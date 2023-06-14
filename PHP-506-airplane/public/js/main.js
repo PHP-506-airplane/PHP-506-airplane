@@ -1,4 +1,5 @@
 // 왕복
+const hd_no = document.querySelector('.hd_no');
 const sta_label = document.querySelector('.sta_label');
 const arr_label = document.querySelector('.arr_label');
 const sta_optionItem = document.querySelectorAll('.sta_optionItem');
@@ -13,6 +14,7 @@ const oArr_optionItem = document.querySelectorAll('.oArr_optionItem');
 const handleSelect = function(item) {
     // 출발지
     sta_label.value = item.textContent;
+    hd_no.value = item.value;
     sta_label.parentNode.classList.remove('active');
 }
  // 옵션 클릭시 클릭한 옵션을 넘김

@@ -33,10 +33,11 @@
                             {{-- 왕복 --}}
                             <div class="round-way">
                                 <div class="selectBox2">
-                                    <input type="text" placeholder="출발지" name="" class="sta_label form-control" readonly>
+                                    <input type="hidden" class="hd_no" name="dep_port_no">
+                                    <input type="text" placeholder="출발지"  class="sta_label form-control" readonly>
                                     <ul class="optionList">
                                         @forelse($data as $val)
-                                            <li class="sta_optionItem opItem">{{$val->port_name}}</li>
+                                            <li class="sta_optionItem opItem" value="{{$val->port_no}}">{{$val->port_name}}</li>
                                             @empty
                                             <li class="arr_optionItem opItem">데이터없음</li>
                                         @endforelse
