@@ -16,9 +16,11 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         // 초기 데이터 삽입용 시더 호출
-        $this->call(AirportInfoSeeder::class);
+        // $this->call(AirportInfoSeeder::class);
+        // $this->call(UserInfoSeeder::class);
 
         // \App\Models\NoticeInfo::factory(2000)->create();
+        \App\Models\FlightInfo::factory(2000)->create();
         // \App\Models\User::factory(10)->create();
     }
 }

@@ -61,13 +61,11 @@ Route::post('/users/findpasswordpost', [UserController::class, 'findpasswordpost
 Route::get('/users/changepassword', [UserController::class, 'changepassword'])->name('changepasswords.changepassword');
 Route::post('/users/changepasswordpost', [UserController::class, 'changepassword'])->name('changepasswords.changepassword.post');
 
-// 0612 add 이동호
-// v002 이동호
+// v002 add 이동호
 // 메인페이지
 Route::get('/reservation/main', [ReservationController::class, 'main'])->name('reservation.main');
-// 공지사항 v002
+// 공지사항
 Route::resource('/notice', NoticeController::class);
-// 공지사항 상세
 
 // 0613 add 오재훈
 // 예약 조회(항공편 선택) 페이지

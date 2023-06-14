@@ -1,4 +1,10 @@
 <?php
+/**************************************************
+ * 프로젝트명   : PHP-506-airplane
+ * 디렉토리     : config
+ * 파일명       : auth.php
+ * 이력         :   v001 0614 이동호 udt
+**************************************************/
 
 return [
 
@@ -62,6 +68,7 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
+            // 'model' => App\Models\User::class, v001 udt
             'model' => App\Models\UserInfo::class,
         ],
 

@@ -1,4 +1,10 @@
 <?php
+/**************************************************
+ * 프로젝트명   : PHP-506-airplane
+ * 디렉토리     : Http/Controller
+ * 파일명       : NoticeController.php
+ * 이력         :   v001 0612 이동호 new
+**************************************************/
 
 namespace App\Http\Controllers;
 
