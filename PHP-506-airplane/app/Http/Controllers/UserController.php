@@ -46,16 +46,15 @@ class UserController extends Controller
         //     $errors = '아이디와 비밀번호를 확인하세요';
         //     return redirect()->back()->with('error', $errors);
         // }
+        
+        Auth::login($user);
 
         // v002 이동호
-        if(!$user){
-            $admin = AdminInfo::where('adm_email', $req->email)->first();
-            Auth::login($admin);
-            session($admin->only('adm_email'));
+        if(Auth::check() && $user->admin_flg === 1){
+            session([$user->only('u_email', 'u_name'), 'admin']);
             return redirect()->intended(route('reservation.main'));
         }
 
-        Auth::login($user);
 
         if(Auth::check()) {
             session($user->only('u_email', 'u_name'));
@@ -113,8 +112,6 @@ class UserController extends Controller
     function useredit() {
         $user  = Userinfo::find(1);
         
-        $user->
-        $user->save();
         return view('useredit')->with('data', $user);
     }
 
