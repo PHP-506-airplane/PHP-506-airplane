@@ -98,6 +98,8 @@ class UserController extends Controller
     function useredit() {
         $user  = Userinfo::find(1);
         
+        $user->
+        $user->save();
         return view('useredit')->with('data', $user);
     }
 

@@ -32,7 +32,7 @@ Route::get('/users/registration', [UserController::class, 'registration'])->name
 Route::post('/users/registrationpost', [UserController::class, 'registrationpost'])->name('users.registration.post');
 Route::get('/users/logout', [UserController::class, 'logout'])->name('users.logout');
 Route::get('/users/withdraw', [UserController::class, 'withdraw'])->name('users.withdraw');
-Route::put('/users/useredit', [UserController::class, 'useredit'])->name('users.useredit');
+Route::get('/users/useredit', [UserController::class, 'useredit'])->name('users.useredit');
 Route::post('/users/usereditpost', [UserController::class, 'usereditpost'])->name('users.useredit.post');
 
 // 0612 이메일 (수연) 

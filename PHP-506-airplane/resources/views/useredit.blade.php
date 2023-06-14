@@ -17,14 +17,18 @@
         <input type="text" name="name" id="name" value="{{count($errors) > 0 ? old('name') : $data->u_name}}">
         <br>
         <label for="email">이메일 : </label>
-        <input type="text" name="email" id="email" value="{{count($errors) > 0 ? old('email') : $data->u_email}}">
+        <input type="text" name="email" id="email" value="{{count($errors) > 0 ? old('email') : $data->u_email}}" readonly>
         <br>
         <label for="birth">생년월일 : </label>
-        <input type="text" name="birth" id="birth" value="{{count($errors) > 0 ? old('birth') : $data->u_birth}}">
+        <input type="date" name="birth" id="birth" value="{{count($errors) > 0 ? old('birth') : $data->u_birth}}">
         <br>
         <label for="gender">성별 : </label>
         <input type="radio" name="gender" id="gender" value="M">남
         <input type="radio" name="gender" id="gender" value="F">여
+        <script>
+            var radioVal = $('input:radio[name="gender"]:checked').val();
+            alert(radioVal); 
+        </script>
         <br>
         <button type="submit">수정</button>
         <button type="button" onclick="location.href='{{Route('users.login')}}'">취소</button>
