@@ -28,11 +28,12 @@
                             <li class="on"><a href="#tab1">왕복</a></li>
                             <li><a href="#tab2">편도</a></li>
                         </ul>
+                        <form action="{{route('reservation.check')}}" method="get">
                         <div id="tab1"class="tab on">
                             {{-- 왕복 --}}
                             <div class="round-way">
                                 <div class="selectBox2">
-                                    <input type="text" placeholder="출발지" class="sta_label form-control" readonly>
+                                    <input type="text" placeholder="출발지" name="" class="sta_label form-control" readonly>
                                     <ul class="optionList">
                                         @forelse($data as $val)
                                             <li class="sta_optionItem opItem">{{$val->port_name}}</li>
@@ -83,9 +84,10 @@
                                 </div>
                             </div>
                         </div>
+                        <button type="submit"><a class="btn btn-primary btn-xl text-uppercase">항공편 검색</a></button>
+                    </form>
                     </div>
                 </div>
-                <a class="btn btn-primary btn-xl text-uppercase" href="{{route('reservation.check')}}">항공편 검색</a>
             </div>
         </header>
         <!-- Services-->
