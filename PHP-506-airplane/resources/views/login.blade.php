@@ -12,6 +12,7 @@
 @section('title', 'Login')
 
 @section('contents')
+    @include('errors.errorsvalidate')
     <h1>로그인</h1>
     <form action="{{route('users.login.post')}}" method="post">
         @csrf

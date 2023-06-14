@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 use Illuminate\Auth\Events\PasswordReset; // 패스워드 변경 이벤트
 use Illuminate\Support\Facades\Password;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rules;
 use Illuminate\Validation\ValidationException;
 
@@ -25,14 +26,16 @@ class UserController extends Controller
     }
 
     function loginpost(Request $req) {
-        $req->validate([
-            'email'    => 'required|email|max:100'  
-            ,'password' => 'required|regex:/^(?=.*[a-zA-Z])(?=.*[!@#$%^*-])(?=.*[0-9]).{8,20}$/'
-        ]);
+        // Log::debug('Login Start', $req->only('u_email', 'u_pw'));
 
-        $user = Userinfo::where('email', $req->email)->first();
+        // $req->validate([
+        //     'u_email'    => 'required|email|max:100'  
+        //     ,'u_pw' => 'required|regex:/^(?=.*[a-zA-Z])(?=.*[!@#$%^*-])(?=.*[0-9]).{8,20}$/'
+        // ]);
+
+        $user = Userinfo::where('u_email', $req->email)->first();
         if(!$user || !(Hash::check($req->password, $user->password))){
-            Log::debug($req->password . ' : '.$user->password);
+            // Log::debug($req->password . ' : '.$user->password);
             $errors = '아이디와 비밀번호를 확인하세요';
             return redirect()->back()->with('error', $errors);
         }
@@ -40,14 +43,14 @@ class UserController extends Controller
         Auth::login($user);
         if(Auth::check()) {
             //로그인 성공
-            session($user->only('email'));
-            return redirect()->intended(route('reservation.main'));
+            session($user->only('u_email'));
+            return redirect()->route('reservation.main');
         } else {
             $errors = '인증작업 에러';
             return redirect()->back()->with('error', $errors);
         }
     }
-
+    
     //회원가입
     function registration() {
         return view('registration');
@@ -230,8 +233,8 @@ class UserController extends Controller
         ];
     }
 
-    //비밀번호 변경
-    public function resetPassword(Request $req)
+    // 비밀번호 변경
+    function resetPassword(Request $req)
     {
         $req->validate([
             'token' => ['required'],
@@ -262,7 +265,7 @@ class UserController extends Controller
     }
 
     // 비밀번호 찾기(수신된 이메일에서 버튼 클릭시 새비번 입력할 수 있는 페이지로 이동(이거 아님))
-    public function forgotPassword(Request $req)
+    function forgotPassword(Request $req)
     {
         $req->validate([
             'email' => 'required|email'
@@ -280,5 +283,4 @@ class UserController extends Controller
 
         return response()->json(['status' => __($status)]);
     }
-} 
-
+}
