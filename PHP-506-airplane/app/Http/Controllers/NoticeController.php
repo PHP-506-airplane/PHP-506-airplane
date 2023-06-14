@@ -53,8 +53,7 @@ class NoticeController extends Controller
      */
     public function show($notice_no)
     {
-        $notice = NoticeInfo::select('*')->where('notice_no', $notice_no)->get();
-        return $notice;
+        return view('noticedetail')->with('data', NoticeInfo::findOrFail($notice_no));
     }
 
     /**

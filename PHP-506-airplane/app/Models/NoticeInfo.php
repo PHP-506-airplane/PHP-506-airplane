@@ -12,9 +12,10 @@ class NoticeInfo extends Model
 {
     use HasFactory, softDeletes;
     protected $table = 'notice_info';
+    protected $primaryKey = 'notice_no';
 
     // 갱신되지않게 블랙리스트 설정
-    protected $guarded = ['id', 'created_at'];
+    protected $guarded = ['notice_no', 'created_at'];
 
     protected $dates = ['deleted_at'];
 }
