@@ -48,3 +48,9 @@ footer{
     text-align: center;
 }
 /* /글자 중앙정렬 */
+
+/* 공지사항 페이지들 */
+.noticeMsg {
+    margin: 5vh auto 5vh 10vw;
+}
+/* /공지사항 페이지들 */

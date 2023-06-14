@@ -19,62 +19,62 @@ class Kernel extends ConsoleKernel
      * @param  \Illuminate\Console\Scheduling\Schedule  $schedule
      * @return void
      */
-    protected function schedule(Schedule $schedule)
-    {
-        $schedule->call(function () {
-            Log::error('스케줄러 테스트');
-            // php artisan schedule:list // 리스트 보기
-            // php artisan schedule:work // 스케줄러 시작
-        })->everyMinute();
-    }
     // protected function schedule(Schedule $schedule)
     // {
     //     $schedule->call(function () {
-
-    //         $serviceKey = '?serviceKey=q1Huc9EjZjvBYP%2BNKi0ILB%2FS%2BhmYkimR2o%2FIfQey1bl0NGsyoDHQJVnSYSEwPfvS9C9SqZkaD%2FXMw9SLRkLlqA%3D%3D';
-    //         $response = Http::get('http://openapi.airport.co.kr/service/rest/FlightStatusList/getFlightStatusList' . $serviceKey);
-
-    //         if ($response->successful()) {
-    //             $xmlString = $response->body();
-    //             $xmlObject = simplexml_load_string($xmlString);
-    //             $data = json_decode(json_encode($xmlObject), true);
-
-    //             if (isset($data['body']['items']['item'])) {
-    //                 $items = $data['body']['items']['item'];
-
-    //                 // DB에 저장
-    //                 $faker = FakerFactory::create();
-
-    //                 foreach ($items as $item) {
-    //                     $flightInfo = new FlightInfo();
-
-    //                     // fly_date 값을 변경해서 'Y-m-d' 형식으로 저장
-    //                     $flyDate = Carbon::parse($item['flightDate'])->format('Y-m-d');
-    //                     $flightInfo->fly_date = $flyDate;
-
-    //                     $flightInfo->price = $faker->randomNumber(5, 6);
-    //                     $flightInfo->dep_port_no = $faker->randomNumber(1);
-    //                     $flightInfo->arr_port_no = $faker->randomNumber(1);
-    //                     $flightInfo->line_no = $faker->randomNumber(1);
-    //                     $flightInfo->flight_num = $item['airFln'];
-    //                     $flightInfo->dep_time = $item['std'];
-    //                     // ?? : null 병합 연산자, 값이 null이 아니라면 그 값을, null이라면 ??뒤의 값을 사용
-    //                     $flightInfo->arr_time = $item['etd'] ?? '0000';
-    //                     $flightInfo->plane_no = $faker->randomNumber(1);
-
-    //                     $flightInfo->save();
-    //                 }
-    //             } else {
-    //                 // 'item' 키가 응답에 없는 경우 처리
-    //                 Log::error('API 응답에 item이 없음');
-    //             }
-    //         } else {
-    //             // API 요청이 성공하지 않은 경우 처리
-    //             Log::error('API 요청이 상태 코드 ' . $response->status() . '로 실패함');
-    //         }
-    //     })->everyMinute(); // php artisan schedule:run 명령어로 즉시 실행시 사용
-    //     // })->dailyAt('10:00'); // 매일 아침 10시에 실행
+    //         Log::error('스케줄러 테스트');
+    //         // php artisan schedule:list // 리스트 보기
+    //         // php artisan schedule:work // 스케줄러 시작
+    //     })->everyMinute();
     // }
+    protected function schedule(Schedule $schedule)
+    {
+        $schedule->call(function () {
+            // 운항 스케줄 api
+            // $serviceKey = '?serviceKey=q1Huc9EjZjvBYP%2BNKi0ILB%2FS%2BhmYkimR2o%2FIfQey1bl0NGsyoDHQJVnSYSEwPfvS9C9SqZkaD%2FXMw9SLRkLlqA%3D%3D';
+            // $response = Http::get('http://openapi.airport.co.kr/service/rest/FlightStatusList/getFlightStatusList' . $serviceKey);
+
+            // if ($response->successful()) {
+            //     $xmlString = $response->body();
+            //     $xmlObject = simplexml_load_string($xmlString);
+            //     $data = json_decode(json_encode($xmlObject), true);
+
+            //     if (isset($data['body']['items']['item'])) {
+            //         $items = $data['body']['items']['item'];
+
+            //         // DB에 저장
+            //         $faker = FakerFactory::create();
+
+            //         foreach ($items as $item) {
+            //             $flightInfo = new FlightInfo();
+
+            //             // fly_date 값을 변경해서 'Y-m-d' 형식으로 저장
+            //             $flyDate = Carbon::parse($item['flightDate'])->format('Y-m-d');
+            //             $flightInfo->fly_date = $flyDate;
+
+            //             $flightInfo->price = $faker->randomNumber(5, 6);
+            //             $flightInfo->dep_port_no = $faker->randomNumber(1);
+            //             $flightInfo->arr_port_no = $faker->randomNumber(1);
+            //             $flightInfo->line_no = $faker->randomNumber(1);
+            //             $flightInfo->flight_num = $item['airFln'];
+            //             $flightInfo->dep_time = $item['std'];
+            //             // ?? : null 병합 연산자, 값이 null이 아니라면 그 값을, null이라면 ??뒤의 값을 사용
+            //             $flightInfo->arr_time = $item['etd'] ?? '0000';
+            //             $flightInfo->plane_no = $faker->randomNumber(1);
+
+            //             $flightInfo->save();
+            //         }
+            //     } else {
+            //         // 'item' 키가 응답에 없는 경우 처리
+            //         Log::error('API 응답에 item이 없음');
+            //     }
+            // } else {
+            //     // API 요청이 성공하지 않은 경우 처리
+            //     Log::error('API 요청이 상태 코드 ' . $response->status() . '로 실패함');
+            // }
+        })->everyMinute(); // php artisan schedule:run 명령어로 즉시 실행시 사용
+        // })->dailyAt('10:00'); // 매일 아침 10시에 실행
+    }
 
     /**
      * Register the commands for the application.

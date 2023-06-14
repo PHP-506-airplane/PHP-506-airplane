@@ -1,3 +1,13 @@
+{{-- 
+/**************************************************
+ * 프로젝트명   : PHP-506-airplane
+ * 디렉토리     : views/layout/inc
+ * 파일명       : header.blade.php
+ * 이력         :   v001 0612 이동호 new
+                    v002 0614 박수연 add 로그인
+                    v003 0614 이동호 add 관리자
+**************************************************/
+--}}
 <nav class="navbar navbar-expand-lg navbar-dark fixed-top navHeader" id="mainNav">
     <div class="container">
         <a class="navbar-brand" href="{{route('reservation.main')}}"><img src="{{asset('img/logo.png')}}" alt="logo" class="imgLogo"></a>
@@ -12,27 +22,16 @@
                 <li class="nav-item"><a href="#about">About</a></li>
                 {{-- 로그인 안했을 때 로그인, 회원가입 뜨고 로그인 했을 때 사용자 이름, 로그아웃 나타나게 --}}
                 <li class="nav-item">
-                {{-- @guest
+                @guest
                     <a href="{{route('users.login')}}">로그인</a>
                     <a href="{{route('users.registration')}}">회원가입</a>
-                @endguest --}}
+                @endguest
 
-                {{-- @auth
-                    로그인됐을 때 사용자 이름 표시 되고 이름 누르면 회원정보 수정으로 
-                    <a href="{{route('users.useredit')}}">{{Auth::user()->name}}</a>
+                @auth
+                    {{-- 로그인됐을 때 사용자 이름 표시 되고 이름 누르면 회원정보 수정으로  --}}
+                    <a href="{{route('users.useredit')}}">{{Auth::user()->u_name}}</a>
                     <a href="{{route('users.logout')}}">로그아웃</a>
-                @endauth --}}
-                @if(session('u_email') !== null)
-                {
-                    <a href="{{route('users.useredit')}}">dd</a>
-                    <a href="{{route('users.logout')}}">로그아웃</a>
-                }
-                @else
-                {
-                    <a href="{{route('users.login')}}">로그인</a>
-                    <a href="{{route('users.registration')}}">회원가입</a>
-                }
-                @endif
+                @endauth
                 </li>
                 
             </ul>

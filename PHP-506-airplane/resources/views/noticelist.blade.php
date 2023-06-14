@@ -16,10 +16,7 @@
 @endsection
 
 @section('contents')
-    <div class="noticeMsg">
-        <h1>공지사항</h1>
-        <span>종이비행기 항공의 다양한 소식을 알려드립니다.</span>
-    </div>
+    @include('layout.inc.notice')
     <div class="nListContainer">
         <div class="listInfo row textCenter">
             <div class="col-2 afterLine">번호</div>

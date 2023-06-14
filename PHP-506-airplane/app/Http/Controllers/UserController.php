@@ -1,8 +1,15 @@
 <?php
-
+/**************************************************
+ * 프로젝트명   : PHP-506-airplane
+ * 디렉토리     : app/Http/Controllers
+ * 파일명       : UserController.php
+ * 이력         :   v001 0612 박수연 new
+ *                  v002 0614 이동호 add 관리자
+**************************************************/
 namespace App\Http\Controllers;
 
 use App\Mail\SendEmail;
+use App\Models\AdminInfo;
 use App\Models\User;
 use App\Models\Userinfo;
 use Illuminate\Http\Request;
@@ -34,10 +41,18 @@ class UserController extends Controller
 
         $user = Userinfo::where('u_email', $req->email)->first();
 
-        if(!$user || !(Hash::check($req->password, $user->u_pw))){
-            // Log::debug($req->password . ' : '.$user->password);
-            $errors = '아이디와 비밀번호를 확인하세요';
-            return redirect()->back()->with('error', $errors);
+        // if(!$user || !(Hash::check($req->password, $user->u_pw))){
+        //     // Log::debug($req->password . ' : '.$user->password);
+        //     $errors = '아이디와 비밀번호를 확인하세요';
+        //     return redirect()->back()->with('error', $errors);
+        // }
+
+        // v002 이동호
+        if(!$user){
+            $admin = AdminInfo::where('adm_email', $req->email)->first();
+            Auth::login($admin);
+            session($admin->only('adm_email'));
+            return redirect()->intended(route('reservation.main'));
         }
 
         Auth::login($user);

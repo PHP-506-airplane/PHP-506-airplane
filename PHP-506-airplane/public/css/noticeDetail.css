@@ -1,0 +1,40 @@
+/* 상하단 가로선 */
+.nDetailContainer {
+    margin: 10px auto;
+    border-top: 1px solid #000000;
+    border-bottom: 1px solid #000000;
+    width: 80vw;
+    min-height: 50vh;
+}
+/* /상하단 가로선 */
+
+/* hr */
+hr {
+    margin: 0;
+}
+/* /hr */
+
+/* 제목 */
+.nTitle {
+    font-size: 20px;
+    border-bottom: 1px solid #cccccc8f;
+}
+
+.nTitleText {
+    margin: 15px auto 15px 30px;
+}
+/* /제목 */
+
+/* 내용 */
+.nContent {
+    margin: 15px auto 15px 30px;
+}
+/* /내용 */
+
+/* 버튼 */
+.nButtons {
+    width: 500px;
+    margin: 20px auto;
+    text-align: center;
+}
+/* /버튼 */
