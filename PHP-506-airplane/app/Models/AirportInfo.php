@@ -9,4 +9,5 @@ class AirportInfo extends Model
 {
     use HasFactory;
     protected $table = 'airport_info';
+    protected $primaryKey = 'port_no';
 }

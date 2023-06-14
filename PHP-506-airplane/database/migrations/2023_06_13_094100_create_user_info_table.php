@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('qa_answer', 20);
             $table->timestamps();
             $table->softDeletes();
+            $table->char('admin_flg', 1)->default(0);
         });
     }
 
