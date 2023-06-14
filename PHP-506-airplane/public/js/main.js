@@ -1,8 +1,13 @@
- /* 일반함수 */
+// 왕복
 const sta_label = document.querySelector('.sta_label');
 const arr_label = document.querySelector('.arr_label');
 const sta_optionItem = document.querySelectorAll('.sta_optionItem');
 const arr_optionItem = document.querySelectorAll('.arr_optionItem');
+// 편도
+const oSta_label = document.querySelector('.oSta_label');
+const oArr_label = document.querySelector('.oArr_label');
+const oSta_optionItem = document.querySelectorAll('.oSta_optionItem');
+const oArr_optionItem = document.querySelectorAll('.oArr_optionItem');
 
  // 클릭한 옵션의 텍스트를 라벨 안에 넣음
 const handleSelect = function(item) {
@@ -11,36 +16,65 @@ const handleSelect = function(item) {
     sta_label.parentNode.classList.remove('active');
 }
  // 옵션 클릭시 클릭한 옵션을 넘김
- sta_optionItem.forEach(function(option){
+sta_optionItem.forEach(function(option){
     option.addEventListener('click', function(){handleSelect(option)})
-})
+});
  // 클릭한 옵션의 텍스트를 라벨 안에 넣음
- const handleSelect2 = function(item) {
+const handleSelect2 = function(item) {
     // 도착지
     arr_label.value = item.textContent;
     arr_label.parentNode.classList.remove('active');
 }
  // 옵션 클릭시 클릭한 옵션을 넘김
- arr_optionItem.forEach(function(option){
-    option.addEventListener('click', function(){handleSelect2(option)})
-})
+arr_optionItem.forEach(function(option){
+    option.addEventListener('click', function(){
+        // 출발지 입력안할시 alert띄움
+        if(sta_label.value == ''){
+            alert('출발지를 입력하세요');
+            arr_label.parentNode.classList.remove('active');
+        }else{
+            handleSelect2(option);
+        }
+    })
+});
+
+const handleSelect3 = function(item) {
+    // 출발지
+    oSta_label.value = item.textContent;
+    oSta_label.parentNode.classList.remove('active');
+}
+ // 옵션 클릭시 클릭한 옵션을 넘김
+ oSta_optionItem.forEach(function(option){
+    option.addEventListener('click', function(){handleSelect3(option)})
+});
+ // 클릭한 옵션의 텍스트를 라벨 안에 넣음
+const handleSelect4 = function(item) {
+    // 도착지
+    oArr_label.value = item.textContent;
+    oArr_label.parentNode.classList.remove('active');
+}
+ // 옵션 클릭시 클릭한 옵션을 넘김
+ oArr_optionItem.forEach(function(option){
+    option.addEventListener('click', function(){handleSelect4(option)})
+});
+
+//  왕복
  // 라벨을 클릭시 출발지 옵션 목록이 열림/닫힘
 sta_label.addEventListener('click', function(){
     sta_label.parentNode.classList.toggle('active');
-    // if(sta_label.parentNode.classList.contains('active')) {
-    //     sta_label.parentNode.classList.remove('active');
-    // } else {
-    //     sta_label.parentNode.classList.add('active');
-    // }
 });
  // 라벨을 클릭시 도착지 옵션 목록이 열림/닫힘
 arr_label.addEventListener('click', function(){
     arr_label.parentNode.classList.toggle('active');
-    // if(arr_label.parentNode.classList.contains('active')) {
-    //     arr_label.parentNode.classList.remove('active');
-    // } else {
-    //     arr_label.parentNode.classList.add('active');
-    // }
+});
+// 편도
+ // 라벨을 클릭시 출발지 옵션 목록이 열림/닫힘
+ oSta_label.addEventListener('click', function(){
+    oSta_label.parentNode.classList.toggle('active');
+});
+ // 라벨을 클릭시 도착지 옵션 목록이 열림/닫힘
+ oArr_label.addEventListener('click', function(){
+    oArr_label.parentNode.classList.toggle('active');
 });
 
 // Tabs

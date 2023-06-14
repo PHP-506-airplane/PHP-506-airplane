@@ -32,59 +32,50 @@
                             {{-- 왕복 --}}
                             <div class="round-way">
                                 <div class="selectBox2">
-                                    <input type="text" placeholder="출발지" class="sta_label form-control"  readonly>
+                                    <input type="text" placeholder="출발지" class="sta_label form-control" readonly>
                                     <ul class="optionList">
-                                        <li class="sta_optionItem">원주</li>
-                                        <li class="sta_optionItem">군산</li>
-                                        <li class="sta_optionItem">광주</li>
-                                        <li class="sta_optionItem">여수</li>
-                                        <li class="sta_optionItem">사천</li>
-                                        <li class="sta_optionItem">울산</li>
-                                        <li class="sta_optionItem">포항경주</li>
+                                        @forelse($data as $val)
+                                            <li class="sta_optionItem opItem">{{$val->port_name}}</li>
+                                            @empty
+                                            <li class="arr_optionItem opItem">데이터없음</li>
+                                        @endforelse
                                     </ul>
                                 </div>
                                 <div class="selectBox2">
                                     <input type="text" placeholder="도착지" class="arr_label form-control" readonly>
                                     <ul class="optionList">
-                                        <li class="arr_optionItem">군산</li>
-                                        <li class="arr_optionItem">원주</li>
-                                        <li class="arr_optionItem">광주</li>
-                                        <li class="arr_optionItem">여수</li>
-                                        <li class="arr_optionItem">사천</li>
-                                        <li class="arr_optionItem">울산</li>
-                                        <li class="arr_optionItem">포항경주</li>
+                                        @forelse($data as $val)
+                                            <li class="arr_optionItem opItem">{{$val->port_name}}</li>
+                                            @empty
+                                            <li class="arr_optionItem opItem">데이터없음</li>
+                                        @endforelse
                                     </ul>
                                 </div>
                                 <div class="selectBox2">
                                     <input type="text" id="txtDate" class="form-control" value="" />
                                 </div>
-                                
                             </div>
                         </div>
                         <div id="tab2"class="tab">
-                            <div class="round-way">
+                            <div class="one-way">
                                 <div class="selectBox2">
-                                    <button class="label">출발지</button>
+                                    <input type="text" placeholder="출발지" class="oSta_label form-control" readonly>
                                     <ul class="optionList">
-                                    <li class="optionItem">원주</li>
-                                    <li class="optionItem">군산</li>
-                                    <li class="optionItem">광주</li>
-                                    <li class="optionItem">여수</li>
-                                    <li class="optionItem">사천</li>
-                                    <li class="optionItem">울산</li>
-                                    <li class="optionItem">포항경주</li>
+                                        @forelse($data as $val)
+                                            <li class="oSta_optionItem opItem">{{$val->port_name}}</li>
+                                            @empty
+                                            <li class="arr_optionItem opItem">데이터없음</li>
+                                        @endforelse
                                     </ul>
                                 </div>
                                 <div class="selectBox2">
-                                    <button class="label">도착지</button>
+                                    <input type="text" placeholder="도착지" class="oArr_label form-control" readonly>
                                     <ul class="optionList">
-                                    <li class="optionItem">원주</li>
-                                    <li class="optionItem">군산</li>
-                                    <li class="optionItem">광주</li>
-                                    <li class="optionItem">여수</li>
-                                    <li class="optionItem">사천</li>
-                                    <li class="optionItem">울산</li>
-                                    <li class="optionItem">포항경주</li>
+                                        @forelse($data as $val)
+                                            <li class="oArr_optionItem opItem">{{$val->port_name}}</li>
+                                            @empty
+                                            <li class="arr_optionItem opItem">데이터없음</li>
+                                        @endforelse
                                     </ul>
                                 </div>
                                 <div class="selectBox2">
