@@ -111,37 +111,38 @@ class UserController extends Controller
 
     //회원정보 수정
     function useredit() {
-        $user  = Userinfo::find(1);
-        
-        $user->
-        $user->save();
-        return view('useredit')->with('data', $user);
+        if(auth()->guest()) {
+            return redirect()->route('users.login');
+        }
+
+        return view('useredit');
     }
 
     function usereditpost(Request $req) {
         $arrKey = [];
 
-        $baseUser  = Userinfo::find(1);
-            
-        //기존 비번 틀렸을 때 에러처리
-        if(!Hash::check($req->password, $baseUser->password)) {
-            return redirect()->back()->with('error', '기존 비밀번호를 확인해 주세요');
-        }
+        $baseuser = Userinfo::find(Auth::user()->id);
 
-        if($req->name !== $baseUser->name) {
+        if($req->name !== $baseuser->u_name) {
             $arrKey[] = 'name';
         }
-        if(!isset($req->password)) {
-            $arrKey[] = 'password';
-        }   
+        if($req->birth !== $baseuser->u_birth) {
+            $arrKey[] = 'birth';
+        }
+        if($req->gender !== $baseuser->u_gender) {
+            $arrKey[] = 'gender';
+        }
+        
+        
         //유효성체크를 하는 모든 항목 리스트:
         $chkList = [
             'name'      => 'required|regex:/^[가-힣]+$/|min:2|max:30'
-            ,'bpassword' => 'regex:/^(?=.*[a-zA-Z])(?=.*[!@#$%^*-])(?=.*[0-9]).{8,20}$/'
-            ,'password' => 'same:passwordchk|regex:/^(?=.*[a-zA-Z])(?=.*[!@#$%^*-])(?=.*[0-9]).{8,20}$/'
+            //만 14세 이상
+            
         ];
 
-        return redirect()->back() ->with('alert', '업데이트 되었습니다!');
+        $baseuser->save();
+        return redirect()->back()->with('alert', '업데이트 되었습니다!');
     }
 
     //탈퇴
