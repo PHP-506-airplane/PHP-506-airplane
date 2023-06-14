@@ -110,17 +110,14 @@ class UserController extends Controller
 
     //회원정보 수정
     function useredit() {
-<<<<<<< HEAD
         if(auth()->guest()) {
             return redirect()->route('users.login');
         }
 
         return view('useredit');
-=======
         $user  = Userinfo::find(1);
         
         return view('useredit')->with('data', $user);
->>>>>>> 51fa25960afdab07ad0199831616d5dcd9c1e737
     }
 
     function usereditpost(Request $req) {
