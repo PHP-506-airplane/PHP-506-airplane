@@ -4,7 +4,6 @@ ul{
 a{
   text-decoration: none;
 }
-
 /***********
 *** Tabs ***
 ***********/
@@ -52,7 +51,7 @@ a{
   line-height: 24px;
   letter-spacing: 1px;
 }
-.round-way{
+.round-way,.one-way{
   display: flex;
   justify-content: center;
   align-items: center;
@@ -74,7 +73,7 @@ a{
   text-decoration: underline !important;
 }
 .form-control{
-  width: 13rem;
+  width: 13.6em;
   height: 60px;
   font-size: 16px;
   font-weight: 700;
@@ -130,25 +129,20 @@ a{
   max-height: 0;
   transition: .3s ease-in;
 }
-
 .selectBox2.active .optionList {
   max-height: 500px;
 }
-
-.selectBox2 .sta_optionItem, .selectBox2 .arr_optionItem{
+.selectBox2 .opItem{
   border-bottom: 1px dashed rgb(170, 72, 72);
   padding: 5px 15px 5px;
   transition: .1s;
 }
-
-.selectBox2 .sta_optionItem:hover, .selectBox2 .arr_optionItem:hover {
+.selectBox2 .opItem:hover {
   background: rgb(175, 93, 93);
 }
-
-.selectBox2 .sta_optionItem:last-child, .selectBox2 .arr_optionItem:last-child {
+.selectBox2 .opItem:last-child {
   border-bottom: 0 none;
 }
-
 .selectBox2 .optionList::-webkit-scrollbar {width: 6px;}
 .selectBox2 .optionList::-webkit-scrollbar-track {background: transparent; }
 .selectBox2 .optionList::-webkit-scrollbar-thumb {background: #303030; border-radius: 45px;}
