@@ -12,16 +12,27 @@
                 <li class="nav-item"><a href="#about">About</a></li>
                 {{-- 로그인 안했을 때 로그인, 회원가입 뜨고 로그인 했을 때 사용자 이름, 로그아웃 나타나게 --}}
                 <li class="nav-item">
-                @guest
+                {{-- @guest
                     <a href="{{route('users.login')}}">로그인</a>
                     <a href="{{route('users.registration')}}">회원가입</a>
-                @endguest
+                @endguest --}}
 
-                @auth
-                    {{-- 로그인됐을 때 사용자 이름 표시 되고 이름 누르면 회원정보 수정으로  --}}
+                {{-- @auth
+                    로그인됐을 때 사용자 이름 표시 되고 이름 누르면 회원정보 수정으로 
                     <a href="{{route('users.useredit')}}">{{Auth::user()->name}}</a>
                     <a href="{{route('users.logout')}}">로그아웃</a>
-                @endauth
+                @endauth --}}
+                @if(session('u_email') !== null)
+                {
+                    <a href="{{route('users.useredit')}}">dd</a>
+                    <a href="{{route('users.logout')}}">로그아웃</a>
+                }
+                @else
+                {
+                    <a href="{{route('users.login')}}">로그인</a>
+                    <a href="{{route('users.registration')}}">회원가입</a>
+                }
+                @endif
                 </li>
                 
             </ul>

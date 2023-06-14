@@ -5,11 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class Userinfo extends Model
+class Userinfo extends Authenticatable
 {
     use HasFactory, SoftDeletes;
 
+    protected $primaryKey = 'u_no';
     protected $fillable = [
         'u_name',
         'u_email',

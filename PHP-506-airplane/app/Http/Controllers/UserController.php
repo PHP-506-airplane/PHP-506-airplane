@@ -26,31 +26,32 @@ class UserController extends Controller
     }
 
     function loginpost(Request $req) {
-        // Log::debug('Login Start', $req->only('u_email', 'u_pw'));
-
+        
         // $req->validate([
         //     'u_email'    => 'required|email|max:100'  
-        //     ,'u_pw' => 'required|regex:/^(?=.*[a-zA-Z])(?=.*[!@#$%^*-])(?=.*[0-9]).{8,20}$/'
+        //     ,'u_pw' => 'required|re gex:/^(?=.*[a-zA-Z])(?=.*[!@#$%^*-])(?=.*[0-9]).{8,20}$/'
         // ]);
 
         $user = Userinfo::where('u_email', $req->email)->first();
-        if(!$user || !(Hash::check($req->password, $user->password))){
+
+        if(!$user || !(Hash::check($req->password, $user->u_pw))){
             // Log::debug($req->password . ' : '.$user->password);
             $errors = '아이디와 비밀번호를 확인하세요';
             return redirect()->back()->with('error', $errors);
         }
 
         Auth::login($user);
+
         if(Auth::check()) {
-            //로그인 성공
-            session($user->only('u_email'));
-            return redirect()->route('reservation.main');
+            session($user->only('u_email', 'u_name'));
+            return redirect()->intended(route('reservation.main'));
         } else {
+            session()->put('u_email', $user->email);
             $errors = '인증작업 에러';
             return redirect()->back()->with('error', $errors);
         }
     }
-    
+
     //회원가입
     function registration() {
         return view('registration');
@@ -84,10 +85,18 @@ class UserController extends Controller
             ->route('users.login')
             ->with('success', '회원가입을 완료했습니다.<br>가입하신 아이디와 비밀번호로 로그인해 주세요.');
     }
+    
+    //로그아웃
+    function logout() {
+        
+        Session::flush();
+        Auth::logout();
+        return redirect()->route('reservation.main');
+    }
 
     //회원정보 수정
     function useredit() {
-        $user  = Userinfo::find(Auth::User()->id);
+        $user  = Userinfo::find(1);
         
         return view('useredit')->with('data', $user);
     }
@@ -95,7 +104,7 @@ class UserController extends Controller
     function usereditpost(Request $req) {
         $arrKey = [];
 
-        $baseUser  = Userinfo::find(Auth::User()->id);
+        $baseUser  = Userinfo::find(1);
             
         //기존 비번 틀렸을 때 에러처리
         if(!Hash::check($req->password, $baseUser->password)) {
@@ -125,14 +134,6 @@ class UserController extends Controller
         $result = Userinfo::destroy('id');
         Session::flush();
         Auth::logout();
-    }
-    
-    //로그아웃
-    function logout() {
-        
-        Session::flush();
-        Auth::logout();
-        return redirect()->route('users.login');
     }
 
     //이메일 인증
@@ -284,3 +285,4 @@ class UserController extends Controller
         return response()->json(['status' => __($status)]);
     }
 }
+
