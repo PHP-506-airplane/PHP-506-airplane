@@ -33,7 +33,7 @@
                             {{-- 왕복 --}}
                             <div class="round-way">
                                 <div class="selectBox2">
-                                    <input type="hidden" class="hd_no" name="dep_port_no">
+                                    <input type="hidden" class="ro_s_hd_no" name="dep_port_no">
                                     <input type="text" placeholder="출발지"  class="sta_label form-control" readonly>
                                     <ul class="optionList">
                                         @forelse($data as $val)
@@ -44,17 +44,18 @@
                                     </ul>
                                 </div>
                                 <div class="selectBox2">
+                                    <input type="hidden" class="one_s_hd_no" name="arr_port_no">
                                     <input type="text" placeholder="도착지" class="arr_label form-control" readonly>
                                     <ul class="optionList">
                                         @forelse($data as $val)
-                                            <li class="arr_optionItem opItem">{{$val->port_name}}</li>
+                                            <li class="arr_optionItem opItem" value="{{$val->port_no}}">{{$val->port_name}}</li>
                                             @empty
                                             <li class="arr_optionItem opItem">데이터없음</li>
                                         @endforelse
                                     </ul>
                                 </div>
                                 <div class="selectBox2">
-                                    <input type="text" id="txtDate" class="form-control" value="" />
+                                    <input type="text" id="txtDate" class="form-control" name="fly_date" />
                                 </div>
                             </div>
                         </div>
@@ -64,7 +65,7 @@
                                     <input type="text" placeholder="출발지" class="oSta_label form-control" readonly>
                                     <ul class="optionList">
                                         @forelse($data as $val)
-                                            <li class="oSta_optionItem opItem">{{$val->port_name}}</li>
+                                            <li class="oSta_optionItem opItem" value="{{$val->port_no}}">{{$val->port_name}}</li>
                                             @empty
                                             <li class="arr_optionItem opItem">데이터없음</li>
                                         @endforelse
@@ -74,14 +75,14 @@
                                     <input type="text" placeholder="도착지" class="oArr_label form-control" readonly>
                                     <ul class="optionList">
                                         @forelse($data as $val)
-                                            <li class="oArr_optionItem opItem">{{$val->port_name}}</li>
+                                            <li class="oArr_optionItem opItem" value="{{$val->port_no}}">{{$val->port_name}}</li>
                                             @empty
                                             <li class="arr_optionItem opItem">데이터없음</li>
                                         @endforelse
                                     </ul>
                                 </div>
                                 <div class="selectBox2">
-                                    <input type="text" id="txtDate1" class="form-control" name="datefilter" value="" />
+                                    <input type="text" id="txtDate1" class="form-control" />
                                 </div>
                             </div>
                         </div>
