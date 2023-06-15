@@ -114,9 +114,10 @@ class UserController extends Controller
     }
 
     function usereditpost(Request $req) {
+        // return $req;
         $arrKey = [];
 
-        $baseuser = Userinfo::find(Auth::user()->id);
+        $baseuser = Userinfo::find(Auth::user()->u_no);
 
         if($req->u_name !== $baseuser->u_name)
         {
@@ -124,19 +125,24 @@ class UserController extends Controller
         }
         
         $chkList = [
-            'name'      => 'required|regex:/^[가-힣]+$/|min:2|max:30'
+            'u_name'      => 'required|regex:/^[가-힣]+$/|min:2|max:30'
         ];
 
         $baseuser->u_name = $req->u_name;
         $baseuser->save();
-        return redirect()->back()->with('alert', '업데이트 되었습니다!');
+
+        echo '<script>alert("변경 되었습니다.")</script>';
+        return view('useredit')->with('data', $baseuser);
+        // return redirect()->back();
+
+        // return redirect()->back()->with('JsAlert', '변경 되었습니다!');
     }
 
     //탈퇴
     function withdraw() {
-        $id = session('id');
+        $id = session('u_no');
 
-        $result = Userinfo::destroy('id');
+        $result = Userinfo::destroy('u_no');
         Session::flush();
         Auth::logout();
 
