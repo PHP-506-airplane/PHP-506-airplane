@@ -9,6 +9,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\NoticeInfo;
+use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
@@ -35,7 +36,7 @@ class NoticeController extends Controller
      */
     public function create()
     {
-        //
+        return view('');
     }
 
     /**
@@ -107,8 +108,12 @@ class NoticeController extends Controller
         $notice->notice_title = $req->title;
         $notice->notice_content = $req->content;
         $notice->save();
+        
+        alert()->success('수정 완료');
 
-        return view('noticedetail')->with('data', NoticeInfo::findOrFail($notice_no));
+        return redirect()->route('notice.show', ['notice' => $notice_no]);
+        // echo '<script>alert("수정이 완료되었습니다.")</script>';
+        // return view('noticedetail')->with('data', $notice);
     }
 
     /**
@@ -117,8 +122,9 @@ class NoticeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($notice_no)
     {
-        //
+        NoticeInfo::destroy($notice_no);
+        return redirect('notice');
     }
 }

@@ -23,6 +23,13 @@ hr {
 .nTitleText {
     margin: 15px auto 15px 30px;
 }
+
+.created_date {
+    display: inline-block;
+    float: right;
+    margin-right: 20px;
+    color: #3d3d3d8f;
+}
 /* /제목 */
 
 /* 내용 */

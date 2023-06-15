@@ -17,6 +17,9 @@
 
 @section('contents')
     @include('layout.inc.notice')
+    @if(isset(Auth::user()->admin_flg) && Auth::user()->admin_flg === '1')
+        <button type="button" onclick="location.href='{{route('notice.create')}}'">공지사항 작성</button>
+    @endif
     <div class="nListContainer">
         <div class="listInfo row textCenter">
             <div class="col-2 afterLine">번호</div>
