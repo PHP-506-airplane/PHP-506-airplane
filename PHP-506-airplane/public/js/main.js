@@ -15,6 +15,8 @@ const hd_li_no = document.querySelector('.hd_li_no a');
 const hd_li_flg = document.querySelector('.hd_li_flg');
 if(hd_li_no.textContent == '왕복'){
     hd_li_flg.value = '1'
+}else{
+    hd_li_flg.value = '0'
 }
 
  // 클릭한 옵션의 텍스트를 라벨 안에 넣음
