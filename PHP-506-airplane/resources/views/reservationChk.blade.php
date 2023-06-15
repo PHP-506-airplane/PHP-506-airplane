@@ -1,3 +1,11 @@
+{{-- 
+/**************************************************
+ * 프로젝트명   : PHP-506-airplane
+ * 디렉토리     : views
+ * 파일명       : reservationChk.blade.php
+ * 이력         :   v001 0613 오재훈 new
+**************************************************/
+--}}
 @extends('layout.layout')
 
 @section('title','항공편 조회')
@@ -31,6 +39,7 @@
         </ul>
     </div>
     <div class="location">
+        {{-- 가는편 --}}
         <h2>여정1 :
                 @if($_GET['dep_port_no'] == $data[0]->dep2_port_no)
                     <span class="br">{{$data[0]->dep_port_name}}({{$data[0]->dep_port_eng}})</span>
@@ -70,6 +79,7 @@
                 @endif
             </tbody>
         </table>
+        {{-- 오는편 --}}
         <h2>여정2 :
             @if( !empty($data[0]->arr2_port_no) || $_GET['arr_port_no'] == $data[0]->arr2_port_no)
                 <span class="br">{{$data[0]->arr_port_name}}({{$data[0]->arr_port_eng}})</span>
@@ -92,8 +102,8 @@
             </tr>
         </thead>
         <tbody>
-            @if($_GET['arr_port_no'] === $data[0]->dep_port_no)
-                @forelse($data as $val)
+            @if($_GET['arr_port_no'] == $data2[0]->dep2_port_no)
+                @forelse($data2 as $val)
                     <tr>
                         <td>{{$val->flight_num}}</td>
                         <td>{{$val->dep_time}}</td>
@@ -109,6 +119,10 @@
             @endif
         </tbody>
     </table>
+    </div>
+    <div class="total_price">
+        <dt>총금액</dt>
+        <dd>0원</dd>
     </div>
 </div> {{-- END container --}}
 @endsection

@@ -20,6 +20,7 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 use Illuminate\Auth\Events\PasswordReset; // 패스워드 변경 이벤트
+use Illuminate\Console\View\Components\Alert;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rules;
@@ -131,11 +132,10 @@ class UserController extends Controller
         $baseuser->u_name = $req->u_name;
         $baseuser->save();
 
-        echo '<script>alert("변경 되었습니다.")</script>';
-        return view('useredit')->with('data', $baseuser);
-        // return redirect()->back();
+        alert()->success('수정 완료');
+        // return view('useredit')->with('data', $baseuser);
 
-        // return redirect()->back()->with('JsAlert', '변경 되었습니다!');
+        return redirect()->back();
     }
 
     //탈퇴
@@ -146,6 +146,8 @@ class UserController extends Controller
         Session::flush();
         Auth::logout();
 
+        // alert()->warning('회원 탈퇴', '탈퇴하시겠습니까?');
+        
         return redirect()->route('reservation.main');
     }
 

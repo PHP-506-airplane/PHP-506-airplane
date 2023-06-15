@@ -1,3 +1,13 @@
+@import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
+
+.notosanskr * { 
+    font-family: 'Noto Sans KR', sans-serif;
+}
+
+body {
+    font-family: 'Noto Sans KR', sans-serif;
+}
+
 h1{
     margin-top: 20px;
 }
@@ -61,4 +71,28 @@ ul{
     margin: -5px 8px 0 0;
     vertical-align: middle;
     background: url('../assets/img/airplane-img.png') no-repeat 0;
+}
+
+/* 총금액 */
+.total_price{
+    position: relative;
+    margin: 70px 0;
+    border-top: 1px solid #000;
+    border-bottom: 1px solid #000;
+}
+.total_price dt{
+    position: absolute;
+    left: 20px;
+    height: 80px;
+    line-height: 80px;
+    font-size: 18px;
+}
+.total_price dd{
+    height: 80px;
+    padding-right: 30px;
+    border-top: 1px solid #e8e8e8;
+    text-align: right;
+    line-height: 80px;
+    font-size: 22px;
+    color: #000;
 }
