@@ -10,7 +10,7 @@
 
 @section('title', '회원정보 수정')
 
-<form action="{{route('users.useredit',['users' => $data->id])}}" method="post">
+<form action="{{route('users.useredit.post',['users' => $data->id])}}" method="post">
         @csrf
         @method('put')
         <label for="u_name">이름 : </label>

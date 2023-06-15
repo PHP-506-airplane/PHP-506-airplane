@@ -30,6 +30,7 @@ class FlightInfoFactory extends Factory
             ,'dep_port_no' => $this->faker->numberBetween(1, 14)
             ,'arr_port_no' => $this->faker->numberBetween(1, 14)
             ,'line_no' => $this->faker->numberBetween(1, 12)
+            // bothify('??###') : 영어 2자리, 숫자 3자리 랜덤하게 생성
             ,'flight_num' => $this->faker->bothify('??###')
             // 시간 형식을 변경해서 저장 ex) 12:00 => 1200
             ,'dep_time' => str_replace(':', '', substr($depTime, 0, 2)) . substr($depTime, 3, 2)

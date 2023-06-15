@@ -33,12 +33,12 @@ Route::post('/users/registrationpost', [UserController::class, 'registrationpost
 Route::get('/users/logout', [UserController::class, 'logout'])->name('users.logout');
 Route::get('/users/withdraw', [UserController::class, 'withdraw'])->name('users.withdraw');
 Route::get('/users/useredit', [UserController::class, 'useredit'])->name('users.useredit');
-Route::post('/users/usereditpost', [UserController::class, 'usereditpost'])->name('users.useredit.post');
+Route::put('/users/usereditpost', [UserController::class, 'usereditpost'])->name('users.useredit.post');
 
 // 0612 이메일
 // 이메일 전송
-Route::get('/mails/mail', [MailController::class, 'mail'])->name('mails.mail');
-Route::post('/mails/mailpost', [MailController::class, 'mailpost'])->name('mails.mail.post');
+// Route::get('/mails/mail', [MailController::class, 'mail'])->name('mails.mail');
+// Route::post('/mails/mailpost', [MailController::class, 'mailpost'])->name('mails.mail.post');
 
 // 이메일 인증
 Route::get('/users/emailverify/{code}', [UserController::class, 'emailverify'])->name('emailverifys.emailverify');

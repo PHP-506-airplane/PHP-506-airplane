@@ -31,8 +31,9 @@
     <div class="nButtons">
         {{-- TODO : 관리자권한일시 수정버튼 출력 --}}
         {{-- TODO : 관리자권한일시 삭제버튼 출력 --}}
-        @if(Auth::user()->admin_flg === '1')
-            관리자당
+        @if(isset(Auth::user()->admin_flg) && Auth::user()->admin_flg === '1')
+            <button type="button" onclick="location.href = '{{route('notice.edit', ['notice' => $data->notice_no])}}'">수정</button>
+            <button type="button" onclick="location.href = '{{route('notice.index')}}'">삭제</button>
         @endif
         <button type="button" onclick="location.href = '{{route('notice.index')}}'">리스트</button>
     </div>
