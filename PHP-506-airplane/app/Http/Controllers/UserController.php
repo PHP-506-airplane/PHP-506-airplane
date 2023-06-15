@@ -39,10 +39,10 @@ class UserController extends Controller
             ,'u_pw' => 'required|regex:/^(?=.*[a-zA-Z])(?=.*[!@#$%^*-])(?=.*[0-9]).{8,20}$/'
         ]);
 
-        $user = Userinfo::where('u_email', $req->email)->first();
+        $user = Userinfo::where('u_email', $req->u_email)->first();
 
 
-        if(!$user || !Hash::check($req->password, $user->u_pw)){
+        if(!$user || !Hash::check($req->u_pw, $user->u_pw)){
             // Log::debug($req->password . ' : '.$user->password);
             $errors = '아이디와 비밀번호를 확인하세요';
             return redirect()->back()->with('error', $errors);
