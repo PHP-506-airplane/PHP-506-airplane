@@ -8,9 +8,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\FlightInfo;
 use App\Models\NoticeInfo;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
@@ -36,7 +38,11 @@ class NoticeController extends Controller
      */
     public function create()
     {
-        return view('');
+        if(empty(Auth::user()) || Auth::user()->admin_flg === '0') {
+            return redirect()->route('notice.index');
+        }
+
+        return view('noticecreate');
     }
 
     /**
@@ -48,10 +54,15 @@ class NoticeController extends Controller
     public function store(Request $req)
     {
         $notice = new NoticeInfo([
-            'title'     => $req->input('title')
-            ,'content'  => $req->input('content')
+            'adm_no'            => Auth::user()->u_no
+            ,'notice_title'     => $req->title
+            ,'notice_content'   => $req->content
         ]);
         $notice->save();
+
+        $notice_no = NoticeInfo::select('notice_no')->max('notice_no');
+        alert()->success('작성 완료');
+        return redirect()->route('notice.show', $notice_no);
     }
 
     /**
@@ -73,6 +84,10 @@ class NoticeController extends Controller
      */
     public function edit($notice_no)
     {
+        if(empty(Auth::user()) || Auth::user()->admin_flg === '0') {
+            return redirect()->route('notice.index');
+        }
+        
         $notice = NoticeInfo::find($notice_no);
         return view('noticeedit')->with('data', $notice);
     }
@@ -110,12 +125,10 @@ class NoticeController extends Controller
         $notice->save();
         
         alert()->success('수정 완료');
-
+        
         return redirect()->route('notice.show', ['notice' => $notice_no]);
-        // echo '<script>alert("수정이 완료되었습니다.")</script>';
-        // return view('noticedetail')->with('data', $notice);
     }
-
+    
     /**
      * Remove the specified resource from storage.
      *
@@ -125,6 +138,7 @@ class NoticeController extends Controller
     public function destroy($notice_no)
     {
         NoticeInfo::destroy($notice_no);
+        alert()->success('삭제 완료');
         return redirect('notice');
     }
 }

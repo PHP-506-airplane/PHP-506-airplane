@@ -34,7 +34,7 @@
     <div class="nButtons">
         {{-- TODO : 관리자권한일시 수정버튼 출력 --}}
         {{-- TODO : 관리자권한일시 삭제버튼 출력 --}}
-        @if(isset(Auth::user()->admin_flg) && Auth::user()->admin_flg === '1')
+        @if(!empty(Auth::user()) && Auth::user()->admin_flg === '1')
             <button type="button" onclick="location.href = '{{route('notice.edit', ['notice' => $data->notice_no])}}'">수정</button>
             <form action="{{route('notice.destroy', ['notice' => $data->notice_no])}}" method="POST">
                 @csrf
