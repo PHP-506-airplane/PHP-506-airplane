@@ -4,8 +4,8 @@
  * 디렉토리     : app/Http/Controllers
  * 파일명       : UserController.php
  * 이력         :   v001 0612 박수연 new
- *                  v002 0614 이동호 add 관리자
 **************************************************/
+
 namespace App\Http\Controllers;
 
 use App\Mail\SendEmail;
@@ -41,7 +41,8 @@ class UserController extends Controller
 
         $user = Userinfo::where('u_email', $req->email)->first();
 
-        if(!$user || (Hash::check($req->password, $user->u_pw))){
+
+        if(!$user || !Hash::check($req->password, $user->u_pw)){
             // Log::debug($req->password . ' : '.$user->password);
             $errors = '아이디와 비밀번호를 확인하세요';
             return redirect()->back()->with('error', $errors);
@@ -49,18 +50,10 @@ class UserController extends Controller
         
         Auth::login($user);
 
-        // v002 이동호
-        if(Auth::check() && $user->admin_flg === 1){
-            session([$user->only('u_email', 'u_name'), 'admin']);
-            return redirect()->intended(route('reservation.main'));
-        }
-
-
         if(Auth::check()) {
-            session($user->only('u_email', 'u_name'));
+            session($user->only('u_email'));
             return redirect()->intended(route('reservation.main'));
         } else {
-            session()->put('u_email', $user->email);
             $errors = '인증작업 에러';
             return redirect()->back()->with('error', $errors);
         }
@@ -114,8 +107,7 @@ class UserController extends Controller
             return redirect()->route('users.login');
         }
 
-        return view('useredit');
-        $user  = Userinfo::find(1);
+        $user  = Userinfo::find(Auth::user()->u_no);
         
         return view('useredit')->with('data', $user);
     }

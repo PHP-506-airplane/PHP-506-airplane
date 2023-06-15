@@ -1,5 +1,6 @@
 // 왕복
-const hd_no = document.querySelector('.hd_no');
+const ro_s_hd_no = document.querySelector('.ro_s_hd_no');
+const one_s_hd_no = document.querySelector('.one_s_hd_no');
 const sta_label = document.querySelector('.sta_label');
 const arr_label = document.querySelector('.arr_label');
 const sta_optionItem = document.querySelectorAll('.sta_optionItem');
@@ -14,7 +15,7 @@ const oArr_optionItem = document.querySelectorAll('.oArr_optionItem');
 const handleSelect = function(item) {
     // 출발지
     sta_label.value = item.textContent;
-    hd_no.value = item.value;
+    ro_s_hd_no.value = item.value;
     sta_label.parentNode.classList.remove('active');
 }
  // 옵션 클릭시 클릭한 옵션을 넘김
@@ -25,6 +26,7 @@ sta_optionItem.forEach(function(option){
 const handleSelect2 = function(item) {
     // 도착지
     arr_label.value = item.textContent;
+    one_s_hd_no.value = item.value;
     arr_label.parentNode.classList.remove('active');
 }
  // 옵션 클릭시 클릭한 옵션을 넘김
@@ -210,6 +212,7 @@ var container = document.getElementById('map');
         // 커스텀 오버레이를 지도에 표시합니다
         customOverlay.setMap(map);
     }
+    
 // 달력
       $("#txtDate").daterangepicker({
         locale: {
@@ -238,7 +241,4 @@ var container = document.getElementById('map');
         autoApply: true,                         // 확인/취소 버튼 사용여부
         singleDatePicker: true                   // 하나의 달력 사용 여부
     });
-     
-    
-    
-    
+

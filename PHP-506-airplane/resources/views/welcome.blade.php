@@ -1,3 +1,12 @@
+{{-- 
+/**************************************************
+ * 프로젝트명   : PHP-506-airplane
+ * 디렉토리     : views
+ * 파일명       : welcome.blade.php
+ * 이력         :   v001 0612 오재훈 new
+                    v002 0614 이동호 add 공지사항 출력
+**************************************************/
+--}}
 @extends('layout.layout')
 
 @section('title','Main')
@@ -33,7 +42,7 @@
                             {{-- 왕복 --}}
                             <div class="round-way">
                                 <div class="selectBox2">
-                                    <input type="hidden" class="hd_no" name="dep_port_no">
+                                    <input type="hidden" class="ro_s_hd_no" name="dep_port_no">
                                     <input type="text" placeholder="출발지"  class="sta_label form-control" readonly>
                                     <ul class="optionList">
                                         @forelse($data as $val)
@@ -44,17 +53,18 @@
                                     </ul>
                                 </div>
                                 <div class="selectBox2">
+                                    <input type="hidden" class="one_s_hd_no" name="arr_port_no">
                                     <input type="text" placeholder="도착지" class="arr_label form-control" readonly>
                                     <ul class="optionList">
                                         @forelse($data as $val)
-                                            <li class="arr_optionItem opItem">{{$val->port_name}}</li>
+                                            <li class="arr_optionItem opItem" value="{{$val->port_no}}">{{$val->port_name}}</li>
                                             @empty
                                             <li class="arr_optionItem opItem">데이터없음</li>
                                         @endforelse
                                     </ul>
                                 </div>
                                 <div class="selectBox2">
-                                    <input type="text" id="txtDate" class="form-control" value="" />
+                                    <input type="text" id="txtDate" class="form-control" name="fly_date" />
                                 </div>
                             </div>
                         </div>
@@ -64,7 +74,7 @@
                                     <input type="text" placeholder="출발지" class="oSta_label form-control" readonly>
                                     <ul class="optionList">
                                         @forelse($data as $val)
-                                            <li class="oSta_optionItem opItem">{{$val->port_name}}</li>
+                                            <li class="oSta_optionItem opItem" value="{{$val->port_no}}">{{$val->port_name}}</li>
                                             @empty
                                             <li class="arr_optionItem opItem">데이터없음</li>
                                         @endforelse
@@ -74,14 +84,14 @@
                                     <input type="text" placeholder="도착지" class="oArr_label form-control" readonly>
                                     <ul class="optionList">
                                         @forelse($data as $val)
-                                            <li class="oArr_optionItem opItem">{{$val->port_name}}</li>
+                                            <li class="oArr_optionItem opItem" value="{{$val->port_no}}">{{$val->port_name}}</li>
                                             @empty
                                             <li class="arr_optionItem opItem">데이터없음</li>
                                         @endforelse
                                     </ul>
                                 </div>
                                 <div class="selectBox2">
-                                    <input type="text" id="txtDate1" class="form-control" name="datefilter" value="" />
+                                    <input type="text" id="txtDate1" class="form-control" />
                                 </div>
                             </div>
                         </div>
@@ -95,13 +105,17 @@
         <section class="page-section" id="services">
             <div class="container sec2">
                 <div class="notice">
-                    {{-- 0613 add 이동호 --}}
+                    {{-- v002 add 이동호 --}}
                     <h2><a href="{{route('notice.index')}}">공지사항</a></h2>
                     <ul>
-                        <li><a href="#"><span>공지1</span><span class="notice-date">2023.06.11</span></a></li>
-                        <li><a href="#"><span>공지2</span><span class="notice-date">2023.06.12</span></a></li>
-                        <li><a href="#"><span>공지3</span><span class="notice-date">2023.06.13</span></a></li>
-                        <li><a href="#"><span>공지4</span><span class="notice-date">2023.06.13</span></a></li>
+                        @foreach($notices as $notice)
+                            <li>
+                                <a href="{{route('notice.show', ['notice' => $notice->notice_no])}}">
+                                    <span>{{ $notice->notice_title }}</span>
+                                    <span class="notice-date">{{ $notice->created_at->format('Y.m.d') }}</span>
+                                </a>
+                            </li>
+                        @endforeach
                     </ul>
                 </div>
                 <div class="map">

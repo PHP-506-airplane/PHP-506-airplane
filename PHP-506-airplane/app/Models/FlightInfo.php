@@ -9,5 +9,6 @@ class FlightInfo extends Model
 {
     use HasFactory;
     protected $table = 'flight_info';
+    protected $primaryKey = 'fly_no';
     public $timestamps = false;
 }

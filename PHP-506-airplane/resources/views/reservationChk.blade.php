@@ -32,7 +32,7 @@
     </div>
     <div class="location">
         <h2>여정1 :
-			<span class="br"></span><strong>서울/인천(ICN)<span class="ico">→</span>도쿄/나리타(NRT)</strong>
+			<span class="br"></span>{{$data->port_name}}<strong><span class="ico">→</span>도쿄/나리타(NRT)</strong>
 		</h2>
         <table class="table sta_table">
             <thead class="table-light">
