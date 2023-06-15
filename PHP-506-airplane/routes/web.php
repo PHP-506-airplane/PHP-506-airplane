@@ -35,10 +35,10 @@ Route::get('/users/withdraw', [UserController::class, 'withdraw'])->name('users.
 Route::get('/users/useredit', [UserController::class, 'useredit'])->name('users.useredit');
 Route::post('/users/usereditpost', [UserController::class, 'usereditpost'])->name('users.useredit.post');
 
-// 0612 이메일 (수연) 
+// 0612 이메일
 // 이메일 전송
-Route::get('/users/email', [MailController::class, 'email'])->name('emails.email');
-Route::post('/users/emailpost', [MailController::class, 'emailpost'])->name('emails.email.post');
+Route::get('/mails/mail', [MailController::class, 'mail'])->name('mails.mail');
+Route::post('/mails/mailpost', [MailController::class, 'mailpost'])->name('mails.mail.post');
 
 // 이메일 인증
 Route::get('/users/emailverify/{code}', [UserController::class, 'emailverify'])->name('emailverifys.emailverify');

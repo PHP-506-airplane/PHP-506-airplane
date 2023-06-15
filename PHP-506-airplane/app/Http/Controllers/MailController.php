@@ -10,17 +10,17 @@ use Illuminate\Support\Facades\Auth;
 
 class MailController extends Controller
 {
-    public static function sendSignupEmail() {
+    public static function mail() {
         return view('email');
     }
     public static function sendSignupEmailpost(Request $req){
         
-        Mail::to($req->email)->send(new SendEmail($req->data));
+        Mail::to($req->email)->send(new SendEmail($req->email));
 
         return "갔나?";
     }
 
-    public function emailanswer(Request $req) {
+    public function mailpost(Request $req) {
 
         $baseUser  = User::find(Auth::User()->id);
         

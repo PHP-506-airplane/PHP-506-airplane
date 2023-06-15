@@ -31,10 +31,10 @@
         <label for="birth">생년월일 : </label>
         <input type="date" name="birth" value="xxx" min="1900-01-01" max="now()">
         <br>
-        <label for="gender">성별 : </label>
+        {{-- <label for="gender">성별 : </label>
         <input type="radio" name="gender" id="gender_m" value="M">M
         <input type="radio" name="gender" id="gender_f" value="F">F
-        <br>
+        <br> --}}
         <div>
             <span>이메일 찾기 힌트를 선택해주세요</span>
         </div>

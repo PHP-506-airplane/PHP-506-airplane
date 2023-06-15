@@ -61,7 +61,7 @@ class SendEmail extends Mailable
      */
     public function build()
     {
-        $user = $this->user;
+        // $user = $this->user;
         return $this->view('emails.sendemail', compact('user'))
         //이메일 제목
         ->subject('이메일 확인');

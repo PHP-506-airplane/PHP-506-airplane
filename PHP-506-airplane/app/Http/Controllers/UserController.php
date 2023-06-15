@@ -69,6 +69,7 @@ class UserController extends Controller
             'name'      => 'required|regex:/^[가-힣]+$/|min:2|max:30'
             ,'email'    => 'required|email|min:5|max:30'  
             ,'password' => 'required_with:passwordchk|same:passwordchk|regex:/^(?=.*[a-zA-Z])(?=.*[!@#$%^*-])(?=.*[0-9]).{8,20}$/'
+            // 만 14세 이상 가입 가능
         ]);
 
         $data['u_name'] = $req->name;
@@ -117,21 +118,16 @@ class UserController extends Controller
 
         $baseuser = Userinfo::find(Auth::user()->id);
 
-        if($req->name !== $baseuser->u_name && $req->birth !== $baseuser->u_birth && $req->gender !== $baseuser->u_gender)
+        if($req->u_name !== $baseuser->u_name)
         {
-            $arrKey[] = 'name';
-            $arrKey[] = 'birth';
-            $arrKey[] = 'gender';
+            $arrKey[] = 'u_name';
         }
         
-        
-        //유효성체크를 하는 모든 항목 리스트:
         $chkList = [
             'name'      => 'required|regex:/^[가-힣]+$/|min:2|max:30'
-            //만 14세 이상
-            
         ];
 
+        $baseuser->u_name = $req->u_name;
         $baseuser->save();
         return redirect()->back()->with('alert', '업데이트 되었습니다!');
     }
@@ -143,6 +139,8 @@ class UserController extends Controller
         $result = Userinfo::destroy('id');
         Session::flush();
         Auth::logout();
+
+        return redirect()->route('reservation.main');
     }
 
     //이메일 인증

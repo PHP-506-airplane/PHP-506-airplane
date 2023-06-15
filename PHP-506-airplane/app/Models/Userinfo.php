@@ -32,4 +32,6 @@ class Userinfo extends Authenticatable
     ];
 
     protected $table = 'user_info';
+
+    protected $dates = ['deleted_at'];
 }

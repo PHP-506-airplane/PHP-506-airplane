@@ -13,27 +13,24 @@
 <form action="{{route('users.useredit',['users' => $data->id])}}" method="post">
         @csrf
         @method('put')
-        <label for="name">이름 : </label>
-        <input type="text" name="name" id="name" value="{{count($errors) > 0 ? old('name') : $data->u_name}}">
+        <label for="u_name">이름 : </label>
+        <input type="text" name="u_name" id="name" value="{{count($errors) > 0 ? old('name') : $data->u_name}}">
         <br>
-        <label for="email">이메일 : </label>
-        <input type="text" name="email" id="email" value="{{count($errors) > 0 ? old('email') : $data->u_email}}" readonly>
+        <label for="u_email">이메일 : </label>
+        <input type="text" name="u_email" id="email" value="{{count($errors) > 0 ? old('email') : $data->u_email}}" readonly>
         <br>
-        <label for="birth">생년월일 : </label>
-        <input type="date" name="birth" id="birth" value="{{count($errors) > 0 ? old('birth') : $data->u_birth}}">
+        <label for="u_birth">생년월일 : </label>
+        <input type="date" name="u_birth" id="birth" value="{{count($errors) > 0 ? old('birth') : $data->u_birth}}" readonly>
         <br>
-        <label for="gender">성별 : </label>
-        <input type="radio" name="gender" id="gender" value="M">남
-        <input type="radio" name="gender" id="gender" value="F">여
+        {{-- <label for="u_gender">성별 : </label>
+        <input type="radio" name="u_gender" id="gender" value="M">남
+        <input type="radio" name="u_gender" id="gender" value="F">여
         <script>
             var radioVal = $('input:radio[name="gender"]:checked').val();
             alert(radioVal); 
-        </script>
+        </script> --}}
         <br>
         <button type="submit">수정</button>
-        <button type="button" onclick="location.href='{{Route('users.login')}}'">취소</button>
+        <button type="button" onclick="location.href='{{Route('reservation.main')}}'">취소</button>
         <button type="button" onclick="location.href='{{Route('users.withdraw')}}'">회원탈퇴</button>
-        
-
-        
     </form>
