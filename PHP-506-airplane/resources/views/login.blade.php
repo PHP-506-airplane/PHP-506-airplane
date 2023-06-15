@@ -16,11 +16,11 @@
     <h1>로그인</h1>
     <form action="{{route('users.login.post')}}" method="post">
         @csrf
-        <label for="email">Email : </label>
-        <input type="text" name="email" id="email">
+        <label for="u_email">Email : </label>
+        <input type="text" name="u_email" id="email">
 
-        <label for="password">password : </label>
-        <input type="password" name="password" id="password">
+        <label for="u_pw">password : </label>
+        <input type="password" name="u_pw" id="password">
         <br>
         <button type="submit">Login</button>
         <button type="button" onclick="location.href = '{{route('findemails.findemail')}}'">이메일 찾기</button>
