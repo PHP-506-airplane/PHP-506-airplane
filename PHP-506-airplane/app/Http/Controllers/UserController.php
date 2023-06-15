@@ -34,18 +34,18 @@ class UserController extends Controller
 
     function loginpost(Request $req) {
         
-        // $req->validate([
-        //     'u_email'    => 'required|email|max:100'  
-        //     ,'u_pw' => 'required|re gex:/^(?=.*[a-zA-Z])(?=.*[!@#$%^*-])(?=.*[0-9]).{8,20}$/'
-        // ]);
+        $req->validate([
+            'u_email'    => 'required|email|max:100'  
+            ,'u_pw' => 'required|regex:/^(?=.*[a-zA-Z])(?=.*[!@#$%^*-])(?=.*[0-9]).{8,20}$/'
+        ]);
 
         $user = Userinfo::where('u_email', $req->email)->first();
 
-        // if(!$user || !(Hash::check($req->password, $user->u_pw))){
-        //     // Log::debug($req->password . ' : '.$user->password);
-        //     $errors = '아이디와 비밀번호를 확인하세요';
-        //     return redirect()->back()->with('error', $errors);
-        // }
+        if(!$user || (Hash::check($req->password, $user->u_pw))){
+            // Log::debug($req->password . ' : '.$user->password);
+            $errors = '아이디와 비밀번호를 확인하세요';
+            return redirect()->back()->with('error', $errors);
+        }
         
         Auth::login($user);
 
@@ -125,13 +125,10 @@ class UserController extends Controller
 
         $baseuser = Userinfo::find(Auth::user()->id);
 
-        if($req->name !== $baseuser->u_name) {
+        if($req->name !== $baseuser->u_name && $req->birth !== $baseuser->u_birth && $req->gender !== $baseuser->u_gender)
+        {
             $arrKey[] = 'name';
-        }
-        if($req->birth !== $baseuser->u_birth) {
             $arrKey[] = 'birth';
-        }
-        if($req->gender !== $baseuser->u_gender) {
             $arrKey[] = 'gender';
         }
         
