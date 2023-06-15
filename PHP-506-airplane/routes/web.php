@@ -33,12 +33,12 @@ Route::post('/users/registrationpost', [UserController::class, 'registrationpost
 Route::get('/users/logout', [UserController::class, 'logout'])->name('users.logout');
 Route::get('/users/withdraw', [UserController::class, 'withdraw'])->name('users.withdraw');
 Route::get('/users/useredit', [UserController::class, 'useredit'])->name('users.useredit');
-Route::post('/users/usereditpost', [UserController::class, 'usereditpost'])->name('users.useredit.post');
+Route::put('/users/usereditpost', [UserController::class, 'usereditpost'])->name('users.useredit.post');
 
-// 0612 이메일 (수연) 
+// 0612 이메일
 // 이메일 전송
-Route::get('/users/email', [MailController::class, 'email'])->name('emails.email');
-Route::post('/users/emailpost', [MailController::class, 'emailpost'])->name('emails.email.post');
+// Route::get('/mails/mail', [MailController::class, 'mail'])->name('mails.mail');
+// Route::post('/mails/mailpost', [MailController::class, 'mailpost'])->name('mails.mail.post');
 
 // 이메일 인증
 Route::get('/users/emailverify/{code}', [UserController::class, 'emailverify'])->name('emailverifys.emailverify');
@@ -61,13 +61,11 @@ Route::post('/users/findpasswordpost', [UserController::class, 'findpasswordpost
 Route::get('/users/changepassword', [UserController::class, 'changepassword'])->name('changepasswords.changepassword');
 Route::post('/users/changepasswordpost', [UserController::class, 'changepassword'])->name('changepasswords.changepassword.post');
 
-// 0612 add 이동호
-// v002 이동호
+// v002 add 이동호
 // 메인페이지
 Route::get('/reservation/main', [ReservationController::class, 'main'])->name('reservation.main');
-// 공지사항 v002
+// 공지사항
 Route::resource('/notice', NoticeController::class);
-// 공지사항 상세
 
 // 0613 add 오재훈
 // 예약 조회(항공편 선택) 페이지

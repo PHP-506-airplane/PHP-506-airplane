@@ -3,9 +3,8 @@
  * 프로젝트명   : PHP-506-airplane
  * 디렉토리     : views/layout/inc
  * 파일명       : header.blade.php
- * 이력         :   v001 0612 이동호 new
+ * 이력         :   v001 0612 오재훈 new
                     v002 0614 박수연 add 로그인
-                    v003 0614 이동호 add 관리자
 **************************************************/
 --}}
 <nav class="navbar navbar-expand-lg navbar-dark fixed-top navHeader" id="mainNav">

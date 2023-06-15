@@ -22,6 +22,9 @@
         <div class="nTitle">
             <div class="nTitleText">
                 {{$data->notice_title}}
+                <div class="created_date">
+                    등록일 : {{mb_substr($data->created_at, 0, 10)}}
+                </div>
             </div>
         </div>
         <div class="nContent">
@@ -31,6 +34,14 @@
     <div class="nButtons">
         {{-- TODO : 관리자권한일시 수정버튼 출력 --}}
         {{-- TODO : 관리자권한일시 삭제버튼 출력 --}}
+        @if(isset(Auth::user()->admin_flg) && Auth::user()->admin_flg === '1')
+            <button type="button" onclick="location.href = '{{route('notice.edit', ['notice' => $data->notice_no])}}'">수정</button>
+            <form action="{{route('notice.destroy', ['notice' => $data->notice_no])}}" method="POST">
+                @csrf
+                @method('delete')
+                <button type="submit">삭제</button>
+            </form>
+        @endif
         <button type="button" onclick="location.href = '{{route('notice.index')}}'">리스트</button>
     </div>
 @endsection

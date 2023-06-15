@@ -1,4 +1,12 @@
 <?php
+/**************************************************
+ * 프로젝트명   : PHP-506-airplane
+ * 디렉토리     : app/Console
+ * 파일명       : Kernel.php
+ * 이력         :   v001 0613 이동호 new
+ *                  v002 0614 이동호 del
+**************************************************/
+    
 
 namespace App\Console;
 
@@ -29,7 +37,10 @@ class Kernel extends ConsoleKernel
     // }
     protected function schedule(Schedule $schedule)
     {
-        $schedule->call(function () {
+        // 매달 1번씩 실행
+        $schedule->command(FlightInfoFactoryCommand::class)->monthlyOn(1, '01:00');
+        // $schedule->call(function () {
+            // v002 del ---------------------------------------------------------------------
             // 운항 스케줄 api
             // $serviceKey = '?serviceKey=q1Huc9EjZjvBYP%2BNKi0ILB%2FS%2BhmYkimR2o%2FIfQey1bl0NGsyoDHQJVnSYSEwPfvS9C9SqZkaD%2FXMw9SLRkLlqA%3D%3D';
             // $response = Http::get('http://openapi.airport.co.kr/service/rest/FlightStatusList/getFlightStatusList' . $serviceKey);
@@ -72,7 +83,10 @@ class Kernel extends ConsoleKernel
             //     // API 요청이 성공하지 않은 경우 처리
             //     Log::error('API 요청이 상태 코드 ' . $response->status() . '로 실패함');
             // }
-        })->everyMinute(); // php artisan schedule:run 명령어로 즉시 실행시 사용
+            // /v002 del ---------------------------------------------------------------------
+            // 매 시간마다 FlightInfoFactoryCommand를 실행
+
+        // })->everyMinute(); // php artisan schedule:run 명령어로 즉시 실행시 사용
         // })->dailyAt('10:00'); // 매일 아침 10시에 실행
     }
 

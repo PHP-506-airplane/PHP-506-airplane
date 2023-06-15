@@ -4,8 +4,8 @@
  * 디렉토리     : app/Http/Controllers
  * 파일명       : UserController.php
  * 이력         :   v001 0612 박수연 new
- *                  v002 0614 이동호 add 관리자
 **************************************************/
+
 namespace App\Http\Controllers;
 
 use App\Mail\SendEmail;
@@ -34,33 +34,26 @@ class UserController extends Controller
 
     function loginpost(Request $req) {
         
-        // $req->validate([
-        //     'u_email'    => 'required|email|max:100'  
-        //     ,'u_pw' => 'required|re gex:/^(?=.*[a-zA-Z])(?=.*[!@#$%^*-])(?=.*[0-9]).{8,20}$/'
-        // ]);
+        $req->validate([
+            'u_email'    => 'required|email|max:100'  
+            ,'u_pw' => 'required|regex:/^(?=.*[a-zA-Z])(?=.*[!@#$%^*-])(?=.*[0-9]).{8,20}$/'
+        ]);
 
-        $user = Userinfo::where('u_email', $req->email)->first();
+        $user = Userinfo::where('u_email', $req->u_email)->first();
 
-        // if(!$user || !(Hash::check($req->password, $user->u_pw))){
-        //     // Log::debug($req->password . ' : '.$user->password);
-        //     $errors = '아이디와 비밀번호를 확인하세요';
-        //     return redirect()->back()->with('error', $errors);
-        // }
+
+        if(!$user || !Hash::check($req->u_pw, $user->u_pw)){
+            // Log::debug($req->password . ' : '.$user->password);
+            $errors = '아이디와 비밀번호를 확인하세요';
+            return redirect()->back()->with('error', $errors);
+        }
         
         Auth::login($user);
 
-        // v002 이동호
-        if(Auth::check() && $user->admin_flg === 1){
-            session([$user->only('u_email', 'u_name'), 'admin']);
-            return redirect()->intended(route('reservation.main'));
-        }
-
-
         if(Auth::check()) {
-            session($user->only('u_email', 'u_name'));
+            session($user->only('u_email'));
             return redirect()->intended(route('reservation.main'));
         } else {
-            session()->put('u_email', $user->email);
             $errors = '인증작업 에러';
             return redirect()->back()->with('error', $errors);
         }
@@ -76,6 +69,7 @@ class UserController extends Controller
             'name'      => 'required|regex:/^[가-힣]+$/|min:2|max:30'
             ,'email'    => 'required|email|min:5|max:30'  
             ,'password' => 'required_with:passwordchk|same:passwordchk|regex:/^(?=.*[a-zA-Z])(?=.*[!@#$%^*-])(?=.*[0-9]).{8,20}$/'
+            // 만 14세 이상 가입 가능
         ]);
 
         $data['u_name'] = $req->name;
@@ -114,46 +108,45 @@ class UserController extends Controller
             return redirect()->route('users.login');
         }
 
-        return view('useredit');
-        $user  = Userinfo::find(1);
+        $user  = Userinfo::find(Auth::user()->u_no);
         
         return view('useredit')->with('data', $user);
     }
 
     function usereditpost(Request $req) {
+        // return $req;
         $arrKey = [];
 
-        $baseuser = Userinfo::find(Auth::user()->id);
+        $baseuser = Userinfo::find(Auth::user()->u_no);
 
-        if($req->name !== $baseuser->u_name) {
-            $arrKey[] = 'name';
-        }
-        if($req->birth !== $baseuser->u_birth) {
-            $arrKey[] = 'birth';
-        }
-        if($req->gender !== $baseuser->u_gender) {
-            $arrKey[] = 'gender';
+        if($req->u_name !== $baseuser->u_name)
+        {
+            $arrKey[] = 'u_name';
         }
         
-        
-        //유효성체크를 하는 모든 항목 리스트:
         $chkList = [
-            'name'      => 'required|regex:/^[가-힣]+$/|min:2|max:30'
-            //만 14세 이상
-            
+            'u_name'      => 'required|regex:/^[가-힣]+$/|min:2|max:30'
         ];
 
+        $baseuser->u_name = $req->u_name;
         $baseuser->save();
-        return redirect()->back()->with('alert', '업데이트 되었습니다!');
+
+        echo '<script>alert("변경 되었습니다.")</script>';
+        return view('useredit')->with('data', $baseuser);
+        // return redirect()->back();
+
+        // return redirect()->back()->with('JsAlert', '변경 되었습니다!');
     }
 
     //탈퇴
     function withdraw() {
-        $id = session('id');
+        $id = session('u_no');
 
-        $result = Userinfo::destroy('id');
+        $result = Userinfo::destroy('u_no');
         Session::flush();
         Auth::logout();
+
+        return redirect()->route('reservation.main');
     }
 
     //이메일 인증

@@ -1,3 +1,12 @@
+{{-- 
+/**************************************************
+ * 프로젝트명   : PHP-506-airplane
+ * 디렉토리     : views
+ * 파일명       : welcome.blade.php
+ * 이력         :   v001 0612 오재훈 new
+                    v002 0614 이동호 add 공지사항 출력
+**************************************************/
+--}}
 @extends('layout.layout')
 
 @section('title','Main')
@@ -97,13 +106,17 @@
         <section class="page-section" id="services">
             <div class="container sec2">
                 <div class="notice">
-                    {{-- 0613 add 이동호 --}}
+                    {{-- v002 add 이동호 --}}
                     <h2><a href="{{route('notice.index')}}">공지사항</a></h2>
                     <ul>
-                        <li><a href="#"><span>공지1</span><span class="notice-date">2023.06.11</span></a></li>
-                        <li><a href="#"><span>공지2</span><span class="notice-date">2023.06.12</span></a></li>
-                        <li><a href="#"><span>공지3</span><span class="notice-date">2023.06.13</span></a></li>
-                        <li><a href="#"><span>공지4</span><span class="notice-date">2023.06.13</span></a></li>
+                        @foreach($notices as $notice)
+                            <li>
+                                <a href="{{route('notice.show', ['notice' => $notice->notice_no])}}">
+                                    <span>{{ $notice->notice_title }}</span>
+                                    <span class="notice-date">{{ $notice->created_at->format('Y.m.d') }}</span>
+                                </a>
+                            </li>
+                        @endforeach
                     </ul>
                 </div>
                 <div class="map">
