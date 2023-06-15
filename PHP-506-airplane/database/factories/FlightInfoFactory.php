@@ -26,6 +26,10 @@ class FlightInfoFactory extends Factory
         $depPortNo = $this->faker->numberBetween(1, 14);
         $arrPortNo = $this->faker->numberBetween(1, 14);
 
+        while($depPortNo === $arrPortNo) {
+            $arrPortNo = $this->faker->numberBetween(1, 14);
+        }
+
         return [
             'fly_date' => $flyDate->format('Y-m-d H:i:s'), // DateTime 객체를 문자열로 변환해서 저장
             'price' => $this->faker->numberBetween(10, 300) * 1000, // 가격을 10,000원 ~ 300,000원 사이로 설정, 최소 1000원 단위
