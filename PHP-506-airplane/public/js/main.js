@@ -11,6 +11,12 @@ const oArr_label = document.querySelector('.oArr_label');
 const oSta_optionItem = document.querySelectorAll('.oSta_optionItem');
 const oArr_optionItem = document.querySelectorAll('.oArr_optionItem');
 
+const hd_li_no = document.querySelector('.hd_li_no a');
+const hd_li_flg = document.querySelector('.hd_li_flg');
+if(hd_li_no.textContent == '왕복'){
+    hd_li_flg.value = '1'
+}
+
  // 클릭한 옵션의 텍스트를 라벨 안에 넣음
 const handleSelect = function(item) {
     // 출발지
