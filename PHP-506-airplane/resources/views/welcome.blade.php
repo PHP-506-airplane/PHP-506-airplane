@@ -25,14 +25,15 @@
                     {{-- 왕복,편도 탭 메뉴 --}}
                     <div class="tabs">
                         <ul class="tabs-list">
-                            <li class="on"><a href="#tab1">왕복</a></li>
-                            <li><a href="#tab2">편도</a></li>
+                            <li class="on hd_li_no"><a href="#tab1">왕복</a></li>
+                            <li class="hd_li_no"><a href="#tab2">편도</a></li>
                         </ul>
                         <form action="{{route('reservation.check')}}" method="get">
                         <div id="tab1"class="tab on">
                             {{-- 왕복 --}}
                             <div class="round-way">
                                 <div class="selectBox2">
+                                    <input type="hidden" class="hd_li_flg" name="hd_li_flg">
                                     <input type="hidden" class="ro_s_hd_no" name="dep_port_no">
                                     <input type="text" placeholder="출발지"  class="sta_label form-control" readonly>
                                     <ul class="optionList">
