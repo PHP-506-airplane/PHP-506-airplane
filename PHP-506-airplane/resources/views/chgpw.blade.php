@@ -12,9 +12,8 @@
 @section('title', '비밀번호 확인')
 
 @section('contents')
-    <h1>비밀번호 수정</h1>
-    <br>
-    <form action="{{route('users.login.post')}}" method="post">
+    <form action="{{route('users.chgpw.post')}}" method="post">
+        <h1>비밀번호 수정</h1>
         @csrf
         @method('put')
         <label for="password">비밀번호 : </label>
@@ -22,8 +21,7 @@
         <br>
         <label for="passwordchk">비밀번호 확인 : </label>
         <input type="text" name="passwordchk" oninput="chkPw()" id="passwordchk">
-        <span id="chk_pw_msg"></span>
-        <br>
+        <div id="chk_pw_msg"></div>
         <br>
         <button type="submit" onclick="location.href = '{{route('users.chgpw.post')}}'">변경</button>
         <button type="button" onclick="location.href = '{{route('reservation.main')}}'">취소</button>

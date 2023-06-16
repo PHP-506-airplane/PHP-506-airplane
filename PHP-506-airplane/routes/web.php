@@ -59,7 +59,7 @@ Route::post('/users/findpasswordpost', [UserController::class, 'findpasswordpost
 
 // 비밀번호 변경
 Route::get('/users/chgpw', [UserController::class, 'chgpw'])->name('users.chgpw');
-Route::post('/users/chgpwpost', [UserController::class, 'chgpwpost'])->name('users.chgpw.post');
+Route::put('/users/chgpwpost', [UserController::class, 'chgpwpost'])->name('users.chgpw.post');
 
 // v002 add 이동호
 // 메인페이지

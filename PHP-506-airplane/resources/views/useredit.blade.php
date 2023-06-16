@@ -11,7 +11,9 @@
 @section('title', '회원정보 수정')
 
 @section('contents')
-<form action="{{route('users.useredit.post',['users' => $data->id])}}" method="post">
+
+    <form action="{{route('users.useredit.post',['users' => $data->id])}}" method="post">
+        <h1>회원정보 수정</h1>
         @csrf
         @method('put')
         <label for="u_name">이름 : </label>
@@ -35,7 +37,9 @@
         <button type="button" onclick="location.href='{{Route('reservation.main')}}'">취소</button>
         <button type="button" onclick="location.href='{{Route('users.chgpw')}}'">비밀번호 수정</button>
         <button type="button" class="div1" onclick="location.href='{{Route('users.withdraw')}}'">회원탈퇴</button>
+        
     </form>
+
 @endsection
 
 @section('js')

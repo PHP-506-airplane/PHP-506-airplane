@@ -67,7 +67,7 @@ class UserController extends Controller
 
     function registrationpost(Request $req) {
         $req->validate([
-            'name'      => 'required|regex:/^[가-힣]+$/|min:2|max:30'
+            'name'      => 'required|regex:/^[가-힣]+$/|min:2|max:30'  
             ,'email'    => 'required|email|min:5|max:30'  
             ,'password' => 'required_with:passwordchk|same:passwordchk|regex:/^(?=.*[a-zA-Z])(?=.*[!@#$%^*-])(?=.*[0-9]).{8,20}$/'
             // 만 14세 이상 가입 가능
@@ -256,31 +256,53 @@ class UserController extends Controller
     
     function chgpwpost(Request $req)
     {
-        $req->validate([
-            'token' => ['required'],
-            'email' => ['required', 'email'],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
-        ]);
+        $arrKey = [];
 
-        $status = Password::reset(
-            $req->only('email', 'password', 'password_confirmation', 'token'),
-            function ($user) use ($req) {
-                $user->forceFill([
-                    'password' => Hash::make($req->password),
-                    'remember_token' => Str::random(60),
-                ])->save();
+        $baseuser = Userinfo::find(Auth::user()->u_no);
 
-                event(new PasswordReset($user));
-            }
-        );
-
-        if ($status != Password::PASSWORD_RESET) {
-            throw ValidationException::withMessages([
-                'email' => [__($status)],
-            ]);
+        if(!Hash::check($req->password, $baseuser->password)) {
+            return redirect()->back()->with('error', '비밀번호가 일치하지 않습니다.');
         }
 
-        return response()->json(['status' => __($status)]);
+        if(!isset($req->password)) {
+            $arrKey[] = 'password';
+        }  
+        
+        $chkList = [
+            'password' => 'required_with:passwordchk|same:passwordchk|regex:/^(?=.*[a-zA-Z])(?=.*[!@#$%^*-])(?=.*[0-9]).{8,20}$/'
+        ];
+
+        $baseuser->u_pw = $req->password;
+        $baseuser->save();
+
+        alert()->success('비밀번호 변경 완료');
+        // return view('useredit')->with('data', $baseuser);
+
+        return redirect()->route('users.logout');
+        // return $req;
+        // $req->validate([
+        //     'password' => 'required_with:passwordchk|same:passwordchk|regex:/^(?=.*[a-zA-Z])(?=.*[!@#$%^*-])(?=.*[0-9]).{8,20}$/'
+        //     ,'passwordchk' => 'required_with:password|same:password|regex:/^(?=.*[a-zA-Z])(?=.*[!@#$%^*-])(?=.*[0-9]).{8,20}$/'
+        // ]);
+
+        // $status = Password::reset(
+        //     $req->only('password', 'passwordchk'),
+        //     function ($user) use ($req) {
+        //         $user->forceFill([
+        //             'password' => Hash::make($req->password),
+        //         ])->save();
+
+        //         event(new PasswordReset($user));
+        //     }
+        // );
+
+        // if ($status != Password::PASSWORD_RESET) {
+        //     throw ValidationException::withMessages([
+        //         'email' => [__($status)],
+        //     ]);
+        // }
+
+        // return response()->json(['status' => __($status)]);
         // return redirect()->back() ->with('alert', '변경 되었습니다!');
     }
 

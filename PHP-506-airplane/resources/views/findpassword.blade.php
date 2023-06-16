@@ -11,7 +11,9 @@
 
 @section('title', '비밀번호 찾기')
 
+
 @section('contents')
+<div class="container">
     <h1>비밀번호 찾기</h1>
     <br>
     <form action="{{route('users.login.post')}}" method="post">
@@ -23,7 +25,7 @@
         <input type="text" name="email" id="email">
         <br>
         <br>
-        <button type="submit" onclick="location.href = '{{route('emails.email')}}'">이메일 발송</button>
+        <button type="submit">이메일 발송</button>
         <button type="button" onclick="location.href = '{{route('users.login')}}'">취소</button>
     </form>
 

@@ -10,6 +10,7 @@
 
 @section('title', '이메일 찾기')
 
+
 @section('contents')
     <h1>이메일 찾기</h1>
     <br>
@@ -22,10 +23,8 @@
         <input type="text" name="email" id="email">
         <br>
         <br>
-
-        <button type="submit" onclick="location.href = '{{route('mails.mail')}}'">이메일 발송</button>
+        <button type="submit">이메일 발송</button>
         <button type="button" onclick="location.href = '{{route('users.login')}}'">취소</button>
     </form>
-
 @endsection
 
