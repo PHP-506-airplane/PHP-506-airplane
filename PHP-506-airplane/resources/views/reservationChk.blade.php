@@ -12,10 +12,13 @@
 
 @section('css')
     <link rel="stylesheet" href="{{asset('css/reservationChk.css')}}">
+    <link rel="stylesheet"href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css" />
 @endsection
 
 @section('contents')
 <div class="container">
+    <form action="{{route('reservation.checkpost')}}" method="post">
+        @csrf
     <h1>항공편 선택</h1>
     <div class="step">
         <h2>Step</h2>
@@ -41,17 +44,17 @@
     <div class="location">
         {{-- 가는편 --}}
         <h2>여정1 :
-                @if($_GET['dep_port_no'] == $data[0]->dep2_port_no)
+                @if(isset($data[0]->dep2_port_no) && $_GET['dep_port_no'] == $data[0]->dep2_port_no)
                     <span class="br">{{$data[0]->dep_port_name}}({{$data[0]->dep_port_eng}})</span>
                 @endif
             <strong>
                 <span class="ico">→</span>
-                    @if($_GET['arr_port_no'] == $data[0]->arr2_port_no)
+                    @if(isset($data[0]->arr2_port_no) && $_GET['arr_port_no'] == $data[0]->arr2_port_no)
                         <span class="br">{{$data[0]->arr_port_name}}({{$data[0]->arr_port_eng}})</span>
                     @endif
             </strong>
 		</h2>
-        <table class="table sta_table">
+        <table class="table sta_table align-middle">
             <thead class="table-light">
                 <tr>
                     <th>편명</th>
@@ -59,17 +62,23 @@
                     <th></th>
                     <th>도착시간</th>
                     <th>가격</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
-                @if($_GET['dep_port_no'] == $data[0]->dep2_port_no && $_GET['arr_port_no'] == $data[0]->arr2_port_no)
+                @if(isset($data[0]->arr2_port_no) && $_GET['arr_port_no'] == $data[0]->arr2_port_no)
                     @forelse($data as $val)
                     <tr>
-                        <td>{{$val->flight_num}}</td>
+                        <td>{{strtoupper($val->flight_num)}}</td>
                         <td>{{$val->dep_time}}</td>
                         <td>시 분</td>
                         <td>{{$val->arr_time}}</td>
-                        <td class="price_btn"><a href="#">{{$val->price}}</a></td>
+                        <td>
+                            <p class="price_btn">
+                                <a href="javascript:void(0);" class="dep_price">{{$val->price}}</a>
+                            </p>
+                        </td>
+                        <td><input type="radio" name="dep_fly_no" value="{{$val->fly_no}}"></td>
                     </tr>
                     @empty
                         <tr>
@@ -79,19 +88,20 @@
                 @endif
             </tbody>
         </table>
+        
         {{-- 오는편 --}}
         <h2>여정2 :
-            @if( !empty($data[0]->arr2_port_no) || $_GET['arr_port_no'] == $data[0]->arr2_port_no)
+            @if( isset($data[0]->arr2_port_no) && $_GET['arr_port_no'] == $data[0]->arr2_port_no)
                 <span class="br">{{$data[0]->arr_port_name}}({{$data[0]->arr_port_eng}})</span>
             @endif
             <strong>
                 <span class="ico">→</span>
-                @if($_GET['dep_port_no'] == $data[0]->dep2_port_no)
+                @if(isset($data[0]->dep2_port_no) && $_GET['dep_port_no'] == $data[0]->dep2_port_no)
                     <span class="br">{{$data[0]->dep_port_name}}({{$data[0]->dep_port_eng}})</span>
                 @endif
             </strong>
         </h2>
-    <table class="table sta_table">
+    <table class="table sta_table align-middle">
         <thead class="table-light">
             <tr>
                 <th>편명</th>
@@ -99,17 +109,23 @@
                 <th></th>
                 <th>도착시간</th>
                 <th>가격</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
-            @if($_GET['arr_port_no'] == $data2[0]->dep2_port_no)
+            @if(isset($_GET['arr_port_no']) && $_GET['arr_port_no'] == $data2[0]->dep2_port_no)
                 @forelse($data2 as $val)
                     <tr>
                         <td>{{$val->flight_num}}</td>
                         <td>{{$val->dep_time}}</td>
                         <td>시 분</td>
                         <td>{{$val->arr_time}}</td>
-                        <td>{{$val->price}}</td>
+                        <td>
+                            <p class="price_btn">
+                                <a href="javascript:void(0);" class="arr_price">{{$val->price}}</a>
+                            </p>
+                        </td>
+                        <td><input type="radio" name="arr_fly_no" value="{{$val->fly_no}}"></td>
                     </tr>
                 @empty
                     <tr>
@@ -122,7 +138,17 @@
     </div>
     <div class="total_price">
         <dt>총금액</dt>
-        <dd>0원</dd>
+        <dd class="sum_price">0원</dd>
     </div>
+    <div class="btnArea">
+            <button type="submit">다음</button>
+    </div>
+</form>
 </div> {{-- END container --}}
+
+@endsection
+
+@section('js')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+    <script src="{{asset('js/reserveChk.js')}}"></script>
 @endsection
