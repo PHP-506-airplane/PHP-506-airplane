@@ -18,7 +18,9 @@
 @section('contents')
     @include('layout.inc.notice')
     @if(!empty(Auth::user()) && Auth::user()->admin_flg === '1')
-        <button type="button" onclick="location.href='{{route('notice.create')}}'">공지사항 작성</button>
+        <div class="divCreateBtn">
+            <button type="button" onclick="location.href='{{route('notice.create')}}'" class="btnCreate">공지사항 작성</button>
+        </div>
     @endif
     <div class="nListContainer">
         <div class="listInfo row textCenter">

@@ -54,10 +54,6 @@ class ReservationController extends Controller
             ['flight_info.dep_port_no', '=', $req->dep_port_no],
             ['flight_info.arr_port_no', '=', $req->arr_port_no],
         ])
-        ->orwhere([
-            ['flight_info.dep_port_no', '=', $req->arr_port_no],
-            ['flight_info.arr_port_no', '=', $req->dep_port_no],
-        ])
         ->whereBetween('flight_info.fly_date',[substr($req->fly_date,0,-13),substr($req->fly_date,13)])
         ->limit(5)
         ->get();
@@ -93,4 +89,9 @@ class ReservationController extends Controller
 
 
     }
+    public function checkpost(Request $req){
+
+        return view('reservationSeat');
+    }
+    
 }

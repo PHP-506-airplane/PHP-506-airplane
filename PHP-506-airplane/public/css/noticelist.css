@@ -1,12 +1,8 @@
-@import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
-
-.notosanskr * { 
-    font-family: 'Noto Sans KR', sans-serif;
+/* min width */
+.nListContainer, .listInfo, .mainContents {
+    min-width: 700px;
 }
-
-body {
-    font-family: 'Noto Sans KR', sans-serif;
-}
+/* /min width */
 
 /* 상하단 가로선 */
 .nListContainer {
@@ -47,3 +43,16 @@ hr {
     text-align: center;
 }
 /* /페이징 */
+
+/* 작성 버튼 */
+.btnCreate {
+    position: absolute;
+    right: -10%;
+    bottom: 10px;
+}
+.divCreateBtn {
+    width: 80vw;
+    min-width: 600px;
+    position: relative;
+}
+/* /작성 버튼 */

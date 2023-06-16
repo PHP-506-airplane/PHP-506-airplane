@@ -39,6 +39,7 @@ class NoticeController extends Controller
     public function create()
     {
         if(empty(Auth::user()) || Auth::user()->admin_flg === '0') {
+            alert()->error('접근 권한이 없습니다.');
             return redirect()->route('notice.index');
         }
 
@@ -85,6 +86,7 @@ class NoticeController extends Controller
     public function edit($notice_no)
     {
         if(empty(Auth::user()) || Auth::user()->admin_flg === '0') {
+            alert()->error('접근 권한이 없습니다.');
             return redirect()->route('notice.index');
         }
         
@@ -137,6 +139,11 @@ class NoticeController extends Controller
      */
     public function destroy($notice_no)
     {
+        if(empty(Auth::user()) || Auth::user()->admin_flg === '0') {
+            alert()->error('접근 권한이 없습니다.');
+            return redirect()->route('notice.index');
+        }
+        
         NoticeInfo::destroy($notice_no);
         alert()->success('삭제 완료');
         return redirect('notice');

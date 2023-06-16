@@ -42,7 +42,7 @@ arr_optionItem.forEach(function(option){
     option.addEventListener('click', function(){
         // 출발지 입력안할시 alert띄움
         if(sta_label.value == ''){
-            alert('출발지를 입력하세요');
+            swal('출발지를 입력하세요');
             arr_label.parentNode.classList.remove('active');
         }else{
             handleSelect2(option);

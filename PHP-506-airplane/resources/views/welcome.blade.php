@@ -38,6 +38,7 @@
                             <li class="hd_li_no"><a href="#tab2">편도</a></li>
                         </ul>
                         <form action="{{route('reservation.check')}}" method="get">
+                            @csrf
                         <div id="tab1"class="tab on">
                             {{-- 왕복 --}}
                             <div class="round-way">

@@ -13,6 +13,7 @@
 body {
     font-family: 'Noto Sans KR', sans-serif;
 }
+
 /* 헤더 */
 .navHeader {
     width: 100vw;
@@ -61,5 +62,6 @@ footer{
 /* 공지사항 페이지들 */
 .noticeMsg {
     margin: 5vh auto 5vh 10vw;
+    min-width: 700px;
 }
 /* /공지사항 페이지들 */
