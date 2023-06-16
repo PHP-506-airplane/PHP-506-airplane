@@ -1,13 +1,3 @@
-@import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
-
-.notosanskr * { 
-    font-family: 'Noto Sans KR', sans-serif;
-}
-
-body {
-    font-family: 'Noto Sans KR', sans-serif;
-}
-
 /* 상하단 가로선 */
 .nDetailContainer {
     margin: 10px auto;

@@ -20,7 +20,7 @@ window.addEventListener('DOMContentLoaded', function() {
         
         // footer가 화면 하단에 고정되어야 하는지 확인
         // 90(px)은 추가여백(만약 스크롤은 없는 높이지만, 컨테츠는 화면 가득 차있을경우를 위해 넣어줌)
-        if (contentHeight + footerHeight + 90 < windowHeight) {
+        if (contentHeight + footerHeight + 130 < windowHeight) {
             footer.classList.add('footerFixed');
         } else {
             footer.classList.remove('footerFixed');

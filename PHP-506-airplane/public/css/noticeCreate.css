@@ -1,0 +1,52 @@
+/* 상하단 가로선 */
+.nCreateContainer {
+    margin: 10px auto;
+    border-top: 1px solid #000000;
+    border-bottom: 1px solid #000000;
+    width: 80vw;
+    max-width: 1000px;
+    min-width: 900px;
+    min-height: 50vh;
+}
+/* /상하단 가로선 */
+
+/* 제목 */
+.labelTitle {
+    margin: 10px;
+    margin-left: 20px;
+}
+
+.inputText {
+    width: 800px;
+}
+/* /제목 */
+
+/* 내용 */
+.textareaContent {
+    margin: 10px auto;
+    margin-left: 7%;
+    margin-bottom: 3%;
+    width: 800px;
+    height: 500px;
+    resize: none;
+}
+/* /내용 */
+
+/* 하단 버튼 */
+.divCreateBtns {
+    margin: 10px;
+    position: relative;
+}
+
+.nCreateBtns {
+    position: absolute;
+    right: 50px;
+    bottom: 7px;
+}
+/* /하단 버튼 */
+
+/* hr */
+hr {
+    margin: 0;
+}
+/* /hr */
