@@ -33,6 +33,11 @@
         <br>
         <button type="submit">수정</button>
         <button type="button" onclick="location.href='{{Route('reservation.main')}}'">취소</button>
-        <button type="button" onclick="location.href='{{Route('users.withdraw')}}'">회원탈퇴</button>
+        <button type="button" onclick="location.href='{{Route('users.chgpw')}}'">비밀번호 수정</button>
+        <button type="button" class="div1" onclick="location.href='{{Route('users.withdraw')}}'">회원탈퇴</button>
     </form>
+@endsection
+
+@section('js')
+    <script src="{{asset('js/delete.js')}}"></script>
 @endsection

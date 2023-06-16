@@ -2,7 +2,7 @@
 /**************************************************
  * 프로젝트명   : PHP-506-airplane
  * 디렉토리     : views
- * 파일명       : chkpassword.blade.php
+ * 파일명       : chgpw.blade.php
  * 이력         :   v001 0613 박수연 new
 **************************************************/
 --}}
@@ -12,21 +12,25 @@
 @section('title', '비밀번호 확인')
 
 @section('contents')
-    <h1>비밀번호 확인</h1>
+    <h1>비밀번호 수정</h1>
     <br>
     <form action="{{route('users.login.post')}}" method="post">
         @csrf
         @method('put')
         <label for="password">비밀번호 : </label>
-        <input type="text" name="password" id="password">
+        <input type="text" name="password" oninput="chkPw()" id="password">
         <br>
         <label for="passwordchk">비밀번호 확인 : </label>
-        <input type="text" name="passwordchk" id="passwordchk">
+        <input type="text" name="passwordchk" oninput="chkPw()" id="passwordchk">
+        <span id="chk_pw_msg"></span>
         <br>
         <br>
-        <button type="submit" onclick="location.href = '{{route('users.edit')}}'">변경</button>
+        <button type="submit" onclick="location.href = '{{route('users.chgpw.post')}}'">변경</button>
         <button type="button" onclick="location.href = '{{route('reservation.main')}}'">취소</button>
     </form>
 
 @endsection
 
+@section('js')
+    <script src="{{asset('js/registration.js')}}"></script>
+@endsection

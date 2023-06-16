@@ -250,7 +250,11 @@ class UserController extends Controller
     }
 
     // 비밀번호 변경
-    function resetPassword(Request $req)
+    function chgpw() {
+        return view('chgpw');
+    }
+    
+    function chgpwpost(Request $req)
     {
         $req->validate([
             'token' => ['required'],
