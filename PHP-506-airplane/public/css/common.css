@@ -65,3 +65,9 @@ footer{
     min-width: 700px;
 }
 /* /공지사항 페이지들 */
+
+/* 에러 메세지 */
+.diverror {
+    color: red;
+}
+/* /에러 메세지 */
