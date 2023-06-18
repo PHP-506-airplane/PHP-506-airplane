@@ -10,4 +10,6 @@ class SeatInfo extends Model
     use HasFactory;
     protected $table = 'seat_info';
     protected $primaryKey = 'seat_no';
+
+    public $timestamps = false;
 }
