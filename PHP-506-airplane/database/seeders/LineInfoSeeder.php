@@ -1,4 +1,10 @@
 <?php
+/**************************************************
+ * 프로젝트명   : PHP-506-airplane
+ * 디렉토리     : database/seeders
+ * 파일명       : LineInfoSeeder.php
+ * 이력         :   v001 0615 이동호 new
+**************************************************/
 
 namespace Database\Seeders;
 
