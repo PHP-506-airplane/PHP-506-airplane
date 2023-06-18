@@ -35,7 +35,7 @@ class UserInfoSeeder extends Seeder
                 ,'qa_answer'    => '집'
                 ,'created_at'   => $date
                 ,'updated_at'   => $date
-                ,'admin_flg'      => 1
+                ,'admin_flg'    => 1
             ]
         ]);
     }
