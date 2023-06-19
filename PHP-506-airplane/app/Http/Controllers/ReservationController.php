@@ -12,6 +12,7 @@ namespace App\Http\Controllers;
 use App\Models\NoticeInfo;
 use App\Models\AirportInfo;
 use App\Models\FlightInfo;
+use App\Models\SeatInfo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Query\JoinClause;
@@ -111,10 +112,48 @@ class ReservationController extends Controller
 
     }
     public function checkpost(Request $req){
+        // 가는편
+        // $result = DB::table('flight_info')
+        // ->join('airport_info as dep_port','dep_port.port_no', '=', 'flight_info.dep_port_no')
+        // ->join('airport_info as arr_port','arr_port.port_no', '=', 'flight_info.arr_port_no')
+        // ->join('airline_info as airline','airline.line_no', '=', 'flight_info.line_no')
+        // ->join('airplane_info as airplane','airline.line_no', '=', 'airplane.line_no')
+        // ->join('seat_info as seat','airplane.plane_no', '=', 'seat.plane_no')
+        // ->join('reserve_info as reserve','seat.seat_no', '=', 'reserve.seat_no')
+        // ->select(
+        //         'flight_info.*'
+        //         ,'dep_port.port_no AS dep2_port_no'
+        //         ,'dep_port.port_eng AS dep_port_eng'
+        //         ,'dep_port.port_name AS dep_port_name'
+        //         ,'arr_port.port_no AS arr2_port_no'
+        //         ,'arr_port.port_eng AS arr_port_eng'
+        //         ,'arr_port.port_name AS arr_port_name'
+        //         ,'reserve.*'
+        //         )
+        // ->where('flight_info.fly_no','=',$req->dep_fly_no)
+        // ->get();
+        $result = DB::table('reserve_info as res')
+        ->join('flight_info as fli','res.fly_no', '=','fli.fly_no')
+        ->join('airport_info as dep','dep.port_no', '=', 'fli.dep_port_no')
+        ->join('airport_info as arr','arr.port_no', '=', 'fli.arr_port_no')
+        ->select(
+                    'fli.*'
+                    ,'res.seat_no'
+                    ,'dep.port_name as dep_name'
+                    ,'dep.port_eng as dep_eng' 
+                    ,'arr.port_name as arr_name'
+                    ,'arr.port_eng as arr_eng'
+                    )
+        ->where('fli.fly_no','=',$req->dep_fly_no)
+        ->where('fli.fly_date','>',now())
+        ->get();
 
-        
+        $seat = DB::table('seat_info')
+        ->select('seat_no')
+        ->limit(108)
+        ->get();
 
-        return view('reservationSeat');
+        return view('reservationSeat')->with('data',$result)->with('seat',$seat);
     }
     
 }

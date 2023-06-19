@@ -38,390 +38,53 @@
             </li>
         </ul>
     </div>
-
 <div class="tripTab">
     <div class="slideCont">
         <ul>
-            <li class="choice" style="width: 526px;">
-                <a id="aFlight1">구간1<span> :{{var_dump($_POST)}}</span></a>
+            <li class="tab choice" style="width: 50%;">
+                <a id="aFlight1" onclick="changeTab('aFlight1')">구간1<span> : {{$data[0]->dep_name}}({{$data[0]->dep_eng}})->{{$data[0]->arr_name}}({{$data[0]->arr_eng}})</span></a>
             </li>
-            <li style="width: 526px;">
-                <a id="aFlight2">구간2<span> : 기타큐슈(KKJ)-서울/인천(ICN)</span></a>
+            <li class="tab" style="width: 50%;">
+                <a id="aFlight2" onclick="changeTab('aFlight2')">구간2<span> : {{$data[0]->arr_name}}({{$data[0]->arr_eng}})->{{$data[0]->dep_name}}({{$data[0]->dep_eng}})</span></a>
             </li>
         </ul>
     </div>
 </div>
-
 <div class="seatMap">
+    <div class="name_box">
+        <h2>예매자 정보</h2>
+        <ul>
+            <li>이름 : <span>홍길동</span></li>
+            <li><input type="text" class="show_name" readonly></li>
+        </ul>
+    </div>
     <div class="map">
         <ol>
-            <li class="fast Available">
-                <a href="javascript:void(0)">
-                    <input type="hidden" name="amount" value="0">
-                    <input type="hidden" name="currency" value="KRW">
-                </a>
-            </li>
-            <li class="fast Available">
-                <a href="javascript:void(0)">
-                    <input type="hidden" name="amount" value="0">
-                    <input type="hidden" name="currency" value="KRW">
-                </a>
-            </li>
-            <li class="fast Available" style="margin-right: 60px;">
-                <a href="javascript:void(0)">
-                    <input type="hidden" name="amount" value="0">
-                    <input type="hidden" name="currency" value="KRW">
-                </a>
-            </li>
-
-            <li class="fast Available">
-                <a href="javascript:void(0)">
-                    <input type="hidden" name="amount" value="0">
-                    <input type="hidden" name="currency" value="KRW">
-                </a>
-            </li>
-            <li class="fast Available">
-                <a href="javascript:void(0)">
-                    <input type="hidden" name="amount" value="0">
-                    <input type="hidden" name="currency" value="KRW">
-                </a>
-            </li>
-            <li class="fast Available">
-                <a href="javascript:void(0)">
-                    <input type="hidden" name="amount" value="0">
-                    <input type="hidden" name="currency" value="KRW">
-                </a>
-            </li>
-            <li class="fast Available">
-                <a href="javascript:void(0)">
-                    <input type="hidden" name="amount" value="0">
-                    <input type="hidden" name="currency" value="KRW">
-                </a>
-            </li>
-            <li class="fast Available">
-                <a href="javascript:void(0)">
-                    <input type="hidden" name="amount" value="0">
-                    <input type="hidden" name="currency" value="KRW">
-                </a>
-            </li>
-            <li class="fast Available" style="margin-right: 60px;">
-                <a href="javascript:void(0)">
-                    <input type="hidden" name="amount" value="0">
-                    <input type="hidden" name="currency" value="KRW">
-                </a>
-            </li>
-            <li class="fast Available">
-                <a href="javascript:void(0)">
-                    <input type="hidden" name="amount" value="0">
-                    <input type="hidden" name="currency" value="KRW">
-                </a>
-            </li>
-            <li class="fast Available">
-                <a href="javascript:void(0)">
-                    <input type="hidden" name="amount" value="0">
-                    <input type="hidden" name="currency" value="KRW">
-                </a>
-            </li>
-            <li class="fast Available">
-                <a href="javascript:void(0)">
-                    <input type="hidden" name="amount" value="0">
-                    <input type="hidden" name="currency" value="KRW">
-                </a>
-            </li>
-            <li class="fast Available">
-                <a href="javascript:void(0)">
-                    <input type="hidden" name="amount" value="0">
-                    <input type="hidden" name="currency" value="KRW">
-                </a>
-            </li>
-            <li class="fast Available">
-                <a href="javascript:void(0)">
-                    <input type="hidden" name="amount" value="0">
-                    <input type="hidden" name="currency" value="KRW">
-                </a>
-            </li>
-            <li class="fast Available" style="margin-right: 60px;">
-                <a href="javascript:void(0)">
-                    <input type="hidden" name="amount" value="0">
-                    <input type="hidden" name="currency" value="KRW">
-                </a>
-            </li>
-            <li class="fast Available">
-                <a href="javascript:void(0)">
-                    <input type="hidden" name="amount" value="0">
-                    <input type="hidden" name="currency" value="KRW">
-                </a>
-            </li>
-            <li class="fast Available">
-                <a href="javascript:void(0)">
-                    <input type="hidden" name="amount" value="0">
-                    <input type="hidden" name="currency" value="KRW">
-                </a>
-            </li>
-            <li class="fast Available">
-                <a href="javascript:void(0)">
-                    <input type="hidden" name="amount" value="0">
-                    <input type="hidden" name="currency" value="KRW">
-                </a>
-            </li>
-            <li class="fast Available">
-                <a href="javascript:void(0)">
-                    <input type="hidden" name="amount" value="0">
-                    <input type="hidden" name="currency" value="KRW">
-                </a>
-            </li>
-            <li class="fast Available">
-                <a href="javascript:void(0)">
-                    <input type="hidden" name="amount" value="0">
-                    <input type="hidden" name="currency" value="KRW">
-                </a>
-            </li>
-            <li class="fast Available" style="margin-right: 60px;">
-                <a href="javascript:void(0)">
-                    <input type="hidden" name="amount" value="0">
-                    <input type="hidden" name="currency" value="KRW">
-                </a>
-            </li>
-            <li class="fast Available">
-                <a href="javascript:void(0)">
-                    <input type="hidden" name="amount" value="0">
-                    <input type="hidden" name="currency" value="KRW">
-                </a>
-            </li>
-            <li class="fast Available">
-                <a href="javascript:void(0)">
-                    <input type="hidden" name="amount" value="0">
-                    <input type="hidden" name="currency" value="KRW">
-                </a>
-            </li>
-            <li class="fast Available">
-                <a href="javascript:void(0)">
-                    <input type="hidden" name="amount" value="0">
-                    <input type="hidden" name="currency" value="KRW">
-                </a>
-            </li>
-            <li class="fast disable Reserved">
-                <a href="javascript:void(0)">
-                    <input type="hidden" name="amount" value="0">
-                    <input type="hidden" name="currency" value="KRW">
-                </a>
-            </li>
-            <li class="fast Available">
-                <a href="javascript:void(0)">
-                    <input type="hidden" name="amount" value="0">
-                    <input type="hidden" name="currency" value="KRW">
-                </a>
-            </li>
-            <li class="fast disable Reserved" style="margin-right: 60px;">
-                <a href="javascript:void(0)">
-                    <input type="hidden" name="amount" value="0">
-                    <input type="hidden" name="currency" value="KRW">
-                </a>
-            </li>
-            <li class="fast disable Reserved">
-                <a href="javascript:void(0)">
-                    <input type="hidden" name="amount" value="0">
-                    <input type="hidden" name="currency" value="KRW">
-                </a>
-            </li>
-            <li class="fast Available">
-                <a href="javascript:void(0)">
-                    <input type="hidden" name="amount" value="0">
-                    <input type="hidden" name="currency" value="KRW">
-                </a>
-            </li>
-            <li class="fast Available">
-                <a href="javascript:void(0)">
-                    <input type="hidden" name="amount" value="0">
-                    <input type="hidden" name="currency" value="KRW">
-                </a>
-            </li>
-            <li class="fast Available">
-                <a href="javascript:void(0)">
-                    <input type="hidden" name="amount" value="0">
-                    <input type="hidden" name="currency" value="KRW">
-                </a>
-            </li>
-            <li class="fast Available">
-                <a href="javascript:void(0)">
-                    <input type="hidden" name="amount" value="0">
-                    <input type="hidden" name="currency" value="KRW">
-                </a>
-            </li>
-            <li class="fast Available" style="margin-right: 60px;">
-                <a href="javascript:void(0)">
-                    <input type="hidden" name="amount" value="0">
-                    <input type="hidden" name="currency" value="KRW">
-                </a>
-            </li>
-            <li class="fast Available">
-                <a href="javascript:void(0)">
-                    <input type="hidden" name="amount" value="0">
-                    <input type="hidden" name="currency" value="KRW">
-                </a>
-            </li>
-            <li class="fast Available">
-                <a href="javascript:void(0)">
-                    <input type="hidden" name="amount" value="0">
-                    <input type="hidden" name="currency" value="KRW">
-                </a>
-            </li>
-            <li class="fast Available">
-                <a href="javascript:void(0)">
-                    <input type="hidden" name="amount" value="0">
-                    <input type="hidden" name="currency" value="KRW">
-                </a>
-            </li>
-            <li class="fast Available">
-                <a href="javascript:void(0)">
-                    <input type="hidden" name="amount" value="0">
-                    <input type="hidden" name="currency" value="KRW">
-                </a>
-            </li>
-            <li class="fast Available">
-                <a href="javascript:void(0)">
-                    <input type="hidden" name="amount" value="0">
-                    <input type="hidden" name="currency" value="KRW">
-                </a>
-            </li>
-            <li class="fast Available" style="margin-right: 60px;">
-                <a href="javascript:void(0)">
-                    <input type="hidden" name="amount" value="0">
-                    <input type="hidden" name="currency" value="KRW">
-                </a>
-            </li>
-            <li class="fast Available">
-                <a href="javascript:void(0)">
-                    <input type="hidden" name="amount" value="0">
-                    <input type="hidden" name="currency" value="KRW">
-                </a>
-            </li>
-            <li class="fast Available">
-                <a href="javascript:void(0)">
-                    <input type="hidden" name="amount" value="0">
-                    <input type="hidden" name="currency" value="KRW">
-                </a>
-            </li>
-            <li class="fast Available">
-                <a href="javascript:void(0)">
-                    <input type="hidden" name="amount" value="0">
-                    <input type="hidden" name="currency" value="KRW">
-                </a>
-            </li>
-            <li class="fast Available">
-                <a href="javascript:void(0)">
-                    <input type="hidden" name="amount" value="0">
-                    <input type="hidden" name="currency" value="KRW">
-                </a>
-            </li>
-            <li class="fast Available">
-                <a href="javascript:void(0)">
-                    <input type="hidden" name="amount" value="0">
-                    <input type="hidden" name="currency" value="KRW">
-                </a>
-            </li>
-            <li class="fast Available" style="margin-right: 60px;">
-                <a href="javascript:void(0)">
-                    <input type="hidden" name="amount" value="0">
-                    <input type="hidden" name="currency" value="KRW">
-                </a>
-            </li>
-            <li class="fast Available">
-                <a href="javascript:void(0)">
-                    <input type="hidden" name="amount" value="0">
-                    <input type="hidden" name="currency" value="KRW">
-                </a>
-            </li>
-            <li class="fast Available">
-                <a href="javascript:void(0)">
-                    <input type="hidden" name="amount" value="0">
-                    <input type="hidden" name="currency" value="KRW">
-                </a>
-            </li>
-            <li class="fast Available">
-                <a href="javascript:void(0)">
-                    <input type="hidden" name="amount" value="0">
-                    <input type="hidden" name="currency" value="KRW">
-                </a>
-            </li>
-            <li class="fast Available">
-                <a href="javascript:void(0)">
-                    <input type="hidden" name="amount" value="0">
-                    <input type="hidden" name="currency" value="KRW">
-                </a>
-            </li>
-            <li class="fast Available">
-                <a href="javascript:void(0)">
-                    <input type="hidden" name="amount" value="0">
-                    <input type="hidden" name="currency" value="KRW">
-                </a>
-            </li>
-            <li class="fast Available" style="margin-right: 60px;">
-                <a href="javascript:void(0)">
-                    <input type="hidden" name="amount" value="0">
-                    <input type="hidden" name="currency" value="KRW">
-                </a>
-            </li>
-            <li class="fast Available">
-                <a href="javascript:void(0)">
-                    <input type="hidden" name="amount" value="0">
-                    <input type="hidden" name="currency" value="KRW">
-                </a>
-            </li>
-            <li class="fast Available">
-                <a href="javascript:void(0)">
-                    <input type="hidden" name="amount" value="0">
-                    <input type="hidden" name="currency" value="KRW">
-                </a>
-            </li>
-            <li class="fast Available">
-                <a href="javascript:void(0)">
-                    <input type="hidden" name="amount" value="0">
-                    <input type="hidden" name="currency" value="KRW">
-                </a>
-            </li>
-            <li class="fast disable Blocked">
-                <a href="javascript:void(0)">
-                    <input type="hidden" name="amount" value="0">
-                    <input type="hidden" name="currency" value="KRW">
-                </a>
-            </li>
-            <li class="fast Available">
-                <a href="javascript:void(0)">
-                    <input type="hidden" name="amount" value="0">
-                    <input type="hidden" name="currency" value="KRW">
-                </a>
-            </li>
-            <li class="fast Available" style="margin-right: 60px;">
-                <a href="javascript:void(0)">
-                    <input type="hidden" name="amount" value="0">
-                    <input type="hidden" name="currency" value="KRW">
-                </a>
-            </li>
-            <li class="fast Available">
-                <a href="javascript:void(0)">
-                    <input type="hidden" name="amount" value="0">
-                    <input type="hidden" name="currency" value="KRW">
-                </a>
-            </li>
-            <li class="fast Available">
-                <a href="javascript:void(0)">
-                    <input type="hidden" name="amount" value="0">
-                    <input type="hidden" name="currency" value="KRW">
-                </a>
-            </li>
-            <li class="fast disable Reserved">
-                <a href="javascript:void(0)">
-                    <input type="hidden" name="amount" value="0">
-                    <input type="hidden" name="currency" value="KRW">
-                </a>
-            </li>
+            {{-- 예약된 좌석 비교 --}}
+            @foreach($data as $value)
+                @foreach($seat as $val)
+                @if($value->seat_no == $val->seat_no)
+                    <li class="fast Available">
+                        <a href="javascript:void(0)" class="selectedEd">
+                            <input type="hidden" name="amount" value="0">
+                            <input type="hidden" id="s_name" name="seat_no" value="{{$val->seat_no}}">
+                        </a>
+                    </li>
+                @else
+                    <li class="fast Available">
+                        <a href="javascript:void(0)">
+                            <input type="hidden" name="amount" value="0">
+                            <input type="hidden" id="s_name" name="seat_no" value="{{$val->seat_no}}">
+                        </a>
+                    </li>
+                @endif
+                @endforeach
+            @endforeach
         </ol>
     </div>
 </div>
 </div>
 @endsection
-
 @section('js')
     <script src="{{asset('js/scripts.js')}}"></script>
     <script src="{{asset('js/reservationSeat.js')}}"></script>
