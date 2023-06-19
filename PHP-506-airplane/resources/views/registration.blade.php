@@ -12,8 +12,13 @@
 @section('title', 'Registration')
 
 @section('contents')
-    <h1>회원가입</h1>
-    {{-- @include('layout.errorsvalidate') --}}
+
+@section('css') 
+    <link rel="stylesheet" href="{{asset('css/registration.css')}}">
+@endsection
+
+    {{-- <h1>회원가입</h1>
+    @include('layout.errorsvalidate')
     <form action="{{route('users.registration.post')}}" method="post">
         @csrf
         <label for="name">이름 : </label>
@@ -55,8 +60,45 @@
         <button type="button" onclick="location.href = '{{route('users.login')}}'">Cancel</button>
     </form>
 
-@endsection
+@endsection --}}
 
+
+<form action="{{route('users.registration.post')}}" method="post">
+    @csrf
+    <div class="wrap">
+            <div class="regist">
+                <h2>Registration</h2>
+                <div class="regist_id">
+                    <label for="name">이름 : </label>
+                    <input type="text" name="name" id="name" required autocomplete="off" placeholder="한글 2~30자 사이로 입력">
+                </div>
+                <div class="regist_id">
+                    <label for="u_email">이메일 : </label>
+                    <input type="email" name="u_email" id="u_email" placeholder="Email" autocomplete="off" >
+                </div>
+                <div class="regist_id">
+                    <label for="u_pw">비밀번호 : </label>
+                    <input type="password" name="u_pw" id="u_pw" placeholder="Password" autocomplete="off">
+                </div>
+                <div class="regist_id">
+                    <label for="u_pwchk">비밀번호 확인: </label>
+                    <input type="password" name="u_pwchk" id="u_pwchk" placeholder="Password" autocomplete="off">
+                </div>
+                <div id="chk_pw_msg"></div>
+                <div class="regist_id">
+                    <label for="birth">생년월일 : </label>
+                    <input type="date" name="birth" value="xxx" min="1900-01-01" max="now()" required>
+                </div>
+                <span class="submit">
+                    <input type="submit" value="가입">
+                </span>
+                <span class="submit">
+                    <input type="button" value="취소" onclick="location.href = '{{route('users.login')}}'">
+                </span>
+            </div>
+        </div>
+    </div>
+</form>
 @section('js')
     <script src="{{asset('js/registration.js')}}"></script>
 @endsection
