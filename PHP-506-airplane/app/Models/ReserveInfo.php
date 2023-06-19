@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class ReserveInfo extends Model
 {
     use HasFactory;
+    protected $table = 'reserve_info';
+    protected $primaryKey = 'reserve_no';
+
+    public $timestamps = false;
 }

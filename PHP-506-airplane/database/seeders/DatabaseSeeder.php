@@ -37,7 +37,12 @@ class DatabaseSeeder extends Seeder
         // \App\Models\NoticeInfo::factory(2000)->create();
 
         // 운항정보 팩토리
-        // \App\Models\FlightInfo::factory(500)->create();
+        // \App\Models\FlightInfo::factory(1000)->create();
+
+        // 예약정보 팩토리
+        for($i = 0; $i < 100; $i++) {
+            \App\Models\ReserveInfo::factory(2000)->create();
+        }
 
     }
 }
