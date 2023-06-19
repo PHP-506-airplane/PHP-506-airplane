@@ -15,7 +15,8 @@ return new class extends Migration
     {
         Schema::create('airline_info', function (Blueprint $table) {
             $table->id('line_no');
-            $table->string('line_name',50);
+            $table->string('line_name', 50);
+            $table->char('line_code', 2);
         });
     }
 

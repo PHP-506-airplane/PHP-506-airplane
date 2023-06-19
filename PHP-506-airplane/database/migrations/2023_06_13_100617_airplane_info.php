@@ -15,8 +15,9 @@ return new class extends Migration
     {
         Schema::create('airplane_info', function (Blueprint $table) {
             $table->id('plane_no');
-            $table->string('plane_name',30);
+            $table->string('plane_name', 30);
             $table->integer('total_seat_num');
+            $table->integer('line_no');
         });
     }
 

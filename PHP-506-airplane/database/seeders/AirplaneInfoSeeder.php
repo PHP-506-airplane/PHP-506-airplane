@@ -22,13 +22,14 @@ class airplaneInfoSeeder extends Seeder
      */
     public function run()
     {
-        AirplaneInfo::insert([
-            ['plane_name' => 'A101', 'total_seat_num' => 96]
-            ,['plane_name' => 'A102', 'total_seat_num' => 96]
-            ,['plane_name' => 'A103', 'total_seat_num' => 96]
-            ,['plane_name' => 'A104', 'total_seat_num' => 96]
-            ,['plane_name' => 'A105', 'total_seat_num' => 96]
-        ]);
+        $arr = [];
+        for($j = 101; $j <= 105; $j++) {
+            for($i = 1; $i <= 12; $i++) {
+                $arr[] = ['plane_name' => 'A'.$j, 'total_seat_num' => 96 , 'line_no' => $i];
+            }
+        }
+
+        AirplaneInfo::insert($arr);
 
         // $airlines = LineInfo::all();
         // $lineNo = 1;

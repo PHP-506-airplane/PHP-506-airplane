@@ -13,9 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('reserved_seat', function (Blueprint $table) {
-            $table->id('reserve_seat_num');
-            $table->char('seat_no', 1);
+        Schema::create('reserve_info', function (Blueprint $table) {
+            $table->id('reserve_no');
+            $table->integer('plane_no');
+            $table->integer('seat_no');
+            $table->integer('fly_no');
+            $table->integer('u_no');
         });
     }
 
@@ -26,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('reserved_seat');
+        Schema::dropIfExists('reserve_info');
     }
 };

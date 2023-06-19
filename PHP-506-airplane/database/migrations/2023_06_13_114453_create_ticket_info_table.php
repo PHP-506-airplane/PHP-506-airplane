@@ -14,12 +14,9 @@ return new class extends Migration
     public function up()
     {
         Schema::create('ticket_info', function (Blueprint $table) {
-            $table->bigInteger('t_no');
-            $table->bigInteger('u_no');
-            $table->bigInteger('fly_no');
-            $table->primary(['t_no', 'u_no', 'fly_no']);
-            $table->bigInteger('reserve_seat_num');
-            $table->integer('reserve_no');
+            $table->id('t_no');
+            $table->integer('reserve_num');
+            $table->integer('t_price');
             $table->softDeletes();
         });
     }

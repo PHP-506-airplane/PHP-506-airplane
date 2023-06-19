@@ -13,7 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::dropIfExists('admin_info');
+        Schema::create('email_verify', function (Blueprint $table) {
+            $table->id('u_no');
+            $table->string('verification_code', 100)->nullable();
+            $table->timestamp('validity_period')->nullable();
+            $table->timestamp('email_verified_at')->nullable();
+        });
     }
 
     /**
@@ -23,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('email_verify');
     }
 };

@@ -14,10 +14,8 @@ return new class extends Migration
     public function up()
     {
         Schema::create('seat_info', function (Blueprint $table) {
-            $table->char('seat_no',3);
-            $table->biginteger('plane_no');
-            $table->primary(['seat_no', 'plane_no']);
-            $table->char('reserve_flg', 1)->default('0');
+            $table->char('seat_no', 3);
+            $table->integer('plane_no');
         });
     }
 

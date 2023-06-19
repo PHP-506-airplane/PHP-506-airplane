@@ -38,10 +38,10 @@ class SeatInfoSeeder extends Seeder
     {
         $seats = [];
 
-        for ($i = 'A'; $i <= 'I'; $i++) {
-            for ($number = 1; $number <= 12; $number++) {
+        for($i = 'A'; $i <= 'I'; $i++) {
+            for($num = 1; $num <= 12; $num++) {
                 // 좌석 번호 생성 ex) A01, A02, B01, B02, ...
-                $seat = $i . str_pad($number, 2, '0', STR_PAD_LEFT);
+                $seat = $i . str_pad($num, 2, '0', STR_PAD_LEFT);
                 // 생성한 좌석 번호 배열에 추가
                 $seats[] = $seat;
             }

@@ -59,7 +59,7 @@ class FlightInfoFactory extends Factory
                 $remainingCount = 10 - $count;
                 // 부족한 데이터 생성
                 FlightInfo::factory()->count($remainingCount)->create([
-                    'fly_date' => $flight->fly_date,
+                    'fly_date' => $flight->fly_date
                 ]);
             }
 
@@ -73,8 +73,8 @@ class FlightInfoFactory extends Factory
                     $remainingCount = 3 - $countPort;
                     // 부족한 데이터 생성
                     FlightInfo::factory()->count($remainingCount)->create([
-                        'fly_date' => $flight->fly_date,
-                        'dep_port_no' => $depPortNo,
+                        'fly_date' => $flight->fly_date
+                        ,'dep_port_no' => $depPortNo
                     ]);
                 }
             }
