@@ -25,7 +25,7 @@ class NoticeInfoFactory extends Factory
     {
         $date = $this->faker->dateTimeBetween('-1 years');
         return [
-            'u_no'            => $this->faker->randomNumber(1)
+            'u_no'              => $this->faker->randomNumber(1)
             ,'notice_title'     => $this->faker->realText(30)
             ,'notice_content'   => $this->faker->realText(100)
             ,'created_at'       => $date

@@ -33,16 +33,16 @@ class FlightInfoFactory extends Factory
         }
 
         return [
-            'fly_date' => $flyDate->format('Y-m-d H:i:s'), // DateTime 객체를 문자열로 변환해서 저장
-            'price' => $this->faker->numberBetween(10, 300) * 1000, // 가격을 10,000원 ~ 300,000원 사이로 설정, 최소 1000원 단위
-            'dep_port_no' => $depPortNo,
-            'arr_port_no' => $arrPortNo,
-            'line_no' => $this->faker->numberBetween(1, 12),
+            'fly_date'      => $flyDate->format('Y-m-d H:i:s') // DateTime 객체를 문자열로 변환해서 저장
+            ,'price'        => $this->faker->numberBetween(10, 300) * 1000 // 가격을 10,000원 ~ 300,000원 사이로 설정, 최소 1000원 단위
+            ,'dep_port_no'  => $depPortNo
+            ,'arr_port_no'  => $arrPortNo
+            ,'line_no'      => $this->faker->numberBetween(1, 12)
             // bothify('??###') : 영어 2자리, 숫자 3자리 랜덤하게 생성
-            'flight_num' => $this->faker->bothify('??###'),
+            ,'flight_num'   => $this->faker->bothify('??###')
             // 시간 형식을 변경해서 저장 ex) 12:00 => 1200
-            'dep_time' => str_replace(':', '', substr($depTime, 0, 2)) . substr($depTime, 3, 2),
-            'arr_time' => str_replace(':', '', substr($arrTime, 0, 2)) . substr($arrTime, 3, 2),
+            ,'dep_time'     => str_replace(':', '', substr($depTime, 0, 2)) . substr($depTime, 3, 2)
+            ,'arr_time'     => str_replace(':', '', substr($arrTime, 0, 2)) . substr($arrTime, 3, 2)
         ];
     }
 
@@ -72,8 +72,8 @@ class FlightInfoFactory extends Factory
                     $remainingCount = 3 - $countPort;
                     // 부족한 데이터 생성
                     FlightInfo::factory()->count($remainingCount)->create([
-                        'fly_date' => $flight->fly_date
-                        ,'dep_port_no' => $depPortNo
+                        'fly_date'      => $flight->fly_date
+                        ,'dep_port_no'  => $depPortNo
                     ]);
                 }
             }
