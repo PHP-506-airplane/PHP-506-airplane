@@ -1,23 +1,30 @@
 // 왕복
 const ro_s_hd_no = document.querySelector('.ro_s_hd_no');
-const one_s_hd_no = document.querySelector('.one_s_hd_no');
+const ro_a_hd_no = document.querySelector('.ro_a_hd_no');
 const sta_label = document.querySelector('.sta_label');
 const arr_label = document.querySelector('.arr_label');
 const sta_optionItem = document.querySelectorAll('.sta_optionItem');
 const arr_optionItem = document.querySelectorAll('.arr_optionItem');
 // 편도
+const one_s_hd_no = document.querySelector('.one_s_hd_no');
+const one_a_hd_no = document.querySelector('.one_a_hd_no');
 const oSta_label = document.querySelector('.oSta_label');
 const oArr_label = document.querySelector('.oArr_label');
 const oSta_optionItem = document.querySelectorAll('.oSta_optionItem');
 const oArr_optionItem = document.querySelectorAll('.oArr_optionItem');
 
-const hd_li_no = document.querySelector('.hd_li_no a');
+const hd_li_no1 = document.querySelector('.hd_li_no1');
+const hd_li_no2 = document.querySelector('.hd_li_no2');
 const hd_li_flg = document.querySelector('.hd_li_flg');
-if(hd_li_no.textContent == '왕복'){
-    hd_li_flg.value = '1'
-}else{
-    hd_li_flg.value = '0'
-}
+
+hd_li_no1.addEventListener('click', function(){
+    hd_li_flg.value = '1';
+});
+hd_li_no2.addEventListener('click', function(){
+    hd_li_flg.value = '0';
+});
+
+
 
  // 클릭한 옵션의 텍스트를 라벨 안에 넣음
 const handleSelect = function(item) {
@@ -34,7 +41,7 @@ sta_optionItem.forEach(function(option){
 const handleSelect2 = function(item) {
     // 도착지
     arr_label.value = item.textContent;
-    one_s_hd_no.value = item.value;
+    ro_a_hd_no.value = item.value;
     arr_label.parentNode.classList.remove('active');
 }
  // 옵션 클릭시 클릭한 옵션을 넘김
@@ -53,6 +60,7 @@ arr_optionItem.forEach(function(option){
 const handleSelect3 = function(item) {
     // 출발지
     oSta_label.value = item.textContent;
+    one_s_hd_no.value = item.value;
     oSta_label.parentNode.classList.remove('active');
 }
  // 옵션 클릭시 클릭한 옵션을 넘김
@@ -63,6 +71,7 @@ const handleSelect3 = function(item) {
 const handleSelect4 = function(item) {
     // 도착지
     oArr_label.value = item.textContent;
+    one_a_hd_no.value = item.value;
     oArr_label.parentNode.classList.remove('active');
 }
  // 옵션 클릭시 클릭한 옵션을 넘김
@@ -100,7 +109,6 @@ for (var i = 0; i < links.length; i++) {
 for (var i = 0; i < items.length; i++) {
  items[i].onclick = function () {
      var tabId = this.querySelector("a").getAttribute("href");
-     console.log(this.classList);
      document.querySelectorAll(".tabs-list li, .tabs div.tab").forEach(function (item) {
              item.classList.remove("on");
          });

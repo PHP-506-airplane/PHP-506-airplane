@@ -15,7 +15,8 @@ return new class extends Migration
     {
         Schema::create('ticket_info', function (Blueprint $table) {
             $table->id('t_no');
-            $table->integer('reserve_num');
+            $table->bigInteger('reserve_num');
+            $table->primaryKey(['t_no','reserve_num']);
             $table->integer('t_price');
             $table->softDeletes();
         });

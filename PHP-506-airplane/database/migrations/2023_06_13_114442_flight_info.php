@@ -23,7 +23,6 @@ return new class extends Migration
             $table->string('flight_num',30);
             $table->char('dep_time', 4);
             $table->char('arr_time', 4);
-            $table->biginteger('plane_no');
         });
     }
 

@@ -34,8 +34,8 @@
                     {{-- 왕복,편도 탭 메뉴 --}}
                     <div class="tabs">
                         <ul class="tabs-list">
-                            <li class="on hd_li_no"><a href="#tab1">왕복</a></li>
-                            <li class="hd_li_no"><a href="#tab2">편도</a></li>
+                            <li class="on hd_li_no1"><a href="#tab1">왕복</a></li>
+                            <li class="hd_li_no2"><a href="#tab2">편도</a></li>
                         </ul>
                         <form action="{{route('reservation.check')}}" method="get">
                             @csrf
@@ -43,7 +43,7 @@
                             {{-- 왕복 --}}
                             <div class="round-way">
                                 <div class="selectBox2">
-                                    <input type="hidden" class="hd_li_flg" name="hd_li_flg">
+                                    <input type="hidden" class="hd_li_flg" name="hd_li_flg" value="1">
                                     <input type="hidden" class="ro_s_hd_no" name="dep_port_no">
                                     <input type="text" placeholder="출발지"  class="sta_label form-control" readonly>
                                     <ul class="optionList">
@@ -55,7 +55,7 @@
                                     </ul>
                                 </div>
                                 <div class="selectBox2">
-                                    <input type="hidden" class="one_s_hd_no" name="arr_port_no">
+                                    <input type="hidden" class="ro_a_hd_no" name="arr_port_no">
                                     <input type="text" placeholder="도착지" class="arr_label form-control" readonly>
                                     <ul class="optionList">
                                         @forelse($data as $val)
@@ -70,9 +70,11 @@
                                 </div>
                             </div>
                         </div>
+                        {{-- 편도 --}}
                         <div id="tab2"class="tab">
                             <div class="one-way">
                                 <div class="selectBox2">
+                                    <input type="hidden" class="one_s_hd_no" name="one_dep_port_no">
                                     <input type="text" placeholder="출발지" class="oSta_label form-control" readonly>
                                     <ul class="optionList">
                                         @forelse($data as $val)
@@ -83,6 +85,7 @@
                                     </ul>
                                 </div>
                                 <div class="selectBox2">
+                                    <input type="hidden" class="one_a_hd_no" name="one_arr_port_no">
                                     <input type="text" placeholder="도착지" class="oArr_label form-control" readonly>
                                     <ul class="optionList">
                                         @forelse($data as $val)
@@ -93,7 +96,7 @@
                                     </ul>
                                 </div>
                                 <div class="selectBox2">
-                                    <input type="text" id="txtDate1" class="form-control" />
+                                    <input type="text" id="txtDate1" class="form-control" name="one_fly_date" />
                                 </div>
                             </div>
                         </div>
