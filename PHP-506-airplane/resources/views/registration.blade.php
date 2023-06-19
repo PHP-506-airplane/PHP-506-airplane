@@ -11,14 +11,12 @@
 
 @section('title', 'Registration')
 
-@section('contents')
-
 @section('css') 
     <link rel="stylesheet" href="{{asset('css/registration.css')}}">
 @endsection
 
-    {{-- <h1>회원가입</h1>
-    @include('layout.errorsvalidate')
+@section('contents')
+    <h1>회원가입</h1>
     <form action="{{route('users.registration.post')}}" method="post">
         @csrf
         <label for="name">이름 : </label>
@@ -26,6 +24,9 @@
         <br>
         <label for="email">이메일 : </label>
         <input type="text" name="email" id="email" required autocomplete="off" placeholder="이메일  형식에 맞게 작성">
+        <br>
+        <input type="email" id="emailInput">
+        <button id="checkEmailButton">이메일 중복 확인</button>
         <br>
         <label for="password">비밀번호 : </label>
         <input type="password" name="password" id="pw" oninput="pwChk()" required autocomplete="off">
@@ -60,9 +61,9 @@
         <button type="button" onclick="location.href = '{{route('users.login')}}'">Cancel</button>
     </form>
 
-@endsection --}}
+@endsection
 
-
+{{-- 
 <form action="{{route('users.registration.post')}}" method="post">
     @csrf
     <div class="wrap">
@@ -76,7 +77,12 @@
                     <label for="u_email">이메일</label>
                     <input type="email" name="u_email" id="email" placeholder="Email" autocomplete="off" >
                 </div>
-                <button id="checkId">이메일 중복확인</button>
+                <button type="button" id="chkDuplicationId">이메일 중복확인</button>
+                <div id="errMsgemail">
+                    @if(isset($arrError["email"]))
+                        {{ $arrError["email"] }}
+                    @endif
+                </div>
                 <div class="regist_id">
                     <label for="u_pw">비밀번호</label>
                     <input type="password" name="u_pw" id="pw" oninput="pwChk()" placeholder="Password" autocomplete="off">
@@ -90,6 +96,27 @@
                     <label for="birth">생년월일</label>
                     <input type="date" name="birth" value="xxx" min="1900-01-01" max="now()" required>
                 </div>
+                <div>
+                    <label for="gender">성별 : </label>
+                        <input type="radio" name="gender" id="gender_m" value="M">M
+                        <input type="radio" name="gender" id="gender_f" value="F">F
+                </div>
+                <div>
+                    <span>이메일 찾기 힌트를 선택해주세요</span>
+                </div>
+                <div class="regist_id">
+                    <select name="myselect" id="myselect">
+                        <option value="1"  selected='selected'>--------선택--------</option>
+                        <option value="2">기억에 남는 추억의 장소는?</option>
+                        <option value="3">나의 보물 제1호는?</option>
+                        <option value="4">가장 기억에 남는 영화는?</option>
+                        <option value="5">우리집 애완동물의 이름은?</option>
+                    </select>
+                </div>
+                <div class="regist_id">
+                    <label for="answer">답 : </label>
+                    <input type="text" name="answer" id="answer">
+                </div>
                 <span class="submit">
                     <input type="submit" value="가입">
                 </span>
@@ -99,28 +126,29 @@
             </div>
         </div>
     </div>
-</form>
+</form> --}}
+{{-- @endsection --}}
+
 @section('js')
     <script src="{{asset('js/registration.js')}}"></script>
-@endsection
+    <script>
+        const checkEmailButton = document.getElementById('checkEmailButton');
+        const emailInput = document.getElementById('emailInput');
 
-@section('javascript')
-<script>
-        const checkId = document.getElementById("checkId");
-        checkId.addEventListener("click", function(){
-        let email = $("email").val();
-        $.ajax({
-        type : "GET",
-        url : "/checkId/"+email,
-        success : function(response){
-        let user = response.user;
-        if(user == null){
-            alert("사용 가능한 아이디입니다.")
-        }
-        else {
-            alert("이미 사용하고 있는 아이디입니다.")
-        }
-        }})
-})
-</script>
+        checkEmailButton.addEventListener('click', function() {
+            const email = emailInput.value;
+
+            $.ajax({
+                type: 'GET',
+                url: '/check-email',
+                data: { email: email },
+                success: function(response) {
+                    alert(response.message);
+                },
+                error: function(xhr, status, error) {
+                    console.error(error);
+                }
+            });
+        });
+    </script>
 @endsection

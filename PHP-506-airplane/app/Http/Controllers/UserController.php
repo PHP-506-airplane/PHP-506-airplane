@@ -87,12 +87,12 @@ class UserController extends Controller
         $data['u_gender'] = $req->gender;
         $data['u_pw'] = Hash::make($req->password);
         $data['u_birth'] = $req->birth;
-        // $data['qa_no'] = $req->myselect;
-        // $data['qa_answer'] = $req->answer;
+        $data['qa_no'] = $req->myselect;
+        $data['qa_answer'] = $req->answer;
 
         $user = Userinfo::create($data);
         if(!$user) {
-            $errors = '시스템 에러가 발생하여, 회원가입에 실패했습니다.<br>잠시 후에 다시 시도해주세요~.';
+            $errors = '시스템 에러가 발생하여 회원가입에 실패했습니다.<br>잠시 후에 다시 시도해주세요~.';
             return redirect()
                 ->route('users.registration')
                 ->with('error', $errors);
@@ -333,6 +333,20 @@ class UserController extends Controller
         }
 
         return response()->json(['status' => __($status)]);
+    }
+
+    //이메일 중복 체크
+    public function checkEmail(Request $request)
+    {
+        $email = $request->input('email');
+
+        $user = User::where('email', $email)->first();
+
+        if ($user) {
+            return response()->json(['message' => '이미 사용 중인 이메일입니다.']);
+        }
+
+        return response()->json(['message' => '사용 가능한 이메일입니다.']);
     }
 }
 

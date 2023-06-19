@@ -30,7 +30,7 @@ li {
 }
 
 .regist {
-    width: 30%;
+    width: 80%;
     height: 800px;
     background: white;
     border-radius: 20px;
@@ -38,6 +38,7 @@ li {
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    overflow: scroll;
 }
 
 h2 {
