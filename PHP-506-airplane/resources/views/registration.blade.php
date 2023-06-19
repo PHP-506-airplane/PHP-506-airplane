@@ -14,20 +14,20 @@
 @section('contents')
     <h1>회원가입</h1>
     {{-- @include('layout.errorsvalidate') --}}
-    <form action="{{route('users.registration.post')}}" method="post" onsubmit="return checkAll()">
+    <form action="{{route('users.registration.post')}}" method="post">
         @csrf
-            <label for="name">이름 : </label>
-            <input type="text" name="name" id="name" oninput="chkName()" required autocomplete="off" placeholder="한글 2~30자 사이로 입력">
+        <label for="name">이름 : </label>
+        <input type="text" name="name" id="name" required autocomplete="off" placeholder="한글 2~30자 사이로 입력">
         <br>
         <label for="email">이메일 : </label>
-        <input type="text" name="email" id="email" oninput="checkMail()" required autocomplete="off">
+        <input type="text" name="email" id="email" required autocomplete="off" placeholder="이메일  형식에 맞게 작성">
         <br>
         <label for="password">비밀번호 : </label>
-        <input type="password" name="password" id="password" oninput="chkPassword()" required autocomplete="off">
+        <input type="password" name="password" id="pw" oninput="pwChk()" required autocomplete="off">
         <br>
-        <label for="passwordchk">비밀번호 : </label>
-        <input type="password" name="passwordchk" id="passwordchk" oninput="chkPassword()" required autocomplete="off">
-        <div id="chk_pw_msg"></div>
+        <label for="passwordchk">비밀번호 확인 : </label>
+        <input type="password" name="passwordchk" id="pwchk" oninput="pwChk()" required autocomplete="off">
+        <div id="chk_pw_msg"></div>  
         <br>
         <label for="birth">생년월일 : </label>
         <input type="date" name="birth" value="xxx" min="1900-01-01" max="now()" required>
