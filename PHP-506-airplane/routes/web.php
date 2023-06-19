@@ -40,6 +40,9 @@ Route::put('/users/usereditpost', [UserController::class, 'usereditpost'])->name
 // Route::get('/mails/mail', [MailController::class, 'mail'])->name('mails.mail');
 // Route::post('/mails/mailpost', [MailController::class, 'mailpost'])->name('mails.mail.post');
 
+// 이메일 중복
+Route::get('/checkId/{login_id}', 'ApiController@check')->name('email.check');
+
 // 이메일 인증
 Route::get('/users/emailverify/{code}', [UserController::class, 'emailverify'])->name('emailverifys.emailverify');
 

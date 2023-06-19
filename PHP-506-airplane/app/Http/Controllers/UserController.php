@@ -35,7 +35,7 @@ class UserController extends Controller
 
     function loginpost(Request $req) {
         
-        $req->validate([
+        $validation = $req->validate([
             'u_email'    => 'required|email|max:100'  
             ,'u_pw' => 'required|regex:/^(?=.*[a-zA-Z])(?=.*[!@#$%^*-])(?=.*[0-9]).{8,20}$/'
         ]);
@@ -58,6 +58,15 @@ class UserController extends Controller
             $errors = '인증작업 에러';
             return redirect()->back()->with('error', $errors);
         }
+
+        $remember = $req -> input('remember');
+
+        if(Auth::attempt($validation, $remember)){
+            return redirect()->route('main');
+
+        } else{
+            return redirect()->back();
+        }
     }
 
     //회원가입
@@ -78,8 +87,8 @@ class UserController extends Controller
         $data['u_gender'] = $req->gender;
         $data['u_pw'] = Hash::make($req->password);
         $data['u_birth'] = $req->birth;
-        $data['qa_no'] = $req->myselect;
-        $data['qa_answer'] = $req->answer;
+        // $data['qa_no'] = $req->myselect;
+        // $data['qa_answer'] = $req->answer;
 
         $user = Userinfo::create($data);
         if(!$user) {

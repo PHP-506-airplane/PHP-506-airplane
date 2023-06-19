@@ -69,30 +69,31 @@
             <div class="regist">
                 <h2>Registration</h2>
                 <div class="regist_id">
-                    <label for="name">이름 : </label>
+                    <label for="name">이름</label>
                     <input type="text" name="name" id="name" required autocomplete="off" placeholder="한글 2~30자 사이로 입력">
                 </div>
                 <div class="regist_id">
-                    <label for="u_email">이메일 : </label>
-                    <input type="email" name="u_email" id="u_email" placeholder="Email" autocomplete="off" >
+                    <label for="u_email">이메일</label>
+                    <input type="email" name="u_email" id="email" placeholder="Email" autocomplete="off" >
+                </div>
+                <button id="checkId">이메일 중복확인</button>
+                <div class="regist_id">
+                    <label for="u_pw">비밀번호</label>
+                    <input type="password" name="u_pw" id="pw" oninput="pwChk()" placeholder="Password" autocomplete="off">
                 </div>
                 <div class="regist_id">
-                    <label for="u_pw">비밀번호 : </label>
-                    <input type="password" name="u_pw" id="u_pw" placeholder="Password" autocomplete="off">
-                </div>
-                <div class="regist_id">
-                    <label for="u_pwchk">비밀번호 확인: </label>
-                    <input type="password" name="u_pwchk" id="u_pwchk" placeholder="Password" autocomplete="off">
+                    <label for="u_pwchk">비밀번호 확인</label>
+                    <input type="password" name="u_pwchk" id="pwchk" oninput="pwChk()" placeholder="PasswordCheck" autocomplete="off">
                 </div>
                 <div id="chk_pw_msg"></div>
                 <div class="regist_id">
-                    <label for="birth">생년월일 : </label>
+                    <label for="birth">생년월일</label>
                     <input type="date" name="birth" value="xxx" min="1900-01-01" max="now()" required>
                 </div>
                 <span class="submit">
                     <input type="submit" value="가입">
                 </span>
-                <span class="submit">
+                <span class="submit2">
                     <input type="button" value="취소" onclick="location.href = '{{route('users.login')}}'">
                 </span>
             </div>
@@ -101,4 +102,25 @@
 </form>
 @section('js')
     <script src="{{asset('js/registration.js')}}"></script>
+@endsection
+
+@section('javascript')
+<script>
+        const checkId = document.getElementById("checkId");
+        checkId.addEventListener("click", function(){
+        let email = $("email").val();
+        $.ajax({
+        type : "GET",
+        url : "/checkId/"+email,
+        success : function(response){
+        let user = response.user;
+        if(user == null){
+            alert("사용 가능한 아이디입니다.")
+        }
+        else {
+            alert("이미 사용하고 있는 아이디입니다.")
+        }
+        }})
+})
+</script>
 @endsection

@@ -182,7 +182,7 @@ h2 {
     height: 50px;
     border: 0;
     outline: none;
-    border-radius: 40px;
+    /* border-radius: 40px; */
     background: linear-gradient(to left, rgb(179, 218, 255), rgb(175, 187, 255));
     color: white;
     font-size: 1.2em;

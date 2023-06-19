@@ -11,7 +11,7 @@
 @section('title', '이메일 찾기')
 
 @section('css') 
-    <link rel="stylesheet" href="{{asset('css/login.css')}}">
+    <link rel="stylesheet" href="{{asset('css/findemail.css')}}">
 @endsection
 
 @section('contents')
@@ -39,11 +39,13 @@
                     <input type="text" name="u_name" id="u_name" placeholder="">
                 </div>
                 <div class="login_pw">
-                    <label for="u_pw">Password : </label>
+                    <label for="u_pw">비밀번호 : </label>
                     <input type="password" name="u_pw" id="u_pw" placeholder="">
                 </div>
                 <div class="submit">
                     <input type="submit" value="이메일 발송">
+                </div>
+                <div class="submit2">
                     <input type="button" value="취소" onclick="location.href = '{{route('users.login')}}'">
                 </div>
             </div>
