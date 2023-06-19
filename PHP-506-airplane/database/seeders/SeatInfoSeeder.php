@@ -27,7 +27,7 @@ class SeatInfoSeeder extends Seeder
 
             foreach ($seats as $seat) {
                 SeatInfo::create([
-                    'seat_no' => $seat // 좌석 번호
+                    'seat_no'   => $seat // 좌석 번호
                     ,'plane_no' => $i // 비행기 번호
                 ]);
             }

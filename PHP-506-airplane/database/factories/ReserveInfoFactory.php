@@ -28,10 +28,10 @@ class ReserveInfoFactory extends Factory
         };
 
         return [
-            'plane_no' => $planeNo,
-            'seat_no' => $generateSeatNo(),
-            'fly_no' => $flyNo,
-            'u_no' => $uNo,
+            'plane_no'  => $planeNo
+            ,'seat_no'  => $generateSeatNo()
+            ,'fly_no'   => $flyNo
+            ,'u_no'     => $uNo
         ];
     }
 }
