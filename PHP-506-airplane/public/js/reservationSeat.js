@@ -1,7 +1,25 @@
 let seats = document.querySelectorAll('.fast a');
+let s_name = document.querySelector('.show_name');
+let choice = document.querySelector('.tab');
+
 
 seats.forEach(function(seat){
     seat.addEventListener('click', function(){
-        seat.classList.toggle('selected'); 
+        seats.forEach(function(seat){
+            seat.classList.remove('selected');
+        });
+        seat.classList.toggle('selected');
+        s_name.value = seat.querySelector('#s_name').value;
     });
 });
+
+function changeTab(tabId) {
+    var tab = document.getElementById(tabId);
+    var tabs = document.getElementsByClassName('tab');
+
+    for (var i = 0; i < tabs.length; i++) {
+        tabs[i].classList.remove('choice');
+    }
+
+    tab.parentElement.classList.add('choice');
+}

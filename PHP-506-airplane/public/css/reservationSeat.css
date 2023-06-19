@@ -57,7 +57,7 @@ h1{
 /*  */
 .map {
     position: absolute;
-    /* right: 146px; */
+    left: 40%;
     top: 300px;
     box-sizing: border-box;
     width: 404px;
@@ -83,8 +83,19 @@ h1{
     cursor: pointer;
     transform: scale(1.2);
 }
+.map li .selectedEd{
+    background-color: #661e43;
+    pointer-events: none;
+}
+.map li .selectedEd:hover {
+    cursor: default;
+    transform: scale(1);
+  }
 .map li.stretch a, .map li.stretch>span, .map li.fast a,.map li.fast>span {
     border: 3px solid #518bbb;
+}
+.fast:nth-child(6n-3){
+    margin-right: 60px;
 }
 .tripTab {
     position: relative;
@@ -113,11 +124,18 @@ h1{
     display: block;
     height: 74px;
     line-height: 74px;
+    cursor: pointer;
     color: #000;
 }
 
 .selected {
     background-color: #6feaf6;
   }
+
+.name_box{
+    width: 30%;
+    display: flex;
+    justify-content: space-between;
+}
 
 
