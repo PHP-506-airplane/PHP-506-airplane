@@ -11,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('email_verify', function (Blueprint $table) {
-            $table->id('u_no');
+        Schema::create('regist_verify', function (Blueprint $table) {
+            $table->id('u_id');
             $table->string('verification_code', 100)->nullable();
             $table->timestamp('validity_period')->nullable();
             $table->timestamp('email_verified_at')->nullable();

@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('reserve_info', function (Blueprint $table) {
             $table->id('reserve_no');
             $table->bigInteger('plane_no');
-            $table->bigInteger('seat_no');
+            $table->char('seat_no', 3);
             $table->bigInteger('fly_no');
             $table->bigInteger('u_no');
         });

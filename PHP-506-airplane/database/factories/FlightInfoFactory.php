@@ -43,7 +43,6 @@ class FlightInfoFactory extends Factory
             // 시간 형식을 변경해서 저장 ex) 12:00 => 1200
             'dep_time' => str_replace(':', '', substr($depTime, 0, 2)) . substr($depTime, 3, 2),
             'arr_time' => str_replace(':', '', substr($arrTime, 0, 2)) . substr($arrTime, 3, 2),
-            'plane_no' => $this->faker->numberBetween(1, 5),
         ];
     }
 

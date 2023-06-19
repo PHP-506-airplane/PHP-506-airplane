@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('seat_info', function (Blueprint $table) {
             $table->char('seat_no', 3);
-            $table->integer('plane_no');
-            $table->primaryKey(['plane_no','seat_no']);
+            $table->bigInteger('plane_no');
+            $table->primary(['plane_no','seat_no']);
         });
     }
 
