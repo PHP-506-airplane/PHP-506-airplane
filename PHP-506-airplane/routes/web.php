@@ -7,6 +7,7 @@
  *                  v002 0612 이동호 add 공지사항 리스트
 **************************************************/
 
+use App\Http\Controllers\ApiController;
 use App\Http\Controllers\NoticeController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ReservationController;

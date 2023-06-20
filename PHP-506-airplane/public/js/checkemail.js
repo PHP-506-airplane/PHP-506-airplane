@@ -1,36 +1,19 @@
-function chkEmail() {
+async function chkEmail() {
     const id = document.getElementById('email');
     const div = document.getElementById('testtest');
-    const url = "?mail=" + id.value;
+    const url = "/api/mail?email=" + id.value;
 
     fetch(url, {
-        headers : {
-            "X-Requested-With" : "XMLHttpRequest"   // json형식으로 사용한다는 말
-        }
+        method: 'POST'
     })
-    .then(data => {
-        if(!data.ok) {
-            throw new Error(data.status + ' : API Response Error');
+    .then(res => {
+        if(!res.ok) {
+            throw new Error(res.status + ' : API Response Error');
         }
-        return data.json();
+        return res.json();
     }) 
-    .then(data => {
-        // if(apiData["flg"] === "1") {
-        //     alert(apiData["message"]);
-        // } else {
-            // alert(apiData["message"]);
-        // }
-        // let formattedData = '';
-        // Object.entries(data).forEach(([key, val]) => {
-        //     formattedData += `${key}: ${val}<br>`;
-        // });
-        // if (data.data) {
-        //     Object.entries(data.data).forEach(([key, value]) => {
-        //         formattedData += ` - ${key}: ${value}<br>`;
-        //     });
-        // }
-        // div.innerHTML = data;
+    .then(apiData => {
+        div.innerHTML = apiData['message'];
     })
-
     .catch(error => alert(error.message));
 }
