@@ -190,7 +190,7 @@ class ReservationController extends Controller
         $data = 
             ReserveInfo::where('u_no', '=', Auth::user()->u_no)
             ->join('flight_info AS fli', 'reserve_info.fly_no', 'fli.fly_no')
-            ->join('airplane_info AS air', 'fli.', '')
+            // ->join('airplane_info AS air', 'fli.', '')
             ->limit(3)
             ->get();
 
