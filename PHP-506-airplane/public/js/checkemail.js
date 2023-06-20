@@ -13,7 +13,8 @@ async function chkEmail() {
         return res.json();
     }) 
     .then(apiData => {
-        div.innerHTML = apiData['message'];
+        // div.innerHTML = apiData['message'];
+        alert(apiData['message']);
     })
     .catch(error => alert(error.message));
 }
