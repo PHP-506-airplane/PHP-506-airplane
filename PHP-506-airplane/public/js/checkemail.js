@@ -1,4 +1,4 @@
-function chkDuplicationId() {
+function chkEmail() {
     const id = document.getElementById('email');
 
     const url = "/api/user?email=" + email.value;
@@ -12,11 +12,11 @@ function chkDuplicationId() {
             return data.json();
         }) 
     .then(apiData => {
-        const idspan = document.getElementById('errMsgemail');
+        const emailbnt = document.getElementById('errMsgemail');
         if(apiData["flg"] === "1") {
-            idspan.innerHTML = apiData["msg"];
+            emailbnt.innerHTML = apiData["msg"];
         } else {
-            idspan.innerHTML = "";
+            emailbnt.innerHTML = "";
         }
     })
 

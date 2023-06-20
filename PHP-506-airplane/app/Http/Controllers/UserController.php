@@ -75,13 +75,15 @@ class UserController extends Controller
     }
 
     function registrationpost(Request $req) {
-        $req->validate([
-            'name'      => 'required|regex:/^[가-힣]+$/|min:2|max:30'  
-            ,'email'    => 'required|email|min:5|max:30'  
-            ,'password' => 'required_with:passwordchk|same:passwordchk|regex:/^(?=.*[a-zA-Z])(?=.*[!@#$%^*-])(?=.*[0-9]).{8,20}$/'
-            // 만 14세 이상 가입 가능
-        ]);
-
+        // Log::debug('Login Start');
+        // return $req;
+        // $req->validate([
+        //     'u_name'      => 'required|regex:/^[가-힣]+$/|min:2|max:30'  
+        //     ,'u_email'    => 'required|email|min:5|max:30'  
+        //     ,'u_pw'       => 'required_with:passwordchk|same:passwordchk|regex:/^(?=.*[a-zA-Z])(?=.*[!@#$%^*-])(?=.*[0-9]).{8,20}$/'
+        //     // 만 14세 이상 가입 가능
+        // ]);
+        // Log::debug('1 Start');
         $data['u_name'] = $req->name;
         $data['u_email'] = $req->email;
         $data['u_gender'] = $req->gender;
@@ -91,6 +93,7 @@ class UserController extends Controller
         $data['qa_answer'] = $req->answer;
 
         $user = Userinfo::create($data);
+        // Log::debug('1 Start', [$user]);
         if(!$user) {
             $errors = '시스템 에러가 발생하여 회원가입에 실패했습니다.<br>잠시 후에 다시 시도해주세요~.';
             return redirect()
@@ -149,9 +152,9 @@ class UserController extends Controller
 
     //탈퇴
     function withdraw() {
-        $id = session('u_no');
+        $id = session('u_email');
 
-        $result = Userinfo::destroy('u_no');
+        $result = Userinfo::destroy('u_email');
         Session::flush();
         Auth::logout();
 
@@ -335,18 +338,6 @@ class UserController extends Controller
         return response()->json(['status' => __($status)]);
     }
 
-    //이메일 중복 체크
-    public function checkEmail(Request $request)
-    {
-        $email = $request->input('email');
-
-        $user = User::where('email', $email)->first();
-
-        if ($user) {
-            return response()->json(['message' => '이미 사용 중인 이메일입니다.']);
-        }
-
-        return response()->json(['message' => '사용 가능한 이메일입니다.']);
-    }
+    
 }
 
