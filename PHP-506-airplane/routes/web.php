@@ -40,6 +40,8 @@ Route::put('/users/usereditpost', [UserController::class, 'usereditpost'])->name
 // Route::get('/mails/mail', [MailController::class, 'mail'])->name('mails.mail');
 // Route::post('/mails/mailpost', [MailController::class, 'mailpost'])->name('mails.mail.post');
 
+// 이메일 중복
+Route::get('/check-email', [UserController::class, 'checkEmail']);
 
 // 이메일 인증
 Route::get('/users/emailverify/{code}', [UserController::class, 'emailverify'])->name('emailverifys.emailverify');
@@ -67,6 +69,8 @@ Route::put('/users/chgpwpost', [UserController::class, 'chgpwpost'])->name('user
 Route::get('/reservation/main', [ReservationController::class, 'main'])->name('reservation.main');
 // 공지사항
 Route::resource('/notice', NoticeController::class);
+// 나의 예약 조회 페이지
+Route::get('/reservation/myreservation', [ReservationController::class, 'myreservation'])->name('reservation.myreservation');
 
 // 0613 add 오재훈
 // 예약 조회(항공편 선택) 페이지

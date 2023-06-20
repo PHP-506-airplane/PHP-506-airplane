@@ -5,6 +5,7 @@
  * 파일명       : ReservationController.php
  * 이력         :   v001 0612 오재훈 new
  *                  v002 0614 이동호 add 공지사항
+ *                  v003 0620 이동호 add 나의 예약 조회 페이지
 **************************************************/
 
 namespace App\Http\Controllers;
@@ -12,23 +13,30 @@ namespace App\Http\Controllers;
 use App\Models\NoticeInfo;
 use App\Models\AirportInfo;
 use App\Models\FlightInfo;
+use App\Models\ReserveInfo;
 use App\Models\SeatInfo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Query\JoinClause;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class ReservationController extends Controller
 {
     public function main() {
         // $result = AirportInfo::select('*')->get(); //v002 del 이동호
-        $data = AirportInfo::select('*')->orderby('port_name')->get();
+        $data = 
+            AirportInfo::select('*')
+            ->orderby('port_name')
+            ->get();
 
         // v002 add 이동호
         // 최신 공지사항 5개 가져오기
-        $notices = NoticeInfo::select(['notice_title', 'notice_no', 'created_at'])
-        ->orderBy('notice_no', 'desc')
-        ->take(5)
-        ->get();
+        $notices = 
+            NoticeInfo::select(['notice_title', 'notice_no', 'created_at'])
+            ->orderBy('notice_no', 'desc')
+            ->take(5)
+            ->get();
         
         //  return view('welcome')->with('data',$result); //v002 del 이동호
         return view('welcome', compact('notices', 'data'));
@@ -156,4 +164,25 @@ class ReservationController extends Controller
         return view('reservationSeat')->with('data',$result)->with('seat',$seat);
     }
     
+    // v003 이동호
+    public function myreservation() {
+        if(empty(Auth::user())) {
+            return redirect()->route('users.login');
+        }
+
+        $data = [];
+        $data = 
+            ReserveInfo::where('u_no', '=', Auth::user()->u_no)
+            ->join('flight_info AS fli', 'reserve_info.fly_no', 'fli.fly_no')
+            ->join('airplane_info AS air', 'fli.', '')
+            ->limit(3)
+            ->get();
+
+        // echo '<pre>';
+        // echo var_dump($data);
+        // echo '</pre>';
+        // exit;
+
+        return view('myreservation')->with('data', $data);
+    }
 }

@@ -19,6 +19,7 @@
     <h1>회원가입</h1>
     <form action="{{route('users.registration.post')}}" method="post">
         @csrf
+        <div id="testtest"></div>
         <label for="name">이름 : </label>
         <input type="text" name="name" id="name" required autocomplete="off" placeholder="한글 2~30자 사이로 입력">
         <br>
@@ -26,7 +27,7 @@
         <input type="email" name="email" id="email" required autocomplete="off" placeholder="이메일  형식에 맞게 작성">
         <br>
         {{-- <input type="email" id="email" required autocomplete="off" placeholder="이메일 형식에 맞게 작성"> --}}
-        <button id="errMsgemail" onclick="chkEmail()">이메일 중복 확인</button>
+        <button type="button" id="errMsgemail" onclick="chkEmail()">이메일 중복 확인</button>
         <br>
         <label for="password">비밀번호 : </label>
         <input type="password" name="password" id="password" oninput="pwChk()" required autocomplete="off">
@@ -131,4 +132,5 @@
 
 @section('js')
     <script src="{{asset('js/registration.js')}}"></script>
+    <script src="{{asset('js/checkemail.js')}}"></script>
 @endsection

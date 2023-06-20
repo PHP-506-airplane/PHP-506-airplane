@@ -30,18 +30,5 @@ class airplaneInfoSeeder extends Seeder
         }
 
         AirplaneInfo::insert($arr);
-
-        // $airlines = LineInfo::all();
-        // $lineNo = 1;
-
-        // foreach ($airlines as $airline) {
-        //     AirplaneInfo::create([
-        //         'plane_name' => 'Air' . $lineNo
-        //         ,'total_seat_num' => 96
-        //         ,'line_no' => $lineNo
-        //     ]);
-
-        //     $lineNo++;
-        // }
     }
 }

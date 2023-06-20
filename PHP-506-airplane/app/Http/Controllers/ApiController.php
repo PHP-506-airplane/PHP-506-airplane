@@ -17,9 +17,9 @@ class ApiController extends Controller
         $user = User::where('u_email', $email)->first();
 
         if ($user) {
-            return response()->json(['message' => '이미 사용 중인 이메일입니다.']);
+            return response()->json(['message' => '이미 사용 중인 이메일입니다.', 'flg' => 1]);
         }
 
-        return response()->json(['message' => '사용 가능한 이메일입니다.']);
+        return response()->json(['message' => '사용 가능한 이메일입니다.', 'flg' => 1]);
     }
 }
