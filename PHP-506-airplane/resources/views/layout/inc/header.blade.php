@@ -29,6 +29,7 @@
                 @auth
                     {{-- 로그인됐을 때 사용자 이름 표시 되고 이름 누르면 회원정보 수정으로  --}}
                     <a href="{{route('users.useredit')}}">{{Auth::user()->u_name}}</a>
+                    <a href="{{route('reservation.myreservation')}}">예약 조회</a>
                     <a href="{{route('users.logout')}}">로그아웃</a>
                 @endauth
                 </li>

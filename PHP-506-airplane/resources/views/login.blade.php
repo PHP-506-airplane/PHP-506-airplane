@@ -52,20 +52,13 @@
     @csrf
     <div class="wrap">
             <div class="login">
-                <h2>Log-in</h2>
-            {{-- <div class="login_sns">
-            <li><a href=""><i class="fab fa-instagram"></i></a></li>
-            <li><a href=""><i class="fab fa-facebook-f"></i></a></li>
-            <li><a href=""><i class="fab fa-twitter"></i></a></li>
-            </div> --}}
+                <h2>로그인</h2>
                 <div class="login_id">
-                    {{-- <h4>이메일</h4> --}}
                     <label for="u_email">Email : </label>
                     <input type="email" name="u_email" id="u_email" placeholder="Email">
                 </div>
                 <div class="login_pw">
                     <label for="u_pw">Password : </label>
-                    {{-- <h4>비밀번호</h4> --}}
                     <input type="password" name="u_pw" id="u_pw" placeholder="Password">
                 </div>
                 <div class="login_etc">

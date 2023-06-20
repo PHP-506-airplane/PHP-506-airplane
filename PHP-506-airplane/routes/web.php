@@ -7,6 +7,7 @@
  *                  v002 0612 이동호 add 공지사항 리스트
 **************************************************/
 
+use App\Http\Controllers\ApiController;
 use App\Http\Controllers\NoticeController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ReservationController;
@@ -69,6 +70,8 @@ Route::put('/users/chgpwpost', [UserController::class, 'chgpwpost'])->name('user
 Route::get('/reservation/main', [ReservationController::class, 'main'])->name('reservation.main');
 // 공지사항
 Route::resource('/notice', NoticeController::class);
+// 나의 예약 조회 페이지
+Route::get('/reservation/myreservation', [ReservationController::class, 'myreservation'])->name('reservation.myreservation');
 
 // 0613 add 오재훈
 // 예약 조회(항공편 선택) 페이지

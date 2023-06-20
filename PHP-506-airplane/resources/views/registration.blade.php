@@ -19,17 +19,18 @@
     <h1>회원가입</h1>
     <form action="{{route('users.registration.post')}}" method="post">
         @csrf
+        <div id="testtest"></div>
         <label for="name">이름 : </label>
         <input type="text" name="name" id="name" required autocomplete="off" placeholder="한글 2~30자 사이로 입력">
         <br>
         <label for="email">이메일 : </label>
-        <input type="text" name="email" id="email" required autocomplete="off" placeholder="이메일  형식에 맞게 작성">
+        <input type="email" name="email" id="email" required autocomplete="off" placeholder="이메일  형식에 맞게 작성">
         <br>
-        <input type="email" id="emailInput">
-        <button id="checkEmailButton">이메일 중복 확인</button>
+        {{-- <input type="email" id="email" required autocomplete="off" placeholder="이메일 형식에 맞게 작성"> --}}
+        <button type="button" id="errMsgemail" onclick="chkEmail()">이메일 중복 확인</button>
         <br>
         <label for="password">비밀번호 : </label>
-        <input type="password" name="password" id="pw" oninput="pwChk()" required autocomplete="off">
+        <input type="password" name="password" id="password" oninput="pwChk()" required autocomplete="off">
         <br>
         <label for="passwordchk">비밀번호 확인 : </label>
         <input type="password" name="passwordchk" id="pwchk" oninput="pwChk()" required autocomplete="off">
@@ -131,24 +132,5 @@
 
 @section('js')
     <script src="{{asset('js/registration.js')}}"></script>
-    <script>
-        const checkEmailButton = document.getElementById('checkEmailButton');
-        const emailInput = document.getElementById('emailInput');
-
-        checkEmailButton.addEventListener('click', function() {
-            const email = emailInput.value;
-
-            $.ajax({
-                type: 'GET',
-                url: '/check-email',
-                data: { email: email },
-                success: function(response) {
-                    alert(response.message);
-                },
-                error: function(xhr, status, error) {
-                    console.error(error);
-                }
-            });
-        });
-    </script>
+    <script src="{{asset('js/checkemail.js')}}"></script>
 @endsection

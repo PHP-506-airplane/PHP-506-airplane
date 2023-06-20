@@ -1,24 +1,30 @@
-function chkDuplicationId() {
+async function chkEmail() {
     const id = document.getElementById('email');
-
-    const url = "/api/user?email=" + email.value;
-    let apiData = null;
+    const div = document.getElementById('testtest');
+    // const url = "/api/mail?" + id.value;
+    const url = "/api/mail";
 
     fetch(url)
-    .then(data => {
-        if(data.status !== 200) {
-            throw new Error(data.status + ' : API Response Error');
+    .then(res => {
+        if(!res.ok) {
+            throw new Error(res.status + ' : API Response Error');
         }
-            return data.json();
-        }) 
-    .then(apiData => {
-        const idspan = document.getElementById('errMsgemail');
-        if(apiData["flg"] === "1") {
-            idspan.innerHTML = apiData["msg"];
-        } else {
-            idspan.innerHTML = "";
-        }
-    })
-
+        return res;
+    }) 
+    // .then(data => {
+        // console.log(data);
+        // let formattedData = '';
+        // // console.log(data)
+        // Object.entries(data).forEach(([key, val]) => {
+        //     formattedData += `${key}: ${val}<br>`;
+        // });
+        // if (data.data) {
+        //     Object.entries(data.data).forEach(([key, value]) => {
+        //         formattedData += ` - ${key}: ${value}<br>`;
+        //     });
+        // }
+        // data.innerHTML = formattedData;
+        // alert(data['message']);
+    // })
     .catch(error => alert(error.message));
 }

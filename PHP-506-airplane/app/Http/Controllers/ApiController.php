@@ -3,32 +3,25 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Userinfo;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class ApiController extends Controller
 {
-    // public function userGet() { 
-    //     $arrGet = $_GET;
-    //     $arrData = [ "flg" => "0" ]; //flg라는 key의 값을 0으로 설정(=>의 기능)
-    //     // model 호출
-    //     $this->model = $this->getModel("User");
+    // 이메일 중복 체크
+    public function chkEmail()
+    {
+        echo "왔냐?";
+        // // Log::debug('Login Start');
+        // $email = $req->email;
+        // // Log::debug('Login Start', $req->only('u_email'));
+        // $user = Userinfo::where('u_email', $email)->first();
+        // // $user = '';
+        // if ($user) {
+        //     return response()->json(['message' => '이미 사용 중인 이메일입니다.', 'flg' => 1]);
+        // }
 
-    //     $result = $this->model->getUser($arrGet, false);    //Model에서의 두번째를 false로 변경->작동 안함
-
-    //     //유저 유무 체크
-    //     if(count($result) == ""){
-    //         $arrData["flg"] ="0";
-    //         $arrData["msg"] = "Email을 입력하세요.";
-    //     }elseif(count($result) !== 0) {
-    //         $arrData["flg"] ="1"; 
-    //         $arrData["msg"] = "입력하신 email가 사용중입니다.";
-    //     }
-
-    //     // 배열을 JSON으로 변경
-    //     // json_encode : php array 또는 string 등을 JSON 문자열로 변환하는 php함수
-    //     $json = json_encode($arrData);
-    //     header('Content-type: application/json');
-    //     echo $json;
-    //     exit();
-    // }
+        // return response()->json(['message' => '사용 가능한 이메일입니다.', 'flg' => 0]);
+    }
 }

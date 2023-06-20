@@ -15,7 +15,7 @@ window.addEventListener('DOMContentLoaded', function() {
         // 현재 창의 높이
         let windowHeight = window.innerHeight;
         // footer의 높이
-        let footerHeight = footer.offsetHeight;
+        // let footerHeight = footer.offsetHeight;
         let contentHeight = divContentsMain.scrollHeight;
         
         // footer가 화면 하단에 고정되어야 하는지 확인
@@ -28,7 +28,7 @@ window.addEventListener('DOMContentLoaded', function() {
     }
     
     // 페이지 로딩 시 footer의 위치를 조정
-    checkFooterPosition();
+    // checkFooterPosition();
     
     // 윈도우 크기 변경 시 footer의 위치를 다시 확인후 조정
     window.addEventListener('resize', function() {

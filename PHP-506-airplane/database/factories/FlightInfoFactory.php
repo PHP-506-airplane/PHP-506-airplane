@@ -27,7 +27,7 @@ class FlightInfoFactory extends Factory
         $depPortNo = $this->faker->numberBetween(1, 14);
         $arrPortNo = $this->faker->numberBetween(1, 14);
 
-        while ($depPortNo === $arrPortNo) {
+        while($depPortNo === $arrPortNo) {
             $arrPortNo = $this->faker->numberBetween(1, 14);
             // $arrPortNo = 99;
         }
@@ -37,7 +37,7 @@ class FlightInfoFactory extends Factory
             ,'price'        => $this->faker->numberBetween(10, 300) * 1000 // 가격을 10,000원 ~ 300,000원 사이로 설정, 최소 1000원 단위
             ,'dep_port_no'  => $depPortNo
             ,'arr_port_no'  => $arrPortNo
-            ,'line_no'      => $this->faker->numberBetween(1, 12)
+            ,'plane_no'     => $this->faker->numberBetween(1, 5)
             // bothify('??###') : 영어 2자리, 숫자 3자리 랜덤하게 생성
             ,'flight_num'   => $this->faker->bothify('??###')
             // 시간 형식을 변경해서 저장 ex) 12:00 => 1200
@@ -54,7 +54,7 @@ class FlightInfoFactory extends Factory
             $date = Carbon::parse($flight->fly_date)->format('Y-m-d');
             $count = FlightInfo::whereDate('fly_date', $date)->count();
 
-            if ($count < 10) {
+            if($count < 10) {
                 $remainingCount = 10 - $count;
                 // 부족한 데이터 생성
                 FlightInfo::factory()->count($remainingCount)->create([
@@ -63,12 +63,12 @@ class FlightInfoFactory extends Factory
             }
 
             // 매일 1부터 14까지의 dep_port_no가 모두 포함되어 최소 3개 이상의 데이터가 있는지 확인
-            foreach (range(1, 14) as $depPortNo) {
+            foreach(range(1, 14) as $depPortNo) {
                 $countPort = FlightInfo::whereDate('fly_date', $date)
                     ->where('dep_port_no', $depPortNo)
                     ->count();
 
-                if ($countPort < 3) {
+                if($countPort < 3) {
                     $remainingCount = 3 - $countPort;
                     // 부족한 데이터 생성
                     FlightInfo::factory()->count($remainingCount)->create([

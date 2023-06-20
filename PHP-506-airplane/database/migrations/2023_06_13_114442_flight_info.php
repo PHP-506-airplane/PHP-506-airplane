@@ -19,7 +19,7 @@ return new class extends Migration
             $table->integer('price');
             $table->biginteger('dep_port_no'); 
             $table->biginteger('arr_port_no');
-            $table->biginteger('line_no');
+            $table->biginteger('plane_no');
             $table->string('flight_num',30);
             $table->char('dep_time', 4);
             $table->char('arr_time', 4);
