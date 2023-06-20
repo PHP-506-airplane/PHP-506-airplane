@@ -1,26 +1,20 @@
-function chkEmail() {
+async function chkEmail() {
     const id = document.getElementById('email');
     const div = document.getElementById('testtest');
-    const url = "?mail=" + id.value;
+    // const url = "/api/mail?" + id.value;
+    const url = "/api/mail";
 
-    fetch(url, {
-        headers : {
-            "X-Requested-With" : "XMLHttpRequest" 
+    fetch(url)
+    .then(res => {
+        if(!res.ok) {
+            throw new Error(res.status + ' : API Response Error');
         }
-    })
-    .then(data => {
-        if(!data.ok) {
-            throw new Error(data.status + ' : API Response Error');
-        }
-        return data.json();
+        return res;
     }) 
-    .then(data => {
-        // if(apiData["flg"] === "1") {
-        //     alert(apiData["message"]);
-        // } else {
-            // alert(apiData["message"]);
-        // }
+    // .then(data => {
+        // console.log(data);
         // let formattedData = '';
+        // // console.log(data)
         // Object.entries(data).forEach(([key, val]) => {
         //     formattedData += `${key}: ${val}<br>`;
         // });
@@ -29,8 +23,8 @@ function chkEmail() {
         //         formattedData += ` - ${key}: ${value}<br>`;
         //     });
         // }
-        // div.innerHTML = data;
-    })
-
+        // data.innerHTML = formattedData;
+        // alert(data['message']);
+    // })
     .catch(error => alert(error.message));
 }
