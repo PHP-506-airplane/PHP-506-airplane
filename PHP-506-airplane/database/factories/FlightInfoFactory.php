@@ -10,6 +10,7 @@
 namespace Database\Factories;
 
 use App\Models\FlightInfo;
+use App\Models\ReserveInfo;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -37,7 +38,7 @@ class FlightInfoFactory extends Factory
             ,'price'        => $this->faker->numberBetween(10, 300) * 1000 // 가격을 10,000원 ~ 300,000원 사이로 설정, 최소 1000원 단위
             ,'dep_port_no'  => $depPortNo
             ,'arr_port_no'  => $arrPortNo
-            ,'plane_no'     => $this->faker->numberBetween(1, 5)
+            ,'plane_no'     => $this->faker->numberBetween(1, 60)
             // bothify('??###') : 영어 2자리, 숫자 3자리 랜덤하게 생성
             ,'flight_num'   => $this->faker->bothify('??###')
             // 시간 형식을 변경해서 저장 ex) 12:00 => 1200
@@ -76,6 +77,12 @@ class FlightInfoFactory extends Factory
                         ,'dep_port_no'  => $depPortNo
                     ]);
                 }
+            }
+
+            $reserveInfo = ReserveInfo::where('fly_no', $flight->flight_num)->first();
+            if ($reserveInfo) {
+                $flight->plane_no = $reserveInfo->plane_no;
+                $flight->save();
             }
         });
     }

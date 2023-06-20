@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\FlightInfo;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -34,4 +35,20 @@ class ReserveInfoFactory extends Factory
             ,'u_no'     => $uNo
         ];
     }
+
+    public function configure()
+    {
+        return $this->afterMaking(function ($reserveInfo) {
+            $res = $reserveInfo->where('fly_no', $reserveInfo->fly_no)->first();
+            if ($res) {
+                $reserveInfo->plane_no = $res->plane_no;
+            }
+
+            $flightInfo = FlightInfo::where('flight_num', $reserveInfo->fly_no)->first();
+            if ($flightInfo) {
+                $reserveInfo->plane_no = $flightInfo->plane_no;
+            }
+        });
+    }
 }
+

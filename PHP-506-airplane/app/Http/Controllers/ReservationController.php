@@ -193,11 +193,24 @@ class ReservationController extends Controller
 
         $data = [];
         $data = 
-            ReserveInfo::where('u_no', '=', Auth::user()->u_no)
-            ->join('flight_info AS fli', 'reserve_info.fly_no', 'fli.fly_no')
-            // ->join('airplane_info AS air', 'fli.', '')
-            ->limit(3)
-            ->get();
+            ReserveInfo::join('flight_info AS fli', 'reserve_info.fly_no', 'fli.fly_no')
+                ->join('airplane_info AS airp', 'fli.plane_no', 'airp.plane_no')
+                ->join('airline_info AS airl', 'airp.line_no', 'airl.line_no')
+                ->where('reserve_info.u_no', Auth::user()->u_no)
+                ->select(
+                    'reserve_info.*'
+                    ,'fli.fly_date'
+                    ,'fli.dep_port_no'
+                    ,'fli.arr_port_no'
+                    ,'fli.flight_num'
+                    ,'fli.dep_time'
+                    ,'fli.arr_time'
+                    ,'airp.plane_name'
+                    ,'airl.line_name'
+                    ,'airl.line_code'
+                )
+                ->limit(30)
+                ->get();
 
         // echo '<pre>';
         // echo var_dump($data);
