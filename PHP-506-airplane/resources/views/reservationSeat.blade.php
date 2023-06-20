@@ -54,10 +54,14 @@
 <div class="seatMap">
     <div class="name_box">
         <h2>예매자 정보</h2>
-        <ul>
-            <li>이름 : <span>홍길동</span></li>
-            <li><input type="text" class="show_name" readonly></li>
-        </ul>
+        <form action="{{route('reservation.seatpost')}}" method="post">
+            <ul>
+                <input type="hidden" name="dep_port_no">
+                <li>이름 : <span>홍길동</span></li>
+                <li><input type="text" class="show_name" readonly></li>
+            </ul>
+            <button type="submit">예약하기</button>
+        </form>
     </div>
     <div class="map">
         <ol>

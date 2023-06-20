@@ -179,6 +179,11 @@ class ReservationController extends Controller
 
         return view('reservationSeat')->with('data',$result)->with('seat',$seat)->with('able',$availableSeats);
     }
+
+    public function seatpost(Request $req){
+        
+        return view('reservationconfirm');
+    }
     
     // v003 이동호
     public function myreservation() {

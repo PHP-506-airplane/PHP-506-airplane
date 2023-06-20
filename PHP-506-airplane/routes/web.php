@@ -77,4 +77,4 @@ Route::get('/reservation/myreservation', [ReservationController::class, 'myreser
 // 예약 조회(항공편 선택) 페이지
 Route::get('/reservation/check', [ReservationController::class, 'check'])->name('reservation.check');
 Route::post('/reservation/checkpost', [ReservationController::class, 'checkpost'])->name('reservation.checkpost');
-// Route::get('/reservation/seat', [ReservationController::class, 'seat'])->name('reservation.seat');
+Route::post('/reservation/seatpost', [ReservationController::class, 'seatpost'])->name('reservation.seatpost');
