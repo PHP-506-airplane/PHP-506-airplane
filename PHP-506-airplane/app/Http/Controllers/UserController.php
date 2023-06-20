@@ -152,7 +152,7 @@ class UserController extends Controller
 
     //탈퇴
     function withdraw() {
-        $id = session('u_email');
+        $id = session('email');
 
         $result = Userinfo::destroy('u_email');
         Session::flush();
@@ -217,49 +217,6 @@ class UserController extends Controller
         return redirect()->back()->with('success', $success);
     }
 
-    // 이메일 찾기
-    function findemail() {
-        return view('findemail');
-    }
-
-    function findemailpost() {
-
-    }
-
-    // 비밀번호 찾기
-    function findpassword() {
-        return view('findpassword');
-    }
-
-    function findpasswordpost() {
-        
-    }
-
-    // 비밀번호 확인
-    function chkpassword() {
-        return view('chkpassword');
-    }
-
-    function chkpasswordpost(Request $req) {
-
-        $arrKey = [];
-
-        $baseUser  = Userinfo::find(Auth::User()->id);
-            
-        //현재 비밀번호 확인
-        if(!Hash::check($req->password, $baseUser->password)) {
-            return redirect()->back()->with('error', '비밀번호가 일치하지 않습니다.');
-        }
-
-        if(!isset($req->password)) {
-            $arrKey[] = 'password';
-        }   
-
-        //유효성체크를 하는 모든 항목 리스트:
-        $chkList = [
-            'password' => 'same:passwordchk|regex:/^(?=.*[a-zA-Z])(?=.*[!@#$%^*-])(?=.*[0-9]).{8,20}$/'
-        ];
-    }
 
     // 비밀번호 변경
     function chgpw() {
@@ -291,51 +248,6 @@ class UserController extends Controller
         // return view('useredit')->with('data', $baseuser);
 
         return redirect()->route('users.logout');
-        // return $req;
-        // $req->validate([
-        //     'password' => 'required_with:passwordchk|same:passwordchk|regex:/^(?=.*[a-zA-Z])(?=.*[!@#$%^*-])(?=.*[0-9]).{8,20}$/'
-        //     ,'passwordchk' => 'required_with:password|same:password|regex:/^(?=.*[a-zA-Z])(?=.*[!@#$%^*-])(?=.*[0-9]).{8,20}$/'
-        // ]);
-
-        // $status = Password::reset(
-        //     $req->only('password', 'passwordchk'),
-        //     function ($user) use ($req) {
-        //         $user->forceFill([
-        //             'password' => Hash::make($req->password),
-        //         ])->save();
-
-        //         event(new PasswordReset($user));
-        //     }
-        // );
-
-        // if ($status != Password::PASSWORD_RESET) {
-        //     throw ValidationException::withMessages([
-        //         'email' => [__($status)],
-        //     ]);
-        // }
-
-        // return response()->json(['status' => __($status)]);
-        // return redirect()->back() ->with('alert', '변경 되었습니다!');
-    }
-
-    // 비밀번호 찾기(수신된 이메일에서 버튼 클릭시 새비번 입력할 수 있는 페이지로 이동(이거 아님))
-    function forgotPassword(Request $req)
-    {
-        $req->validate([
-            'email' => 'required|email'
-        ], $req->all());
-
-        $status = Password::sendResetLink(
-            $req->only('email')
-        );
-
-        if ($status != Password::RESET_LINK_SENT) {
-            throw ValidationException::withMessages([
-                'email' => [__($status)],
-            ]);
-        }
-
-        return response()->json(['status' => __($status)]);
     }
 
     
