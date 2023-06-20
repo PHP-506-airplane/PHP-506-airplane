@@ -10,18 +10,19 @@ use Illuminate\Support\Facades\Log;
 class ApiController extends Controller
 {
     // 이메일 중복 체크
-    public function chkEmail()
+    public function chkEmail(Request $req)
     {
-        echo "왔냐?";
-        // // Log::debug('Login Start');
+        Log::debug('왔냐?');
+        Log::debug($req);
         // $email = $req->email;
-        // // Log::debug('Login Start', $req->only('u_email'));
-        // $user = Userinfo::where('u_email', $email)->first();
-        // // $user = '';
-        // if ($user) {
-        //     return response()->json(['message' => '이미 사용 중인 이메일입니다.', 'flg' => 1]);
-        // }
+        // Log::debug('Login Start', $req->only('u_email'));
+        $user = Userinfo::where('u_email', $req->email)->first();
+        Log::debug($user);
 
-        // return response()->json(['message' => '사용 가능한 이메일입니다.', 'flg' => 0]);
+        if ($user) {
+            return response()->json(['message' => '이미 사용 중인 이메일입니다.', 'flg' => 1]);
+        }
+
+        return response()->json(['message' => '사용 가능한 이메일입니다.', 'flg' => 0]);
     }
 }

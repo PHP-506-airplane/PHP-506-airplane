@@ -30,10 +30,10 @@
         <button type="button" id="errMsgemail" onclick="chkEmail()">이메일 중복 확인</button>
         <br>
         <label for="password">비밀번호 : </label>
-        <input type="password" name="password" id="password" oninput="pwChk()" required autocomplete="off">
+        <input type="password" name="password" id="password" oninput="chkPw()" required autocomplete="off">
         <br>
         <label for="passwordchk">비밀번호 확인 : </label>
-        <input type="password" name="passwordchk" id="pwchk" oninput="pwChk()" required autocomplete="off">
+        <input type="password" name="passwordchk" id="pwchk" oninput="chkPw()" required autocomplete="off">
         <div id="chk_pw_msg"></div>  
         <br>
         <label for="birth">생년월일 : </label>
@@ -131,6 +131,6 @@
 {{-- @endsection --}}
 
 @section('js')
-    <script src="{{asset('js/registration.js')}}"></script>
+    <script src="{{asset('js/chkPw.js')}}"></script>
     <script src="{{asset('js/checkemail.js')}}"></script>
 @endsection

@@ -20,4 +20,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 // 이메일 중복
-Route::post('/mail', [ApiController::class, 'chkEmail'])->name('chkEmail');
+Route::post('/mail', [ApiController::class, 'chkEmail']);

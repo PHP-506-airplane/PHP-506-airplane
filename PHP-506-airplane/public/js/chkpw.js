@@ -1,7 +1,7 @@
 const chkPwMsg = document.getElementById('chk_pw_msg');
 
-function pwChk() {
-    const p1 = document.getElementById('pw').value;
+function chkPw() {
+    const p1 = document.getElementById('password').value;
     const p2 = document.getElementById('pwchk').value;
     if( p2.length === 0 ) {
         chkPwMsg.style.color = 'red';
