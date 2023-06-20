@@ -5,7 +5,7 @@ function chkEmail() {
 
     fetch(url, {
         headers : {
-            "X-Requested-With" : "XMLHttpRequest" 
+            "X-Requested-With" : "XMLHttpRequest"   // json형식으로 사용한다는 말
         }
     })
     .then(data => {
