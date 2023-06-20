@@ -45,8 +45,8 @@ class DatabaseSeeder extends Seeder
         // }
         
         // 티켓정보 팩토리
-        // for($i = 0; $i < 1; $i++) {
+        for($i = 0; $i < 1; $i++) {
             \App\Models\TicketInfo::factory(2000)->create();
-        // }
+        }
     }
 }
