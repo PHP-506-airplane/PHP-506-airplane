@@ -148,12 +148,28 @@ class ReservationController extends Controller
         ->where('fli.fly_date','>',now())
         ->get();
 
+        
+        // 예약된 좌석
+        $availableSeats = DB::table('reserve_info')
+            ->select('seat_no')
+            ->where('fly_no','=',$req->dep_fly_no)
+            ->get();
+
+        // 좌석
         $seat = DB::table('seat_info')
         ->select('seat_no')
         ->limit(108)
         ->get();
 
-        return view('reservationSeat')->with('data',$result)->with('seat',$seat);
+        if(!isset($req->dep_fly_no)){
+            alert()->warning('가는편 여정을 선택해주세요');
+            return redirect()->back();
+        }elseif(!isset($req->arr_fly_no)){
+            alert()->warning('오는편 여정을 선택해주세요');
+            return redirect()->back();
+        }
+
+        return view('reservationSeat')->with('data',$result)->with('seat',$seat)->with('able',$availableSeats);
     }
     
 }

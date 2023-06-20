@@ -16,6 +16,13 @@
 @endsection
 
 @section('contents')
+<?php
+// $number = $val->arr_time - $val->dep_time
+// $hours = floor($val->arr_time - $val->dep_time / 60)
+// $minutes = $val->arr_time - $val->dep_time % 60
+
+// $time = sprintf("%02d:%02d", $hours, $minutes) 
+?>
 <div class="container">
     <form action="{{route('reservation.checkpost')}}" method="post">
         @csrf
@@ -67,30 +74,24 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @if(isset($data[0]->arr2_port_no) && $_GET['arr_port_no'] == $data[0]->arr2_port_no)
                     @forelse($data as $val)
                     <tr>
                         <td>{{strtoupper($val->flight_num)}}</td>
-                        <td>{{$val->dep_time}}</td>
-                        <td>시 분</td>
-                        <td>{{$val->arr_time}}</td>
-                        <td>
-                            <p class="price_btn">
-                                <a href="javascript:void(0);" class="dep_price">{{$val->price}}</a>
-                            </p>
-                        </td>
+                        <td><p>({{$data[0]->dep_port_eng}})</p>{{substr($val->dep_time, 0, 2)}}:{{substr($val->dep_time, 2, 2)}}</td>
+                        <td>{{ (strtotime($val->arr_time) - strtotime($val->dep_time))/60 }}</td>
+                        <td><p>({{$data[0]->arr_port_eng}})</p>{{substr_replace($val->arr_time,':',2,0)}}</td>
+                        <td>{{substr_replace($val->price,',',-3,0)}}</td>
                         <td><input type="radio" name="dep_fly_no" value="{{$val->fly_no}}"></td>
                     </tr>
                     @empty
                     <tr>
-                        <td>데이터없음</td>
+                        <td colspan="6">데이터없음</td>
                     </tr>
                     @endforelse
-                    @endif
                 </tbody>
             </table>
             {{-- 오는편 --}}
-            <h2>여정2 :
+            <h2 class="select2">여정2 :
                 @if( isset($data[0]->arr2_port_no) && $_GET['arr_port_no'] == $data[0]->arr2_port_no)
                 <span class="br">{{$data[0]->arr_port_name}}({{$data[0]->arr_port_eng}})</span>
                 @endif
@@ -113,26 +114,20 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @if(isset($_GET['arr_port_no']) && $_GET['arr_port_no'] == $data2[0]->dep2_port_no)
                     @forelse($data2 as $val)
                     <tr>
-                        <td>{{$val->flight_num}}</td>
-                        <td>{{$val->dep_time}}</td>
-                        <td>시 분</td>
-                        <td>{{$val->arr_time}}</td>
-                        <td>
-                            <p class="price_btn">
-                                <a href="javascript:void(0);" class="arr_price">{{$val->price}}</a>
-                            </p>
-                        </td>
+                        <td>{{strtoupper($val->flight_num)}}</td>
+                        <td><p>({{$data2[0]->dep_port_eng}})</p>{{substr($val->dep_time, 0, 2)}}:{{substr($val->dep_time, 2, 2)}}</td>
+                        <td>{{ (strtotime($val->arr_time) - strtotime($val->dep_time))/60 }}</td>
+                        <td><p>({{$data2[0]->arr_port_eng}})</p>{{substr_replace($val->arr_time,':',2,0)}}</td>
+                        <td>{{substr_replace($val->price,',',-3,0)}}</td>
                         <td><input type="radio" name="arr_fly_no" value="{{$val->fly_no}}"></td>
                     </tr>
                     @empty
                     <tr>
-                        <td>데이터없음</td>
+                        <td colspan="6">데이터없음</td>
                     </tr>
                     @endforelse
-                    @endif
                 </tbody>
             </table>
         </div>
@@ -161,26 +156,20 @@
                 </tr>
             </thead>
             <tbody>
-                @if(isset($oneway[0]->arr2_port_no) && $_GET['one_arr_port_no'] == $oneway[0]->arr2_port_no)
                 @forelse($oneway as $val)
                 <tr>
                     <td>{{strtoupper($val->flight_num)}}</td>
-                    <td>{{$val->dep_time}}</td>
-                    <td>시 분</td>
-                    <td>{{$val->arr_time}}</td>
-                    <td>
-                        <p class="price_btn">
-                            <a href="javascript:void(0);" class="dep_price">{{$val->price}}</a>
-                        </p>
-                    </td>
+                    <td><p>({{$oneway[0]->dep_port_eng}})</p>{{substr($val->dep_time, 0, 2)}}:{{substr($val->dep_time, 2, 2)}}</td>
+                    <td>{{ (strtotime($val->arr_time) - strtotime($val->dep_time))/60 }}</td>
+                    <td><p>({{$oneway[0]->arr_port_eng}})</p>{{substr_replace($val->arr_time,':',2,0)}}</td>
+                    <td>{{substr_replace($val->price,',',-3,0)}}</td>
                     <td><input type="radio" name="dep_fly_no" value="{{$val->fly_no}}"></td>
                 </tr>
                 @empty
                 <tr>
-                    <td>데이터없음</td>
+                    <td colspan="6">데이터없음</td>
                 </tr>
                 @endforelse
-                @endif
             </tbody>
         </table>
         @endif

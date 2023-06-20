@@ -15,6 +15,7 @@
 @endsection
 
 @section('contents')
+
 <div class="container">
 <h1>좌석 선택</h1>
     <div class="step">
@@ -61,24 +62,22 @@
     <div class="map">
         <ol>
             {{-- 예약된 좌석 비교 --}}
-            @foreach($data as $value)
-                @foreach($seat as $val)
-                @if($value->seat_no == $val->seat_no)
-                    <li class="fast Available">
-                        <a href="javascript:void(0)" class="selectedEd">
-                            <input type="hidden" name="amount" value="0">
-                            <input type="hidden" id="s_name" name="seat_no" value="{{$val->seat_no}}">
-                        </a>
-                    </li>
+            @foreach($seat as $value)
+                @if($able->contains('seat_no',$value->seat_no))
+                <li class="fast Available">
+                    <a href="javascript:void(0)" class="selectedEd">
+                        <input type="hidden" name="amount" value="0">
+                        <input type="hidden" id="s_name" name="seat_no" value="{{$value->seat_no}}">
+                    </a>
+                </li>
                 @else
-                    <li class="fast Available">
-                        <a href="javascript:void(0)">
-                            <input type="hidden" name="amount" value="0">
-                            <input type="hidden" id="s_name" name="seat_no" value="{{$val->seat_no}}">
-                        </a>
-                    </li>
+                <li class="fast Available">
+                    <a href="javascript:void(0)">
+                        <input type="hidden" name="amount" value="0">
+                        <input type="hidden" id="s_name" name="seat_no" value="{{$value->seat_no}}">
+                    </a>
+                </li>
                 @endif
-                @endforeach
             @endforeach
         </ol>
     </div>
