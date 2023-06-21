@@ -18,13 +18,23 @@
 @section('contents')
     @include('layout.inc.notice')
     <div class="nCreateContainer">
-        <form action="{{route('notice.store')}}" method="POST" class="formCreate">
+    {{-- 에러메세지 --}}
+    @if ($errors->any())
+    <div class="error">
+        @foreach ($errors->all() as $error)
+            <div>{{$error}}</div>
+        @endforeach
+    </div>
+    @endif
+    {{-- /에러메세지 --}}
+        <form action="{{route('notice.store')}}" method="POST" class="formCreate" enctype="multipart/form-data">
             @csrf
             <label for="title" class="labelTitle">제목 : </label>
             <input type="text" name="title" id="title" class="inputText">
             <hr>
             <label for="content"></label>
             <textarea name="content" id="content" class="textareaContent"></textarea>
+            <input type="file" name="image">
             <div class="divCreateBtns">
                 <div class="nCreateBtns">
                     <button type="submit">작성</button>

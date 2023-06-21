@@ -6,6 +6,7 @@
  * 이력         :   v001 0612 오재훈 new
  *                  v002 0614 이동호 add 공지사항
  *                  v003 0620 이동호 add 나의 예약 조회 페이지
+ *                  v004 0621 이동호 add 최저가 항공
 **************************************************/
 
 namespace App\Http\Controllers;
@@ -34,13 +35,22 @@ class ReservationController extends Controller
         // v002 add 이동호
         // 최신 공지사항 5개 가져오기
         $notices = 
-            NoticeInfo::select(['notice_title', 'notice_no', 'created_at'])
-            ->orderBy('notice_no', 'desc')
-            ->take(5)
-            ->get();
+            NoticeInfo::select('notice_title', 'notice_no', 'created_at')
+                ->orderBy('notice_no', 'desc')
+                ->take(5)
+                ->get();
+
+        // v004 이동호
+        // 최저가항공 6개 가져오기
+        $lowCost = 
+            FlightInfo::select('*')
+                ->where('fly_date', '>', now())
+                ->orderBy('price')
+                ->limit(6)
+                ->get();
         
         //  return view('welcome')->with('data',$result); //v002 del 이동호
-        return view('welcome', compact('notices', 'data'));
+        return view('welcome', compact('notices', 'data', 'lowCost'));
     }
 
     public function check(Request $req) {

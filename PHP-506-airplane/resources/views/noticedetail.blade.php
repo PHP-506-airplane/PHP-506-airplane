@@ -31,6 +31,11 @@
         </div>
         <div class="nContent">
             {{$data->notice_content}}
+            @if($data->image_path)
+                <div class="nImage">
+                    <img src="{{asset($data->image_path . '?' . time())}}" alt="이미지">
+                </div>
+            @endif
         </div>
     </div>
     <div class="nButtons">

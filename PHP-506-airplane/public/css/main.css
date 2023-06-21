@@ -197,3 +197,20 @@ a{
 .sec2 .map{
   width: 40%;
 }
+
+/* v004 add 이동호 스와이퍼 */
+.mySwipper {
+  width: 800px;
+  margin: 0 auto;
+  overflow: hidden;
+}
+.swiper-slide {
+  width: 100%;
+}
+.slide1 {
+  background-color: beige;
+}
+.slide2 {
+  background-color: yellowgreen;
+}
+/* /v004 add 이동호 스와이퍼 */

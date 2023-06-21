@@ -20,6 +20,15 @@
     @yield('css')
 </head>
 <body>
+    @if(session('alert'))
+        <script>
+            alert('{{session('alert')}}');
+        </script>
+        @php
+            session()->forget('alert');
+        @endphp
+    @endif
+
     @include('layout.inc.header')
 
     <div class="divContentsMain">

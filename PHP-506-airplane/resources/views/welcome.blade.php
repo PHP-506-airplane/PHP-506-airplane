@@ -4,7 +4,8 @@
  * 디렉토리     : views
  * 파일명       : welcome.blade.php
  * 이력         :   v001 0612 오재훈 new
-                    v002 0614 이동호 add 공지사항 출력
+ *                  v002 0614 이동호 add 공지사항 출력
+ *                  v003 0621 이동호 add 최저가 항공 스와이퍼
 **************************************************/
 --}}
 @extends('layout.layout')
@@ -25,6 +26,11 @@
 {{-- css --}}
     <link rel="stylesheet" href="{{asset('css/styles.css')}}">
     <link rel="stylesheet" href="{{asset('css/main.css')}}">
+
+{{-- v004 add 이동호 --}}
+{{-- 스와이퍼 라이브러리 --}}
+<link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
 @endsection
 
 @section('contents')
@@ -106,6 +112,19 @@
                 </div>
             </div>
         </header>
+        {{-- v004 add 이동호 --}}
+        <div class="mySwipper">
+            <div class="swiper-container">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide slide1">Slide 1</div>
+                    <div class="swiper-slide slide2">Slide 2</div>
+                </div>
+                <div class="swiper-pagination"></div>
+            </div>
+        </div>
+        @foreach($lowCost as $key => $val)
+            {{$key . ' : ' . $val}}
+        @endforeach
         <!-- Services-->
         <section class="page-section" id="services">
             <div class="container sec2">

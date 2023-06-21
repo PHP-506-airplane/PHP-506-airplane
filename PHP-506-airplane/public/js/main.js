@@ -285,3 +285,15 @@ var container = document.getElementById('map');
         singleDatePicker: true                   // 하나의 달력 사용 여부
     });
 
+
+// v004 add 이동호 스와이퍼
+let swiper = new Swiper('.swiper-container', {
+    slidesPerView: 1,
+    pagination: {
+        el: '.swiper-pagination',
+        clickable: true,
+    },
+    autoplay: {
+        delay: 3000, // 3초 딜레이 설정
+    },
+});
