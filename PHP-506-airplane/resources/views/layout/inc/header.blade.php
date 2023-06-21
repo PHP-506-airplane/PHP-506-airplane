@@ -30,31 +30,9 @@
                 @endguest
 
                 @auth
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                    {{Auth::user()->u_name}}
-                </button>
-
-                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">마이페이지</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-primary"><a href="{{route('users.useredit')}}">정보수정</a></button>
-                        <button type="button" class="btn btn-primary"><a href="{{route('reservation.myreservation')}}">예약조회</a></button>
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">X</button>
-                        
-                    </div>
-                    </div>
-                </div>
-                </div>
-
-                <a href="{{route('users.logout')}}">로그아웃</a>
+                    <a href="{{route('users.useredit')}}">{{Auth::user()->u_name}}</a>
+                    <a href="{{route('reservation.myreservation')}}">예약조회</a>
+                    <a href="{{route('users.logout')}}">로그아웃</a>
                 @endauth
                 </li>
             </ul>
@@ -62,8 +40,6 @@
     </div>
 </nav>
 
-
-
-@section('js')
+{{-- @section('js')
     <script src="{{asset('js/modal.js')}}"></script>
-@endsection
+@endsection --}}
