@@ -16,13 +16,40 @@ const oArr_optionItem = document.querySelectorAll('.oArr_optionItem');
 const hd_li_no1 = document.querySelector('.hd_li_no1');
 const hd_li_no2 = document.querySelector('.hd_li_no2');
 const hd_li_flg = document.querySelector('.hd_li_flg');
+// 항공편 검색 
+const btn_submit = document.querySelector('.btn-submit');
 
+btn_submit.addEventListener('click',function(event){
+    // 왕복일때 유효성 검사
+    if(hd_li_flg.value == '1') {
+        if(sta_label.value == ''){
+            alert('출발지를 입력하세요');
+            event.preventDefault();
+    
+        }else if(arr_label.value ==''){
+            alert('도착지를 입력하세요');
+            event.preventDefault();
+        }
+        // 편도일때
+    }else{
+        if(oSta_label.value == ''){
+            alert('출발지를 입력하세요');
+            event.preventDefault();
+    
+        }else if(oArr_label.value ==''){
+            alert('도착지를 입력하세요');
+            event.preventDefault();
+        }
+    }
+})
+// 왕복/편도 flg
 hd_li_no1.addEventListener('click', function(){
     hd_li_flg.value = '1';
 });
 hd_li_no2.addEventListener('click', function(){
     hd_li_flg.value = '0';
 });
+
 
 
 
@@ -49,7 +76,7 @@ arr_optionItem.forEach(function(option){
     option.addEventListener('click', function(){
         // 출발지 입력안할시 alert띄움
         if(sta_label.value == ''){
-            swal('출발지를 입력하세요');
+            alert('출발지를 입력하세요');
             arr_label.parentNode.classList.remove('active');
         }else{
             handleSelect2(option);

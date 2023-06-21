@@ -11,5 +11,12 @@ class ReserveInfo extends Model
     protected $table = 'reserve_info';
     protected $primaryKey = 'reserve_no';
 
+    protected $fillable = [
+        'u_no',
+        'seat_no',
+        'fly_no',
+        'plane_no',
+    ];
+
     public $timestamps = false;
 }

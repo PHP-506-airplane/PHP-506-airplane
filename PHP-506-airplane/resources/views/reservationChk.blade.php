@@ -178,7 +178,7 @@
             <dd class="sum_price">0원</dd>
         </div>
         <div class="btnArea">
-            <button type="submit">다음</button>
+            <button type="submit" class="chk_btn">다음</button>
         </div>
     </form>
 </div> {{-- END container --}}

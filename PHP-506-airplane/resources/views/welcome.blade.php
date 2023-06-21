@@ -100,7 +100,7 @@
                                 </div>
                             </div>
                         </div>
-                        <button type="submit"><a class="btn btn-primary btn-xl text-uppercase">항공편 검색</a></button>
+                        <button type="submit"><a class="btn btn-info btn-xl text-uppercase btn-submit">항공편 검색</a></button>
                     </form>
                     </div>
                 </div>

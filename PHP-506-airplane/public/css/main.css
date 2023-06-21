@@ -41,6 +41,11 @@ a{
   font-size: 22px;
   color: white;
 }
+.asd{
+  width: 200px;
+  height: 60px;
+  background-color: #D8E6F4;
+}
 /* Tab Content */
 .tabs .tab {
   display: none;
@@ -83,7 +88,6 @@ a{
   text-decoration: underline !important;
 }
 .form-control{
-  width: 13.6em;
   height: 60px;
   font-size: 16px;
   font-weight: 700;
@@ -135,12 +139,13 @@ a{
   list-style-type: none;
   padding: 0;
   border-radius: 6px;
-  overflow: hidden;
+  overflow-y: scroll;
   max-height: 0;
   transition: .3s ease-in;
 }
+
 .selectBox2.active .optionList {
-  max-height: 500px;
+  max-height: 375px;
 }
 .selectBox2 .opItem{
   border-bottom: 1px dashed rgb(170, 72, 72);
