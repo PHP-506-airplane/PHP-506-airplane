@@ -248,7 +248,6 @@ class ReservationController extends Controller
         ReserveInfo::destroy($req->reserve_no);
         TicketInfo::where('t_no', $req->t_no)->delete();
 
-        alert()->success('취소가 완료되었습니다.');
-        return redirect()->route('reservation.myreservation');
+        return redirect()->route('reservation.myreservation')->with('alert', '취소가 완료되었습니다.');
     }
 }

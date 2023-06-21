@@ -21,10 +21,31 @@ use Illuminate\Support\Facades\Validator as FacadesValidator;
 class NoticeController extends Controller
 {
     // 관리자 권한 체크
-    function checkAuth() {
+    public function checkAuth() {
         if (empty(Auth::user()) || Auth::user()->admin_flg === '0') {
             return redirect()->route('notice.index')->with('alert', '권한이 없습니다.');
         }
+    }
+
+    // 유효성 검사
+    public function validateData($req) {
+        $validator = Validator::make(
+            $req->only('notice_no', 'title', 'content'),
+            [
+                'title'         => 'required|between:3,50',
+                'content'       => 'required|max:4000',
+                'notice_no'     => 'integer',
+                'image'         => 'nullable|image|max:2048',
+            ]
+        );
+
+        if ($validator->fails()) {
+            return redirect()
+                ->back()
+                ->withErrors($validator)
+                ->withInput($req->only('title', 'content'));
+        }
+
     }
 
     /**
@@ -65,21 +86,8 @@ class NoticeController extends Controller
             return $result;
         }
 
-        $validator = Validator::make(
-            $req->only('notice_no', 'title', 'content')
-            ,[
-                'title'         => 'required|between:3,50'
-                ,'content'      => 'required|max:4000'
-                ,'notice_no'    => 'required|integer'
-                ,'image'        => 'nullable|image|max:2048'
-            ]
-        );
-
-        if($validator->fails()) {
-            return redirect()
-                ->back()
-                ->withErrors($validator)
-                ->withInput($req->only('title', 'content'));
+        if ($result = $this->validateData($req)) {
+            return $result;
         }
 
         $notice = new NoticeInfo([
@@ -149,21 +157,8 @@ class NoticeController extends Controller
 
         $req->request->add(['notice_no' => $notice_no]);
 
-        $validator = Validator::make(
-            $req->only('notice_no', 'title', 'content')
-            ,[
-                'title'         => 'required|between:3,50'
-                ,'content'      => 'required|max:4000'
-                ,'notice_no'    => 'required|integer'
-                ,'image'        => 'nullable|image|max:2048'
-            ]
-        );
-
-        if($validator->fails()) {
-            return redirect()
-                ->back()
-                ->withErrors($validator)
-                ->withInput($req->only('title', 'content'));
+        if ($result = $this->validateData($req)) {
+            return $result;
         }
 
         $notice = NoticeInfo::find($notice_no);
