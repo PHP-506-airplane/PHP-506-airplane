@@ -72,6 +72,9 @@ Route::get('/reservation/main', [ReservationController::class, 'main'])->name('r
 Route::resource('/notice', NoticeController::class);
 // 나의 예약 조회 페이지
 Route::get('/reservation/myreservation', [ReservationController::class, 'myreservation'])->name('reservation.myreservation');
+// 예약 취소
+Route::post('/reservation/myreservation', [ReservationController::class, 'rescancle'])->name('reservation.rescancle');
+
 
 // 0613 add 오재훈
 // 예약 조회(항공편 선택) 페이지

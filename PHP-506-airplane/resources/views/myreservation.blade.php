@@ -16,15 +16,35 @@
 @endsection
 
 @section('contents')
+    @if(empty($data))
+        <div>예약 정보가 없습니다.</div>
+    @endif
     @foreach($data as $key => $val)
+        {!!'flyno : ' . strtoupper($val['fly_no']) . '<br>'!!}
+        {!!'resno : ' . strtoupper($val['reserve_no']) . '<br>'!!}
         {!!'편명 : ' . strtoupper($val['flight_num']) . '<br>'!!}
-        {!!'비행기 이름 : ' . $val['plane_no'] . '<br>'!!}
+        {!!'항공사 : ' . $val['line_name'] . '<br>'!!}
+        {!!'항공사 코드 : ' . $val['line_code'] . '<br>'!!}
+        {!!'비행기 이름 : ' . $val['plane_name'] . '<br>'!!}
+        {!!'예약자 이름 : ' . $val['u_name'] . '<br>'!!}
         {!!'좌석 : ' . $val['seat_no'] . '<br>'!!}
         {!!'날짜 : ' . $val['fly_date'] . '<br>'!!}
-        {!!$key . ':' . $val . '<br>'!!}
+        {!!'출발 시간 : ' . $val['dep_time'] . '<br>'!!}
+        {!!'도착 시간 : ' . $val['arr_time'] . '<br>'!!}
+        {!!'소요 시간 : ' . (strtotime($val['arr_time']) - strtotime($val['dep_time'])) / 60 . '분<br>'!!}
+        {!!'출발 : ' . $val['dep_port_name'] . '<br>'!!}
+        {!!'도착 : ' . $val['arr_port_name'] . '<br>'!!}
+        <form action="{{route('reservation.rescancle')}}" method="POST" id="formCancel">
+            @csrf
+            <input type="hidden" name="reserve_no" value="{{$val['reserve_no']}}">
+            <input type="hidden" name="t_no" value="{{$val['t_no']}}">
+            <button type="button" onclick="Confirm()">예약 취소</button>
+            {{-- <button type="submit">예약 취소</button> --}}
+        </form>
+        <hr>
     @endforeach
 @endsection
 
 @section('js')
-    {{-- <script src="{{asset('js/myreservation.js')}}"></script> --}}
+    <script src="{{asset('js/myreservation.js')}}"></script>
 @endsection

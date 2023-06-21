@@ -12,8 +12,8 @@
 @section('title', '공지사항')
 
 @section('css')
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
-<link rel="stylesheet"href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+    <link rel="stylesheet"href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css" />
     <link rel="stylesheet" href="{{asset('css/noticeDetail.css')}}">
 @endsection
 
@@ -34,8 +34,6 @@
         </div>
     </div>
     <div class="nButtons">
-        {{-- TODO : 관리자권한일시 수정버튼 출력 --}}
-        {{-- TODO : 관리자권한일시 삭제버튼 출력 --}}
         @if(!empty(Auth::user()) && Auth::user()->admin_flg === '1')
             <button type="button" onclick="location.href = '{{route('notice.edit', ['notice' => $data->notice_no])}}'">수정</button>
             <form action="{{route('notice.destroy', ['notice' => $data->notice_no])}}" method="POST" id="formDel">
