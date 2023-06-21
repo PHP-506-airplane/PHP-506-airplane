@@ -294,6 +294,19 @@ let swiper = new Swiper('.swiper-container', {
         clickable: true,
     },
     autoplay: {
-        delay: 3000, // 3초 딜레이 설정
+        delay: 3000, // 3초 딜레이
+    },
+    navigation: {
+        prevEl: '.swiper-button-prev', // 이전 슬라이드 버튼
+        nextEl: '.swiper-button-next', // 다음 슬라이드 버튼
     },
 });
+
+// 다음 슬라이드 버튼 클릭 시 슬라이드 1로 이동
+function goToNextSlide() {
+    if (swiper.activeIndex < swiper.slides.length - 1) {
+        swiper.slideNext();
+    } else {
+        swiper.slideTo(0);
+    }
+}

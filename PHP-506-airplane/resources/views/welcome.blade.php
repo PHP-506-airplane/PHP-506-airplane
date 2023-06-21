@@ -120,6 +120,8 @@
                     <div class="swiper-slide slide2">Slide 2</div>
                 </div>
                 <div class="swiper-pagination"></div>
+                <div class="swiper-button-prev"></div> {{-- 이전 슬라이드 버튼 --}}
+                <div class="swiper-button-next" onclick="goToNextSlide()"></div> {{-- 다음 슬라이드 버튼 --}}
             </div>
         </div>
         @foreach($lowCost as $key => $val)
