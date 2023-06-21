@@ -15,6 +15,7 @@ use App\Models\AirportInfo;
 use App\Models\FlightInfo;
 use App\Models\ReserveInfo;
 use App\Models\SeatInfo;
+use App\Models\TicketInfo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Query\JoinClause;
@@ -196,27 +197,41 @@ class ReservationController extends Controller
             ReserveInfo::join('flight_info AS fli', 'reserve_info.fly_no', 'fli.fly_no')
                 ->join('airplane_info AS airp', 'fli.plane_no', 'airp.plane_no')
                 ->join('airline_info AS airl', 'airp.line_no', 'airl.line_no')
+                ->join('airport_info AS dep', 'fli.dep_port_no', 'dep.port_no')
+                ->join('airport_info AS arr', 'fli.arr_port_no', 'arr.port_no')
+                ->join('user_info AS user', 'reserve_info.u_no', 'user.u_no')
+                ->join('ticket_info AS ticket', 'reserve_info.reserve_no', 'ticket.reserve_no')
                 ->where('reserve_info.u_no', Auth::user()->u_no)
                 ->select(
                     'reserve_info.*'
                     ,'fli.fly_date'
-                    ,'fli.dep_port_no'
-                    ,'fli.arr_port_no'
+                    ,'dep.port_name AS dep_port_name'
+                    ,'arr.port_name  AS arr_port_name'
                     ,'fli.flight_num'
                     ,'fli.dep_time'
                     ,'fli.arr_time'
                     ,'airp.plane_name'
                     ,'airl.line_name'
                     ,'airl.line_code'
+                    ,'user.u_name'
+                    ,'fli.fly_no'
+                    ,'ticket.t_no'
                 )
                 ->limit(30)
                 ->get();
 
-        // echo '<pre>';
-        // echo var_dump($data);
-        // echo '</pre>';
-        // exit;
-
         return view('myreservation')->with('data', $data);
+    }
+
+    public function rescancle(Request $req) {
+        if(empty(Auth::user())) {
+            return redirect()->route('users.login');
+        }
+
+        ReserveInfo::destroy($req->reserve_no);
+        TicketInfo::where('t_no', $req->t_no)->delete();
+
+        alert()->success('취소가 완료되었습니다.');
+        return redirect()->route('reservation.myreservation');
     }
 }

@@ -55,14 +55,15 @@ class NoticeController extends Controller
     public function store(Request $req)
     {
         $notice = new NoticeInfo([
-            'adm_no'            => Auth::user()->u_no
+            'u_no'            => Auth::user()->u_no
             ,'notice_title'     => $req->title
             ,'notice_content'   => $req->content
         ]);
         $notice->save();
 
         $notice_no = NoticeInfo::select('notice_no')->max('notice_no');
-        alert()->success('작성 완료');
+        
+        // return redirect()->route('notice.show', $notice_no)->with('alert','완료되었습니다.');
         return redirect()->route('notice.show', $notice_no);
     }
 
