@@ -7,6 +7,10 @@
                     v002 0614 박수연 add 로그인
 **************************************************/
 --}}
+@section('css') 
+    <link rel="stylesheet" href="{{asset('css/modal.css')}}">
+@endsection
+
 <nav class="navbar navbar-expand-lg navbar-dark fixed-top navHeader" id="mainNav">
     <div class="container">
         <a class="navbar-brand" href="{{route('reservation.main')}}"><img src="{{asset('img/logo.png')}}" alt="logo" class="imgLogo"></a>
@@ -19,7 +23,6 @@
                 <li class="nav-item"><a href="#services">예약</a></li>
                 <li class="nav-item"><a href="#portfolio">서비스</a></li>
                 <li class="nav-item"><a href="#about">About</a></li>
-                {{-- 로그인 안했을 때 로그인, 회원가입 뜨고 로그인 했을 때 사용자 이름, 로그아웃 나타나게 --}}
                 <li class="nav-item">
                 @guest
                     <a href="{{route('users.login')}}">로그인</a>
@@ -27,14 +30,40 @@
                 @endguest
 
                 @auth
-                    {{-- 로그인됐을 때 사용자 이름 표시 되고 이름 누르면 회원정보 수정으로  --}}
-                    <a href="{{route('users.useredit')}}">{{Auth::user()->u_name}}</a>
-                    <a href="{{route('reservation.myreservation')}}">예약 조회</a>
-                    <a href="{{route('users.logout')}}">로그아웃</a>
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    {{Auth::user()->u_name}}
+                </button>
+
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">마이페이지</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary"><a href="{{route('users.useredit')}}">정보수정</a></button>
+                        <button type="button" class="btn btn-primary"><a href="{{route('reservation.myreservation')}}">예약조회</a></button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">X</button>
+                        
+                    </div>
+                    </div>
+                </div>
+                </div>
+
+                <a href="{{route('users.logout')}}">로그아웃</a>
                 @endauth
                 </li>
-                
             </ul>
         </div>
     </div>
 </nav>
+
+
+
+@section('js')
+    <script src="{{asset('js/modal.js')}}"></script>
+@endsection
