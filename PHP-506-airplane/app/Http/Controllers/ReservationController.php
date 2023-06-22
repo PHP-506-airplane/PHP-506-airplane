@@ -54,7 +54,7 @@ class ReservationController extends Controller
                 ->where('flight_info.fly_date', '>', now())
                 ->orderBy('price')
                 ->orderBy('flight_info.fly_date')
-                ->limit(6)
+                ->limit(8)
                 ->get();
         
         //  return view('welcome')->with('data',$result); //v002 del 이동호

@@ -205,14 +205,13 @@ a{
 
 /* v004 add 이동호 스와이퍼 */
 .mySwipper {
-  max-width: 1000px;
+  max-width: 900px;
   margin: 0 auto;
   overflow: hidden;
+  position: relative;
+  height: 330px;
 }
-.swiper-slide {
-  width: 100%;
-}
-.swiper_margin {
+.swiper_center {
   text-align: center;
 }
 .swiper_contents {
@@ -220,8 +219,9 @@ a{
 }
 .swiper_img {
   width: 200px;
+  height: 200px;
 }
-.slide_width {
-  width: 200px;
+.swiper-pagination-bullet {
+  background: rgb(0, 0, 0) !important;
 }
 /* /v004 add 이동호 스와이퍼 */

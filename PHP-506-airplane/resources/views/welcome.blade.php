@@ -113,26 +113,25 @@
                 </div>
             </div>
         </header>
-        {{-- v004 add 이동호 --}}
+        {{-- v004 add 이동호 스와이퍼 --}}
         <div class="mySwipper">
             <div class="swiper-container">
-                <div class="swiper-wrapper swiper_margin">
-                    @for($i = 0; $i <= 5; $i++)
-                        <div class="swiper-slide slide{{$i}} slide_width">
-                            <div class="swiper_contents">
+                <div class="swiper-wrapper swiper_center">
+                    @for($i = 0; $i <= 7; $i++)
+                        <div class="swiper-slide slide{{$i}}" id="slide_width">
+                            <div class="swiper_contents swiper_width">
                                 <img src="{{asset('lowCostImg/'. $i .'.png?' . time())}}" alt="IMG" class="swiper_img">
-                                <div>{{$lowCost[$i]->dep_name}} ~ {{$lowCost[$i]->arr_name}}</div>
+                                <div>{{str_replace('공항','',$lowCost[$i]->dep_name)}} → {{str_replace('공항','',$lowCost[$i]->arr_name)}}</div>
                                 <div>날짜 : {{$lowCost[$i]->fly_date}}</div>
                                 <div>가격 : {{number_format($lowCost[$i]->price)}}원</div>
                             </div>
                         </div>
                     @endfor
                 </div>
-                <div class="swiper-pagination"></div>
-                <div class="swiper-button-prev"></div> {{-- 이전 슬라이드 버튼 --}}
-                <div class="swiper-button-next" onclick="goToNextSlide()"></div> {{-- 다음 슬라이드 버튼 --}}
             </div>
+            <div class="swiper-pagination"></div>
         </div>
+        {{-- /스와이퍼 --}}
         <!-- Services-->
         <section class="page-section" id="services">
             <div class="container sec2">
