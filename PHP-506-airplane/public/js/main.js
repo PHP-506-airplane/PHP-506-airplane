@@ -278,13 +278,18 @@ var container = document.getElementById('map');
 
 // v004 add 이동호 스와이퍼
 let swiper = new Swiper('.swiper-container', {
-    slidesPerView: 1,
+    slidesPerView: 3,
+    loop : true, // 슬라이드 반복 여부
+    loopAdditionalSlides : 1,
+    centeredSlides : true, // true시에 슬라이드가 가운데로 배치
+    allowTouchMove : false, // false시에 스와이핑이 되지 않으며 버튼으로만 슬라이드 조작이 가능
     pagination: {
         el: '.swiper-pagination',
         clickable: true,
     },
     autoplay: {
         delay: 3000, // 3초 딜레이
+        disableOnInteraction : false, // 스와이프 후 자동 재생이 비활성화 되지 않게
     },
     navigation: {
         prevEl: '.swiper-button-prev', // 이전 슬라이드 버튼
