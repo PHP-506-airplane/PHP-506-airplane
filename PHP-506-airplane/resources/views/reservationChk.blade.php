@@ -80,8 +80,8 @@
                         <td><p>({{$data[0]->dep_port_eng}})</p>{{substr($val->dep_time, 0, 2)}}:{{substr($val->dep_time, 2, 2)}}</td>
                         <td>{{ (strtotime($val->arr_time) - strtotime($val->dep_time))/60 }}</td>
                         <td><p>({{$data[0]->arr_port_eng}})</p>{{substr_replace($val->arr_time,':',2,0)}}</td>
-                        <td>{{substr_replace($val->price,',',-3,0)}}</td>
-                        <td><input type="radio" name="dep_fly_no" value="{{$val->fly_no}}"></td>
+                        <td><input type="hidden" class="dep_price" value="{{$val->price}}">{{substr_replace($val->price,',',-3,0)}}</td>
+                        <td class="dep_fly_no"><input type="radio"  name="dep_fly_no" value="{{$val->fly_no}}"><span style="display:none;">{{$val->price}}</span></td>
                     </tr>
                     @empty
                     <tr>
@@ -121,7 +121,7 @@
                         <td>{{ (strtotime($val->arr_time) - strtotime($val->dep_time))/60 }}</td>
                         <td><p>({{$data2[0]->arr_port_eng}})</p>{{substr_replace($val->arr_time,':',2,0)}}</td>
                         <td>{{substr_replace($val->price,',',-3,0)}}</td>
-                        <td><input type="radio" name="arr_fly_no" value="{{$val->fly_no}}"></td>
+                        <td class="arr_fly_no"><input type="radio" name="arr_fly_no" value="{{$val->fly_no}}"><span style="display:none;">{{$val->price}}</span></td>
                     </tr>
                     @empty
                     <tr>
