@@ -22,6 +22,15 @@
     <div class="wrap">
             <div class="login">
                 <h2>로그인</h2>
+                {{-- @if($error->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                            <li>{{$error}}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif --}}
                 <div class="login_id">
                     <label for="u_email">이메일 </label>
                     <input type="email" name="u_email" id="u_email" placeholder="Email">
