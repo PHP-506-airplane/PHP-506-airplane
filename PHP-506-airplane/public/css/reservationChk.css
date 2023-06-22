@@ -115,3 +115,16 @@ table tbody tr td{
     font-size: 22px;
     color: #000;
 }
+.chk_btn{
+    position: fixed;
+    border-radius: 0.5rem;
+    right: 40px;
+    bottom: 55px;
+    text-align: center;
+    width: 15%;
+    height: 60px;
+    font-size: 1.125rem;
+    background-color: #fff;
+    border: 2px solid #b3b3b3;
+    font-weight: 700;
+}

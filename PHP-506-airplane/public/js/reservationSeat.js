@@ -23,3 +23,11 @@ function changeTab(tabId) {
 
     tab.parentElement.classList.add('choice');
 }
+
+const seatForm = document.getElementById('seatPost');
+function reserveBtn(){
+    var con_test = confirm("정말 예약 하시겠습니까?");
+    if(con_test == true){
+        seatForm.submit();
+    }
+}

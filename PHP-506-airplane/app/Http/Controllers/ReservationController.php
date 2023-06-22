@@ -64,8 +64,7 @@ class ReservationController extends Controller
     public function check(Request $req) {
         // 로그인체크
         if(empty(Auth::user())) {
-            alert()->warning('로그인이 필요한 기능입니다.');
-            return redirect()->route('users.login');
+            return redirect()->route('users.login')->with('alert', '로그인이 필요한 기능입니다.');
         }
         // 왕복/편도 플래그
         $flg = $req->only('hd_li_flg');
@@ -176,11 +175,9 @@ class ReservationController extends Controller
         ->get();
 
         if(!isset($req->dep_fly_no)){
-            // alert('가는편 여정을 선택해주세요');
-            return redirect()->back();
+            return redirect()->back()->with('alert', '가는편 여정을 선택해주세요.');
         }elseif(!isset($req->arr_fly_no)){
-            // alert()->warning('오는편 여정을 선택해주세요');
-            return redirect()->back();
+            return redirect()->back()->with('alert', '오는편 여정을 선택해주세요.');
         }
 
         return view('reservationSeat')->with('data',$result)->with('seat',$seat)->with('able',$availableSeats);
@@ -194,8 +191,7 @@ class ReservationController extends Controller
         // ]);
 
         if(!isset($req->seat_no)){
-            alert()->warning('좌석을 선택해주세요');
-            return redirect()->back();
+            return redirect()->back()->with('alert', '좌석을 선택해주세요.');
         }
 
         $reserveInfo = new ReserveInfo([
@@ -208,7 +204,7 @@ class ReservationController extends Controller
         $reserveInfo->save();
 
         
-        return view('reservationconfirm');
+        return redirect()->route('reservation.myreservation');
     }
     
     // v003 이동호
