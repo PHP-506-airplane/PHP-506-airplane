@@ -7,9 +7,6 @@
                     v002 0614 박수연 add 로그인
 **************************************************/
 --}}
-@section('css') 
-    <link rel="stylesheet" href="{{asset('css/header.css')}}">
-@endsection
 
 <ul class="nav nav-pills justify-content-center">
     <a class="navbar-brand" href="{{route('reservation.main')}}"><img width="150px" height="50px" class="air" src="{{asset('img/air.png')}}" alt="logo"></a>
