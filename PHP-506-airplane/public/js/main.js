@@ -158,75 +158,41 @@ var container = document.getElementById('map');
     var positions = [
         {
             title: '원주공항',
-            content:'<div class="marker">' +
-            '  <a href="https://www.airport.co.kr/wonju/index.do" target="_blank">' +
-            '    <span style="color:#2e2e2e; font-weight:bold; font-size:14px; position:absolute; top:-30px; left:-13px" class="title">원주</span>' +
-            '  </a>' +
-            '</div>'
-            , 
+            content:'<div>원주공항</div>',
             latlng: new kakao.maps.LatLng(37.459244, 127.977174)
         },
         {
             title: '군산공항',
-            content:'<div class="marker">' +
-            '  <a href="https://www.airport.co.kr/gunsan/index.do" target="_blank">' +
-            '    <span style="color:#2e2e2e; font-weight:bold; font-size:14px; position:absolute; top:-30px; left:-13px" class="title">군산</span>' +
-            '  </a>' +
-            '</div>'
-            ,  
+            content:'<div>군산공항</div>',  
             latlng: new kakao.maps.LatLng(35.926094, 126.615779)
         },
         {
             title: '광주공항',
-            content:'<div class="marker">' +
-            '  <a href="https://www.airport.co.kr/gwangju/index.do" target="_blank">' +
-            '    <span style="color:#2e2e2e; font-weight:bold; font-size:14px; position:absolute; top:-30px; left:-13px" class="title">광주</span>' +
-            '  </a>' +
-            '</div>'
-            ,  
+            content:'<div>광주공항</div>',  
             latlng: new kakao.maps.LatLng(35.139930, 126.811030)
         },
         {
             title: '여수공항',
-            content:'<div class="marker">' +
-            '  <a href="https://www.airport.co.kr/yeosu/index.do" target="_blank">' +
-            '    <span style="color:#2e2e2e; font-weight:bold; font-size:14px; position:absolute; top:-30px; left:-13px" class="title">여수</span>' +
-            '  </a>' +
-            '</div>'
-            ,
+            content:'<div>여수공항</div>',
             latlng: new kakao.maps.LatLng(34.840328, 127.614111)
         },
         {
             title: '사천공항',
-            content:'<div class="marker">' +
-            '  <a href="https://www.airport.co.kr/sacheon/index.do" target="_blank">' +
-            '    <span style="color:#2e2e2e; font-weight:bold; font-size:14px; position:absolute; top:-30px; left:-13px" class="title">사천</span>' +
-            '  </a>' +
-            '</div>'
-            ,
+            content:'<div>사천공항</div>',
             latlng: new kakao.maps.LatLng(35.089780, 128.070582)
         },
         {
             title: '울산공항',
-            content:'<div class="marker">' +
-            '  <a href="https://www.airport.co.kr/ulsan/index.do" target="_blank">' +
-            '    <span style="color:#2e2e2e; font-weight:bold; font-size:14px; position:absolute; top:-30px; left:-13px" class="title">울산</span>' +
-            '  </a>' +
-            '</div>'
-            ,
+            content:'<div>울산공항</div>',
             latlng: new kakao.maps.LatLng(35.593570, 129.356540)
         },
         {
             title: '포항경주공항',
-            content:'<div class="marker">' +
-            '  <a href="https://www.airport.co.kr/pohang/index.do" target="_blank">' +
-            '    <span style="color:#2e2e2e; font-weight:bold; font-size:14px; position:absolute; top:-30px; left:-23px" class="title">포항경주</span>' +
-            '  </a>' +
-            '</div>'
-            ,
+            content:'<div>포항경주공항</div>',
             latlng: new kakao.maps.LatLng(35.984811, 129.433999)
         }
     ];
+
 
     // 마커 이미지의 이미지 주소입니다
     var imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png"; 
@@ -246,14 +212,38 @@ var container = document.getElementById('map');
             title : positions[i].title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
             image : markerImage // 마커 이미지
         });
-        // 커스텀 오버레이를 생성합니다
-        var customOverlay = new kakao.maps.CustomOverlay({
-            position : marker.getPosition(),
-            content: positions[i].content
+        // // 커스텀 오버레이를 생성합니다
+        // var customOverlay = new kakao.maps.CustomOverlay({
+        //     position : marker.getPosition(),
+        //     content: positions[i].content
+        // });
+
+        var infowindow = new kakao.maps.InfoWindow({
+            content : positions[i].content
         });
         
         // 커스텀 오버레이를 지도에 표시합니다
-        customOverlay.setMap(map);
+        // customOverlay.setMap(map);
+
+        // 마커에 mouseover 이벤트와 mouseout 이벤트를 등록합니다
+        // 이벤트 리스너로는 클로저를 만들어 등록합니다 
+        // for문에서 클로저를 만들어 주지 않으면 마지막 마커에만 이벤트가 등록됩니다
+        kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow));
+        kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
+    }
+    
+    // 인포윈도우를 표시하는 클로저를 만드는 함수입니다 
+    function makeOverListener(map, marker, infowindow) {
+        return function() {
+            infowindow.open(map, marker);
+        };
+    }
+
+    // 인포윈도우를 닫는 클로저를 만드는 함수입니다 
+    function makeOutListener(infowindow) {
+        return function() {
+            infowindow.close();
+        };
     }
     
 // 달력

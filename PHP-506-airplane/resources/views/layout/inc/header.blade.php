@@ -8,34 +8,35 @@
 **************************************************/
 --}}
 
-@section('css') 
-    <link rel="stylesheet" href="{{asset('css/header.css')}}">
-@endsection
-
-
-<ul class="nav nav-pills">
-        <div class="space">
+<ul class="nav nav-pills justify-content-center">
+    <a class="navbar-brand" href="{{route('reservation.main')}}"><img width="150px" height="50px" class="air" src="{{asset('img/air.png')}}" alt="logo"></a>
+        <div style="width:950px">
         </div>
-            <li class="nav-item">
-                <a class="nav-link" href="#">수하물 안내</a>
-            </li>
+        <li class="nav-item">
+            <a class="nav-link p-3 mb-2 bg-body text-dark" href="#">수하물 안내</a>
+        </li>
     @guest
         <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="{{route('users.login')}}">로그인</a>
+            <a class="nav-link active p-3 mb-2 bg-body text-dark" aria-current="page" href="{{route('users.login')}}">로그인</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="{{route('users.registration')}}">회원가입</a>
+            <a class="nav-link active p-3 mb-2 bg-body text-dark" aria-current="page" href="{{route('users.registration')}}">회원가입</a>
         </li>
+        
     @endguest
 
     @auth
         <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">{{Auth::user()->u_name}}님</a>
+        <a class="nav-link dropdown-toggle p-3 mb-2 bg-body text-dark" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">{{Auth::user()->u_name}}님</a>
             <ul class="dropdown-menu">
                 <li><a class="dropdown-item" href="{{route('users.useredit')}}">회원정보 수정</a></li>
                 <li><a class="dropdown-item" href="{{route('reservation.myreservation')}}">예약 조회</a></li>
             </ul>
         </li>
+        <li class="nav-item">
+            <a class="nav-link active p-3 mb-2 bg-body text-dark" aria-current="page" href="{{route('users.logout')}}">로그아웃</a>
+        </li>
+
     @endauth 
 </ul>
 
