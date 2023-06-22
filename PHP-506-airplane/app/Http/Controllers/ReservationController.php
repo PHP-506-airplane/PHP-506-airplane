@@ -143,36 +143,42 @@ class ReservationController extends Controller
 
     }
     public function checkpost(Request $req){
+        //왕복
+        if($req->hd_li_flg =='1'){
+            // 가는편
+            $result = DB::table('reserve_info as res')
+            ->join('flight_info as fli','res.fly_no', '=','fli.fly_no')
+            ->join('airport_info as dep','dep.port_no', '=', 'fli.dep_port_no')
+            ->join('airport_info as arr','arr.port_no', '=', 'fli.arr_port_no')
+            ->select(
+                        'fli.*'
+                        ,'res.seat_no'
+                        ,'dep.port_name as dep_name'
+                        ,'dep.port_eng as dep_eng' 
+                        ,'arr.port_name as arr_name'
+                        ,'arr.port_eng as arr_eng'
+                        )
+            ->where('fli.fly_no','=',$req->dep_fly_no)
+            ->where('fli.fly_date','>',now())
+            ->get();
 
-        // 가는편
-        $result = DB::table('reserve_info as res')
-        ->join('flight_info as fli','res.fly_no', '=','fli.fly_no')
-        ->join('airport_info as dep','dep.port_no', '=', 'fli.dep_port_no')
-        ->join('airport_info as arr','arr.port_no', '=', 'fli.arr_port_no')
-        ->select(
-                    'fli.*'
-                    ,'res.seat_no'
-                    ,'dep.port_name as dep_name'
-                    ,'dep.port_eng as dep_eng' 
-                    ,'arr.port_name as arr_name'
-                    ,'arr.port_eng as arr_eng'
-                    )
-        ->where('fli.fly_no','=',$req->dep_fly_no)
-        ->where('fli.fly_date','>',now())
-        ->get();
+            // 예약된 좌석
+            $availableSeats = DB::table('reserve_info')
+                ->select('seat_no')
+                ->where('fly_no','=',$req->dep_fly_no)
+                ->get();
+
+            // 오는편
+        }
 
         
-        // 예약된 좌석
-        $availableSeats = DB::table('reserve_info')
-            ->select('seat_no')
-            ->where('fly_no','=',$req->dep_fly_no)
-            ->get();
 
         // 좌석
         $seat = DB::table('seat_info')
         ->select('seat_no')
         ->limit(108)
         ->get();
+
 
         if(!isset($req->dep_fly_no)){
             return redirect()->back()->with('alert', '가는편 여정을 선택해주세요.');
@@ -184,11 +190,6 @@ class ReservationController extends Controller
     }
 
     public function seatpost(Request $req){
-
-
-        // $req->validate([
-        //     'seat_no' => 'required'
-        // ]);
 
         if(!isset($req->seat_no)){
             return redirect()->back()->with('alert', '좌석을 선택해주세요.');

@@ -57,12 +57,14 @@ h1{
 .step li::marker{
     content: '';
 }
-/*  */
+/* 좌석 */
+.seatMap{
+    display: flex;
+}
 .map {
-    position: absolute;
-    left: 40%;
-    top: 300px;
     box-sizing: border-box;
+    margin-top: 50px;
+    margin-left: 100px;
     width: 404px;
     height: 100%;
 }
