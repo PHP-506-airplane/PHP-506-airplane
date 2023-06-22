@@ -54,7 +54,7 @@
 <div class="seatMap">
     <div class="name_box">
         <h2>예매자 정보</h2>
-        <form action="{{route('reservation.seatpost')}}" method="post">
+        <form id="seatPost" action="{{route('reservation.seatpost')}}" method="post">
             @csrf
             <ul>
                 <input type="hidden" name="fly_no" value="{{$data[0]->fly_no}}">
@@ -62,7 +62,7 @@
                 <li>이름 : <span>{{Auth::user()->u_name}}</span></li>
                 <li><input type="text" class="show_name" name="seat_no" value="" readonly></li>
             </ul>
-            <button type="submit">예약하기</button>
+            <button type="button" onclick="reserveBtn()">예약하기</button>
         </form>
     </div>
     <div class="map">

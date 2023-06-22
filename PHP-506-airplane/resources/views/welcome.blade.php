@@ -74,10 +74,11 @@
                                 <div class="selectBox2">
                                     <input type="text" id="txtDate" class="form-control" name="fly_date" />
                                 </div>
+                                <button type="submit" class="btn-submit">항공편 검색</button>
                             </div>
                         </div>
                         {{-- 편도 --}}
-                        <div id="tab2"class="tab">
+                        <div id="tab2" class="tab">
                             <div class="one-way">
                                 <div class="selectBox2">
                                     <input type="hidden" class="one_s_hd_no" name="one_dep_port_no">
@@ -104,9 +105,9 @@
                                 <div class="selectBox2">
                                     <input type="text" id="txtDate1" class="form-control" name="one_fly_date" />
                                 </div>
+                                <button type="submit" class="btn-submit">항공편 검색</button>
                             </div>
                         </div>
-                        <button type="submit"><a class="btn btn-info btn-xl text-uppercase btn-submit">항공편 검색</a></button>
                     </form>
                     </div>
                 </div>

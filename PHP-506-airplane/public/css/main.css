@@ -14,6 +14,16 @@ ul{
 a{
   text-decoration: none;
 }
+.btn-submit{
+  border-radius: 0.5rem;
+  text-align: center;
+  width: 15%;
+  height: 60px;
+  font-size: 1.125rem;
+  background-color: #fff;
+  border: 2px solid #b3b3b3;
+  font-weight: 700;
+}
 /***********
 *** Tabs ***
 ***********/
@@ -41,16 +51,10 @@ a{
   font-size: 22px;
   color: white;
 }
-.asd{
-  width: 200px;
-  height: 60px;
-  background-color: #D8E6F4;
-}
 /* Tab Content */
 .tabs .tab {
   display: none;
   width: 100%;
-  min-height: 250px;
   height: auto;
   padding: 0 32px;
   color: #333;
@@ -141,6 +145,7 @@ a{
   border-radius: 6px;
   overflow-y: scroll;
   max-height: 0;
+  z-index: 99;
   transition: .3s ease-in;
 }
 
