@@ -43,9 +43,17 @@ class ReservationController extends Controller
         // v004 이동호
         // 최저가항공 6개 가져오기
         $lowCost = 
-            FlightInfo::select('*')
-                ->where('fly_date', '>', now())
+            FlightInfo::join('airport_info AS dep', 'flight_info.dep_port_no', 'dep.port_no')
+                ->join('airport_info AS arr', 'flight_info.arr_port_no', 'arr.port_no')
+                ->select(
+                    'flight_info.fly_date'
+                    ,'flight_info.price'
+                    ,'dep.port_name AS dep_name'
+                    ,'arr.port_name AS arr_name'
+                )
+                ->where('flight_info.fly_date', '>', now())
                 ->orderBy('price')
+                ->orderBy('flight_info.fly_date')
                 ->limit(6)
                 ->get();
         

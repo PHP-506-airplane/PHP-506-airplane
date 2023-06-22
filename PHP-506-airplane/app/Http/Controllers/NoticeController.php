@@ -20,34 +20,6 @@ use Illuminate\Support\Facades\Validator as FacadesValidator;
 
 class NoticeController extends Controller
 {
-    // 관리자 권한 체크
-    public function checkAuth() {
-        if (empty(Auth::user()) || Auth::user()->admin_flg === '0') {
-            return redirect()->route('notice.index')->with('alert', '권한이 없습니다.');
-        }
-    }
-
-    // 유효성 검사
-    public function validateData($req) {
-        $validator = Validator::make(
-            $req->only('notice_no', 'title', 'content'),
-            [
-                'title'         => 'required|between:3,50',
-                'content'       => 'required|max:4000',
-                'notice_no'     => 'integer',
-                'image'         => 'nullable|image|max:2048',
-            ]
-        );
-
-        if ($validator->fails()) {
-            return redirect()
-                ->back()
-                ->withErrors($validator)
-                ->withInput($req->only('title', 'content'));
-        }
-
-    }
-
     /**
      * Display a listing of the resource.
      *
@@ -66,9 +38,8 @@ class NoticeController extends Controller
      */
     public function create()
     {
-        // $this->checkAuth(); // 라고쓰면 동작하지 않는 이유 물어보기
-        if ($result = $this->checkAuth()) {
-            return $result;
+        if (empty(Auth::user()) || Auth::user()->admin_flg === '0') {
+            return redirect()->route('notice.index')->with('alert', '권한이 없습니다.');
         }
 
         return view('noticecreate');
@@ -82,12 +53,24 @@ class NoticeController extends Controller
      */
     public function store(Request $req)
     {
-        if ($result = $this->checkAuth()) {
-            return $result;
+        if (empty(Auth::user()) || Auth::user()->admin_flg === '0') {
+            return redirect()->route('notice.index')->with('alert', '권한이 없습니다.');
         }
 
-        if ($result = $this->validateData($req)) {
-            return $result;
+        $validator = Validator::make(
+            $req->only('notice_no', 'title', 'content'),
+            [
+                'title'         => 'required|between:3,50'
+                ,'content'       => 'max:4000'
+                ,'image'         => 'nullable|image|max:2048'
+            ]
+        );
+
+        if ($validator->fails()) {
+            return redirect()
+                ->back()
+                ->withErrors($validator)
+                ->withInput($req->only('title', 'content'));
         }
 
         $notice = new NoticeInfo([
@@ -134,8 +117,8 @@ class NoticeController extends Controller
      */
     public function edit($notice_no)
     {
-        if ($result = $this->checkAuth()) {
-            return $result;
+        if (empty(Auth::user()) || Auth::user()->admin_flg === '0') {
+            return redirect()->route('notice.index')->with('alert', '권한이 없습니다.');
         }
 
         $notice = NoticeInfo::find($notice_no);
@@ -151,14 +134,27 @@ class NoticeController extends Controller
      */
     public function update(Request $req, $notice_no)
     {
-        if ($result = $this->checkAuth()) {
-            return $result;
+        if (empty(Auth::user()) || Auth::user()->admin_flg === '0') {
+            return redirect()->route('notice.index')->with('alert', '권한이 없습니다.');
         }
 
         $req->request->add(['notice_no' => $notice_no]);
 
-        if ($result = $this->validateData($req)) {
-            return $result;
+        $validator = Validator::make(
+            $req->only('notice_no', 'title', 'content'),
+            [
+                'title'         => 'required|between:3,50'
+                ,'content'       => 'max:4000'
+                ,'notice_no'     => 'required|integer'
+                ,'image'         => 'nullable|image|max:2048'
+            ]
+        );
+
+        if ($validator->fails()) {
+            return redirect()
+                ->back()
+                ->withErrors($validator)
+                ->withInput($req->only('title', 'content'));
         }
 
         $notice = NoticeInfo::find($notice_no);
@@ -194,8 +190,8 @@ class NoticeController extends Controller
      */
     public function destroy($notice_no)
     {
-        if ($result = $this->checkAuth()) {
-            return $result;
+        if (empty(Auth::user()) || Auth::user()->admin_flg === '0') {
+            return redirect()->route('notice.index')->with('alert', '권한이 없습니다.');
         }
         
         NoticeInfo::destroy($notice_no);

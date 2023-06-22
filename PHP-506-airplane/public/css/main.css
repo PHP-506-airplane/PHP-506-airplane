@@ -207,10 +207,13 @@ a{
 .swiper-slide {
   width: 100%;
 }
-.slide1 {
-  background-color: beige;
+.swiper_margin {
+  text-align: center;
 }
-.slide2 {
-  background-color: yellowgreen;
+.swiper_contents {
+  margin: 10px;
+}
+.swiper_img {
+  width: 200px;
 }
 /* /v004 add 이동호 스와이퍼 */
