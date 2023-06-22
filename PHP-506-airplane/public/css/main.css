@@ -200,7 +200,7 @@ a{
 
 /* v004 add 이동호 스와이퍼 */
 .mySwipper {
-  width: 800px;
+  max-width: 1000px;
   margin: 0 auto;
   overflow: hidden;
 }
@@ -214,6 +214,9 @@ a{
   margin: 10px;
 }
 .swiper_img {
+  width: 200px;
+}
+.slide_width {
   width: 200px;
 }
 /* /v004 add 이동호 스와이퍼 */

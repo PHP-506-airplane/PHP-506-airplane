@@ -288,10 +288,10 @@ var container = document.getElementById('map');
 
 // v004 add 이동호 스와이퍼
 let swiper = new Swiper('.swiper-container', {
-    slidesPerView: 3,
+    spaceBetween: 1,
     loop : true, // 슬라이드 반복 여부
     loopAdditionalSlides : 1,
-    centeredSlides : true, // true시에 슬라이드가 가운데로 배치
+    // centeredSlides : true, // true시에 슬라이드가 가운데로 배치
     allowTouchMove : false, // false시에 스와이핑이 되지 않으며 버튼으로만 슬라이드 조작이 가능
     pagination: {
         el: '.swiper-pagination',
@@ -305,6 +305,22 @@ let swiper = new Swiper('.swiper-container', {
         prevEl: '.swiper-button-prev', // 이전 슬라이드 버튼
         nextEl: '.swiper-button-next', // 다음 슬라이드 버튼
     },
+    breakpoints: { //반응형 조건 속성
+        320: {
+            slidesPerView: 1,
+        },
+        530: {
+            slidesPerView: 2,
+        },
+        700: {
+            slidesPerView: 3,
+        },
+        900: {
+            slidesPerView: 4,
+        },
+    },
+    observer: true,
+    observeParents: true,
 });
 
 // 다음 슬라이드 버튼 클릭 시 슬라이드 1로 이동

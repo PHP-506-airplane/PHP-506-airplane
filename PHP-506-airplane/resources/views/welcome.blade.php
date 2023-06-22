@@ -117,7 +117,7 @@
             <div class="swiper-container">
                 <div class="swiper-wrapper swiper_margin">
                     @for($i = 0; $i <= 5; $i++)
-                        <div class="swiper-slide slide{{$i}}">
+                        <div class="swiper-slide slide{{$i}} slide_width">
                             <div class="swiper_contents">
                                 <img src="{{asset('lowCostImg/'. $i .'.png?' . time())}}" alt="IMG" class="swiper_img">
                                 <div>{{$lowCost[$i]->dep_name}} ~ {{$lowCost[$i]->arr_name}}</div>
