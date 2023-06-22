@@ -209,6 +209,7 @@ a{
   margin: 0 auto;
   overflow: hidden;
   position: relative;
+  height: 330px;
 }
 .swiper_center {
   text-align: center;
@@ -220,10 +221,7 @@ a{
   width: 200px;
   height: 200px;
 }
-.swiper-button-prev,
-.swiper-button-next {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
+.swiper-pagination-bullet {
+  background: rgb(0, 0, 0) !important;
 }
 /* /v004 add 이동호 스와이퍼 */

@@ -129,9 +129,8 @@
                     @endfor
                 </div>
             </div>
+            <div class="swiper-pagination"></div>
         </div>
-        <div class="swiper-button-prev"></div> {{-- 이전 슬라이드 버튼 --}}
-        <div class="swiper-button-next"></div> {{-- 다음 슬라이드 버튼 --}}
         {{-- /스와이퍼 --}}
         <!-- Services-->
         <section class="page-section" id="services">
