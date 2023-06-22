@@ -7,3 +7,21 @@
     width: 200px;
 }
 
+#logout {
+    border: none;
+    background-color: none;
+    color: #000;
+}
+
+.airplane {
+    width: 70px;
+    height: 30px;
+}
+
+#air {
+    float: left;
+}
+
+.space {
+    width: 500px;
+}
