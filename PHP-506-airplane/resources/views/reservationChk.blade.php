@@ -74,7 +74,7 @@
                     <tr>
                         <td>{{strtoupper($val->flight_num)}}</td>
                         <td><p>({{$data[0]->dep_port_eng}})</p>{{substr($val->dep_time, 0, 2)}}:{{substr($val->dep_time, 2, 2)}}</td>
-                        <td>{{ (strtotime($val->arr_time) - strtotime($val->dep_time))/60 }}</td>
+                        <td>{{ TimeCalculation($val->dep_time, $val->arr_time) }}</td>
                         <td><p>({{$data[0]->arr_port_eng}})</p>{{substr_replace($val->arr_time,':',2,0)}}</td>
                         <td><input type="hidden" class="dep_price" value="{{$val->price}}">{{substr_replace($val->price,',',-3,0)}}</td>
                         <td class="dep_fly_no"><input type="radio"  name="dep_fly_no" value="{{$val->fly_no}}"><span style="display:none;">{{$val->price}}</span></td>
@@ -114,7 +114,7 @@
                     <tr>
                         <td>{{strtoupper($val->flight_num)}}</td>
                         <td><p>({{$data2[0]->dep_port_eng}})</p>{{substr($val->dep_time, 0, 2)}}:{{substr($val->dep_time, 2, 2)}}</td>
-                        <td>{{ (strtotime($val->arr_time) - strtotime($val->dep_time))/60 }}</td>
+                        <td>{{ TimeCalculation($val->dep_time, $val->arr_time) }}</td>
                         <td><p>({{$data2[0]->arr_port_eng}})</p>{{substr_replace($val->arr_time,':',2,0)}}</td>
                         <td>{{substr_replace($val->price,',',-3,0)}}</td>
                         <td class="arr_fly_no"><input type="radio" name="arr_fly_no" value="{{$val->fly_no}}"><span style="display:none;">{{$val->price}}</span></td>
@@ -159,33 +159,7 @@
                     <td>{{strtoupper($val->flight_num)}}</td>
                     <td><p>({{$oneway[0]->dep_port_eng}})</p>{{substr($val->dep_time, 0, 2)}}:{{substr($val->dep_time, 2, 2)}}</td>
                     <td>
-                        <?php
-                            $start_time = $val->dep_time;
-                            $end_time = $val->arr_time;
-
-                            $start_hour = (int)substr($start_time, 0, 2);
-                            $start_minute = (int)substr($start_time, 2, 2);
-
-                            $end_hour = (int)substr($end_time, 0, 2);
-                            $end_minute = (int)substr($end_time, 2, 2);
-
-                            if ($end_hour < $start_hour) {
-                                $end_hour += 24; // 도착 시간이 출발 시간보다 작은 경우 24시간을 더해줍니다.
-                            }
-
-                            $hour_difference = $end_hour - $start_hour;
-                            $minute_difference = $end_minute - $start_minute;
-
-                            // 음수로 나오는 경우에는 앞날로 넘어간 시간이므로 조정해줍니다.
-                            if ($minute_difference < 0) {
-                                $hour_difference--;
-                                $minute_difference += 60;
-                            }
-
-                            $result = sprintf("%02d시 %02d분", $hour_difference, $minute_difference);
-
-                    ?>
-                    {{$result}}
+                        {{TimeCalculation($val->dep_time, $val->arr_time)}}
                     </td>
                     <td><p>({{$oneway[0]->arr_port_eng}})</p>{{substr_replace($val->arr_time,':',2,0)}}</td>
                     <td>{{substr_replace($val->price,',',-3,0)}}</td>

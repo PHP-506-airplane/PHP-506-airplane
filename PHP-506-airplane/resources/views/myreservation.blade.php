@@ -31,7 +31,7 @@
         {!!'날짜 : ' . $val['fly_date'] . '<br>'!!}
         {!!'출발 시간 : ' . $val['dep_time'] . '<br>'!!}
         {!!'도착 시간 : ' . $val['arr_time'] . '<br>'!!}
-        {!!'소요 시간 : ' . (strtotime($val['arr_time']) - strtotime($val['dep_time'])) / 60 . '분<br>'!!}
+        {!!'소요 시간 : ' . TimeCalculation($val['dep_time'], $val['arr_time']) . '<br>'!!}
         {!!'출발 : ' . $val['dep_port_name'] . '<br>'!!}
         {!!'도착 : ' . $val['arr_port_name'] . '<br>'!!}
         <form action="{{route('reservation.rescancle')}}" method="POST" id="formCancel">
