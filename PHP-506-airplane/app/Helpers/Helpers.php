@@ -25,5 +25,9 @@ function TimeCalculation($start_time, $end_time) {
         $minute_difference += 60;
     }
 
-    return sprintf('%02d분', $minute_difference);
+    if ($minute_difference === 60) {
+        return '60분';
+    }
+
+    return $minute_difference.'분';
 }
