@@ -24,10 +24,10 @@ function TimeCalculation($start_time, $end_time) {
         $hour_difference--;
         $minute_difference += 60;
     }
-
-    if ($minute_difference === 60) {
+    
+    if ($hour_difference > 0 || $minute_difference > 60) {
         return '60분';
     }
 
-    return $minute_difference.'분';
+    return $minute_difference . '분';
 }
