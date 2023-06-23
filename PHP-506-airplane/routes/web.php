@@ -69,7 +69,8 @@ Route::put('/users/chgpwpost', [UserController::class, 'chgpwpost'])->name('user
 // 메인페이지
 Route::get('/reservation/main', [ReservationController::class, 'main'])->name('reservation.main');
 // 공지사항
-Route::get('/notice/rate', [NoticeController::class, 'rateinfoget'])->name('notice.rateinfoget');
+Route::get('/notice/baggage', [NoticeController::class, 'baggage'])->name('notice.baggage');
+// Route::get('/notice/rate', [NoticeController::class, 'rateinfoget'])->name('notice.rateinfoget');
 Route::middleware(['adminBtn'])->resource('/notice', NoticeController::class);
 // 나의 예약 조회 페이지
 Route::get('/reservation/myreservation', [ReservationController::class, 'myreservation'])->name('reservation.myreservation');

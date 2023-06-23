@@ -204,6 +204,11 @@ a{
 }
 
 /* v004 add 이동호 스와이퍼 */
+.swiperMent {
+  font-size: 28px;
+  width: 900px;
+  margin: 10px auto;
+}
 .mySwipper {
   max-width: 900px;
   margin: 0 auto;

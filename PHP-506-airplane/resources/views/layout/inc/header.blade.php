@@ -13,7 +13,8 @@
         <div style="width:950px">
         </div>
         <li class="nav-item">
-            <a class="nav-link p-3 mb-2 bg-body text-dark" href="{{route('notice.rateinfoget')}}">운임 안내</a>
+            <a class="nav-link p-3 mb-2 bg-body text-dark" href="{{route('notice.baggage')}}">수하물 안내</a>
+            {{-- <a class="nav-link p-3 mb-2 bg-body text-dark" href="{{route('notice.rateinfoget')}}">운임 안내</a> --}}
         </li>
     @guest
         <li class="nav-item">

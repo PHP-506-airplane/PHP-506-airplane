@@ -221,4 +221,8 @@ class NoticeController extends Controller
 
         return view('rateinfo')->with('data', $data);
     }
+
+    public function baggage() {
+        return view('baggageinfo');
+    }
 }
