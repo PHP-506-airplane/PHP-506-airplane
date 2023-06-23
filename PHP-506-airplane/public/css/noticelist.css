@@ -56,3 +56,10 @@ hr {
     position: relative;
 }
 /* /작성 버튼 */
+
+/* 검색 버튼 */
+.serachBox {
+    text-align: center;
+    margin: 20px;
+}
+/* /검색 버튼 */

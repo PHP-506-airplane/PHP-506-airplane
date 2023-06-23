@@ -71,3 +71,7 @@ footer{
     color: red;
 }
 /* /에러 메세지 */
+
+.divContentsMain {
+    min-height: 88vh;
+}

@@ -69,12 +69,13 @@ Route::put('/users/chgpwpost', [UserController::class, 'chgpwpost'])->name('user
 // 메인페이지
 Route::get('/reservation/main', [ReservationController::class, 'main'])->name('reservation.main');
 // 공지사항
-Route::resource('/notice', NoticeController::class);
+Route::get('/notice/rate', [NoticeController::class, 'rateinfoget'])->name('notice.rateinfoget');
+Route::middleware(['adminBtn'])->resource('/notice', NoticeController::class);
 // 나의 예약 조회 페이지
 Route::get('/reservation/myreservation', [ReservationController::class, 'myreservation'])->name('reservation.myreservation');
 // 예약 취소
 Route::post('/reservation/myreservation', [ReservationController::class, 'rescancle'])->name('reservation.rescancle');
-
+// 할인율 안내 페이지
 
 // 0613 add 오재훈
 // 예약 조회(항공편 선택) 페이지

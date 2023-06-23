@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\RateInfo;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Database\Seeders\AirportInfoSeeder;
@@ -32,14 +33,18 @@ class DatabaseSeeder extends Seeder
 
         // 예약 정보 테스트 시더
         // $this->call(TestSeeder::class);
+        
+        // 할인율 시더
+        $this->call(RateInfoSeeder::class);
+
 
         // 공지사항 팩토리
         // \App\Models\NoticeInfo::factory(2000)->create();
 
         // 운항정보 팩토리
-        for($i = 0; $i < 2; $i++) {
-            \App\Models\FlightInfo::factory(500)->create();
-        }
+        // for($i = 0; $i < 2; $i++) {
+        //     \App\Models\FlightInfo::factory(500)->create();
+        // }
 
         // 예약정보 팩토리
         // for($i = 0; $i < 10; $i++) {
@@ -47,8 +52,8 @@ class DatabaseSeeder extends Seeder
         // }
         
         // 티켓정보 팩토리
-        for($i = 0; $i < 200; $i++) {
-            \App\Models\TicketInfo::factory(500)->create();
-        }
+        // for($i = 0; $i < 200; $i++) {
+        //     \App\Models\TicketInfo::factory(500)->create();
+        // }
     }
 }

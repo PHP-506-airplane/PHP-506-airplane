@@ -4,6 +4,7 @@
  * 디렉토리     : Http/Controller
  * 파일명       : NoticeController.php
  * 이력         :   v001 0612 이동호 new
+ *                  v002 0623 이동호 add 검색기능
 **************************************************/
 
 namespace App\Http\Controllers;
@@ -16,19 +17,43 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator as FacadesValidator;
+use App\Http\Middleware\AdminMiddleware;
+use App\Models\RateInfo;
 
 class NoticeController extends Controller
 {
+    // 미들웨어로 관리자권한 체크
+    public function __construct()
+    {
+        $this->middleware(AdminMiddleware::class)->only(['create', 'store']);
+    }
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $req)
     {
-        $data = NoticeInfo::select(['notice_no', 'notice_title', 'created_at', 'updated_at'])->orderBy('notice_no', 'DESC')->paginate(10);
-        return view('noticelist', compact('data'));
+        // $data = NoticeInfo::select(['notice_no', 'notice_title', 'created_at', 'updated_at'])->orderBy('notice_no', 'DESC')->paginate(10);
+        // return view('noticelist', compact('data')); // v002 del
+
+        // v002 add
+        $searchText = $req->input('search');
+
+        $query = NoticeInfo::select(['notice_no', 'notice_title', 'created_at', 'updated_at'])
+            ->orderBy('notice_no', 'DESC');
+    
+        // 검색어를 받아와서 해당하는 공지사항을 검색하고 페이지네이션해서 반환
+        if ($searchText) {
+            $query->where('notice_title', 'like', '%' . $searchText . '%');
+        }
+    
+        $data = $query->paginate(10);
+    
+        return view('noticelist', compact('data', 'searchText'));
     }
 
     /**
@@ -38,10 +63,6 @@ class NoticeController extends Controller
      */
     public function create()
     {
-        if (empty(Auth::user()) || Auth::user()->admin_flg === '0') {
-            return redirect()->route('notice.index')->with('alert', '권한이 없습니다.');
-        }
-
         return view('noticecreate');
     }
 
@@ -53,10 +74,6 @@ class NoticeController extends Controller
      */
     public function store(Request $req)
     {
-        if (empty(Auth::user()) || Auth::user()->admin_flg === '0') {
-            return redirect()->route('notice.index')->with('alert', '권한이 없습니다.');
-        }
-
         $validator = Validator::make(
             $req->only('notice_no', 'title', 'content'),
             [
@@ -179,7 +196,7 @@ class NoticeController extends Controller
 
         $notice->save();
 
-        return redirect()->route('notice.show', ['notice' => $notice_no])->with('alert', '수정이 완료되었습니다.');
+        return redirect()->route('notice.show', ['notice' => $notice_no])->with('alert', '수정되었습니다.');
     }
     
     /**
@@ -195,6 +212,13 @@ class NoticeController extends Controller
         }
         
         NoticeInfo::destroy($notice_no);
-        return redirect()->route('notice')->with('alert', '삭제가 완료되었습니다.');
+        return redirect()->route('notice.index')->with('alert', '삭제되었습니다.');
+    }
+
+    public function rateinfoget() {
+        $data = RateInfo::select('*')
+            ->get();
+
+        return view('rateinfo')->with('data', $data);
     }
 }

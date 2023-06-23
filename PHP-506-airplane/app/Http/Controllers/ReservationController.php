@@ -45,22 +45,40 @@ class ReservationController extends Controller
                 ->get();
 
         // v004 이동호
-        // 최저가항공 6개 가져오기
-        $lowCost = 
-            FlightInfo::join('airport_info AS dep', 'flight_info.dep_port_no', 'dep.port_no')
-                ->join('airport_info AS arr', 'flight_info.arr_port_no', 'arr.port_no')
-                ->select(
-                    'flight_info.fly_date'
-                    ,'flight_info.price'
-                    ,'dep.port_name AS dep_name'
-                    ,'arr.port_name AS arr_name'
-                )
-                ->where('flight_info.fly_date', '>', now())
-                ->orderBy('price')
-                ->orderBy('flight_info.fly_date')
-                ->limit(8)
-                ->get();
-        
+        // 최저가항공 가져오기
+
+        // $lowCost = 
+        //     FlightInfo::join('airport_info AS dep', 'flight_info.dep_port_no', 'dep.port_no')
+        //         ->join('airport_info AS arr', 'flight_info.arr_port_no', 'arr.port_no')
+        //         ->select(
+        //             'flight_info.fly_date'
+        //             ,'flight_info.price'
+        //             ,'dep.port_name AS dep_name'
+        //             ,'arr.port_name AS arr_name'
+        //         )
+        //         ->where('flight_info.fly_date', '>', now())
+        //         ->orderBy('price')
+        //         ->orderBy('flight_info.fly_date')
+        //         ->limit(8)
+        //         ->get();
+
+        $lowCost = [];
+        for($i = 0; $i < 8; $i++) {
+            $price = rand(10, 30) * 1000;
+            $lowCost[] = 
+                FlightInfo::join('airport_info AS dep', 'flight_info.dep_port_no', 'dep.port_no')
+                    ->join('airport_info AS arr', 'flight_info.arr_port_no', 'arr.port_no')
+                    ->select(
+                        'flight_info.fly_date'
+                        ,'flight_info.price'
+                        ,'dep.port_name AS dep_name'
+                        ,'arr.port_name AS arr_name'
+                    )
+                    ->where('flight_info.fly_date', '>', now())
+                    ->where('flight_info.price', '=', $price)
+                    ->first();
+        }
+
         //  return view('welcome')->with('data',$result); //v002 del 이동호
         return view('welcome', compact('notices', 'data', 'lowCost'));
     }
@@ -245,7 +263,7 @@ class ReservationController extends Controller
                 ,'user.u_name'
                 ,'fli.fly_no'
                 ,'ticket.t_no'
-                ,'ticket.price'
+                ,'ticket.t_price'
             )
             ->limit(1)
             ->get();
@@ -256,7 +274,7 @@ class ReservationController extends Controller
         return redirect()->route('reservation.myreservation')->with('alert', '예약이 완료되었습니다.\n가입시 등록하신 이메일로 예약정보가 발송되었습니다.');
     }
     
-    // v003 이동호
+    // v003 이동호 add 나의 예약 조회 페이지
     public function myreservation() {
         if(empty(Auth::user())) {
             return redirect()->route('users.login');
@@ -272,6 +290,7 @@ class ReservationController extends Controller
                 ->join('user_info AS user', 'reserve_info.u_no', 'user.u_no')
                 ->join('ticket_info AS ticket', 'reserve_info.reserve_no', 'ticket.reserve_no')
                 ->where('reserve_info.u_no', Auth::user()->u_no)
+                ->where('fli.fly_date', '>=', now())
                 ->select(
                     'reserve_info.*'
                     ,'fli.fly_date'
@@ -287,12 +306,15 @@ class ReservationController extends Controller
                     ,'fli.fly_no'
                     ,'ticket.t_no'
                 )
+                ->orderBy('fli.fly_date')
+                ->orderBy('fli.dep_time')
                 ->limit(30)
                 ->get();
 
         return view('myreservation')->with('data', $data);
     }
 
+    // v003 이동호 add 예약 취소
     public function rescancle(Request $req) {
         if(empty(Auth::user())) {
             return redirect()->route('users.login');

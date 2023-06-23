@@ -16,8 +16,10 @@
 @endsection
 
 @section('contents')
-    @if(empty($data))
+    @if($data->isEmpty())
         <div>예약 정보가 없습니다.</div>
+        <br>
+        <button type="button" onclick="location.href='{{route('reservation.main')}}'">예약하기</button>
     @endif
     @foreach($data as $key => $val)
         {!!'flyno : ' . strtoupper($val['fly_no']) . '<br>'!!}
@@ -38,7 +40,7 @@
             @csrf
             <input type="hidden" name="reserve_no" value="{{$val['reserve_no']}}">
             <input type="hidden" name="t_no" value="{{$val['t_no']}}">
-            <button type="button" onclick="Confirm()">예약 취소</button>
+            <button type="button" onclick="confirmCancel()">예약 취소</button>
             {{-- <button type="submit">예약 취소</button> --}}
         </form>
         <hr>

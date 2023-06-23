@@ -39,13 +39,13 @@
         </div>
     </div>
     <div class="nButtons">
-        @if(!empty(Auth::user()) && Auth::user()->admin_flg === '1')
+        @if($isAdmin)
             <button type="button" onclick="location.href = '{{route('notice.edit', ['notice' => $data->notice_no])}}'">수정</button>
             <form action="{{route('notice.destroy', ['notice' => $data->notice_no])}}" method="POST" id="formDel">
                 @csrf
                 @method('delete')
                 {{-- <button type="submit">삭제</button> --}}
-                <button type="button" onclick="Confirm()">삭제</button>
+                <button type="button" onclick="confirmDel()">삭제</button>
             </form>
         @endif
         <button type="button" onclick="location.href = '{{route('notice.index')}}'">리스트</button>
