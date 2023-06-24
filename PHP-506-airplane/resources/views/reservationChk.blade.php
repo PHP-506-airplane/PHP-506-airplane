@@ -44,7 +44,6 @@
         </div>
         <div class="location">
             @if($flg['hd_li_flg'] === '1')
-           
             <input type="hidden" name="hd_li_flg" value="{{$flg['hd_li_flg']}}">
             {{-- 가는편 --}}
             <h2>여정1 :
@@ -129,7 +128,6 @@
         </div>
         @else
         {{-- 편도 --}}
-        {{var_dump($oneway)}}
         <input type="hidden" name="hd_li_flg" value="{{$flg['hd_li_flg']}}">
         <h2>여정1 :
             @if(isset($oneway[0]->dep2_port_no) && $_GET['one_dep_port_no'] == $oneway[0]->dep2_port_no)

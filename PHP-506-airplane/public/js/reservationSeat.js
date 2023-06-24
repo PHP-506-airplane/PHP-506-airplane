@@ -2,7 +2,7 @@ let seats = document.querySelectorAll('.fast a');
 let s_name = document.querySelector('.show_name');
 let choice = document.querySelector('.tab');
 
-
+// 좌석선택
 seats.forEach(function(seat){
     seat.addEventListener('click', function(){
         seats.forEach(function(seat){
@@ -13,17 +13,26 @@ seats.forEach(function(seat){
     });
 });
 
+// 가는편/오는편 탭
 function changeTab(tabId) {
-    var tab = document.getElementById(tabId);
-    var tabs = document.getElementsByClassName('tab');
+    var tabId1 = document.getElementById('aFlight1');
+    var tabId2 = document.getElementById('aFlight2');
+    var map = document.getElementsByClassName('map');
 
-    for (var i = 0; i < tabs.length; i++) {
-        tabs[i].classList.remove('choice');
+    if(tabId == 'aFlight1'){
+        tabId1.parentElement.classList.add('choice');
+        tabId2.parentElement.classList.remove('choice');
+        map[0].classList.add('active');
+        map[1].classList.remove('active');
+    }else{
+        tabId2.parentElement.classList.add('choice');
+        tabId1.parentElement.classList.remove('choice');
+        map[1].classList.add('active');
+        map[0].classList.remove('active');
     }
-
-    tab.parentElement.classList.add('choice');
+            
 }
-
+// 예약확정 confirm
 const seatForm = document.getElementById('seatPost');
 function reserveBtn(){
     var con_test = confirm("정말 예약 하시겠습니까?");
@@ -31,3 +40,5 @@ function reserveBtn(){
         seatForm.submit();
     }
 }
+
+
