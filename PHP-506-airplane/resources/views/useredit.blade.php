@@ -44,16 +44,53 @@
                         <a href="{{route('reservation.main')}}">취소</a>
                     </div>
                     <div class="forgot_pw">
-                        <a href="{{route('users.withdraw')}}">회원탈퇴</a>
+                        <a href="{{route('users.chgpw')}}">비밀번호 변경</a>
                     </div>
+                    {{-- <div class="forgot_pw">
+                        <a href="{{ route('users.withdraw')}}" onclick="test()">회원탈퇴</a>
+                    </div> --}}
                 </div>
             </div>
         </div>
     </div>
 </form>
-
+<form action="{{route('users.withdraw')}}" method="get" id="withdraw">
+    <div class="forgot_pw">
+        <button type="button" onclick="test()">회원탈퇴</button>
+    </div>
+</form>
 @endsection
 
 @section('js')
     <script src="{{asset('js/delete.js')}}"></script>
+    <script>
+    const seatForm = document.getElementById('withdraw');
+    function test() {
+        var con_test = confirm("정말 탈퇴 하시겠습니까?");
+        if(con_test == true){
+        seatForm.submit();
+    }
+}
+
+    
+</script>
+{{-- <script>
+!confirm("탈퇴?")
+function ConfirmTest() {
+if (confirm("삭제 하시겠습니까?")) {
+        return route('users.withdraw');
+    }  
+    else {
+        return false;
+    }
+}
+</script> --}}
+
+{{-- function withdraw(){
+  if (confirm("정말 탈퇴하시겠습니까??") == true){    //확인
+      document.form.submit();
+  }else{   //취소
+      return;
+  }
+} --}}
 @endsection

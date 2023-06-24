@@ -29,9 +29,9 @@
 
 {{-- v004 add 이동호 --}}
 {{-- 스와이퍼 라이브러리 --}}
-<link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+{{-- <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
 <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
-@endsection
+@endsection --}}
 
 @section('contents')
         <header class="masthead">
@@ -45,9 +45,9 @@
                         </ul>
                         <form action="{{route('reservation.check')}}" method="get">
                             @csrf
-                        <div id="tab1"class="tab on">
+                        <div id="tab1"class="tab on"> 
                             {{-- 왕복 --}}
-                            <div class="round-way">
+                             <div class="round-way">
                                 <div class="selectBox2">
                                     <input type="hidden" class="hd_li_flg" name="hd_li_flg" value="1">
                                     <input type="hidden" class="ro_s_hd_no" name="dep_port_no">
@@ -76,9 +76,9 @@
                                 </div>
                                 <button type="submit" class="btn-submit">항공편 검색</button>
                             </div>
-                        </div>
+                        </div> 
                         {{-- 편도 --}}
-                        <div id="tab2" class="tab">
+                         <div id="tab2" class="tab">
                             <div class="one-way">
                                 <div class="selectBox2">
                                     <input type="hidden" class="one_s_hd_no" name="one_dep_port_no">
@@ -112,9 +112,9 @@
                     </div>
                 </div>
             </div>
-        </header>
+        </header> 
         {{-- v004 add 이동호 스와이퍼 --}}
-        <div class="mySwipper">
+        {{-- <div class="mySwipper">
             <div class="swiper-container">
                 <div class="swiper-wrapper swiper_center">
                     @for($i = 0; $i <= 7; $i++)
@@ -130,14 +130,14 @@
                 </div>
             </div>
             <div class="swiper-pagination"></div>
-        </div>
+        </div> --}}
         {{-- /스와이퍼 --}}
         <!-- Services-->
-        <section class="page-section" id="services">
+         <section class="page-section" id="services">
             <div class="container sec2">
-                <div class="notice">
+                <div class="notice"> 
                     {{-- v002 add 이동호 --}}
-                    <h2><a href="{{route('notice.index')}}">공지사항</a></h2>
+                     <h2><a href="{{route('notice.index')}}">공지사항</a></h2>
                     <ul>
                         @foreach($notices as $notice)
                             <li>

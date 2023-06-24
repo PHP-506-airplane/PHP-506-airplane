@@ -3,6 +3,11 @@ async function chkEmail() {
     const div = document.getElementById('testtest');
     const url = "/api/mail?email=" + id.value;
 
+    if (id.value === "") {
+        alert("이메일을 입력해주세요.");
+        return;
+    }
+
     fetch(url, {
         method: 'POST'
     })

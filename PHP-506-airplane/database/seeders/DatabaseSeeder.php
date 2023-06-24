@@ -43,12 +43,12 @@ class DatabaseSeeder extends Seeder
 
         // 예약정보 팩토리
         // for($i = 0; $i < 10; $i++) {
-        //     \App\Models\ReserveInfo::factory(2000)->create();
+        //     \App\Models\ReserveInfo::factory(200)->create();
         // }
         
         // 티켓정보 팩토리
-        for($i = 0; $i < 200; $i++) {
-            \App\Models\TicketInfo::factory(500)->create();
-        }
+        // for($i = 0; $i < 200; $i++) {
+        //     \App\Models\TicketInfo::factory(500)->create();
+        // }
     }
 }

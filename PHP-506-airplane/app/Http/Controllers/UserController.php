@@ -35,19 +35,20 @@ class UserController extends Controller
 
     function loginpost(Request $req) {
         
+        
+        $user = Userinfo::where('u_email', $req->u_email)->first();
+        
+        
+        if(!$user || !Hash::check($req->u_pw, $user->u_pw)){
+            // Log::debug($req->password . ' : '.$user->password);
+            $error = '아이디와 비밀번호를 확인하세요';
+            return redirect()->back()->with('alert', $error);
+        }
+
         $validation = $req->validate([
             'u_email'    => 'required|email|max:100'  
             ,'u_pw' => 'required|regex:/^(?=.*[a-zA-Z])(?=.*[!@#$%^*-])(?=.*[0-9]).{8,20}$/'
         ]);
-
-        $user = Userinfo::where('u_email', $req->u_email)->first();
-
-
-        if(!$user || !Hash::check($req->u_pw, $user->u_pw)){
-            // Log::debug($req->password . ' : '.$user->password);
-            $errors = '아이디와 비밀번호를 확인하세요';
-            return redirect()->back()->with('error', $errors);
-        }
         
         Auth::login($user);
 
@@ -59,9 +60,8 @@ class UserController extends Controller
             return redirect()->back()->with('error', $errors);
         }
 
-        $remember = $req -> input('remember');
 
-        if(Auth::attempt($validation, $remember)){
+        if(Auth::attempt($validation)){
             return redirect()->route('main');
 
         } else{
@@ -152,9 +152,11 @@ class UserController extends Controller
 
     //탈퇴
     function withdraw() {
-        $id = session('email');
-
-        $result = Userinfo::destroy('u_email');
+        $id = session('u_no');
+        // return session()->all();
+        // return var_dump(session()->all(), $id);
+        $result = Userinfo::destroy(Auth::user()->u_no);
+        // return var_dump($result);
         Session::flush();
         Auth::logout();
 
@@ -225,17 +227,13 @@ class UserController extends Controller
     
     function chgpwpost(Request $req)
     {
-        $arrKey = [];
 
         $baseuser = Userinfo::find(Auth::user()->u_no);
 
-        if(!Hash::check($req->password, $baseuser->password)) {
-            return redirect()->back()->with('error', '비밀번호가 일치하지 않습니다.');
+        if(!Hash::check($req->nowpassword, $baseuser->u_pw)) {
+            return redirect()->back()->with('alert', '비밀번호가 일치하지 않습니다.');
         }
 
-        if(!isset($req->password)) {
-            $arrKey[] = 'password';
-        }  
         
         $chkList = [
             'password' => 'required_with:passwordchk|same:passwordchk|regex:/^(?=.*[a-zA-Z])(?=.*[!@#$%^*-])(?=.*[0-9]).{8,20}$/'
@@ -244,10 +242,9 @@ class UserController extends Controller
         $baseuser->u_pw = $req->password;
         $baseuser->save();
 
-        alert()->success('비밀번호 변경 완료');
-        // return view('useredit')->with('data', $baseuser);
+       
 
-        return redirect()->route('users.logout');
+        return redirect()->route('users.logout')->with('alert','비밀번호가 변경 되었습니다.');
     }
 
     

@@ -16,19 +16,22 @@
         <h1>비밀번호 수정</h1>
         @csrf
         @method('put')
+         <p id="passwordStatus"></p>
+        <label for="nowpassword">현재 비밀번호 : </label>
+        <input type="text" name="nowpassword" id="nowpassword">
+        <br>
         <label for="password">비밀번호 : </label>
         <input type="text" name="password" oninput="chkPw()" id="password">
         <br>
-        <label for="passwordchk">비밀번호 확인 : </label>
-        <input type="text" name="passwordchk" oninput="chkPw()" id="passwordchk">
+        <label for="pwchk">비밀번호 확인 : </label>
+        <input type="text" name="pwchk" oninput="chkPw()" id="pwchk">
         <div id="chk_pw_msg"></div>
         <br>
         <button type="submit" onclick="location.href = '{{route('users.chgpw.post')}}'">변경</button>
         <button type="button" onclick="location.href = '{{route('reservation.main')}}'">취소</button>
     </form>
-
 @endsection
 
 @section('js')
-    <script src="{{asset('js/registration.js')}}"></script>
+    <script src="{{asset('js/chkpw.js')}}"></script>
 @endsection
