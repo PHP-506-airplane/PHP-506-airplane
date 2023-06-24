@@ -360,6 +360,8 @@ class ReservationController extends Controller
                     'reserve_info.*'
                     ,'fli.fly_date'
                     ,'dep.port_name AS dep_port_name'
+                    ,'dep.port_eng AS dep_port_eng'
+                    ,'arr.port_eng AS arr_port_eng'
                     ,'arr.port_name  AS arr_port_name'
                     ,'fli.flight_num'
                     ,'fli.dep_time'

@@ -19,10 +19,10 @@
     @include('layout.inc.notice')
     @if($isAdmin)
         <div class="divCreateBtn">
-            <button type="button" onclick="location.href='{{route('notice.create')}}'" class="btnCreate">공지사항 작성</button>
+            <button type="button" onclick="location.href='{{route('notice.create')}}'" class="btnCreate btn btn-outline-info">공지사항 작성</button>
         </div>
     @endif
-    <div class="nListContainer">
+    <div class="nListContainer container">
         <div class="listInfo row textCenter">
             <div class="col-2 afterLine">번호</div>
             <div class="col-8 afterLine">제목</div>
@@ -37,14 +37,14 @@
         </div>
         @empty
         <div class="row">
-            <div>공지사항이 없습니다.</div>
+            <div class="noneContents">공지사항이 없습니다.</div>
         </div>
         @endforelse
     </div>
     <div class="serachBox">
         <form action="{{ route('notice.index') }}" method="GET">
             <input type="text" id="serachInput" name="search" value="{{ $searchText }}">
-            <button type="submit">검색</button>
+            <button type="submit" class="btn btn-outline-info">검색</button>
         </form>
     </div>
 

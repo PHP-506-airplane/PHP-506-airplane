@@ -23,14 +23,14 @@ body {
 }
 
 .imgLogo {
-    width: 272px;
-    height: 68px;
+    width: 17rem;
+    height: 4.25rem;
 }
 /* /헤더 */
 
 /* 푸터 */
 footer{
-    height: 50px;
+    height: 3.125rem;
     width: 100%;
     background-color: rgba(75, 75, 75, 0.089);
     color: rgb(0, 0, 0);
@@ -38,7 +38,7 @@ footer{
 }
 
 .footerContainer {
-    padding-top: 13px;    
+    padding-top: .8125rem;    
 }
 
 .footerFixed {
@@ -61,8 +61,21 @@ footer{
 
 /* 공지사항 페이지들 */
 .noticeMsg {
-    margin: 5vh auto 5vh 10vw;
-    min-width: 700px;
+    margin: 5vh auto 1vh auto;
+    width: 100vw;
+    height: 12.5rem;
+    line-height: 12.5rem;
+    text-align: center;
+    background-image: url('/img/banner.jpg');
+    background-size: auto;
+    background-repeat: no-repeat;
+    color: white;
+    font-weight: 900;
+}
+.noticeH1 {
+    padding-top: 3.125rem;
+    font-size: 3.125rem;
+    text-shadow: -1px 0px black, 0px 1px black, 1px 0px black, 0px -1px black;
 }
 /* /공지사항 페이지들 */
 
@@ -75,3 +88,9 @@ footer{
 .divContentsMain {
     min-height: 88vh;
 }
+
+/* 버튼 색깔 */
+.btn-outline-info:hover {
+    color: white;
+}
+/* /버튼 색깔 */

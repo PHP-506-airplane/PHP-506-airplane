@@ -1,14 +1,25 @@
+/* a tag */
+a {
+    color: #000000;
+    text-decoration: none;
+}
+a:hover {
+    color: #000000;
+}
+/* /a tag */
+
 /* min width */
 .nListContainer, .listInfo, .mainContents {
-    min-width: 700px;
+    min-width: 43.75rem;
+    max-width: 75rem;
 }
 /* /min width */
 
 /* 상하단 가로선 */
 .nListContainer {
-    margin: 10px auto;
-    border-top: 1px solid #000000;
-    border-bottom: 1px solid #000000;
+    margin: .625rem auto;
+    border-top: .0625rem solid #000000;
+    border-bottom: .0625rem solid #000000;
     width: 80vw;
     min-height: 50vh;
 }
@@ -22,19 +33,18 @@ hr {
 
 /* 번호, 게목, 등록일 */
 .listInfo {
-    height: 50px;
-    line-height: 50px;
+    height: 3.125rem;
+    line-height: 3.125rem;
     width: 80vw;
-    background-color: #f7f7f6;
-    margin-left: 0;
+    background-color: #008cff23;
 }
 /* /번호, 게목, 등록일 */
 
 /* 내용 */
 .mainContents {
     margin-left: 0;
-    height: 50px;
-    line-height: 50px;
+    height: 3.125rem;
+    line-height: 3.125rem;
 }
 /* /내용 */
 
@@ -45,21 +55,24 @@ hr {
 /* /페이징 */
 
 /* 작성 버튼 */
-.btnCreate {
-    position: absolute;
-    right: -10%;
-    bottom: 10px;
-}
 .divCreateBtn {
-    width: 80vw;
-    min-width: 600px;
-    position: relative;
+    margin: 0 auto;
+    min-width: 43.75rem;
+    max-width: 75rem;
+    text-align: right;
 }
 /* /작성 버튼 */
 
 /* 검색 버튼 */
 .serachBox {
     text-align: center;
-    margin: 20px;
+    margin: 1.25rem;
 }
 /* /검색 버튼 */
+
+/* 검색 - 글 없음 */
+.noneContents {
+    text-align: center;
+    margin: 1.875rem auto;
+}
+/* /검색 - 글 없음 */
