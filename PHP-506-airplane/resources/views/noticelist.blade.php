@@ -17,12 +17,12 @@
 
 @section('contents')
     @include('layout.inc.notice')
-    @if(!empty(Auth::user()) && Auth::user()->admin_flg === '1')
+    @if($isAdmin)
         <div class="divCreateBtn">
-            <button type="button" onclick="location.href='{{route('notice.create')}}'" class="btnCreate">공지사항 작성</button>
+            <button type="button" onclick="location.href='{{route('notice.create')}}'" class="btnCreate btn btn-outline-info">공지사항 작성</button>
         </div>
     @endif
-    <div class="nListContainer">
+    <div class="nListContainer container">
         <div class="listInfo row textCenter">
             <div class="col-2 afterLine">번호</div>
             <div class="col-8 afterLine">제목</div>
@@ -37,18 +37,30 @@
         </div>
         @empty
         <div class="row">
-            <div class="col"></div>
-            <div class="col">게시글 없음</div>
-            <div class="col"></div>
-            <div class="col"></div>
+            <div class="noneContents">공지사항이 없습니다.</div>
         </div>
         @endforelse
     </div>
-    <div class="paginate">
-        {{ $data->links('vendor.pagination.custom') }}
+    <div class="serachBox">
+        <form action="{{ route('notice.index') }}" method="GET">
+            <input type="text" id="serachInput" name="search" value="{{ $searchText }}">
+            <button type="submit" class="btn btn-outline-info">검색</button>
+        </form>
     </div>
+
+    {{-- 검색하면 검색결과 페이지네이션 --}}
+    @if ($searchText)
+        <div class="paginate">
+            {{ $data->appends(['search' => $searchText])->links('vendor.pagination.custom') }}
+        </div>
+    @else
+        <div class="paginate">
+            {{ $data->links('vendor.pagination.custom') }}
+        </div>
+    @endif
+
 @endsection
 
 @section('js')
-    {{-- <script src="{{asset('js/js 파일 이름.js')}}"></script> --}}
+    <script src="{{asset('js/noticeList.js')}}"></script>
 @endsection

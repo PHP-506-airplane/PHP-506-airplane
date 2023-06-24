@@ -12,5 +12,10 @@ class TicketInfo extends Model
     protected $table = 'ticket_info';
     protected $primaryKey = 't_no';
 
+    protected $fillable = [
+        'reserve_no'
+        ,'t_price'
+    ];
+
     public $timestamps = false;
 }

@@ -20,6 +20,7 @@
     @yield('css')
 </head>
 <body>
+    {{-- 세션에 'alert'가 존재하면 alert창 출력 --}}
     @if(session('alert'))
         <script>
             alert('{{session('alert')}}');
