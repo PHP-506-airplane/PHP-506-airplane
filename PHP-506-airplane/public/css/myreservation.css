@@ -59,6 +59,8 @@ Cities
 --------------------*/
 .boarding-pass .cities {
     position: relative;
+    display: flex;
+    justify-content: space-between;
 }
 
 .boarding-pass .cities::after {
@@ -69,12 +71,12 @@ Cities
 
 .boarding-pass .cities .city {
     padding: 20px 18px;
-    float: left;
+    /* float: left; */
 }
 
 .boarding-pass .cities .city:nth-child(2) {
     /* float: right; */
-    margin-left: 125px;
+    margin-left: auto;
 }
 
 .boarding-pass .cities .city strong {
