@@ -29,9 +29,9 @@
 
 {{-- v004 add 이동호 --}}
 {{-- 스와이퍼 라이브러리 --}}
-{{-- <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+<link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
 <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
-@endsection --}}
+@endsection
 
 @section('contents')
         <header class="masthead">
@@ -131,7 +131,7 @@
                 </div>
             </div>
             <div class="swiper-pagination"></div>
-        </div> --}}
+        </div>
         {{-- /스와이퍼 --}}
         <!-- Services-->
          <section class="page-section" id="services">
