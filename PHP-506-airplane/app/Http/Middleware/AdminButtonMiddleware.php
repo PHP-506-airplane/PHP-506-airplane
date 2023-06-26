@@ -24,7 +24,7 @@ class AdminButtonMiddleware
     public function handle(Request $req, Closure $next)
     {
         if (!empty(Auth::user()) && Auth::user()->admin_flg === '1') {
-            // 사용자가 관리자인 경우에만 버튼을 출력
+            // view()->share() : 모든 뷰에 공유할 데이터를 설정하는 데 사용
             view()->share('isAdmin', true);
         } else {
             view()->share('isAdmin', false);
