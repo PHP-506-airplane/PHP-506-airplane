@@ -74,7 +74,7 @@
                                 <div class="selectBox2">
                                     <input type="text" id="txtDate" class="form-control" name="fly_date" />
                                 </div>
-                                <button type="submit" class="btn-submit">항공편 검색</button>
+                                    <button type="submit" class="btn btn-submit"><span>항공편 검색</span></button>
                             </div>
                         </div> 
                         {{-- 편도 --}}
@@ -105,7 +105,7 @@
                                 <div class="selectBox2">
                                     <input type="text" id="txtDate1" class="form-control" name="one_fly_date" />
                                 </div>
-                                <button type="submit" class="btn-submit">항공편 검색</button>
+                                <button type="submit" class="btn btn-submit"><span>항공편 검색</span></button>
                             </div>
                         </div>
                     </form>

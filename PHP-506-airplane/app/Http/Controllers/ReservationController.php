@@ -171,7 +171,6 @@ class ReservationController extends Controller
         // 왕복/편도 플래그
         $flg = $req->only('hd_li_flg');
 
-        
         //왕복
         if($req->hd_li_flg =='1'){
             // 가는편
@@ -267,17 +266,14 @@ class ReservationController extends Controller
 
             return view('reservationSeat', compact('data', 'seat', 'availableSeats', 'flg'));
             }
-            
-        
-        
-        
     }
 // 예약하기
     public function seatpost(Request $req){
-        // return var_dump($_POST);
-        // if(!isset($req->seat_no) || !isset($req->seat_no2)){
-        //     return redirect()->back()->with('alert', '좌석을 선택해주세요.');
-        // }
+
+        if(!isset($req->seat_no) || !isset($req->seat_no2)){
+            return redirect()->back()->with('alert', '좌석을 선택해주세요.');
+        }
+
         if($req->flg =='1'){
             $reserveInfo = new ReserveInfo([
                 'u_no'=> Auth::user()->u_no

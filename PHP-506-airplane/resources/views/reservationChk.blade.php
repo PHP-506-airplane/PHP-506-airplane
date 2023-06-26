@@ -12,7 +12,6 @@
 
 @section('css')
 <link rel="stylesheet" href="{{asset('css/reservationChk.css')}}">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css" />
 @endsection
 
 @section('contents')
@@ -56,6 +55,9 @@
                     <span class="br">{{$data[0]->arr_port_name}}({{$data[0]->arr_port_eng}})</span>
                     @endif
                 </strong>
+                <span class="r_date">
+                    날짜: {{substr($_GET['fly_date'],0,-13)}}
+                </span>
             </h2>
             <table class="table sta_table align-middle">
                 <thead class="table-light">
@@ -96,6 +98,9 @@
                     <span class="br">{{$data[0]->dep_port_name}}({{$data[0]->dep_port_eng}})</span>
                     @endif
                 </strong>
+                <span class="r_date">
+                    날짜: {{substr($_GET['fly_date'],13)}}
+                </span>
             </h2>
             <table class="table sta_table align-middle">
                 <thead class="table-light">
@@ -139,6 +144,9 @@
                 <span class="br">{{$oneway[0]->arr_port_name}}({{$oneway[0]->arr_port_eng}})</span>
                 @endif
             </strong>
+            <span class="r_date">
+                날짜: {{$_GET['one_fly_date'],0,-13}}
+            </span>
         </h2>
         <table class="table sta_table align-middle">
             <thead class="table-light">
@@ -184,6 +192,5 @@
 @endsection
 
 @section('js')
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
 <script src="{{asset('js/reserveChk.js')}}"></script>
 @endsection

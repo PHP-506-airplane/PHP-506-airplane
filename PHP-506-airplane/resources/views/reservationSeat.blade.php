@@ -87,7 +87,7 @@
                         </li>
                     @endif
                 </ul>
-                <button type="button" onclick="reserveBtn()">예약하기</button>
+                <button type="button" class="chk_btn" onclick="reserveBtn()">예약하기</button>
             </form>
         </div>
         {{-- 왕복편 --}}

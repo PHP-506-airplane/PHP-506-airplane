@@ -193,6 +193,17 @@ ol {
     font-size: 48px !important;
 }
 
+.chk_btn{
+    border-radius: 0.5rem;
+    text-align: center;
+    width: 50%;
+    height: 60px;
+    font-size: 1.125rem;
+    background-color: #fff;
+    border: 2px solid #b3b3b3;
+    font-weight: 700;
+}
+
 
 
 

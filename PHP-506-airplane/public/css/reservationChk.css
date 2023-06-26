@@ -72,6 +72,12 @@ ul{
 .step li::marker{
     content: '';
 }
+.r_date{
+    margin-left: 30%;
+}
+.location > h2{
+    margin-top: 30px;
+}
 .location h2::before{
     content: "";
     display: inline-block;
