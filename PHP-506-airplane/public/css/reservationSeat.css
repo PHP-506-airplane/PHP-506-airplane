@@ -14,7 +14,6 @@ h1{
 .active{
     display: block;
 }
-
 .on{
     font-weight: bold;
 }
@@ -67,6 +66,7 @@ h1{
 /* 좌석 */
 .seatMap{
     display: flex;
+    margin-bottom: 20px;
 }
 ol {
     padding-top: 2rem;
@@ -76,7 +76,7 @@ ol {
     box-sizing: border-box;
     background: url('../img/plane-img.png')no-repeat;
     margin-top: 50px;
-    margin-left: 100px;
+    margin-left: 200px;
     width: 420px;
     height: 100%;
 }
@@ -108,15 +108,16 @@ ol {
     cursor: default;
     transform: scale(1);
   }
-.map li.stretch a, .map li.stretch>span, .map li.fast a,.map li.fast>span {
+.map li.fast a,.map li.fast>span,.map li.fast2 a,.map li.fast2>span {
     border: 3px solid #518bbb;
 }
-.fast:nth-child(6n-3){
+.fast:nth-child(6n-3),.fast2:nth-child(6n-3){
     margin-right: 60px;
 }
-.fast:nth-child(35n){
+.fast:nth-child(35n),.fast2:nth-child(35n):nth-child(35n){
     margin-bottom: 60px;
 }
+/* Tab */
 .tripTab {
     position: relative;
 }
@@ -151,22 +152,47 @@ ol {
 .selected {
     background-color: #6feaf6;
   }
-
 .name_box{
     width: 30%;
     display: flex;
     justify-content: space-between;
 }
-/* .name_box h2{
-    color: #fff;
+.name_box h2{
+    color: #2e2e2e;
     height: 100px;
     line-height: 100px;
-    background-color: #518bbb;
+}
+.name_box .u_name{
+    font-size: 28px;
+}
+.s_li{
+    margin: 20px 0;
+}
+.s_li input{
+    background-color: transparent;
+    text-align: center;
+    width: 10rem;
+    font-size: 48px;
+    color: #661e43;
+    border: none;
+    height: 80px;
+}
+.s_li h3{
+    padding-bottom: 15px;
+    border-bottom: 3px dotted #3e3e3e;
+    text-align: center;
+}
+.name_box > h2{
+    position: fixed;
 }
 #seatPost{
-    height: 200px;
-    background-color: #ebebeb;
-} */
+    position: fixed;
+    left: 30%;
+}
+.material-symbols-outlined{
+    font-size: 48px !important;
+}
+
 
 
 

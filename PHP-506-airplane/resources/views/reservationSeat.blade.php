@@ -12,6 +12,7 @@
 
 @section('css')
 <link rel="stylesheet" href="{{asset('css/reservationSeat.css')}}">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
 @endsection
 
 @section('contents')
@@ -45,9 +46,13 @@
                 <li class="tab choice" style="width: 50%;">
                     <a id="aFlight1" onclick="changeTab('aFlight1')">구간1<span> : {{$data[0]->dep_name}}({{$data[0]->dep_eng}})->{{$data[0]->arr_name}}({{$data[0]->arr_eng}})</span></a>
                 </li>
-                <li class="tab" style="width: 50%;">
-                    <a id="aFlight2" onclick="changeTab('aFlight2')">구간2<span> : {{$data[0]->arr_name}}({{$data[0]->arr_eng}})->{{$data[0]->dep_name}}({{$data[0]->dep_eng}})</span></a>
-                </li>
+                @if($flg['hd_li_flg'] === '1')
+                    <li class="tab" style="width: 50%;">
+                        <a id="aFlight2" onclick="changeTab('aFlight2')">구간2<span> : {{$data[0]->arr_name}}({{$data[0]->arr_eng}})->{{$data[0]->dep_name}}({{$data[0]->dep_eng}})</span></a>
+                    </li>
+                @else
+                <li class="tab choice" style="width: 50%;"></li>
+                @endif
             </ul>
         </div>
     </div>
@@ -57,19 +62,40 @@
             <form id="seatPost" action="{{route('reservation.seatpost')}}" method="post">
                 @csrf
                 <ul>
+                    <input type="hidden" name="flg" value="{{$flg['hd_li_flg']}}">
                     <input type="hidden" name="fly_no" value="{{$data[0]->fly_no}}">
                     <input type="hidden" name="plane_no" value="{{$data[0]->plane_no}}">
-                    <li>이름 : <span>{{Auth::user()->u_name}}</span></li>
-                    <li><input type="text" class="show_name" name="seat_no" value="" readonly></li>
+                    @if($flg['hd_li_flg'] === '1')
+                        <input type="hidden" name="fly_no2" value="{{$data2[0]->fly_no}}">
+                        <input type="hidden" name="plane_no2" value="{{$data2[0]->plane_no}}">
+                    @endif
+                    <li class="u_name">이름 : <span>{{Auth::user()->u_name}}</span></li>
+                    <li class="s_li">
+                        <h3>가는편(구간1)</h3>
+                        <span class="material-symbols-outlined">
+                            chair
+                            </span>
+                        <input type="text" class="show_name" name="seat_no"  readonly>
+                    </li>
+                    @if($flg['hd_li_flg'] === '1')
+                        <li class="s_li">
+                            <h3>오는편(구간2)</h3>
+                            <span class="material-symbols-outlined">
+                                chair
+                                </span>
+                            <input type="text" class="show_name2" name="seat_no2"  readonly>
+                        </li>
+                    @endif
                 </ul>
                 <button type="button" onclick="reserveBtn()">예약하기</button>
             </form>
         </div>
         {{-- 왕복편 --}}
+        {{-- 예약된 좌석 비교 --}}
         @if($flg['hd_li_flg'] === '1')
         <div class="map active">
             <ol>
-                {{-- 예약된 좌석 비교 --}}
+                {{-- 가는편 --}}
                 @foreach($seat as $value)
                     @if($availableSeats->contains('seat_no',$value->seat_no))
                     <li class="fast Available">
@@ -91,20 +117,20 @@
         </div>
         <div class="map">
             <ol>
-                {{-- 예약된 좌석 비교 --}}
+                {{-- 오는편 --}}
                 @foreach($seat as $value)
                     @if($availableSeats2->contains('seat_no',$value->seat_no))
-                    <li class="fast Available">
+                    <li class="fast2 Available">
                         <a href="javascript:void(0)" class="selectedEd">
                             <input type="hidden" name="amount" value="0">
-                            <input type="hidden" id="s_name" name="seat_no" value="{{$value->seat_no}}">
+                            <input type="hidden" id="s_name2" name="seat_no" value="{{$value->seat_no}}">
                         </a>
                     </li>
                     @else
-                    <li class="fast Available">
+                    <li class="fast2 Available">
                         <a href="javascript:void(0)">
                             <input type="hidden" name="amount" value="0">
-                            <input type="hidden" id="s_name" name="seat_no" value="{{$value->seat_no}}">
+                            <input type="hidden" id="s_name2" name="seat_no" value="{{$value->seat_no}}">
                         </a>
                     </li>
                     @endif
@@ -114,7 +140,7 @@
         @else
         <div class="map active">
             <ol>
-                {{-- 예약된 좌석 비교 --}}
+                {{-- 편도 --}}
                 @foreach($seat as $value)
                     @if($availableSeats->contains('seat_no',$value->seat_no))
                     <li class="fast Available">

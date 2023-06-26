@@ -4,6 +4,7 @@
  * 디렉토리     : app/Http/Controllers
  * 파일명       : UserController.php
  * 이력         :   v001 0612 박수연 new
+ *                  v002 0626 이동호 add 이전페이지 기억
 **************************************************/
 
 namespace App\Http\Controllers;
@@ -52,11 +53,14 @@ class UserController extends Controller
 
         if(Auth::check()) {
             session($user->only('u_email'));
+            
+            // v002 add 이동호
             if (Session::has('previous_url')) {
                 $previousUrl = Session::get('previous_url');
                 Session::forget('previous_url'); // 세션에서 URL을 제거
                 return redirect()->intended($previousUrl); // 이전 페이지로 리다이렉트
             }
+
             return redirect()->intended(route('reservation.main'));
         } else {
             $errors = '인증작업 에러';
@@ -104,10 +108,10 @@ class UserController extends Controller
     
     //로그아웃
     function logout() {
-        
         Session::flush();
         Auth::logout();
-        return redirect()->route('reservation.main');
+        // return redirect()->route('reservation.main');
+        return redirect()->back();
     }
 
     //회원정보 수정

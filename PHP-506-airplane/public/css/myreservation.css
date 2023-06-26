@@ -1,15 +1,50 @@
+/* 예약 헤더 */
+.myreservationHeader {
+    margin: 0 auto 5vh auto;
+    width: 100vw;
+    height: 12.5rem;
+    line-height: 12.5rem;
+    text-align: center;
+    background-image: url('/img/banner.jpg');
+    background-size: auto;
+    background-repeat: no-repeat;
+    color: white;
+    font-weight: 900;
+    text-decoration: none;
+}
+/* /예약 헤더 */
+
+/* 예약 없음 */
+.reserveNone {
+    margin: 30px auto;
+    text-align: center;
+}
+.noneSpan {
+    font-size: 40px;
+    font-weight: 900;
+}
+/* 예약 없음 */
+
 /*--------------------
 Boarding Pass
 --------------------*/
+.passContainer {
+    max-width: 800px;
+    margin: 30px auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
 .boarding-pass {
     width: 350px;
-    height: 420px;
     background: #fff;
     border-radius: 12px;
     box-shadow: 0 5px 30px rgba(0, 0, 0, .2);
     overflow: hidden;
     text-transform: uppercase;
-    margin: 30px auto
+    margin: 30px auto;
+    display: inline-block;
 }
 
 .boarding-pass small {
@@ -31,6 +66,8 @@ Header
     background: linear-gradient(to bottom, #36475f, #2c394f);
     padding: 12px 20px;
     height: 53px;
+    /* width: 360px;
+    margin-left: -15px; */
 }
 
 .boarding-pass header .logo {

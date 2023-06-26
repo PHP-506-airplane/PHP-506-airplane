@@ -8,6 +8,6 @@
 --}}
 
 <div class="noticeMsg">
-    <h1 class="noticeH1">공지사항</h1>
+    <h1 class="noticeH1"><a href="{{route('notice.index')}}">공지사항</a></h1>
     <h6>종이비행기 항공의 다양한 소식을 알려드립니다.</h6>
 </div>
