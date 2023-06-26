@@ -57,7 +57,7 @@ class UserController extends Controller
             // v002 add 이동호
             if (Session::has('previous_url')) {
                 $previousUrl = Session::get('previous_url');
-                Session::forget('previous_url'); // 세션에서 URL을 제거
+                Session::forget('previous_url'); // 세션에서 URL 제거
                 return redirect()->intended($previousUrl); // 이전 페이지로 리다이렉트
             }
 
