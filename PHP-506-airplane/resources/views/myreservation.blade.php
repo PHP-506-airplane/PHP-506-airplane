@@ -16,89 +16,97 @@
 @endsection
 
 @section('contents')
-@if($data->isEmpty())
-<div>예약 정보가 없습니다.</div>
-<br>
-<button type="button" onclick="location.href='{{route('reservation.main')}}'">예약하기</button>
-@endif
-@foreach($data as $key => $val)
-<div class="boarding-pass">
-    <header>
-        <div class="flight">
-            <strong>{{$val['line_name']}}</strong>
-        </div>
-    </header>
-    <section class="cities">
-        <div class="city">
-            <small>{{str_replace('공항', '' , $val['dep_port_name'])}}</small>
-
-            <strong>{{strtoupper($val['dep_port_eng'])}}</strong>
-        </div>
-        <div class="city">
-            <small>{{str_replace('공항', '' , $val['arr_port_name'])}}</small>
-
-            <strong>{{strtoupper($val['arr_port_eng'])}}</strong>
-        </div>
-        <svg class="airplane">
-            <use xlink:href="#airplane"></use>
-        </svg>
-    </section>
-    <section class="infos">
-        <div class="places">
-            <div class="box">
-                <small>Linecode</small>
-                <strong><em>{{$val['line_code']}}</em></strong>
-            </div>
-            <div class="box">
-                <small>airplane</small>
-                <strong><em>{{$val['plane_name']}}</em></strong>
-            </div>
-            <div class="box">
-                <small>Seat</small>
-                <strong>{{$val['seat_no']}}</strong>
-            </div>
-            <div class="box">
-                <small>Class</small>
-                <strong>E</strong>
-            </div>
-        </div>
-        <div class="times">
-            <div class="box">
-                <small>Date</small>
-                <strong>{{substr($val['fly_date'], 5)}}</strong>
-            </div>
-            <div class="box">
-                <small>Departure</small>
-                <strong>{{substr($val['dep_time'], 0, 2) . ':' . substr($val['dep_time'], 2)}}</strong>
-            </div>
-            <div class="box">
-                <small>Duration</small>
-                <strong>{{TimeCalculation($val['dep_time'], $val['arr_time'])}}</strong>
-            </div>
-            <div class="box">
-                <small>Arrival</small>
-                <strong>{{substr($val['arr_time'], 0, 2) . ':' . substr($val['arr_time'], 2)}}</strong>
-            </div>
-        </div>
-    </section>
-    <section class="strap">
-        <div class="box">
-            <div class="passenger">
-                <small>passenger</small>
-                <strong>{{$val['u_name']}}</strong>
-            </div>
-            <form action="{{route('reservation.rescancle')}}" method="POST" id="formCancel">
-                @csrf
-                <input type="hidden" name="reserve_no" value="{{$val['reserve_no']}}">
-                <input type="hidden" name="t_no" value="{{$val['t_no']}}">
-                <button type="button" onclick="confirmCancel()" class="btn btn-outline-success">예약 취소</button>
-            </form>
-        </div>
-        <img src="{{asset('img/qr.png')}}" alt="QR code" class="imgQr">
-    </section>
+<div class="myreservationHeader">
+    <h1 class="noticeH1">예약 내역 조회</h1>
+    <h6>예약하신 내역을 알려드립니다.</h6>
 </div>
-@endforeach
+@if($data->isEmpty())
+    <div class="reserveNone">
+        <span class="noneSpan">예약 정보가 없습니다.</span>
+        <br>
+        <br>
+        <button type="button" onclick="location.href='{{route('reservation.main')}}'" class="btn btn-outline-info">예약하기</button>
+    </div>
+@endif
+<div class="passContainer">
+@foreach($data as $key => $val)
+    <div class="boarding-pass">
+        <header>
+            <div class="flight">
+                <strong>{{$val['line_name']}}</strong>
+            </div>
+        </header>
+        <section class="cities">
+            <div class="city">
+                <small>{{str_replace('공항', '' , $val['dep_port_name'])}}</small>
 
+                <strong>{{strtoupper($val['dep_port_eng'])}}</strong>
+            </div>
+            <div class="city">
+                <small>{{str_replace('공항', '' , $val['arr_port_name'])}}</small>
+
+                <strong>{{strtoupper($val['arr_port_eng'])}}</strong>
+            </div>
+            <svg class="airplane">
+                <use xlink:href="#airplane"></use>
+            </svg>
+        </section>
+        <section class="infos">
+            <div class="places">
+                <div class="box">
+                    <small>Linecode</small>
+                    <strong><em>{{$val['line_code']}}</em></strong>
+                </div>
+                <div class="box">
+                    <small>airplane</small>
+                    <strong><em>{{$val['plane_name']}}</em></strong>
+                </div>
+                <div class="box">
+                    <small>Seat</small>
+                    <strong>{{$val['seat_no']}}</strong>
+                </div>
+                <div class="box">
+                    <small>Class</small>
+                    <strong>E</strong>
+                </div>
+            </div>
+            <div class="times">
+                <div class="box">
+                    <small>Date</small>
+                    <strong>{{substr($val['fly_date'], 5)}}</strong>
+                </div>
+                <div class="box">
+                    <small>Departure</small>
+                    <strong>{{substr($val['dep_time'], 0, 2) . ':' . substr($val['dep_time'], 2)}}</strong>
+                </div>
+                <div class="box">
+                    <small>Duration</small>
+                    <strong>{{TimeCalculation($val['dep_time'], $val['arr_time'])}}</strong>
+                </div>
+                <div class="box">
+                    <small>Arrival</small>
+                    <strong>{{substr($val['arr_time'], 0, 2) . ':' . substr($val['arr_time'], 2)}}</strong>
+                </div>
+            </div>
+        </section>
+        <section class="strap">
+            <div class="box">
+                <div class="passenger">
+                    <small>passenger</small>
+                    <strong>{{$val['u_name']}}</strong>
+                </div>
+                <form action="{{route('reservation.rescancle')}}" method="POST" id="formCancel">
+                    @csrf
+                    <input type="hidden" name="reserve_no" value="{{$val['reserve_no']}}">
+                    <input type="hidden" name="t_no" value="{{$val['t_no']}}">
+                    <button type="button" onclick="confirmCancel()" class="btn btn-outline-success">예약 취소</button>
+                </form>
+            </div>
+            <img src="{{asset('img/qr.png')}}" alt="QR code" class="imgQr">
+        </section>
+    </div>
+@endforeach
+</div>
 
 <svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" display="none">
     <symbol id="alitalia" viewBox="0 0 80 17">
