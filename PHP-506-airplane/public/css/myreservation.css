@@ -198,3 +198,14 @@ Strap
     width: 80px;
     height: 80px;
 }
+
+/* QR코드 */
+.imgQr {
+    width: 80px;
+    height: 80px;
+    display: inline-block;
+    position: absolute;
+    bottom: 30px;
+    right: 30px;
+}
+/* /QR코드 */
