@@ -84,8 +84,8 @@ class UserController extends Controller
         $data['u_gender'] = $req->gender;
         $data['u_pw'] = Hash::make($req->password);
         $data['u_birth'] = $req->birth;
-        $data['qa_no'] = $req->myselect;
-        $data['qa_answer'] = $req->answer;
+        $data['qa_no'] = 1;
+        $data['qa_answer'] = '1';
 
         $user = Userinfo::create($data);
         // Log::debug('1 Start', [$user]);
@@ -99,7 +99,7 @@ class UserController extends Controller
         //회원가입 완료 로그인 페이지로 이동
         return redirect()
             ->route('users.login')
-            ->with('success', '회원가입을 완료했습니다.<br>가입하신 아이디와 비밀번호로 로그인해 주세요.');
+            ->with('alert', '회원가입을 완료했습니다.<br>가입하신 아이디와 비밀번호로 로그인해 주세요.');
     }
     
     //로그아웃
@@ -139,10 +139,10 @@ class UserController extends Controller
         $baseuser->u_name = $req->u_name;
         $baseuser->save();
 
-        alert()->success('수정 완료');
+        // alert()->success('수정 완료');
         // return view('useredit')->with('data', $baseuser);
 
-        return redirect()->back();
+        return redirect()->back()->with('alert', '수정되었습니다.');
     }
 
     //탈퇴

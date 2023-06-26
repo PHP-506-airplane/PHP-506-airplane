@@ -56,10 +56,10 @@
              <li class="nav-item justify-content-end" style="font-weight:600">
             <a class="nav-link" href="{{route('notice.baggage')}}">수하물 안내</a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item" style="font-weight:600">
             <a class="nav-link" href="{{route('users.login')}}">로그인</a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item" style="font-weight:600">
             <a class="nav-link" href="{{route('users.registration')}}">회원가입</a>
             </li>
         @endguest

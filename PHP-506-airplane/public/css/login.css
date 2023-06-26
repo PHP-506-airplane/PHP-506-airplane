@@ -1,129 +1,101 @@
-@import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
+@font-face {font-family: 'Noto Sans KR';font-style: normal;font-weight: 100;src: url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Thin.woff2) format('woff2'),url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Thin.woff) format('woff'),url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Thin.otf) format('opentype');}
+@font-face {font-family: 'Noto Sans KR';font-style: normal;font-weight: 300;src: url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Light.woff2) format('woff2'),url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Light.woff) format('woff'),url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Light.otf) format('opentype');} @font-face {font-family: 'Noto Sans KR';font-style: normal;font-weight: 400;src: url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Regular.woff2) format('woff2'),url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Regular.woff) format('woff'),url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Regular.otf) format('opentype');} @font-face {font-family: 'Noto Sans KR';font-style: normal;font-weight: 500;src: url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Medium.woff2) format('woff2'),url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Medium.woff) format('woff'),url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Medium.otf) format('opentype');} @font-face {font-family: 'Noto Sans KR';font-style: normal;font-weight: 700;src: url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Bold.woff2) format('woff2'),url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Bold.woff) format('woff'),url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Bold.otf) format('opentype');} @font-face {font-family: 'Noto Sans KR';font-style: normal;font-weight: 900;src: url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Black.woff2) format('woff2'),url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Black.woff) format('woff'),url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Black.otf) format('opentype');}
 
-.notosanskr * { 
-font-family: 'Noto Sans KR', sans-serif;
+body{
+    margin:0 auto;
 }
+/* body, table, div, p ,span{font-family:'Nanum Gothic';} */
+body, table, div, p ,span{font-family:'Noto Sans KR';}
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: "Noto Sans KR", sans-serif;
-}
-
-a {
+a{
     text-decoration: none;
-    color: black;
+    color:#333;
 }
-
-li {
-    list-style: none;
+#con{
+    width:100%;
+    /* height: 100vh; */
+    min-height: 100%;
+    background-color:#e1e8f3;
+    background-image:url("img/bg.jpg");
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size:cover;
+    padding:0;
+    position: relative;
 }
-
-.wrap {
-    width: 100%;
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: rgba(0, 0, 0, 0.1);
-}
-
-.login {
-    width: 30%;
+#login{
+    width:600px;
     height: 600px;
-    background: white;
-    border-radius: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
+    margin:0 auto;
+    /* position: relative; */
+    /* background:#ddd; */
+}
+#login_form{
+    /* text-align:center; */
+    border-radius: 10px;
+    padding:50px;
+    background: #fff;
+    text-align: center;
+    position: absolute;
+    top:50%;
+    left:50%;
+    transform: translate(-50%, -50%);
+}
+.login{
+    font-size:25px;
+    font-weight: 900;
+    color:#333;
 }
 
-h2 {
-    color: rgb(175, 187, 255);
-    font-size: 2em;
-}
-.login_sns {
-    padding: 20px;
-    display: flex;
-}
-
-.login_sns li {
-    padding: 0px 15px;
+.size{
+    width:300px;
+    height:30px;
+    padding-left:10px;
+    background-color: #f4f4f4;
+    /* margin-left:10px; */
+    border:none;
+    border-radius: 5px;
 }
 
-.login_sns a {
-    width: 50px;
-    height: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 10px;
-    border-radius: 50px;
-    background: white;
-    font-size: 20px;
-    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.4), -3px -3px 5px rgba(0, 0, 0, 0.1);
+.btn{
+    width:310px;
+    height: 40px;
+    font-size:15px;
+    background-color: #adcce5;
+    color:#fff;
+    border:none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+.btn:hover{
+    background:#adcce5;
+}
+hr{
+    margin-top:20px;
+    background:#eee;
+    
+}
+.find{
+    color:#ddd;
+    font-size:12px;
+}
+.find span{
+    padding-left:10px;
+}
+.find span::before{
+    content:'|';
+    color:#333;
+    padding-right: 10px;
+}
+.find span:nth-child(1):before{
+    content:none;
 }
 
-.login_id {
-    margin-top: 20px;
-    width: 80%;
+.find span:nth-child(1){
+    padding-left:0px;
 }
 
-.login_id input {
-    width: 100%;
-    height: 50px;
-    border-radius: 30px;
-    margin-top: 10px;
-    padding: 0px 20px;
-    border: 1px solid lightgray;
-    outline: none;
-}
-
-.login_pw {
-    margin-top: 20px;
-    width: 80%;
-}
-
-.login_pw input {
-    width: 100%;
-    height: 50px;
-    border-radius: 30px;
-    margin-top: 10px;
-    padding: 0px 20px;
-    border: 1px solid lightgray;
-    outline: none;
-}
-
-.login_etc {
-    padding: 10px;
-    width: 80%;
-    font-size: 14px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-weight: bold;
-}
-
-.submit {
-    margin-top: 50px;
-    width: 80%;
-}
-.submit input {
-    width: 100%;
-    height: 50px;
-    border: 0;
-    outline: none;
-    border-radius: 40px;
-    background: linear-gradient(to left, rgb(179, 218, 255), rgb(175, 187, 255));
-    color: white;
-    font-size: 1.2em;
-    letter-spacing: 2px;
-}
-
-.space {
-    width: 30px;
-    height: 20px;
+.find a:hover{
+    color:#707070;
 }
 
