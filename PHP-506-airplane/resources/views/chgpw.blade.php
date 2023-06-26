@@ -9,7 +9,7 @@
 
 @extends('layout.layout')
 
-@section('title', '비밀번호 확인')
+@section('title', '비밀번호 변경')
 
 @section('contents')
     <form action="{{route('users.chgpw.post')}}" method="post">

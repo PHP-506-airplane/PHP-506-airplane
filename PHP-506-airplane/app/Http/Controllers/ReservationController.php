@@ -26,6 +26,7 @@ use Illuminate\Database\Query\JoinClause;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Session;
 
 class ReservationController extends Controller
 {
@@ -359,6 +360,8 @@ class ReservationController extends Controller
     // v003 이동호 add 나의 예약 조회 페이지
     public function myreservation() {
         if(empty(Auth::user())) {
+            // 로그인하지 않은 유저가 접근한 페이지를 세션에 저장
+            Session::put('previous_url', route('reservation.myreservation'));
             return redirect()->route('users.login');
         }
 

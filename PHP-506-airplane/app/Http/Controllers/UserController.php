@@ -32,13 +32,11 @@ class UserController extends Controller
     function login() {
         return view('login');
     }
-
+    
     function loginpost(Request $req) {
-        
-        
+
         $user = Userinfo::where('u_email', $req->u_email)->first();
-        
-        
+
         if(!$user || !Hash::check($req->u_pw, $user->u_pw)){
             // Log::debug($req->password . ' : '.$user->password);
             $error = '아이디와 비밀번호를 확인하세요';
@@ -54,18 +52,15 @@ class UserController extends Controller
 
         if(Auth::check()) {
             session($user->only('u_email'));
+            if (Session::has('previous_url')) {
+                $previousUrl = Session::get('previous_url');
+                Session::forget('previous_url'); // 세션에서 URL을 제거
+                return redirect()->intended($previousUrl); // 이전 페이지로 리다이렉트
+            }
             return redirect()->intended(route('reservation.main'));
         } else {
             $errors = '인증작업 에러';
             return redirect()->back()->with('error', $errors);
-        }
-
-
-        if(Auth::attempt($validation)){
-            return redirect()->route('main');
-
-        } else{
-            return redirect()->back();
         }
     }
 
