@@ -1,8 +1,10 @@
 let seats = document.querySelectorAll('.fast a');
+let seats2 = document.querySelectorAll('.fast2 a');
 let s_name = document.querySelector('.show_name');
+let s_name2 = document.querySelector('.show_name2');
 let choice = document.querySelector('.tab');
 
-// 좌석선택
+// 가는편 좌석 선택
 seats.forEach(function(seat){
     seat.addEventListener('click', function(){
         seats.forEach(function(seat){
@@ -10,6 +12,17 @@ seats.forEach(function(seat){
         });
         seat.classList.toggle('selected');
         s_name.value = seat.querySelector('#s_name').value;
+    });
+});
+
+// 오는편 좌석 선택
+seats2.forEach(function(seat){
+    seat.addEventListener('click', function(){
+        seats2.forEach(function(seat){
+            seat.classList.remove('selected');
+        });
+        seat.classList.toggle('selected');
+        s_name2.value = seat.querySelector('#s_name2').value;
     });
 });
 

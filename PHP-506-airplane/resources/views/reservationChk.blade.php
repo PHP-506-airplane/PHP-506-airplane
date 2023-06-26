@@ -161,7 +161,7 @@
                     </td>
                     <td><p>({{$oneway[0]->arr_port_eng}})</p>{{substr_replace($val->arr_time,':',2,0)}}</td>
                     <td>{{substr_replace($val->price,',',-3,0)}}</td>
-                    <td><input type="radio" name="dep_fly_no" value="{{$val->fly_no}}"></td>
+                    <td class="dep_fly_no2"><input type="radio" name="dep_fly_no" value="{{$val->fly_no}}"><span style="display:none;">{{$val->price}}</span></td>
                 </tr>
                 @empty
                 <tr>
