@@ -6,7 +6,14 @@
  * 이력         :   v001 0623 이동호 new
 **************************************************/
 
-function TimeCalculation($start_time, $end_time) {
+// ---------------------------------
+// 메소드명	: TimeCalculation
+// 기능		: '0000'형식인 문자열 시간 차이 계산
+// 파라미터	:   String	&$start_time
+//			    String		&$end_time
+// 리턴값	:   String
+// ---------------------------------
+function TimeCalculation(&$start_time, &$end_time) {
     $start_hour = (int)substr($start_time, 0, 2);
     $start_minute = (int)substr($start_time, 2, 2);
 

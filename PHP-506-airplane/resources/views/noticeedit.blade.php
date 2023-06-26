@@ -33,10 +33,10 @@
             <label for="title" class="labelTitle">제목 :</label>
             <input type="text" name="title" id="title" value="{{count($errors) > 0 ? old('title') : $data->notice_title}}" class="inputText">  
             <br>
-            <div contentEditable="true" class="divContent" id="divContent" oninput="updateTextarea()" onclick="moveCursor()">
+            <div contentEditable="true" class="divContent" id="divContent" oninput="updateTextarea()">
                 @if($data->image_path)
                 <div class="imageContainer">
-                    <img id="currentImage" src="{{asset($data->image_path . '?' . time())}}" alt="이미지" class="noticeImg" onload="addBr()">
+                    <img id="currentImage" src="{{asset($data->image_path . '?' . time())}}" alt="이미지" class="noticeImg">
                 </div>
                 @endif
                 {{count($errors) > 0 ? old('content') : $data->notice_content}}

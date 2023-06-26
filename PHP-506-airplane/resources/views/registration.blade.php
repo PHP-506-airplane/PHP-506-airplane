@@ -20,7 +20,7 @@
 <div id="con">
 <div id="login">
 <div id="login_form"><!--로그인 폼-->
-<form action="{{route('users.registration.post')}}" method="post">
+<form action="{{route('users.registration.post')}}" method="post" id="registForm">
     @csrf
     <h3 class="login" style="letter-spacing:-1px;">회원가입</h3>
     <hr>
@@ -70,7 +70,8 @@
             <div style="height:20px"></div>
             <br>
                 <p>
-                    <input type="submit" value="회원가입" class="btn">
+                    {{-- <input type="submit" value="회원가입" class="btn"> --}}
+                    <button type="button" value="회원가입" class="btn" onclick="register()">회원가입</button>
                 </p>
             </form>
             <hr>

@@ -1,8 +1,9 @@
 function displaySelectedImage(event) {
     const image = event.target.files[0];
     const imageURL = URL.createObjectURL(image);
-    const imagePreview = document.getElementById('imagePreview');
-    imagePreview.innerHTML = `<img src="${imageURL}" alt="이미지" class="noticeImg">`;
+    const selectedImage = document.getElementById('selectedImage');
+    selectedImage.src = imageURL;
+    selectedImage.style = 'display: block';
 }
 
 function updateTextarea() {

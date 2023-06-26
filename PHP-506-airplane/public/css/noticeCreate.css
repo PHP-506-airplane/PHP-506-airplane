@@ -22,13 +22,19 @@
 /* /제목 */
 
 /* 내용 */
-.textareaContent {
+#divContent {
     margin: 10px auto;
     margin-left: 7%;
     margin-bottom: 3%;
     width: 800px;
-    height: 500px;
-    resize: none;
+    min-height: 500px;
+    overflow: auto;
+    max-height: 700px;
+    border: 1px solid #000;
+}
+
+#content {
+    display: none;
 }
 /* /내용 */
 
@@ -50,3 +56,21 @@ hr {
     margin: 0;
 }
 /* /hr */
+
+/* 이미지 */
+.divContent {
+    display: block;
+    margin: 10px auto;
+    margin-bottom: 3%;
+    min-width: 700px;
+    max-width: 900px;
+    min-height: 500px;
+    border: 1px solid #000000;
+    padding: 10px;
+}
+
+.divContent img {
+    max-width: 90%;
+    height: auto;
+}
+/* /이미지 */

@@ -47,8 +47,9 @@ hr {
 /* /입력창 */
 
 /* 이미지 최대크기 */
-.noticeImg {
-    max-width: 870px;
+.divContent img {
+    max-width: 90%;
+    height: auto;
 }
 /* /이미지 최대크기 */
 
