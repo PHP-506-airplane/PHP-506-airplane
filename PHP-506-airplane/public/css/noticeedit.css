@@ -1,0 +1,64 @@
+/* 컨테이너 */
+.nEditContainer {
+    margin: 10px auto;
+    border-top: 1px solid #000000;
+    border-bottom: 1px solid #000000;
+    max-width: 1000px;
+    min-width: 700px;
+    min-height: 50vh;
+}
+/* /컨테이너 */
+
+/* hr */
+hr {
+    margin: 0;
+}
+/* /hr */
+
+/* 입력창 */
+.labelTitle {
+    margin: 10px;
+    margin-left: 20px;
+}
+
+.inputText {
+    width: 800px;
+}
+
+.divContent {
+    display: block;
+    margin: 10px auto;
+    margin-bottom: 3%;
+    min-width: 700px;
+    max-width: 900px;
+    min-height: 500px;
+    border: 1px solid #000000;
+    padding: 10px;
+}
+
+.divContent:focus {
+    border: 1px solid #000000;
+    outline: none;
+}
+
+#content {
+    display: none;
+}
+/* /입력창 */
+
+/* 이미지 최대크기 */
+.noticeImg {
+    max-width: 870px;
+}
+/* /이미지 최대크기 */
+
+/* 버튼 */
+.editBtns {
+    display: inline-block;
+    float: right;
+}
+/* /버튼 */
+
+#image {
+    margin-bottom: 30px;
+}

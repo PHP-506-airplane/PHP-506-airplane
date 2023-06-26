@@ -17,12 +17,9 @@
 
 @section('contents')
 
-<form action="{{route('users.login.post')}}" method="post">
-    @csrf
-    <div class="wrap">
+    {{-- <div class="wrap">
             <div class="login">
                 <h2>로그인</h2>
-                {{-- @include('errors.errorsvalidate') --}}
                 <div class="login_id">
                     <label for="u_email">이메일 </label>
                     <input type="email" name="u_email" id="u_email" placeholder="Email">
@@ -44,15 +41,38 @@
             </div>
         </div>
     </div>
-</form>
+</form> --}}
+<div id="con">
+    <div id="login">
+        <div id="login_form"><!--로그인 폼-->
+        <form action="{{route('users.login.post')}}" method="post">
+        @csrf 
+            <h3 class="login" style="letter-spacing:-1px;">로그인</h3>
+            <hr>
+            <label>
+            <p style="text-align: left; font-size:12px; color:#666">이메일</p>
+            <input type="text" placeholder="아이디를 입력하세요" class="size" name="u_email" id="u_email">
+            <p></p>
+            </label>
+            <br>
+            <label>
+            <p style="text-align: left; font-size:12px; color:#666">비밀번호</p>
+            <input type="text" placeholder="비밀번호를 입력하세요" class="size" name="u_pw" id="u_pw">
+            </label>
+            <div style="height:30px"></div>
+            <p>
+                <input type="submit" value="로그인" class="btn">
+            </p>
+        </form>
+        <hr>
+        <p class="find">
+            <span><a href="{{route('users.registration')}}">회원가입</a></span>
+        </p>
+        
+        </div>
+    <div>
+</div>
+
+
 @endsection
 
-
- 
-{{-- ----------------------------------------------------------------------------------------------------------------
-로그인 페이지 버튼 주석
-<button type="submit">Login</button>
-<button class="bnt" type="button" onclick="location.href = '{{route('findemails.findemail')}}'">이메일 찾기</button>
-<button class="bnt" type="button" onclick="location.href = '{{route('findpasswords.findpassword')}}'">비밀번호 찾기</button>
-<button class="bnt" type="button" onclick="location.href = '{{route('users.registration')}}'">회원가입</button> 
----}}

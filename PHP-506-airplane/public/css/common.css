@@ -34,11 +34,16 @@ footer{
     width: 100%;
     background-color: rgba(75, 75, 75, 0.089);
     color: rgb(0, 0, 0);
-    z-index: 999999;
+    transform: translate(0%);
+    /* z-index: 999999; */
 }
 
 .footerContainer {
-    padding-top: .8125rem;    
+    padding-top: .8125rem; 
+    min-height: 100%;
+    padding-bottom: 1rem;
+    position: fixed;   
+    /* bottom: 0; */
 }
 
 .footerFixed {
@@ -61,7 +66,7 @@ footer{
 
 /* 공지사항 페이지들 */
 .noticeMsg {
-    margin: 5vh auto 1vh auto;
+    margin: 0 auto 5vh auto;
     width: 100vw;
     height: 12.5rem;
     line-height: 12.5rem;
@@ -71,6 +76,11 @@ footer{
     background-repeat: no-repeat;
     color: white;
     font-weight: 900;
+    text-decoration: none;
+}
+.noticeMsg  a {
+    text-decoration: none !important;
+    color: white !important;
 }
 .noticeH1 {
     padding-top: 3.125rem;

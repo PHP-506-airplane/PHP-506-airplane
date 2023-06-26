@@ -16,7 +16,7 @@
 
 @section('contents')
 
-<form action="{{route('users.useredit.post',['users' => $data->id])}}" method="post">
+{{-- <form action="{{route('users.useredit.post',['users' => $data->id])}}" method="post">
     @csrf
     @method('put')
     <div class="wrap">
@@ -46,9 +46,9 @@
                     <div class="forgot_pw">
                         <a href="{{route('users.chgpw')}}">비밀번호 변경</a>
                     </div>
-                    {{-- <div class="forgot_pw">
+                    <div class="forgot_pw">
                         <a href="{{ route('users.withdraw')}}" onclick="test()">회원탈퇴</a>
-                    </div> --}}
+                    </div> 
                 </div>
             </div>
         </div>
@@ -58,17 +58,60 @@
     <div class="forgot_pw">
         <button type="button" onclick="test()">회원탈퇴</button>
     </div>
-</form>
+</form> --}}
+
+<div id="con">
+    <div id="login">
+        <div id="login_form">
+        <form action="{{route('users.useredit.post',['users' => $data->id])}}" method="post" id="edit">
+        @csrf
+        @method('put')
+            <h3 class="login" style="letter-spacing:-1px;">회원정보 수정</h3>
+            <hr>
+            <label>
+            <p style="text-align: left; font-size:12px; color:#666">이름</p>
+            <input type="text" name="u_name" id="u_name" value="{{count($errors) > 0 ? old('u_name') : $data->u_name}}" placeholder="">
+            <p></p>
+            </label>
+            <br>
+            <label>
+            <p style="text-align: left; font-size:12px; color:#666">이메일</p>
+            <input type="text" name="u_email" id="u_email" value="{{count($errors) > 0 ? old('u_email') : $data->u_email}}" disabled placeholder="">
+            <p></p>
+            </label>
+            <br>
+            <div style="height:30px"></div>
+            <p>
+                <input type="submit" value="수정" class="btn">
+            </p>
+            <div class="login_etc">
+                <div class="space"></div>
+                <div class="forgot_pw">
+                    <a href="{{route('reservation.main')}}">취소</a>
+                </div>
+                <span>|</span>
+                <div class="forgot_pw">
+                    <a href="{{route('users.chgpw')}}">비밀번호 변경</a>
+                </div>
+                <span>|</span>
+                <div class="forgot_pw">
+                    <a  onclick="test()" id="withdraw">회원탈퇴</a>
+                </div> 
+            </div>
+        </form>
+        </div>
+    <div>
+</div>
 @endsection
 
 @section('js')
     <script src="{{asset('js/delete.js')}}"></script>
     <script>
-    const seatForm = document.getElementById('withdraw');
+    const withdraw = document.getElementById('withdraw');
     function test() {
         var con_test = confirm("정말 탈퇴 하시겠습니까?");
         if(con_test == true){
-        seatForm.submit();
+        location.href="{{ route('users.withdraw')}}";
     }
 }
 

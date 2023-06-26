@@ -138,7 +138,7 @@
             <div class="container sec2">
                 <div class="notice"> 
                     {{-- v002 add 이동호 --}}
-                     <h2><a href="{{route('notice.index')}}">공지사항</a></h2>
+                     <h2><a href="{{route('notice.index')}}" style="color: #000;">공지사항</a></h2>
                     <ul>
                         @foreach($notices as $notice)
                             <li>

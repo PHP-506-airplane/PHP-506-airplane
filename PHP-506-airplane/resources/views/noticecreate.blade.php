@@ -20,11 +20,11 @@
     <div class="nCreateContainer">
     {{-- 에러메세지 --}}
     @if ($errors->any())
-    <div class="error">
-        @foreach ($errors->all() as $error)
-            <div>{{$error}}</div>
-        @endforeach
-    </div>
+        <div class="error">
+            @foreach ($errors->all() as $error)
+                <div>{{$error}}</div>
+            @endforeach
+        </div>
     @endif
     {{-- /에러메세지 --}}
         <form action="{{route('notice.store')}}" method="POST" class="formCreate" enctype="multipart/form-data">
@@ -33,12 +33,15 @@
             <input type="text" name="title" id="title" class="inputText">
             <hr>
             <label for="content"></label>
-            <textarea name="content" id="content" class="textareaContent"></textarea>
-            <input type="file" name="image">
+            <div contentEditable="true" class="divContent" id="divContent" oninput="updateTextarea()">
+                <div id="imagePreview"></div>
+            </div>
+            <textarea type="hidden" name="content" id="content" class="textareaContent"></textarea>
+            <input type="file" name="image" onchange="displaySelectedImage(event)">
             <div class="divCreateBtns">
                 <div class="nCreateBtns">
-                    <button type="submit">작성</button>
-                    <button type="button" onclick="location.href='{{route('notice.index')}}'">취소</button>
+                    <button type="submit" class="btn btn-outline-success">작성</button>
+                    <button type="button" onclick="location.href='{{route('notice.index')}}'" class="btn btn-outline-danger">취소</button>
                 </div>
             </div>
         </form>
@@ -46,5 +49,5 @@
 @endsection
 
 @section('js')
-    {{-- <script src="{{asset('js/js 파일 이름.js')}}"></script> --}}
+    <script src="{{asset('js/noticecreate.js')}}"></script>
 @endsection

@@ -1,9 +1,10 @@
 /* 상하단 가로선 */
 .nDetailContainer {
-    margin: .625rem auto;
-    border-top: .0625rem solid #000000;
-    border-bottom: .0625rem solid #000000;
-    width: 80vw;
+    margin: 10px auto;
+    border-top: 1px solid #000000;
+    border-bottom: 1px solid #000000;
+    max-width: 1000px;
+    min-width: 700px;
     min-height: 50vh;
 }
 /* /상하단 가로선 */
@@ -16,35 +17,41 @@ hr {
 
 /* 제목 */
 .nTitle {
-    font-size: 1.25rem;
-    border-bottom: .0625rem solid #cccccc8f;
+    font-size: 20px;
+    border-bottom: 1px solid #cccccc8f;
 }
 
 .nTitleText {
-    margin: .9375rem auto .9375rem 1.875rem;
+    margin: 15px auto 15px 30px;
 }
 
 .created_date {
     display: inline-block;
     float: right;
-    margin-right: 1.25rem;
+    margin-right: 20px;
     color: #3d3d3d8f;
 }
 /* /제목 */
 
 /* 내용 */
 .nContent {
-    margin: .9375rem auto .9375rem 1.875rem;
+    margin: 15px auto 15px 30px;
 }
 /* /내용 */
 
 /* 버튼 */
 .nButtons {
-    width: 31.25rem;
-    margin: 1.25rem auto;
+    width: 500px;
+    margin: 20px auto;
     text-align: center;
     display: flex;
     justify-content: center;
-    gap: .625rem;
+    gap: 10px;
 }
 /* /버튼 */
+
+/* 이미지 최대크기 */
+.noticeImg {
+    max-width: 900px;
+}
+/* /이미지 최대크기 */

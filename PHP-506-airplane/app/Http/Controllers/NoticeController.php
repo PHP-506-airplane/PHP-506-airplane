@@ -27,7 +27,7 @@ class NoticeController extends Controller
     // 미들웨어로 관리자권한 체크
     public function __construct()
     {
-        $this->middleware(AdminMiddleware::class)->only(['create', 'store']);
+        $this->middleware(AdminMiddleware::class)->only(['create', 'store', 'edit', 'update', 'destory']);
     }
 
     /**
@@ -77,7 +77,7 @@ class NoticeController extends Controller
         $validator = Validator::make(
             $req->only('notice_no', 'title', 'content'),
             [
-                'title'         => 'required|between:3,50'
+                'title'          => 'required|between:3,50'
                 ,'content'       => 'max:4000'
                 ,'image'         => 'nullable|image|max:2048'
             ]
@@ -91,7 +91,7 @@ class NoticeController extends Controller
         }
 
         $notice = new NoticeInfo([
-            'u_no'            => Auth::user()->u_no
+            'u_no'              => Auth::user()->u_no
             ,'notice_title'     => $req->title
             ,'notice_content'   => $req->content
         ]);
@@ -134,10 +134,6 @@ class NoticeController extends Controller
      */
     public function edit($notice_no)
     {
-        if (empty(Auth::user()) || Auth::user()->admin_flg === '0') {
-            return redirect()->route('notice.index')->with('alert', '권한이 없습니다.');
-        }
-
         $notice = NoticeInfo::find($notice_no);
         return view('noticeedit')->with('data', $notice);
     }
@@ -151,16 +147,12 @@ class NoticeController extends Controller
      */
     public function update(Request $req, $notice_no)
     {
-        if (empty(Auth::user()) || Auth::user()->admin_flg === '0') {
-            return redirect()->route('notice.index')->with('alert', '권한이 없습니다.');
-        }
-
         $req->request->add(['notice_no' => $notice_no]);
 
         $validator = Validator::make(
             $req->only('notice_no', 'title', 'content'),
             [
-                'title'         => 'required|between:3,50'
+                'title'          => 'required|between:3,50'
                 ,'content'       => 'max:4000'
                 ,'notice_no'     => 'required|integer'
                 ,'image'         => 'nullable|image|max:2048'
@@ -207,10 +199,6 @@ class NoticeController extends Controller
      */
     public function destroy($notice_no)
     {
-        if (empty(Auth::user()) || Auth::user()->admin_flg === '0') {
-            return redirect()->route('notice.index')->with('alert', '권한이 없습니다.');
-        }
-        
         NoticeInfo::destroy($notice_no);
         return redirect()->route('notice.index')->with('alert', '삭제되었습니다.');
     }

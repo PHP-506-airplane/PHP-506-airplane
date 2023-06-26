@@ -30,12 +30,12 @@
             </div>
         </div>
         <div class="nContent">
-            {{$data->notice_content}}
             @if($data->image_path)
-                <div class="nImage">
-                    <img src="{{asset($data->image_path . '?' . time())}}" alt="이미지">
-                </div>
+            <div class="nImage">
+                <img src="{{asset($data->image_path . '?' . time())}}" alt="이미지" class="noticeImg">
+            </div>
             @endif
+            {{$data->notice_content}}
         </div>
     </div>
     <div class="nButtons">
@@ -44,7 +44,6 @@
             <form action="{{route('notice.destroy', ['notice' => $data->notice_no])}}" method="POST" id="formDel">
                 @csrf
                 @method('delete')
-                {{-- <button type="submit">삭제</button> --}}
                 <button type="button" onclick="confirmDel()" class="btn btn-outline-danger">삭제</button>
             </form>
         @endif

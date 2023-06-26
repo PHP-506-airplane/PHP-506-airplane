@@ -4,6 +4,7 @@
  * 디렉토리     : app/Http/Controllers
  * 파일명       : UserController.php
  * 이력         :   v001 0612 박수연 new
+ *                  v002 0626 이동호 add 이전페이지 기억
 **************************************************/
 
 namespace App\Http\Controllers;
@@ -52,11 +53,14 @@ class UserController extends Controller
 
         if(Auth::check()) {
             session($user->only('u_email'));
+            
+            // v002 add 이동호
             if (Session::has('previous_url')) {
                 $previousUrl = Session::get('previous_url');
                 Session::forget('previous_url'); // 세션에서 URL을 제거
                 return redirect()->intended($previousUrl); // 이전 페이지로 리다이렉트
             }
+
             return redirect()->intended(route('reservation.main'));
         } else {
             $errors = '인증작업 에러';
@@ -84,8 +88,8 @@ class UserController extends Controller
         $data['u_gender'] = $req->gender;
         $data['u_pw'] = Hash::make($req->password);
         $data['u_birth'] = $req->birth;
-        $data['qa_no'] = $req->myselect;
-        $data['qa_answer'] = $req->answer;
+        $data['qa_no'] = 1;
+        $data['qa_answer'] = '1';
 
         $user = Userinfo::create($data);
         // Log::debug('1 Start', [$user]);
@@ -99,15 +103,15 @@ class UserController extends Controller
         //회원가입 완료 로그인 페이지로 이동
         return redirect()
             ->route('users.login')
-            ->with('success', '회원가입을 완료했습니다.<br>가입하신 아이디와 비밀번호로 로그인해 주세요.');
+            ->with('alert', '회원가입을 완료했습니다.<br>가입하신 아이디와 비밀번호로 로그인해 주세요.');
     }
     
     //로그아웃
     function logout() {
-        
         Session::flush();
         Auth::logout();
-        return redirect()->route('reservation.main');
+        // return redirect()->route('reservation.main');
+        return redirect()->back();
     }
 
     //회원정보 수정
@@ -139,10 +143,10 @@ class UserController extends Controller
         $baseuser->u_name = $req->u_name;
         $baseuser->save();
 
-        alert()->success('수정 완료');
+        // alert()->success('수정 완료');
         // return view('useredit')->with('data', $baseuser);
 
-        return redirect()->back();
+        return redirect()->back()->with('alert', '수정되었습니다.');
     }
 
     //탈퇴
