@@ -53,6 +53,7 @@
     <br>
     <label>
         <p style="text-align: left; font-size:12px; color:#666; margin-top:1rem">성별</p>
+        
         <input type="radio" placeholder="성별" class="size" name="gender" id="u_gender" value="M">남
         <input type="radio" placeholder="성별" class="size" name="gender" id="u_gender" value="F">여
     </label>
