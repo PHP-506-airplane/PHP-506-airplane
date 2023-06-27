@@ -116,16 +116,10 @@
 }
 
     // 0627이동호 쓰로틀링 ----------------------------------------------------------
-    const submitButton = document.getElementById('editBtn');
     const editForm = document.getElementById('edit');
-    
-    function handleEdit() {
-        // 수정 버튼을 클릭했을 때 실행되는 함수
-        // console.log('수정 버튼 클릭');
-        editForm.submit();
-    }
-    
-    submitButton.addEventListener('click', throttle(handleEdit, 2000));
+    const btn = document.getElementById('editBtn');
+
+    throttle(btn, edit);
     // /0627이동호 쓰로틀링 ----------------------------------------------------------
 </script>
 {{-- <script>
