@@ -11,7 +11,7 @@
 <nav class="navbar navbar-expand-lg bg-light">
   <div class="container-fluid">
     <div style="width:70px"></div>
-    <a class="navbar-brand" href="{{route('reservation.main')}}"><img width="180px" height="40px" class="air" src="{{asset('img/logoplz.png')}}" alt="logo"></a>
+    <a class="navbar-brand" href="{{route('reservation.main')}}"><img width="250px" height="35px" class="air" src="{{asset('img/last.png')}}" alt="logo"></a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
