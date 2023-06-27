@@ -82,7 +82,7 @@
             <br>
             <div style="height:30px"></div>
             <p>
-                <input type="submit" value="수정" class="btn">
+                <input type="button" value="수정" class="btn" id="editBtn">
             </p>
             <div class="login_etc">
                 <div class="space"></div>
@@ -115,11 +115,22 @@
     }
 }
 
+    // 0627이동호 쓰로틀링 ----------------------------------------------------------
+    const submitButton = document.getElementById('editBtn');
+    const editForm = document.getElementById('edit');
     
+    function handleEdit() {
+        // 수정 버튼을 클릭했을 때 실행되는 함수
+        // console.log('수정 버튼 클릭');
+        editForm.submit();
+    }
+    
+    submitButton.addEventListener('click', throttle(handleEdit, 2000));
+    // /0627이동호 쓰로틀링 ----------------------------------------------------------
 </script>
 {{-- <script>
-!confirm("탈퇴?")
-function ConfirmTest() {
+    !confirm("탈퇴?")
+    function ConfirmTest() {
 if (confirm("삭제 하시겠습니까?")) {
         return route('users.withdraw');
     }  
