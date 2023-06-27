@@ -58,9 +58,9 @@ footer{
 /* 글자 중앙정렬 */
 .textCenter {
     text-align: center;
-    height: 30px;
+    /* height: 30px; */
     color: rgb(0, 0, 0);
-    line-height: 30px;
+    /* line-height: 30px; */
     bottom: 0;
 }
 /* /글자 중앙정렬 */

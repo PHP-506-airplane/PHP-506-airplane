@@ -44,7 +44,7 @@ hr {
 .mainContents {
     margin-left: 0;
     height: 50px;
-    line-height: 50px;
+    line-height: 50px !important;
 }
 /* /내용 */
 
