@@ -27,6 +27,10 @@ h1{
     height: 2px;
     background-color: #661e43;
 }
+.title{
+    font-size: 52px;
+    font-weight: bold;
+}
 /* 목록 */
 .step{
     height: 36px;
@@ -101,7 +105,8 @@ ol {
     transform: scale(1.2);
 }
 .map li .selectedEd{
-    background-color: #661e43;
+    background:url('../img/close.png')no-repeat center;
+    background-color: #b3b3b3;
     pointer-events: none;
 }
 .map li .selectedEd:hover {
@@ -148,7 +153,6 @@ ol {
     cursor: pointer;
     color: #000;
 }
-
 .selected {
     background-color: #6feaf6;
   }
@@ -163,7 +167,11 @@ ol {
     line-height: 100px;
 }
 .name_box .u_name{
-    font-size: 28px;
+    font-size: 36px;
+    font-weight: 600;
+}
+.name_box .u_name span{
+    color: #661e43;
 }
 .s_li{
     margin: 20px 0;
@@ -183,7 +191,8 @@ ol {
     text-align: center;
 }
 .name_box > h2{
-    position: fixed;
+    font-size: 38px;
+    font-weight: 700;
 }
 #seatPost{
     position: fixed;
@@ -192,16 +201,22 @@ ol {
 .material-symbols-outlined{
     font-size: 48px !important;
 }
-
 .chk_btn{
     border-radius: 0.5rem;
     text-align: center;
-    width: 50%;
+    width: 100%;
     height: 60px;
     font-size: 1.125rem;
     background-color: #fff;
     border: 2px solid #b3b3b3;
     font-weight: 700;
+}
+.info{
+    margin-top: 30%;
+    width:300px;
+    height:300px;
+    background:url('../img/seatInfo.png')no-repeat center;
+
 }
 
 

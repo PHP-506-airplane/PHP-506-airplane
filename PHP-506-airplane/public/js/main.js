@@ -51,13 +51,12 @@ hd_li_no2.addEventListener('click', function(){
 });
 
 
-
-
  // 클릭한 옵션의 텍스트를 라벨 안에 넣음
 const handleSelect = function(item) {
     // 출발지
     sta_label.value = item.textContent;
     ro_s_hd_no.value = item.value;
+    
     sta_label.parentNode.classList.remove('active');
 }
  // 옵션 클릭시 클릭한 옵션을 넘김
@@ -69,6 +68,7 @@ const handleSelect2 = function(item) {
     // 도착지
     arr_label.value = item.textContent;
     ro_a_hd_no.value = item.value;
+
     arr_label.parentNode.classList.remove('active');
 }
  // 옵션 클릭시 클릭한 옵션을 넘김

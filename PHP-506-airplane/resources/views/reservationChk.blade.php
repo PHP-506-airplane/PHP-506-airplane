@@ -42,24 +42,22 @@
             </ul>
         </div>
         <div class="location">
+            <input type="hidden" name="dep_port_no" value="{{$depPort[0]->port_no}}">
+            <input type="hidden" name="arr_port_no" value="{{$arrPort[0]->port_no}}">
             @if($flg['hd_li_flg'] === '1')
             <input type="hidden" name="hd_li_flg" value="{{$flg['hd_li_flg']}}">
             {{-- 가는편 --}}
             <h2>여정1 :
-                @if(isset($data[0]->dep2_port_no) && $_GET['dep_port_no'] == $data[0]->dep2_port_no)
-                <span class="br">{{$data[0]->dep_port_name}}({{$data[0]->dep_port_eng}})</span>
-                @endif
+                <span class="br">{{$depPort[0]->port_name}}({{$depPort[0]->port_eng}})</span>
                 <strong>
                     <span class="ico">→</span>
-                    @if(isset($data[0]->arr2_port_no) && $_GET['arr_port_no'] == $data[0]->arr2_port_no)
-                    <span class="br">{{$data[0]->arr_port_name}}({{$data[0]->arr_port_eng}})</span>
-                    @endif
+                    <span class="br">{{$arrPort[0]->port_name}}({{$arrPort[0]->port_eng}})</span>
                 </strong>
                 <span class="r_date">
                     날짜: {{substr($_GET['fly_date'],0,-13)}}
                 </span>
             </h2>
-            <table class="table sta_table align-middle">
+            <table class="table sta_table align-middle table-hover">
                 <thead class="table-light">
                     <tr>
                         <th>편명</th>
@@ -72,14 +70,15 @@
                 </thead>
                 <tbody>
                     @forelse($data as $val)
-                    <tr>
-                        <td>{{strtoupper($val->flight_num)}}</td>
-                        <td><p>({{$data[0]->dep_port_eng}})</p>{{substr($val->dep_time, 0, 2)}}:{{substr($val->dep_time, 2, 2)}}</td>
-                        <td>{{ TimeCalculation($val->dep_time, $val->arr_time) }}</td>
-                        <td><p>({{$data[0]->arr_port_eng}})</p>{{substr_replace($val->arr_time,':',2,0)}}</td>
-                        <td><input type="hidden" class="dep_price" value="{{$val->price}}">{{substr_replace($val->price,',',-3,0)}}</td>
-                        <td class="dep_fly_no"><input type="radio"  name="dep_fly_no" value="{{$val->fly_no}}"><span style="display:none;">{{$val->price}}</span></td>
-                    </tr>
+                    <tr class="tr_data">
+                        <input type="hidden" name="dep_plane_no" value="{{$val->plane_no}}">
+                            <td>{{strtoupper($val->flight_num)}}</td>
+                            <td><p>({{$data[0]->dep_port_eng}})</p>{{substr($val->dep_time, 0, 2)}}:{{substr($val->dep_time, 2, 2)}}</td>
+                            <td>{{ TimeCalculation($val->dep_time, $val->arr_time) }}</td>
+                            <td><p>({{$data[0]->arr_port_eng}})</p>{{substr_replace($val->arr_time,':',2,0)}}</td>
+                            <td><input type="hidden" class="dep_price" value="{{$val->price}}">{{substr_replace($val->price,',',-3,0)}}</td>
+                            <td class="dep_fly_no"><input type="radio" id="data" name="dep_fly_no" value="{{$val->fly_no}}"></td>
+                        </tr>
                     @empty
                     <tr>
                         <td colspan="6">데이터없음</td>
@@ -89,20 +88,16 @@
             </table>
             {{-- 오는편 --}}
             <h2 class="select2">여정2 :
-                @if( isset($data[0]->arr2_port_no) && $_GET['arr_port_no'] == $data[0]->arr2_port_no)
-                <span class="br">{{$data[0]->arr_port_name}}({{$data[0]->arr_port_eng}})</span>
-                @endif
+                <span class="br">{{$arrPort[0]->port_name}}({{$arrPort[0]->port_eng}})</span>
                 <strong>
                     <span class="ico">→</span>
-                    @if(isset($data[0]->dep2_port_no) && $_GET['dep_port_no'] == $data[0]->dep2_port_no)
-                    <span class="br">{{$data[0]->dep_port_name}}({{$data[0]->dep_port_eng}})</span>
-                    @endif
+                    <span class="br">{{$depPort[0]->port_name}}({{$depPort[0]->port_eng}})</span>
                 </strong>
                 <span class="r_date">
                     날짜: {{substr($_GET['fly_date'],13)}}
                 </span>
             </h2>
-            <table class="table sta_table align-middle">
+            <table class="table sta_table align-middle table-hover">
                 <thead class="table-light">
                     <tr>
                         <th>편명</th>
@@ -115,13 +110,14 @@
                 </thead>
                 <tbody>
                     @forelse($data2 as $val)
-                    <tr>
+                    <tr class="tr_data2">
+                        <input type="hidden" name="arr_plane_no" value="{{$val->plane_no}}">
                         <td>{{strtoupper($val->flight_num)}}</td>
                         <td><p>({{$data2[0]->dep_port_eng}})</p>{{substr($val->dep_time, 0, 2)}}:{{substr($val->dep_time, 2, 2)}}</td>
                         <td>{{ TimeCalculation($val->dep_time, $val->arr_time) }}</td>
                         <td><p>({{$data2[0]->arr_port_eng}})</p>{{substr_replace($val->arr_time,':',2,0)}}</td>
-                        <td>{{substr_replace($val->price,',',-3,0)}}</td>
-                        <td class="arr_fly_no"><input type="radio" name="arr_fly_no" value="{{$val->fly_no}}"><span style="display:none;">{{$val->price}}</span></td>
+                        <td><input type="hidden" class="arr_price" value="{{$val->price}}">{{substr_replace($val->price,',',-3,0)}}</td>
+                        <td class="arr_fly_no"><input type="radio" id="data" name="arr_fly_no" value="{{$val->fly_no}}"></td>
                     </tr>
                     @empty
                     <tr>
@@ -135,20 +131,16 @@
         {{-- 편도 --}}
         <input type="hidden" name="hd_li_flg" value="{{$flg['hd_li_flg']}}">
         <h2>여정1 :
-            @if(isset($oneway[0]->dep2_port_no) && $_GET['one_dep_port_no'] == $oneway[0]->dep2_port_no)
-            <span class="br">{{$oneway[0]->dep_port_name}}({{$oneway[0]->dep_port_eng}})</span>
-            @endif
+            <span class="br">{{$depPort[0]->port_name}}({{$depPort[0]->port_eng}})</span>
             <strong>
                 <span class="ico">→</span>
-                @if(isset($oneway[0]->arr2_port_no) && $_GET['one_arr_port_no'] == $oneway[0]->arr2_port_no)
-                <span class="br">{{$oneway[0]->arr_port_name}}({{$oneway[0]->arr_port_eng}})</span>
-                @endif
+                <span class="br">{{$arrPort[0]->port_name}}({{$arrPort[0]->port_eng}})</span>
             </strong>
             <span class="r_date">
                 날짜: {{$_GET['one_fly_date'],0,-13}}
             </span>
         </h2>
-        <table class="table sta_table align-middle">
+        <table class="table sta_table align-middle table-hover">
             <thead class="table-light">
                 <tr>
                     <th>편명</th>
@@ -161,15 +153,14 @@
             </thead>
             <tbody>
                 @forelse($oneway as $val)
-                <tr>
+                <tr class="tr_data3">
+                    <input type="hidden" name="dep_plane_no" value="{{$val->plane_no}}">
                     <td>{{strtoupper($val->flight_num)}}</td>
                     <td><p>({{$oneway[0]->dep_port_eng}})</p>{{substr($val->dep_time, 0, 2)}}:{{substr($val->dep_time, 2, 2)}}</td>
-                    <td>
-                        {{TimeCalculation($val->dep_time, $val->arr_time)}}
-                    </td>
+                    <td>{{TimeCalculation($val->dep_time, $val->arr_time)}}</td>
                     <td><p>({{$oneway[0]->arr_port_eng}})</p>{{substr_replace($val->arr_time,':',2,0)}}</td>
-                    <td>{{substr_replace($val->price,',',-3,0)}}</td>
-                    <td class="dep_fly_no2"><input type="radio" name="dep_fly_no" value="{{$val->fly_no}}"><span style="display:none;">{{$val->price}}</span></td>
+                    <td><input type="hidden" class="dep_price2" value="{{$val->price}}">{{substr_replace($val->price,',',-3,0)}}</td>
+                    <td class="dep_fly_no2"><input type="radio" id="data"name="dep_fly_no" value="{{$val->fly_no}}"></td>
                 </tr>
                 @empty
                 <tr>

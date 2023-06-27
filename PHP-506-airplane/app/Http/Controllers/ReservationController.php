@@ -86,16 +86,29 @@ class ReservationController extends Controller
     }
 // 항공편 설정
     public function check(Request $req) {
+        
         // 로그인체크
         if(empty(Auth::user())) {
             return redirect()->route('users.login')->with('alert', '로그인이 필요한 기능입니다.');
         }
+
+       
+        
         // 왕복/편도 플래그
         $flg = $req->only('hd_li_flg');
         // 왕복
         if($req->hd_li_flg === '1'){
+
+        $depPort = DB::table('airport_info')
+        ->select('*')
+        ->where('port_no','=',$req->dep_port_no)->get();
+
+        $arrPort = DB::table('airport_info')
+        ->select('*')
+        ->where('port_no','=',$req->arr_port_no)->get();
+
         // 가는편
-        $result = DB::table('flight_info')
+        $data = DB::table('flight_info')
         ->join('airport_info as dep_port','dep_port.port_no', '=', 'flight_info.dep_port_no')
         ->join('airport_info as arr_port','arr_port.port_no', '=', 'flight_info.arr_port_no')
         ->select(
@@ -116,7 +129,7 @@ class ReservationController extends Controller
         ->get();
 
         // 오는편
-        $result2 = DB::table('flight_info')
+        $data2 = DB::table('flight_info')
         ->join('airport_info as dep_port','dep_port.port_no', '=', 'flight_info.dep_port_no')
         ->join('airport_info as arr_port','arr_port.port_no', '=', 'flight_info.arr_port_no')
         ->select(
@@ -136,12 +149,19 @@ class ReservationController extends Controller
         ->limit(5)
         ->get();
 
-        return view('reservationChk')->with('data',$result)->with('data2',$result2)->with('flg',$flg);
+        return view('reservationChk', compact('data', 'data2', 'flg','arrPort','depPort'));
 
         }else{
+            $depPort = DB::table('airport_info')
+            ->select('*')
+            ->where('port_no','=',$req->one_dep_port_no)->get();
+
+            $arrPort = DB::table('airport_info')
+            ->select('*')
+            ->where('port_no','=',$req->one_arr_port_no)->get();
         
         // 편도
-        $result = DB::table('flight_info')
+        $oneway = DB::table('flight_info')
         ->join('airport_info as dep_port','dep_port.port_no', '=', 'flight_info.dep_port_no')
         ->join('airport_info as arr_port','arr_port.port_no', '=', 'flight_info.arr_port_no')
         ->select(
@@ -161,7 +181,7 @@ class ReservationController extends Controller
         ->limit(5)
         ->get();
 
-        return view('reservationChk')->with('oneway',$result)->with('flg',$flg);
+        return view('reservationChk', compact('oneway','flg','arrPort','depPort'));
         }
         
 
@@ -169,14 +189,20 @@ class ReservationController extends Controller
     }
 // 좌석 출력
     public function checkpost(Request $req){
-        return $req;
         // 왕복/편도 플래그
         $flg = $req->only('hd_li_flg');
+
+        $depPort = DB::table('airport_info')
+        ->select('*')
+        ->where('port_no','=',$req->dep_port_no)->get();
+
+        $arrPort = DB::table('airport_info')
+        ->select('*')
+        ->where('port_no','=',$req->arr_port_no)->get();
 
         //왕복
         if($req->hd_li_flg =='1'){
             // 가는편
-            
             $data = DB::table('reserve_info as res')
             ->join('flight_info as fli','res.fly_no', '=','fli.fly_no')
             ->join('airport_info as dep','dep.port_no', '=', 'fli.dep_port_no')
@@ -231,10 +257,10 @@ class ReservationController extends Controller
                 return redirect()->back()->with('alert', '오는편 여정을 선택해주세요.');
             }
             
-            return view('reservationSeat', compact('data', 'data2', 'seat', 'availableSeats', 'availableSeats2', 'flg'));
+            return view('reservationSeat', compact('data', 'data2', 'seat', 'availableSeats', 'availableSeats2', 'flg','depPort','arrPort'));
 
             }else{
-            //     // 편도
+            // 편도
             $data = DB::table('reserve_info as res')
             ->join('flight_info as fli','res.fly_no', '=','fli.fly_no')
             ->join('airport_info as dep','dep.port_no', '=', 'fli.dep_port_no')
@@ -266,15 +292,15 @@ class ReservationController extends Controller
                 return redirect()->back()->with('alert', '가는편 여정을 선택해주세요.');
             }
 
-            return view('reservationSeat', compact('data', 'seat', 'availableSeats', 'flg'));
+            return view('reservationSeat', compact('data', 'seat', 'availableSeats', 'flg','depPort','arrPort'));
             }
     }
 // 예약하기
     public function seatpost(Request $req){
 
-        if(!isset($req->seat_no) || !isset($req->seat_no2)){
-            return redirect()->back()->with('alert', '좌석을 선택해주세요.');
-        }
+        // if(!isset($req->seat_no) || !isset($req->seat_no2)){
+        //     return redirect()->back()->with('alert', '좌석을 선택해주세요.');
+        // }
 
         if($req->flg =='1'){
             $reserveInfo = new ReserveInfo([

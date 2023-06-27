@@ -18,7 +18,7 @@
 @section('contents')
 
 <div class="container">
-    <h1>좌석 선택</h1>
+    <h1 class="title">좌석 선택</h1>
     <div class="step">
         <h2>Step</h2>
         <ul>
@@ -44,11 +44,11 @@
         <div class="slideCont">
             <ul>
                 <li class="tab choice" style="width: 50%;">
-                    <a id="aFlight1" onclick="changeTab('aFlight1')">구간1<span> : {{$data[0]->dep_name}}({{$data[0]->dep_eng}})->{{$data[0]->arr_name}}({{$data[0]->arr_eng}})</span></a>
+                    <a id="aFlight1" onclick="changeTab('aFlight1')">구간1<span> : {{$depPort[0]->port_name}}({{$depPort[0]->port_eng}})->{{$arrPort[0]->port_name}}({{$arrPort[0]->port_eng}})</span></a>
                 </li>
                 @if($flg['hd_li_flg'] === '1')
                     <li class="tab" style="width: 50%;">
-                        <a id="aFlight2" onclick="changeTab('aFlight2')">구간2<span> : {{$data[0]->arr_name}}({{$data[0]->arr_eng}})->{{$data[0]->dep_name}}({{$data[0]->dep_eng}})</span></a>
+                        <a id="aFlight2" onclick="changeTab('aFlight2')">구간2<span> : {{$arrPort[0]->port_name}}({{$arrPort[0]->port_eng}})->{{$depPort[0]->port_name}}({{$depPort[0]->port_eng}})</span></a>
                     </li>
                 @else
                 <li class="tab choice" style="width: 50%;"></li>
@@ -63,11 +63,11 @@
                 @csrf
                 <ul>
                     <input type="hidden" name="flg" value="{{$flg['hd_li_flg']}}">
-                    <input type="hidden" name="fly_no" value="{{$data[0]->fly_no}}">
-                    <input type="hidden" name="plane_no" value="{{$data[0]->plane_no}}">
+                    <input type="hidden" name="fly_no" value="{{$_POST['dep_fly_no']}}">
+                    <input type="hidden" name="plane_no" value="{{$_POST['dep_plane_no']}}">
                     @if($flg['hd_li_flg'] === '1')
-                        <input type="hidden" name="fly_no2" value="{{$data2[0]->fly_no}}">
-                        <input type="hidden" name="plane_no2" value="{{$data2[0]->plane_no}}">
+                        <input type="hidden" name="fly_no2" value="{{$_POST['arr_fly_no']}}">
+                        <input type="hidden" name="plane_no2" value="{{$_POST['arr_plane_no']}}">
                     @endif
                     <li class="u_name">이름 : <span>{{Auth::user()->u_name}}</span></li>
                     <li class="s_li">
@@ -161,6 +161,9 @@
             </ol>
         </div>
         @endif
+        <div class="info">
+
+        </div>
     </div>
     
 
