@@ -54,7 +54,7 @@
                     <span class="br">{{$arrPort[0]->port_name}}({{$arrPort[0]->port_eng}})</span>
                 </strong>
                 <span class="r_date">
-                    {{-- 날짜: {{substr($_GET['fly_date'],0,-13)}} --}}
+                    날짜: {{substr($_GET['fly_date'],0,-13)}}
                 </span>
             </h2>
             <table class="table sta_table align-middle table-hover">

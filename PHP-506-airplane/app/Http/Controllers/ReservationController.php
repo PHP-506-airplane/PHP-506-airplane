@@ -99,11 +99,10 @@ class ReservationController extends Controller
         
         if ($sessionReq !== null) {
             $req = new Request($sessionReq);
+            $_GET['fly_date'] = $req->fly_date;
         }
 
         Log::debug($req);
-
-       
         
         // 왕복/편도 플래그
         $flg = $req->only('hd_li_flg');
