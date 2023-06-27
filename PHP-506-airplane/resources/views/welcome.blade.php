@@ -47,7 +47,7 @@
                             @csrf
                         <div id="tab1"class="tab on"> 
                             {{-- 왕복 --}}
-                             <div class="round-way">
+                            <div class="round-way">
                                 <div class="selectBox2">
                                     <input type="hidden" class="hd_li_flg" name="hd_li_flg" value="1">
                                     <input type="hidden" class="ro_s_hd_no" name="dep_port_no">
