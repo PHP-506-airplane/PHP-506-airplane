@@ -30,12 +30,14 @@ body {
 
 /* 푸터 */
 footer{
-    height: 3.125rem;
+    height: 30px;
     width: 100%;
     background-color: rgba(75, 75, 75, 0.089);
     color: rgb(0, 0, 0);
-    transform: translate(0%);
     /* z-index: 999999; */
+    line-height: 30px;
+    /* position: absolute; */
+    bottom: 0;
 }
 
 .footerContainer {
@@ -44,11 +46,6 @@ footer{
     padding-bottom: 1rem;
     position: fixed;   
     /* bottom: 0; */
-}
-
-.footerFixed {
-    position: fixed;
-    bottom: 0;
 }
 /* /푸터 */
 
@@ -61,6 +58,10 @@ footer{
 /* 글자 중앙정렬 */
 .textCenter {
     text-align: center;
+    height: 30px;
+    color: rgb(0, 0, 0);
+    line-height: 30px;
+    bottom: 0;
 }
 /* /글자 중앙정렬 */
 
@@ -96,7 +97,7 @@ footer{
 /* /에러 메세지 */
 
 .divContentsMain {
-    min-height: 88vh;
+    min-height: 100vh;
 }
 
 /* 버튼 색깔 */

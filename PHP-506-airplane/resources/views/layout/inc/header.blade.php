@@ -70,7 +70,7 @@
             </li>
             <li class="nav-item dropdown justify-content-end" style="font-weight:600">
              
-            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="margin-right:60px">
                 {{Auth::user()->u_name}}님
             </a>
             <ul class="dropdown-menu justify-content-end" style="font-weight:600">

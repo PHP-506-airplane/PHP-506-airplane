@@ -57,7 +57,7 @@
             <br>
             <label>
             <p style="text-align: left; font-size:12px; color:#666">비밀번호</p>
-            <input type="text" placeholder="비밀번호를 입력하세요" class="size" name="u_pw" id="u_pw">
+            <input type="password" placeholder="비밀번호를 입력하세요" class="size" name="u_pw" id="u_pw">
             </label>
             <div style="height:30px"></div>
             <p>
