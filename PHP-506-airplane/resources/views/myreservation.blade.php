@@ -18,7 +18,7 @@
 @section('contents')
 <div class="myreservationHeader">
     <h1 class="noticeH1">예약 내역 조회</h1>
-    <h6>예약하신 내역을 알려드립니다.</h6>
+    <h5 class="noticeH5">예약하신 내역을 알려드립니다.</h5>
 </div>
 @if($data->isEmpty())
     <div class="reserveNone">
@@ -39,12 +39,10 @@
         <section class="cities">
             <div class="city">
                 <small>{{str_replace('공항', '' , $val['dep_port_name'])}}</small>
-
                 <strong>{{strtoupper($val['dep_port_eng'])}}</strong>
             </div>
             <div class="city">
                 <small>{{str_replace('공항', '' , $val['arr_port_name'])}}</small>
-
                 <strong>{{strtoupper($val['arr_port_eng'])}}</strong>
             </div>
             <svg class="airplane">

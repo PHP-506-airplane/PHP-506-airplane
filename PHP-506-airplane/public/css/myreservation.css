@@ -12,6 +12,15 @@
     font-weight: 900;
     text-decoration: none;
 }
+.noticeH1 {
+    padding-top: 3.125rem;
+    font-size: 55px;
+    text-shadow: -1px 0px black, 0px 1px black, 1px 0px black, 0px -1px black;
+}
+.noticeH5 {
+    font-size: 30px;
+    text-shadow: -1px 0px black, 0px 1px black, 1px 0px black, 0px -1px black;
+}
 /* /예약 헤더 */
 
 /* 예약 없음 */

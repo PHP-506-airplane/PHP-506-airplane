@@ -70,7 +70,8 @@ class ReservationController extends Controller
                 FlightInfo::join('airport_info AS dep', 'flight_info.dep_port_no', 'dep.port_no')
                     ->join('airport_info AS arr', 'flight_info.arr_port_no', 'arr.port_no')
                     ->select(
-                        'flight_info.fly_date'
+                        'flight_info.fly_no'
+                        ,'flight_info.fly_date'
                         ,'flight_info.price'
                         ,'dep.port_name AS dep_name'
                         ,'arr.port_name AS arr_name'
@@ -168,6 +169,7 @@ class ReservationController extends Controller
     }
 // 좌석 출력
     public function checkpost(Request $req){
+        return $req;
         // 왕복/편도 플래그
         $flg = $req->only('hd_li_flg');
 

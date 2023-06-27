@@ -123,8 +123,8 @@
                             <div class="swiper_contents swiper_width">
                                 <img src="{{asset('lowCostImg/'. $i .'.png?' . time())}}" alt="IMG" class="swiper_img">
                                 <div>{{str_replace('공항','',$lowCost[$i]->dep_name)}} → {{str_replace('공항','',$lowCost[$i]->arr_name)}}</div>
-                                <div>날짜 : {{$lowCost[$i]->fly_date}}</div>
-                                <div>가격 : {{number_format($lowCost[$i]->price)}}원</div>
+                                <div>{{$lowCost[$i]->fly_date}}</div>
+                                <div>{{number_format($lowCost[$i]->price)}}원</div>
                             </div>
                         </div>
                     @endfor

@@ -1,6 +1,44 @@
 ul, li {
     list-style: none;
 }
-li::before {
+
+.divLi li::before {
     content: '-';
 }
+
+
+/* 헤더 */
+.baggageinfoHeader {
+    margin: 0 auto 5vh auto;
+    width: 100vw;
+    height: 12.5rem;
+    line-height: 12.5rem;
+    text-align: center;
+    background-image: url('/img/banner.jpg');
+    background-size: auto;
+    background-repeat: no-repeat;
+    color: white;
+    font-weight: 900;
+    text-decoration: none;
+}
+.noticeMsg  a {
+    text-decoration: none !important;
+    color: white !important;
+}
+.noticeH1 {
+    padding-top: 3.125rem;
+    font-size: 55px;
+    text-shadow: -1px 0px black, 0px 1px black, 1px 0px black, 0px -1px black;
+}
+.noticeH5 {
+    font-size: 30px;
+    text-shadow: -1px 0px black, 0px 1px black, 1px 0px black, 0px -1px black;
+}
+/* /헤더 */
+
+/* 컨테이너 */
+.baggageinfoContainer {
+    max-width: 1000px;
+    margin: 30px auto;
+}
+/* /컨테이너 */

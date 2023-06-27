@@ -13,7 +13,7 @@
 //			    String		&$end_time
 // 리턴값	:   String
 // ---------------------------------
-function TimeCalculation(&$start_time, &$end_time) {
+function TimeCalculation($start_time, $end_time) {
     $start_hour = (int)substr($start_time, 0, 2);
     $start_minute = (int)substr($start_time, 2, 2);
 
