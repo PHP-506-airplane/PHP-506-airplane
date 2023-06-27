@@ -94,7 +94,7 @@
                     <a href="{{route('users.chgpw')}}">비밀번호 변경</a>
                 </div>
                 <span>|</span>
-                <div class="forgot_pw">
+                <div class="forgot_pw" id="divWithdraw">
                     <a  onclick="test()" id="withdraw">회원탈퇴</a>
                 </div> 
             </div>
