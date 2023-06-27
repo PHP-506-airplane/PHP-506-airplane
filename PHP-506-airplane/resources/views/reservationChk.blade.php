@@ -56,7 +56,7 @@
                     @endif
                 </strong>
                 <span class="r_date">
-                    날짜: {{substr($_GET['fly_date'],0,-13)}}
+                    {{-- 날짜: {{substr($_GET['fly_date'],0,-13)}} --}}
                 </span>
             </h2>
             <table class="table sta_table align-middle">

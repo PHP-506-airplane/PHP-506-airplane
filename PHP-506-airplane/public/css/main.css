@@ -238,7 +238,7 @@ a{
   margin: 10px auto;
 }
 .mySwipper {
-  max-width: 900px;
+  max-width: 901px;
   margin: 0 auto;
   overflow: hidden;
   position: relative;
@@ -253,8 +253,65 @@ a{
 .swiper_img {
   width: 200px;
   height: 200px;
+  box-shadow: 1px 1px 1px 1px gray;
 }
 .swiper-pagination-bullet {
   background: rgb(0, 0, 0) !important;
 }
+.swiper-slide {
+  left: -32.5px;
+}
+
+/* 마우스오버 애니메이션 */
+ul.type1 li {
+  position: relative; 
+  display: inline-block; 
+  padding: 5px;
+  width: 225px; 
+  height: 280px;
+}
+
+ul.type1 li span {
+  position: absolute; 
+  background: rgb(160, 190, 235); 
+  transition: all 0.5s;
+}
+ul.type1 li span:nth-child(1) {
+  left: 0; 
+  top: 0; 
+  width: 0; 
+  height: 2px;
+}
+ul.type1 li span:nth-child(2) {
+  right: -2px; 
+  top: 0; 
+  width: 2px; 
+  height: 0;
+}
+ul.type1 li span:nth-child(3) {
+  right: 0; 
+  bottom: 0; 
+  width: 0; 
+  height: 2px;
+}
+ul.type1 li span:nth-child(4) {
+  left: 0; 
+  bottom: 0; 
+  width: 2px; 
+  height: 0;
+}
+ul.type1 li:hover span:nth-child(1) {
+  width: 100%;
+}
+ul.type1 li:hover span:nth-child(2) {
+  height: 100%;
+}
+ul.type1 li:hover span:nth-child(3) {
+  width: 100%;
+}
+ul.type1 li:hover span:nth-child(4) {
+  height: 100%;
+}
+/* /마우스오버 애니메이션 */
+
 /* /v004 add 이동호 스와이퍼 */
