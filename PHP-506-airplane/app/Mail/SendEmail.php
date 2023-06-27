@@ -3,6 +3,7 @@
 namespace App\Mail;
 
 use App\Models\User;
+use App\Models\Userinfo;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -19,7 +20,7 @@ class SendEmail extends Mailable
     /**
      * Create a new message instance.
      */
-    public function __construct(User $user)
+    public function __construct(Userinfo $user)
     {
         $this->user = $user;
     }
@@ -61,8 +62,8 @@ class SendEmail extends Mailable
      */
     public function build()
     {
-        // $user = $this->user;
-        return $this->view('emails.sendemail', compact('user'))
+        $user = $this->user;
+        return $this->view('email.sendemail')->with('user',$user)
         //이메일 제목
         ->subject('이메일 확인');
     }

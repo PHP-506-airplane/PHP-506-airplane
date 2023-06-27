@@ -13,8 +13,6 @@ a{
 }
 #con{
     width:100%;
-    /* height: 100%; */
-    min-height: 100vh;
     background-color:#e1e8f3;
     background-image:url("img/bg.jpg");
     background-position: center center;
@@ -24,14 +22,14 @@ a{
     /* height: auto; */
     /* padding-bottom: 2rem */
     /* min-height: 100%; */
-    position: relative;
+    /* position: relative; */
     
 }
 #login{
-    width:600px;
+    width:500px;
     height: 1100px;
     margin:0 auto;
-    /* position: relative; */
+    position: relative;
     /* background:#ddd; */
 }
 #login_form{
@@ -45,6 +43,7 @@ a{
     left:50%;
     transform: translate(-50%, -50%);
     height: 800px;
+    width: 400px;
 }
 .login{
     font-size:25px;
@@ -104,8 +103,9 @@ hr{
     color:#707070;
 }
 .num1{
-    width:60px;
+    /* width:60px; */
     text-align: left;
+    margin-right: 50px;
 }
 .num2{
     width:235px;
@@ -115,4 +115,13 @@ hr{
     border: none;
     background-color: #fff;
     font-size: 12px;
+}
+
+/* .gender {
+    margin-left: 50px;
+} */
+
+.size {
+    display: inline-block;
+    /* width: 100px; */
 }

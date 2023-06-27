@@ -22,7 +22,8 @@
 </div>
 <div class="baggageinfoContainer">
     <div class="divLi">
-        <div>휴대 수하물</div>
+        <div class="title">휴대 수하물</div>
+        <br>
         <ul>
             <li>
                 고객이 기내로 가져갈 수 있는 수하물을 말합니다.
@@ -48,7 +49,8 @@
                 단, 기내 휴대 수하물 허용 규격에 부합하는 경우 기내 반입은 가능하나, 기내 탑재공간 부족시 탑승구에서 위탁될수 있으니 이점 양지하시기 바랍니다.
             </li>
         </ul>
-        <div>무료 위탁 수하물</div>
+        <div class="title">무료 위탁 수하물</div>
+        <br>
         <ul>
             <li>
                 고객이 출발지 공항에서 항공사에 탁송 의뢰하여 목적지 공항에서 수취하는 수하물을 말합니다.
@@ -64,6 +66,7 @@
             </li>
         </ul>
     </div>
+    <br>
     <table class="bbsList">
         <colgroup>
             <col width="20%">
