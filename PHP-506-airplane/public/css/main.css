@@ -238,7 +238,7 @@ a{
   margin: 10px auto;
 }
 .mySwipper {
-  max-width: 901px;
+  max-width: 910px;
   margin: 0 auto;
   overflow: hidden;
   position: relative;
@@ -260,6 +260,9 @@ a{
 }
 .swiper-slide {
   left: -32.5px;
+}
+#formLowCost {
+  cursor: pointer;
 }
 
 /* 마우스오버 애니메이션 */

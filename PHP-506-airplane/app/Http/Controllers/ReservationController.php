@@ -74,7 +74,10 @@ class ReservationController extends Controller
                         ,'flight_info.fly_date'
                         ,'flight_info.price'
                         ,'dep.port_name AS dep_name'
+                        ,'dep.port_no AS dep_no'
                         ,'arr.port_name AS arr_name'
+                        ,'arr.port_no AS arr_no'
+                        ,'flight_info.plane_no'
                     )
                     ->where('flight_info.fly_date', '>', now())
                     ->where('flight_info.price', '=', $price)
@@ -86,7 +89,6 @@ class ReservationController extends Controller
     }
 // 항공편 설정
     public function check(Request $req) {
-        
         // 로그인체크
         if(empty(Auth::user())) {
             Session::put(['request' => $req->all()]);
@@ -102,7 +104,7 @@ class ReservationController extends Controller
             $_GET['fly_date'] = $req->fly_date;
         }
 
-        Log::debug($req);
+        // Log::debug($req);
         
         // 왕복/편도 플래그
         $flg = $req->only('hd_li_flg');
@@ -198,16 +200,19 @@ class ReservationController extends Controller
 
 // 좌석 출력
     public function checkpost(Request $req){
+        // Log::debug($req);
         // 왕복/편도 플래그
         $flg = $req->only('hd_li_flg');
-
+        
         $depPort = DB::table('airport_info')
         ->select('*')
         ->where('port_no','=',$req->dep_port_no)->get();
-
+        // Log::debug($depPort);
+        
         $arrPort = DB::table('airport_info')
         ->select('*')
         ->where('port_no','=',$req->arr_port_no)->get();
+        // Log::debug($arrPort);
 
         //왕복
         if($req->hd_li_flg =='1'){

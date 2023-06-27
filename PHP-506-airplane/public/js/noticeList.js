@@ -5,7 +5,7 @@ searchButton.addEventListener('click', () => {
     const searchText = searchInput.value.trim().toLowerCase();
     const items = document.getElementsByClassName('mainContents');
 
-    // 제목을 검색어와 비교하여 필터링
+    // 제목을 검색어랑 비교해서 필터링
     for(let i = 0; i < items.length; i++) {
         const itemTitle = items[i].querySelector('a').innerText.toLowerCase();
 

@@ -127,10 +127,21 @@
                                         <span></span>
                                         <span></span>
                                         <span></span>
-                                        <img src="{{asset('lowCostImg/'. $i .'.png?' . time())}}" alt="IMG" class="swiper_img">
-                                        <div>{{str_replace('공항','',$lowCost[$i]->dep_name)}} → {{str_replace('공항','',$lowCost[$i]->arr_name)}}</div>
-                                        <div>{{$lowCost[$i]->fly_date}}</div>
-                                        <div>{{number_format($lowCost[$i]->price)}}원</div>
+                                        <form action="{{route('reservation.checkpost')}}" method="POST" id="formLowCost" onclick="test(event)">
+                                            @csrf
+                                            <img src="{{asset('lowCostImg/'. $i .'.png?' . time())}}" alt="IMG" class="swiper_img">
+                                            <div>{{str_replace('공항','',$lowCost[$i]->dep_name)}} → {{str_replace('공항','',$lowCost[$i]->arr_name)}}</div>
+                                            <div>{{$lowCost[$i]->fly_date}}</div>
+                                            <div>{{number_format($lowCost[$i]->price)}}원</div>
+                                            <input type="hidden" name="hd_li_flg" value="0">
+                                            <input type="hidden" name="dep_port_no" value="{{$lowCost[$i]->dep_no}}">
+                                            <input type="hidden" name="one_dep_port_no" value="{{$lowCost[$i]->dep_no}}">
+                                            <input type="hidden" name="arr_port_no" value="{{$lowCost[$i]->arr_no}}">
+                                            <input type="hidden" name="one_arr_port_no" value="{{$lowCost[$i]->arr_no}}">
+                                            <input type="hidden" name="dep_plane_no" value="{{$lowCost[$i]->plane_no}}">
+                                            <input type="hidden" name="dep_fly_no" value="{{$lowCost[$i]->fly_no}}">
+                                            <input type="hidden" name="one_fly_date" value="{{$lowCost[$i]->fly_date}}">
+                                        </form>
                                     </li>
                                 </ul>
                             {{-- </div> --}}
@@ -173,4 +184,10 @@
     <script src="{{asset('js/scripts.js')}}"></script>
     <script src="{{asset('js/main.js')}}"></script>
 
+    <script>
+        function test(event) {
+            const clickedForm = event.target.closest('#formLowCost'); // 클릭된 form을 찾음
+            clickedForm.submit();
+        }
+    </script>
 @endsection
