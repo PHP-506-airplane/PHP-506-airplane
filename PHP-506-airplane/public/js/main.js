@@ -18,30 +18,8 @@ const hd_li_no2 = document.querySelector('.hd_li_no2');
 const hd_li_flg = document.querySelector('.hd_li_flg');
 // 항공편 검색 
 const btn_submit = document.querySelector('.btn-submit');
+const btn_submit2 = document.querySelector('.btn-submit2');
 
-btn_submit.addEventListener('click',function(event){
-    // 왕복일때 유효성 검사
-    if(hd_li_flg.value == '1') {
-        if(sta_label.value == ''){
-            alert('출발지를 입력하세요');
-            event.preventDefault();
-    
-        }else if(arr_label.value ==''){
-            alert('도착지를 입력하세요');
-            event.preventDefault();
-        }
-        // 편도일때
-    }else{
-        if(oSta_label.value == ''){
-            alert('출발지를 입력하세요');
-            event.preventDefault();
-    
-        }else if(oArr_label.value ==''){
-            alert('도착지를 입력하세요');
-            event.preventDefault();
-        }
-    }
-})
 // 왕복/편도 flg
 hd_li_no1.addEventListener('click', function(){
     hd_li_flg.value = '1';
@@ -49,6 +27,39 @@ hd_li_no1.addEventListener('click', function(){
 hd_li_no2.addEventListener('click', function(){
     hd_li_flg.value = '0';
 });
+
+btn_submit.addEventListener('click',function(event){
+    // 왕복일때 유효성 검사
+    if(hd_li_flg.value == 1) {
+        if(sta_label.value == ''){
+            alert('출발지를 입력하세요');
+            event.preventDefault();
+    
+        }else if(arr_label.value ==''){
+            alert('도착지를 입력하세요');
+            event.preventDefault();
+        }else if (sta_label.value == arr_label.value) {
+            alert('출발지와 도착지는 같을 수 없습니다.');
+            event.preventDefault();
+        }
+    }
+});
+btn_submit2.addEventListener('click',function(event){
+    // 편도일때
+    if(hd_li_flg.value == 0){
+        if(oSta_label.value == ''){
+            alert('출발지를 입력하세요');
+            event.preventDefault();
+        }else if(oArr_label.value ==''){
+            alert('도착지를 입력하세요');
+            event.preventDefault();
+        }else if (oSta_label.value == oArr_label.value) {
+            alert('출발지와 도착지는 같을 수 없습니다.');
+            event.preventDefault();
+        }
+    }
+});
+
 
 
  // 클릭한 옵션의 텍스트를 라벨 안에 넣음
@@ -78,6 +89,8 @@ arr_optionItem.forEach(function(option){
         if(sta_label.value == ''){
             alert('출발지를 입력하세요');
             arr_label.parentNode.classList.remove('active');
+        }else if(sta_label.value === arr_label.value){
+            console.log('aaa');
         }else{
             handleSelect2(option);
         }

@@ -142,8 +142,11 @@ ol {
     font-size: 18px;
     background: #ebebeb;
 }
-.tripTab li.choice a {
+.tripTab li.choice {
     color: #fff;
+}
+.tripTab li:hover{
+    text-decoration: underline;
 }
 .tripTab li a {
     position: relative;
@@ -218,6 +221,40 @@ ol {
     background:url('../img/seatInfo.png')no-repeat center;
 
 }
+@media (max-width: 1400px) {
+    .name_box h2 {
+      display: none;
+    }
+    .map{
+        margin-left: 100px;
+    }
+    #seatPost{
+        left: 20%;
+    }
+  }
+  @media (max-width: 1200px) {
+    .name_box h2 {
+      display: none;
+    }
+    .map{
+        margin-left: 0px;
+    }
+    #seatPost{
+        left: 10%;
+    }
+  }
+  @media (max-width: 993px) {
+    .name_box h2 {
+      display: none;
+    }
+    .map{
+        margin-left: -10px;
+    }
+    #seatPost{
+        display: none;
+    }
+  }
+
 
 
 

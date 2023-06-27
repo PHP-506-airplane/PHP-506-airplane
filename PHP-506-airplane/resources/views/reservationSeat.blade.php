@@ -44,11 +44,11 @@
         <div class="slideCont">
             <ul>
                 <li class="tab choice" style="width: 50%;">
-                    <a id="aFlight1" onclick="changeTab('aFlight1')">구간1<span> : {{$depPort[0]->port_name}}({{$depPort[0]->port_eng}})->{{$arrPort[0]->port_name}}({{$arrPort[0]->port_eng}})</span></a>
+                    <a id="aFlight1" onclick="changeTab('aFlight1')">구간1<span class="t_over"> : {{$depPort[0]->port_name}}({{$depPort[0]->port_eng}})->{{$arrPort[0]->port_name}}({{$arrPort[0]->port_eng}})</span></a>
                 </li>
                 @if($flg['hd_li_flg'] === '1')
                     <li class="tab" style="width: 50%;">
-                        <a id="aFlight2" onclick="changeTab('aFlight2')">구간2<span> : {{$arrPort[0]->port_name}}({{$arrPort[0]->port_eng}})->{{$depPort[0]->port_name}}({{$depPort[0]->port_eng}})</span></a>
+                        <a id="aFlight2" onclick="changeTab('aFlight2')">구간2<span class="t_over"> : {{$arrPort[0]->port_name}}({{$arrPort[0]->port_eng}})->{{$depPort[0]->port_name}}({{$depPort[0]->port_eng}})</span></a>
                     </li>
                 @else
                 <li class="tab choice" style="width: 50%;"></li>
@@ -75,7 +75,7 @@
                         <span class="material-symbols-outlined">
                             chair
                             </span>
-                        <input type="text" class="show_name" name="seat_no"  readonly>
+                        <input type="text" class="show_name" name="seat_no" readonly>
                     </li>
                     @if($flg['hd_li_flg'] === '1')
                         <li class="s_li">
@@ -83,7 +83,7 @@
                             <span class="material-symbols-outlined">
                                 chair
                                 </span>
-                            <input type="text" class="show_name2" name="seat_no2"  readonly>
+                            <input type="text" class="show_name2" name="seat_no2" readonly>
                         </li>
                     @endif
                 </ul>
@@ -161,12 +161,8 @@
             </ol>
         </div>
         @endif
-        <div class="info">
-
-        </div>
+        <div class="info"></div>
     </div>
-    
-
 </div>
 @endsection
 @section('js')

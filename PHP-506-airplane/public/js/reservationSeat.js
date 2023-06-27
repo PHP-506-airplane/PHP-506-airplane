@@ -49,8 +49,17 @@ function changeTab(tabId) {
 const seatForm = document.getElementById('seatPost');
 function reserveBtn(){
     var con_test = confirm("정말 예약 하시겠습니까?");
+
     if(con_test == true){
-        seatForm.submit();
+        if(s_name.value ==''){
+            alert('가는편 좌석을 선택해 주세요.');
+            con_test = false;
+        }else if(s_name2.value ==''){
+            alert('오는편 좌석을 선택해 주세요.');
+            con_test = false;
+        }else{
+            seatForm.submit();
+        }
     }
 }
 

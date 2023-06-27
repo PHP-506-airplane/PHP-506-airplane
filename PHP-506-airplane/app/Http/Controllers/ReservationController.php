@@ -298,27 +298,54 @@ class ReservationController extends Controller
 // 예약하기
     public function seatpost(Request $req){
 
-        // if(!isset($req->seat_no) || !isset($req->seat_no2)){
-        //     return redirect()->back()->with('alert', '좌석을 선택해주세요.');
-        // }
-
         if($req->flg =='1'){
+            // 가는편 예약
+            // 예약정보(reserve_info) 저장
             $reserveInfo = new ReserveInfo([
                 'u_no'=> Auth::user()->u_no
                 ,'seat_no' => $req->seat_no
                 ,'fly_no' => $req->fly_no
                 ,'plane_no' => $req->plane_no
             ]);
+            
+            $reserveInfo->save();
+
+            // 예약정보 저장 후 티켓 저장
+            $tNo = ReserveInfo::max('reserve_no');
+            $price = FlightInfo::select('price')
+            ->where('fly_no', $req->fly_no)
+            ->first();
+            $priceInt = intval($price->price);
+
+            $ticketInfo = new TicketInfo([
+                'reserve_no'    => $tNo
+                ,'t_price'      => $priceInt
+            ]);
+            $ticketInfo->save();
+            // 오는편 예약
             $reserveInfo2 = new ReserveInfo([
                 'u_no'=> Auth::user()->u_no
                 ,'seat_no' => $req->seat_no2
                 ,'fly_no' => $req->fly_no2
                 ,'plane_no' => $req->plane_no2
             ]);
-            $reserveInfo->save();
-            $reserveInfo2->save();
-        }else{
 
+            $reserveInfo2->save();
+
+            $tNo2 = ReserveInfo::max('reserve_no');
+            $price2 = FlightInfo::select('price')
+            ->where('fly_no', $req->fly_no)
+            ->first();
+            $priceInt2 = intval($price2->price);
+
+            $ticketInfo2 = new TicketInfo([
+                'reserve_no'    => $tNo2
+                ,'t_price'      => $priceInt2
+            ]);
+            $ticketInfo2->save();
+
+        }else{
+            // 편도 예약
             $reserveInfo3 = new ReserveInfo([
                 'u_no'=> Auth::user()->u_no
                 ,'seat_no' => $req->seat_no
@@ -327,21 +354,33 @@ class ReservationController extends Controller
             ]);
 
             $reserveInfo3->save();
+
+            $tNo3 = ReserveInfo::max('reserve_no');
+            $price3 = FlightInfo::select('price')
+            ->where('fly_no', $req->fly_no)
+            ->first();
+            $priceInt3 = intval($price3->price);
+
+            $ticketInfo3 = new TicketInfo([
+                'reserve_no'    => $tNo3
+                ,'t_price'      => $priceInt3
+            ]);
+            $ticketInfo3->save();
         }
         
 
         // v005 add 이동호
-        $tNo = ReserveInfo::max('reserve_no');
-        $price = FlightInfo::select('price')
-            ->where('fly_no', $req->fly_no)
-            ->first();
-        $priceInt = intval($price->price);
+        // $tNo = ReserveInfo::max('reserve_no');
+        // $price = FlightInfo::select('price')
+        //     ->where('fly_no', $req->fly_no)
+        //     ->first();
+        // $priceInt = intval($price->price);
 
-        $ticketInfo = new TicketInfo([
-            'reserve_no'    => $tNo
-            ,'t_price'      => $priceInt
-        ]);
-        $ticketInfo->save();
+        // $ticketInfo = new TicketInfo([
+        //     'reserve_no'    => $tNo
+        //     ,'t_price'      => $priceInt
+        // ]);
+        // $ticketInfo->save();
 
 
         // 메일에 예약정보 담아서 보내기
