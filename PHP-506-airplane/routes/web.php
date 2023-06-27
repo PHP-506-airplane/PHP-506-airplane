@@ -26,7 +26,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [ReservationController::class, 'main'])->name('reservation.main');
 
-// 0612 유저 (수연)
+// 0612 유저
 Route::get('/users/login', [UserController::class, 'login'])->name('users.login');
 Route::post('/users/loginpost', [UserController::class, 'loginpost'])->name('users.login.post');
 Route::get('/users/registration', [UserController::class, 'registration'])->name('users.registration');
@@ -38,11 +38,8 @@ Route::put('/users/usereditpost', [UserController::class, 'usereditpost'])->name
 
 // 0612 이메일
 // 이메일 전송
-// Route::get('/mails/mail', [MailController::class, 'mail'])->name('mails.mail');
-// Route::post('/mails/mailpost', [MailController::class, 'mailpost'])->name('mails.mail.post');
-
-// 이메일 중복
-Route::get('/check-email', [UserController::class, 'checkEmail']);
+Route::get('/mails/mail', [MailController::class, 'mail'])->name('mails.mail');
+Route::post('/mails/mailpost', [MailController::class, 'mailpost'])->name('mails.mail.post');
 
 // 이메일 인증
 Route::get('/users/emailverify/{code}', [UserController::class, 'emailverify'])->name('emailverifys.emailverify');
@@ -51,15 +48,15 @@ Route::get('/users/emailverify/{code}', [UserController::class, 'emailverify'])-
 Route::get('/users/emailverify_resend', [UserController::class, 'emailverify_resend'])->name('emailverifys_resend.emailverify_resend');
 
 // 이메일 찾기
-Route::get('/users/findemail', [UserController::class, 'findemail'])->name('findemails.findemail');
-Route::post('/users/findemailpost', [UserController::class, 'findemail'])->name('findemails.findemail.post');
+// Route::get('/users/findemail', [UserController::class, 'findemail'])->name('findemails.findemail');
+// Route::post('/users/findemailpost', [UserController::class, 'findemail'])->name('findemails.findemail.post');
 
 // 이메일 찾기 답변
-Route::post('/users/emailanswer', [UserController::class, 'emailanswer'])->name('emailanswers.emailanswer');
+// Route::post('/users/emailanswer', [UserController::class, 'emailanswer'])->name('emailanswers.emailanswer');
 
 // 비밀번호 찾기
-Route::get('/users/findpassword', [UserController::class, 'findpassword'])->name('findpasswords.findpassword');
-Route::post('/users/findpasswordpost', [UserController::class, 'findpasswordpost'])->name('findpasswords.findpassword.post');
+// Route::get('/users/findpassword', [UserController::class, 'findpassword'])->name('findpasswords.findpassword');
+// Route::post('/users/findpasswordpost', [UserController::class, 'findpasswordpost'])->name('findpasswords.findpassword.post');
 
 // 비밀번호 변경
 Route::get('/users/chgpw', [UserController::class, 'chgpw'])->name('users.chgpw');

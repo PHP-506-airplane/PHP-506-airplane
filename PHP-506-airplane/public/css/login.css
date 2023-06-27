@@ -21,7 +21,7 @@ a{
     background-repeat: no-repeat;
     background-size:cover;
     padding:0;
-    /* position: relative; */
+    position: absolute;
 }
 #login{
     width:600px;

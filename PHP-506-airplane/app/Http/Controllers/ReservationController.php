@@ -89,10 +89,20 @@ class ReservationController extends Controller
         
         // 로그인체크
         if(empty(Auth::user())) {
+            Session::put(['request' => $req->all()]);
+            Session::put('previous_url', route('reservation.check'));
             return redirect()->route('users.login')->with('alert', '로그인이 필요한 기능입니다.');
         }
 
-       
+        $sessionReq = Session::get('request');
+        Session::forget('request');
+        
+        if ($sessionReq !== null) {
+            $req = new Request($sessionReq);
+            $_GET['fly_date'] = $req->fly_date;
+        }
+
+        Log::debug($req);
         
         // 왕복/편도 플래그
         $flg = $req->only('hd_li_flg');
@@ -183,10 +193,9 @@ class ReservationController extends Controller
 
         return view('reservationChk', compact('oneway','flg','arrPort','depPort'));
         }
-        
-
 
     }
+
 // 좌석 출력
     public function checkpost(Request $req){
         // 왕복/편도 플래그

@@ -11,21 +11,13 @@ use Illuminate\Support\Facades\Auth;
 class MailController extends Controller
 {
     public static function mail() {
-        return view('email');
+        return view('mail');
     }
-    public static function sendSignupEmailpost(Request $req){
+
+    public static function mailpost(Request $req){
         
         Mail::to($req->email)->send(new SendEmail($req->email));
 
-        return "갔나?";
-    }
-
-    public function mailpost(Request $req) {
-
-        $baseUser  = User::find(Auth::User()->id);
-        
-        if($req->answer !== $baseUser->answer) {
-            return "이메일 인증 답변이 일치하지 않ㅅㅂ니다^^";
-        }
+        return "전송";
     }
 }

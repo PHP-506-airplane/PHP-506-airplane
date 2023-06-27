@@ -11,6 +11,7 @@ namespace App\Http\Controllers;
 
 use App\Mail\SendEmail;
 use App\Models\AdminInfo;
+use App\Models\EmailVerify;
 use App\Models\User;
 use App\Models\Userinfo;
 use Illuminate\Http\Request;
@@ -26,6 +27,7 @@ use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rules;
 use Illuminate\Validation\ValidationException;
+use App\Rules\MinAge;
 
 class UserController extends Controller
 {
@@ -76,12 +78,12 @@ class UserController extends Controller
     function registrationpost(Request $req) {
         // Log::debug('Login Start');
         // return $req;
-        // $req->validate([
-        //     'u_name'      => 'required|regex:/^[가-힣]+$/|min:2|max:30'  
-        //     ,'u_email'    => 'required|email|min:5|max:30'  
-        //     ,'u_pw'       => 'required_with:passwordchk|same:passwordchk|regex:/^(?=.*[a-zA-Z])(?=.*[!@#$%^*-])(?=.*[0-9]).{8,20}$/'
-        //     // 만 14세 이상 가입 가능
-        // ]);
+        $req->validate([
+            'name'          => 'required|regex:/^[가-힣]+$/|min:2|max:30'  
+            ,'email'        => 'required|email|min:5|max:30'  
+            ,'password'     => 'required_with:passwordchk|same:passwordchk|regex:/^(?=.*[a-zA-Z])(?=.*[!@#$%^*-])(?=.*[0-9]).{8,20}$/'
+            ,'birth'        => ['required', 'date', new MinAge(14)]
+        ]);
         // Log::debug('1 Start');
         $data['u_name'] = $req->name;
         $data['u_email'] = $req->email;
@@ -92,26 +94,41 @@ class UserController extends Controller
         $data['qa_answer'] = '1';
 
         $user = Userinfo::create($data);
-        // Log::debug('1 Start', [$user]);
         if(!$user) {
             $errors = '시스템 에러가 발생하여 회원가입에 실패했습니다.<br>잠시 후에 다시 시도해주세요~.';
             return redirect()
                 ->route('users.registration')
                 ->with('error', $errors);
         }
-        
+
+        // $email_pk = Userinfo::select('u_no')->max('u_no');
+        // $verification_code = Str::random(30); // 인증 코드 생
+        // $validity_period = now()->addMinutes(30); // 유효기간 설정
+
+        // $data2['u_no'] = $email_pk;
+        // $data2['verification_code'] = $verification_code;
+        // $data2['validity_period'] = $validity_period;
+
+        // $email = EmailVerify::create($data2);
+  
+        // $user->verification_code = $verification_code;
+        // $user->validity_period = $validity_period;
+        // $user->save();
+
+        // Mail::to($user->u_email)->send(new SendEmail($user));
+
         //회원가입 완료 로그인 페이지로 이동
         return redirect()
             ->route('users.login')
-            ->with('alert', '회원가입을 완료했습니다.<br>가입하신 아이디와 비밀번호로 로그인해 주세요.');
+            ->with('alert', '회원가입을 완료했습니다.\n가입하신 아이디와 비밀번호로 로그인해 주세요.');
     }
     
     //로그아웃
     function logout() {
         Session::flush();
         Auth::logout();
-        // return redirect()->route('reservation.main');
-        return redirect()->back();
+        return redirect()->route('reservation.main');
+        // return redirect()->back();
     }
 
     //회원정보 수정
@@ -179,8 +196,8 @@ class UserController extends Controller
 
         if ($currentTime > $validityPeriod) {
             $error = '인증 유효시간이 만료되었습니다.';
-            $resendEmailUrl = route('resend.email', ['email' => $user->email]);
-            return redirect()->back()->with('error', $error)->with('resend_email', true)->with('resend_email_url', $resendEmailUrl);
+            $resendEmailUrl = route('emailverifys_resend.emailverify_resend', ['u_email' => $user->email]);
+            return redirect()->back()->with('error', $error)->with('emailverifys_resend.emailverify_resend', true)->with('resend_email_url', $resendEmailUrl);
         }
 
         $user->verification_code = null;
@@ -189,11 +206,11 @@ class UserController extends Controller
         $user->save();
 
         $success = '이메일 인증이 완료되었습니다.<br>가입하신 아이디와 비밀번호로 로그인 해 주십시오.';
-        return redirect()->route('users.login')->with('success', $success);
+        return redirect()->route('users.login')->with('alert', $success);
     }
 
     function emailverify_resend(Request $req) {
-        $user = Userinfo::where('email', $req->email)->first();
+        $user = Userinfo::where('u_email', $req->email)->first();
 
         if (!$user) {
             $error = '해당 이메일로 가입된 계정이 없습니다.';
@@ -215,7 +232,7 @@ class UserController extends Controller
         Mail::to($user->email)->send(new SendEmail($user));
 
         $success = '이메일 인증 메일을 재전송하였습니다.<br>이메일을 확인하여 계정을 활성화해 주세요.';
-        return redirect()->back()->with('success', $success);
+        return redirect()->back()->with('alert', $success);
     }
 
 
@@ -238,12 +255,11 @@ class UserController extends Controller
             'password' => 'required_with:passwordchk|same:passwordchk|regex:/^(?=.*[a-zA-Z])(?=.*[!@#$%^*-])(?=.*[0-9]).{8,20}$/'
         ];
 
-        $baseuser->u_pw = $req->password;
+        $baseuser->u_pw = Hash::make($req->password);
         $baseuser->save();
 
-       
-
-        return redirect()->route('users.logout')->with('alert','비밀번호가 변경 되었습니다.');
+        // Session::put('alert', '비밀번호가 변경되었습니다.');
+        return redirect()->route('users.useredit')->with('alert','비밀번호가 변경 되었습니다.');
     }
 
     

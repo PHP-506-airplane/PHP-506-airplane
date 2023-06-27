@@ -120,12 +120,20 @@
                 <div class="swiper-wrapper swiper_center">
                     @for($i = 0; $i <= 7; $i++)
                         <div class="swiper-slide slide{{$i}}" id="slide_width">
-                            <div class="swiper_contents swiper_width">
-                                <img src="{{asset('lowCostImg/'. $i .'.png?' . time())}}" alt="IMG" class="swiper_img">
-                                <div>{{str_replace('공항','',$lowCost[$i]->dep_name)}} → {{str_replace('공항','',$lowCost[$i]->arr_name)}}</div>
-                                <div>{{$lowCost[$i]->fly_date}}</div>
-                                <div>{{number_format($lowCost[$i]->price)}}원</div>
-                            </div>
+                            {{-- <div class="swiper_contents swiper_width"> --}}
+                                <ul class="type1">
+                                    <li>
+                                        <span></span>
+                                        <span></span>
+                                        <span></span>
+                                        <span></span>
+                                        <img src="{{asset('lowCostImg/'. $i .'.png?' . time())}}" alt="IMG" class="swiper_img">
+                                        <div>{{str_replace('공항','',$lowCost[$i]->dep_name)}} → {{str_replace('공항','',$lowCost[$i]->arr_name)}}</div>
+                                        <div>{{$lowCost[$i]->fly_date}}</div>
+                                        <div>{{number_format($lowCost[$i]->price)}}원</div>
+                                    </li>
+                                </ul>
+                            {{-- </div> --}}
                         </div>
                     @endfor
                 </div>

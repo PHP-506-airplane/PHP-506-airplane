@@ -24,40 +24,57 @@
     @csrf
     <h3 class="login" style="letter-spacing:-1px;">회원가입</h3>
     <hr>
+    <label>
+    <div>
     <p style="text-align: left; font-size:12px; color:#666; margin-top:1rem">이름</p>
-    <input type="text" placeholder="이름" class="size" name="name" id="name" autocomplete="off">
+    <input type="text" placeholder="한글 2~30글자 사이로 입력해주세요" class="size" name="name" id="name" autocomplete="off">
+    </div>
     </label>
     <br>
     <label>
-        <p style="text-align: left; font-size:12px; color:#666; margin-top:1rem">이메일</p>
-        <input type="text" placeholder="이메일" class="size" name="email" id="email" autocomplete="off">
-        <br>
-        <button type="button" id="errMsgemail" onclick="chkEmail()">이메일 중복 확인</button>
+        <div>
+            <p style="text-align: left; font-size:12px; color:#666; margin-top:1rem">이메일</p>
+            <input type="text" placeholder="이메일 형식에 맞게 써주세요" class="size" name="email" id="email" autocomplete="off">
+            <br>
+            <button type="button" id="errMsgemail" onclick="chkEmail()">이메일 중복 확인</button>
+        </div>
     </label> 
     <br>
     <label>
     <p style="text-align: left; font-size:12px; color:#666l margin-top:1rem">비밀번호</p>
-    <input type="password" placeholder="비밀번호" class="size" oninput="chkPw()" name="password" id="password">
+    <input type="password" placeholder="비밀번호를 입력해주세요" class="size" oninput="chkPw()" name="password" id="password">
     </label>
     <br>
     <label>
         <p style="text-align: left; font-size:12px; color:#666; margin-top:1rem">비밀번호 확인</p>
-        <input type="password" placeholder="비밀번호 확인" class="size" oninput="chkPw()" name="passwordchk" id="pwchk">
+        <input type="password" placeholder="비밀번호 확인을 입력해주세요" class="size" oninput="chkPw()" name="passwordchk" id="pwchk">
         <div id="chk_pw_msg"></div> 
     </label>
     <br>
     <label>
         <p style="text-align: left; font-size:12px; color:#666; margin-top:1rem">생년월일</p>
-        <input type="date" placeholder="생년월일" class="size" name="birth" id="u_birth">
+        <input type="date" placeholder="생년월일을 입력해주세요" class="size" name="birth" id="u_birth">
     </label>
     <br>
-    <label>
-        <p style="text-align: left; font-size:12px; color:#666; margin-top:1rem">성별</p>
-        
-        <input type="radio" placeholder="성별" class="size" name="gender" id="u_gender" value="M">남
-        <input type="radio" placeholder="성별" class="size" name="gender" id="u_gender" value="F">여
-    </label>
+    <div class="gender">
+        <p style="text-align: left; font-size:12px; color:#666; margin-top:1rem" >성별</p>
+         <select class="size num1" name="gender">
+            <option value="1">남</option>
+            <option value="2">여</option>
+            <option value="3" selected>선택안함</option>
+        </select>
+        {{-- <br> --}}
+        {{-- <input type="radio" placeholder="성별" class="size" name="gender" id="u_gender" value="M">남
+        <input type="radio" placeholder="성별" class="size" name="gender" id="u_gender" value="F">여 --}}
+    </div>
     <br>
+    @if ($errors->any())
+    <div class="error">
+        @foreach ($errors->all() as $error)
+            <div>{{$error}}</div>
+        @endforeach
+    </div>
+    @endif
     {{-- <label>
         <p style="text-align: left; font-size:12px; color:#666">비밀번호 찾기 질문</p>
         <select class="size num1" name="myselect">
@@ -68,7 +85,6 @@
         </select>
         <input type="text" placeholder="힌트" class="size" name="answer" id="answer">
     </label> --}}
-            <div style="height:20px"></div>
             <br>
                 <p>
                     {{-- <input type="submit" value="회원가입" class="btn"> --}}
@@ -79,9 +95,11 @@
             <p class="find">
                 <span><a href="{{route('users.login')}}" >로그인 페이지로 이동</a></span>
             </p>
+             
         </div>
     <div>
 </div>
+
 @endsection
 
 

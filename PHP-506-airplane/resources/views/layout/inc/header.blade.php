@@ -8,42 +8,10 @@
 **************************************************/
 --}}
 
-{{-- <ul class="nav nav-pills justify-content-center">
-    <a class="navbar-brand" href="{{route('reservation.main')}}"><img width="150px" height="50px" class="air" src="{{asset('img/air.png')}}" alt="logo"></a>
-        <div style="width:950px">
-        </div>
-        <li class="nav-item">
-            <a class="nav-link p-3 mb-2 bg-body text-dark" href="{{route('notice.baggage')}}">수하물 안내</a>
-        </li>
-    @guest
-        <li class="nav-item">
-            <a class="nav-link active p-3 mb-2 bg-body text-dark" aria-current="page" href="{{route('users.login')}}">로그인</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link active p-3 mb-2 bg-body text-dark" aria-current="page" href="{{route('users.registration')}}">회원가입</a>
-        </li>
-        
-    @endguest
-
-    @auth
-        <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle p-3 mb-2 bg-body text-dark" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">{{Auth::user()->u_name}}님</a>
-            <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="{{route('users.useredit')}}">회원정보 수정</a></li>
-                <li><a class="dropdown-item" href="{{route('reservation.myreservation')}}">예약 조회</a></li>
-            </ul>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link active p-3 mb-2 bg-body text-dark" aria-current="page" href="{{route('users.logout')}}">로그아웃</a>
-        </li>
-
-    @endauth 
-</ul> --}}
-
 <nav class="navbar navbar-expand-lg bg-light">
   <div class="container-fluid">
     <div style="width:70px"></div>
-    <a class="navbar-brand" href="{{route('reservation.main')}}"><img width="180px" height="40px" class="air" src="{{asset('img/logoplz.png')}}" alt="logo"></a>
+    <a class="navbar-brand" href="{{route('reservation.main')}}"><img width="250px" height="35px" class="air" src="{{asset('img/last.png')}}" alt="logo"></a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
