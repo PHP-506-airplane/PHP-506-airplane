@@ -127,7 +127,7 @@ a{
   border: none;
 }
 .selectBox2 * {
-   box-sizing: border-box; 
+  box-sizing: border-box; 
 }
 .selectBox2 {
   position: relative;
@@ -230,7 +230,18 @@ a{
 .sec2 .map{
   width: 40%;
 }
-
+.map_img{
+  display: flex;
+  align-items: center;
+}
+.map_img .img1{
+  margin-left: 40px;
+}
+.map_img .img1 span{
+  font-size: 18px;
+  color: #2e2e2e;
+  font-weight: 500;
+}
 /* v004 add 이동호 스와이퍼 */
 .swiperMent {
   font-size: 28px;

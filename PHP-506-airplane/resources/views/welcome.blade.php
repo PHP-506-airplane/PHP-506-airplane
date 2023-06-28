@@ -170,7 +170,17 @@
                     </ul>
                 </div>
                 <div class="map">
-                    <h2>국내공항위치</h2>
+                    <div class="map_img">
+                        <h2>국내공항위치</h2>
+                        <div class="img1">
+                            <span>국내</span>
+                            <img src="{{asset('img/icon-airport2.png')}}" alt="">
+                        </div>
+                        <div class="img1">
+                            <span>국제</span>
+                            <img src="{{asset('img/icon-airport.png')}}" alt="">
+                        </div>
+                    </div>
                     <div id="map" style="width:400px;height:300px;"></div>
                 </div>
             </div>
