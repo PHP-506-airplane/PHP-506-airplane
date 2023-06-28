@@ -48,41 +48,45 @@ class ReservationController extends Controller
         // v004 이동호
         // 최저가항공 가져오기
 
-        // $lowCost = 
-        //     FlightInfo::join('airport_info AS dep', 'flight_info.dep_port_no', 'dep.port_no')
-        //         ->join('airport_info AS arr', 'flight_info.arr_port_no', 'arr.port_no')
-        //         ->select(
-        //             'flight_info.fly_date'
-        //             ,'flight_info.price'
-        //             ,'dep.port_name AS dep_name'
-        //             ,'arr.port_name AS arr_name'
-        //         )
-        //         ->where('flight_info.fly_date', '>', now())
-        //         ->orderBy('price')
-        //         ->orderBy('flight_info.fly_date')
-        //         ->limit(8)
-        //         ->get();
+        $lowCost = 
+            FlightInfo::join('airport_info AS dep', 'flight_info.dep_port_no', 'dep.port_no')
+                ->join('airport_info AS arr', 'flight_info.arr_port_no', 'arr.port_no')
+                ->select(
+                    'flight_info.fly_no'
+                    ,'flight_info.fly_date'
+                    ,'flight_info.price'
+                    ,'dep.port_name AS dep_name'
+                    ,'dep.port_no AS dep_no'
+                    ,'arr.port_name AS arr_name'
+                    ,'arr.port_no AS arr_no'
+                    ,'flight_info.plane_no'
+                )
+                ->where('flight_info.fly_date', '>', now())
+                ->orderBy('price')
+                ->orderBy('flight_info.fly_date')
+                ->limit(8)
+                ->get();
 
-        $lowCost = [];
-        for($i = 0; $i < 8; $i++) {
-            $price = rand(10, 30) * 1000;
-            $lowCost[] = 
-                FlightInfo::join('airport_info AS dep', 'flight_info.dep_port_no', 'dep.port_no')
-                    ->join('airport_info AS arr', 'flight_info.arr_port_no', 'arr.port_no')
-                    ->select(
-                        'flight_info.fly_no'
-                        ,'flight_info.fly_date'
-                        ,'flight_info.price'
-                        ,'dep.port_name AS dep_name'
-                        ,'dep.port_no AS dep_no'
-                        ,'arr.port_name AS arr_name'
-                        ,'arr.port_no AS arr_no'
-                        ,'flight_info.plane_no'
-                    )
-                    ->where('flight_info.fly_date', '>', now())
-                    ->where('flight_info.price', '=', $price)
-                    ->first();
-        }
+        // $lowCost = [];
+        // for($i = 0; $i < 8; $i++) {
+        //     $price = rand(10, 30) * 1000;
+        //     $lowCost[] = 
+        //         FlightInfo::join('airport_info AS dep', 'flight_info.dep_port_no', 'dep.port_no')
+        //             ->join('airport_info AS arr', 'flight_info.arr_port_no', 'arr.port_no')
+        //             ->select(
+        //                 'flight_info.fly_no'
+        //                 ,'flight_info.fly_date'
+        //                 ,'flight_info.price'
+        //                 ,'dep.port_name AS dep_name'
+        //                 ,'dep.port_no AS dep_no'
+        //                 ,'arr.port_name AS arr_name'
+        //                 ,'arr.port_no AS arr_no'
+        //                 ,'flight_info.plane_no'
+        //             )
+        //             ->where('flight_info.fly_date', '>', now())
+        //             ->where('flight_info.price', '=', $price)
+        //             ->first();
+        // }
 
         //  return view('welcome')->with('data',$result); //v002 del 이동호
         return view('welcome', compact('notices', 'data', 'lowCost'));
@@ -400,37 +404,36 @@ class ReservationController extends Controller
         // ]);
         // $ticketInfo->save();
 
-
         // 메일에 예약정보 담아서 보내기
         $reserveData = 
-        ReserveInfo::join('flight_info AS fli', 'reserve_info.fly_no', 'fli.fly_no')
-            ->join('airplane_info AS airp', 'fli.plane_no', 'airp.plane_no')
-            ->join('airline_info AS airl', 'airp.line_no', 'airl.line_no')
-            ->join('airport_info AS dep', 'fli.dep_port_no', 'dep.port_no')
-            ->join('airport_info AS arr', 'fli.arr_port_no', 'arr.port_no')
-            ->join('user_info AS user', 'reserve_info.u_no', 'user.u_no')
-            ->join('ticket_info AS ticket', 'reserve_info.reserve_no', 'ticket.reserve_no')
-            ->where('reserve_info.u_no', Auth::user()->u_no)
-            ->select(
-                'reserve_info.*'
-                ,'fli.fly_date'
-                ,'dep.port_name AS dep_port_name'
-                ,'dep.port_eng AS dep_port_eng'
-                ,'arr.port_name  AS arr_port_name'
-                ,'arr.port_eng AS arr_port_eng'
-                ,'fli.flight_num'
-                ,'fli.dep_time'
-                ,'fli.arr_time'
-                ,'airp.plane_name'
-                ,'airl.line_name'
-                ,'airl.line_code'
-                ,'user.u_name'
-                ,'fli.fly_no'
-                ,'ticket.t_no'
-                ,'ticket.t_price'
-            )
-            ->limit(1)
-            ->get();
+            ReserveInfo::join('flight_info AS fli', 'reserve_info.fly_no', 'fli.fly_no')
+                ->join('airplane_info AS airp', 'fli.plane_no', 'airp.plane_no')
+                ->join('airline_info AS airl', 'airp.line_no', 'airl.line_no')
+                ->join('airport_info AS dep', 'fli.dep_port_no', 'dep.port_no')
+                ->join('airport_info AS arr', 'fli.arr_port_no', 'arr.port_no')
+                ->join('user_info AS user', 'reserve_info.u_no', 'user.u_no')
+                ->join('ticket_info AS ticket', 'reserve_info.reserve_no', 'ticket.reserve_no')
+                ->where('reserve_info.u_no', Auth::user()->u_no)
+                ->select(
+                    'reserve_info.*'
+                    ,'fli.fly_date'
+                    ,'dep.port_name AS dep_port_name'
+                    ,'dep.port_eng AS dep_port_eng'
+                    ,'arr.port_name  AS arr_port_name'
+                    ,'arr.port_eng AS arr_port_eng'
+                    ,'fli.flight_num'
+                    ,'fli.dep_time'
+                    ,'fli.arr_time'
+                    ,'airp.plane_name'
+                    ,'airl.line_name'
+                    ,'airl.line_code'
+                    ,'user.u_name'
+                    ,'fli.fly_no'
+                    ,'ticket.t_no'
+                    ,'ticket.t_price'
+                )
+                ->limit(1)
+                ->get();
 
         $userinfo = Userinfo::where('u_email', Auth::user()->u_email)->first();
         Mail::to(Auth::user()->u_email)->send(new SendReserve($userinfo, $reserveData));

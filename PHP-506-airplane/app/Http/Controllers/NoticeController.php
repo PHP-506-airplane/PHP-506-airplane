@@ -45,14 +45,14 @@ class NoticeController extends Controller
 
         $query = NoticeInfo::select(['notice_no', 'notice_title', 'created_at', 'updated_at'])
             ->orderBy('notice_no', 'DESC');
-    
+
         // 검색어를 받아와서 해당하는 공지사항을 검색하고 페이지네이션해서 반환
         if ($searchText) {
             $query->where('notice_title', 'like', '%' . $searchText . '%');
         }
-    
+
         $data = $query->paginate(10);
-    
+
         return view('noticelist', compact('data', 'searchText'));
     }
 
@@ -75,9 +75,10 @@ class NoticeController extends Controller
     public function store(Request $req)
     {
         $validator = Validator::make(
-            $req->only('notice_no', 'title', 'content'),
+            $req->only('notice_no', 'title', 'content', 'image'),
             [
-                'title'          => 'required|between:3,50'
+                'notice_no'      => 'required|integer'
+                ,'title'         => 'required|between:3,50'
                 ,'content'       => 'max:4000'
                 ,'image'         => 'nullable|image|max:2048'
             ]
@@ -95,7 +96,7 @@ class NoticeController extends Controller
             ,'notice_title'     => $req->title
             ,'notice_content'   => $req->content
         ]);
-        
+
         // 이미지가 업로드되었는지 확인
         if ($req->hasFile('image')) {
             $image = $req->file('image');
@@ -109,9 +110,9 @@ class NoticeController extends Controller
             $notice->image_path = $imagePath;
         }
         $notice->save();
-        
+
         $notice_no = NoticeInfo::select('notice_no')->max('notice_no');
-        
+
         return redirect()->route('notice.show', $notice_no);
     }
 
