@@ -24,6 +24,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Query\JoinClause;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
@@ -108,13 +109,42 @@ class ReservationController extends Controller
             $_GET['fly_date'] = $req->fly_date;
         }
 
-        // Log::debug($req);
-        
-        // 왕복/편도 플래그
-        $flg = $req->only('hd_li_flg');
-        // 왕복
-        if($req->hd_li_flg === '1'){
 
+        // cookie ver. ------------------------------------------------------------------------
+        // 요청 쿠키 가져오기
+        // $prevReq = Cookie::get('prev_req');
+        // Log::debug(['요청쿠키', $prevReq]);
+        
+        // if (!Auth::user()) {
+        //     Log::debug($prevReq, ['1차 if']);
+        //     // 이전 요청 쿠키가 없으면 새로운 요청을 쿠키에 저장
+        //     if (empty($prevReq)) {
+        //         Cookie::queue('prev_req', serialize($req->all()), 5);
+        //         Cookie::queue('prev_url', route('reservation.check'), 5);
+        //         Log::debug(cookie('prev_req'), ['쿠키에 담기']);
+        //         Log::debug(cookie('prev_url'), ['쿠키에 담기']);
+        //     }
+        //     return redirect()->route('users.login')->with('alert', '로그인이 필요한 기능입니다.');
+        // }
+
+        // // 요청 쿠키가 있을 경우
+        // if (!empty($prevReq)) {
+        //     $prevReqArr = unserialize($prevReq);
+        //     $req = new Request($prevReqArr);
+        //     $_GET['fly_date'] = $req->fly_date;
+        
+        //     // 요청 쿠키 삭제
+        //     Cookie::forget('prev_req', 'prev_url');
+        // }
+        // /cookie ver. ------------------------------------------------------------------------
+
+    // Log::debug($req);
+    
+    // 왕복/편도 플래그
+    $flg = $req->only('hd_li_flg');
+    // 왕복
+    if($req->hd_li_flg === '1'){
+        
         $depPort = DB::table('airport_info')
         ->select('*')
         ->where('port_no','=',$req->dep_port_no)->get();
