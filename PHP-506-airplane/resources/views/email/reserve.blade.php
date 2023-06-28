@@ -337,7 +337,7 @@
                     <strong>{{$reserveData['u_name']}}</strong>
                 </div>
             </div>
-            <img src="{{asset('img/qr.png')}}" alt="QR code" class="imgQr">
+            <img src="{{$message->embed(public_path() . '/img/qr.png')}}" alt="QR code" class="imgQr">
         </section>
     </div>
 
