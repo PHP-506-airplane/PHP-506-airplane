@@ -95,9 +95,7 @@
             <p class="find">
                 <span><a href="{{route('users.login')}}" >로그인 페이지로 이동</a></span>
             </p>
-             
         </div>
-    <div>
 </div>
 
 @endsection

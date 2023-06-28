@@ -13,21 +13,21 @@ a{
 }
 #con{
     width:100%;
-    /* height: 100vh; */
-    min-height: 100vh;
+    height: 872px;
+    /* min-height: 100vh; */
     background-color:#e1e8f3;
     background-image:url("img/bg.jpg");
     background-position: center center;
     background-repeat: no-repeat;
     background-size:cover;
+    position: relative;
     padding:0;
-    position: absolute;
 }
 #login{
     width:600px;
-    height: 800px;
+    height: 100%;
     margin:0 auto;
-    /* position: relative; */
+    position: relative;
     /* background:#ddd; */
 }
 #login_form{

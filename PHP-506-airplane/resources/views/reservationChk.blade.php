@@ -126,7 +126,7 @@
                     @endforelse
                 </tbody>
             </table>
-        </div>
+        
         @else
         {{-- 편도 --}}
         <input type="hidden" name="hd_li_flg" value="{{$flg['hd_li_flg']}}">
@@ -169,6 +169,7 @@
                 @endforelse
             </tbody>
         </table>
+    
         @endif
         <div class="total_price">
             <dt>총금액</dt>
@@ -177,9 +178,9 @@
         <div class="btnArea">
             <button type="submit" class="chk_btn">다음</button>
         </div>
+    </div>
     </form>
 </div> {{-- END container --}}
-
 @endsection
 
 @section('js')

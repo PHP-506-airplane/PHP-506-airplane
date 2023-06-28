@@ -13,7 +13,6 @@ a{
 }
 #con{
     width:100%;
-    height: 100vh;
     min-height: 100%;
     background-color:#e1e8f3;
     background-image:url("img/bg.jpg");
@@ -25,7 +24,7 @@ a{
 }
 #login{
     width:600px;
-    height: 750px;
+    height: 872px;
     margin:0 auto;
     /* position: relative; */
     /* background:#ddd; */

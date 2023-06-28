@@ -50,7 +50,6 @@
             <span><a href="{{route('reservation.main')}}">취소</a></span>
         </p>
         </div>
-    <div>
 </div>
 
 @endsection

@@ -56,7 +56,6 @@
             </div>
         </form>
         </div>
-    <div>
 </div>
 @endsection
 
@@ -78,23 +77,4 @@
     throttle(btn, edit);
     // /0627이동호 쓰로틀링 ----------------------------------------------------------
 </script>
-{{-- <script>
-    !confirm("탈퇴?")
-    function ConfirmTest() {
-if (confirm("삭제 하시겠습니까?")) {
-        return route('users.withdraw');
-    }  
-    else {
-        return false;
-    }
-}
-</script> --}}
-
-{{-- function withdraw(){
-  if (confirm("정말 탈퇴하시겠습니까??") == true){    //확인
-      document.form.submit();
-  }else{   //취소
-      return;
-  }
-} --}}
 @endsection

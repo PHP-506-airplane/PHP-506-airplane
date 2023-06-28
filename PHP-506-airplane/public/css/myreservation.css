@@ -1,3 +1,9 @@
+html{
+    overflow-x: hidden;
+}
+.divContentsMain {
+    height: 871px;
+}
 /* 예약 헤더 */
 .myreservationHeader {
     margin: 0 auto 5vh auto;
