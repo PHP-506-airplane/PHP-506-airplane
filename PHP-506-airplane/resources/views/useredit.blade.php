@@ -38,7 +38,7 @@
             <br>
             <div style="height:30px"></div>
             <p>
-                <input type="button" value="수정" class="btn" id="editBtn">
+                <input type="submit" value="수정" class="btn" id="editBtn">
             </p>
             <div class="login_etc">
                 <div class="space"></div>
