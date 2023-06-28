@@ -32,7 +32,7 @@ body {
 footer{
     height: 30px;
     width: 100%;
-    background-color: rgba(75, 75, 75, 0.089);
+    background-color: rgb(221, 221, 221);
     color: rgb(0, 0, 0);
     z-index: 999999;
     line-height: 30px;
