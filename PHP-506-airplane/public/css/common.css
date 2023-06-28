@@ -34,7 +34,7 @@ footer{
     width: 100%;
     background-color: rgba(75, 75, 75, 0.089);
     color: rgb(0, 0, 0);
-    /* z-index: 999999; */
+    z-index: 999999;
     line-height: 30px;
     position: fixed;
     bottom: 0;
