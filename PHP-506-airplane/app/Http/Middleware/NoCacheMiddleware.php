@@ -23,6 +23,7 @@ class NoCacheMiddleware
         if (method_exists($response, 'header')) {
             $response->header('Cache-Control', 'private, no-cache, no-store, must-revalidate');
             $response->header('Pragma', 'no-cache');
+            // 캐시의 만료 날짜를 과거로 설정해서 캐시가 즉시 만료되도록 함
             $response->header('Expires', 'Thu, 19 Nov 1981 08:52:00 GMT');
         }
 
