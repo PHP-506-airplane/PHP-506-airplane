@@ -29,6 +29,10 @@ a:hover {
 hr {
     margin: 0;
 }
+
+hr:last-child {
+    display: none;
+}
 /* /hr */
 
 /* 번호, 제목, 등록일 */
@@ -37,6 +41,7 @@ hr {
     line-height: 50px;
     width: 80vw;
     background-color: #008cff23;
+    border-bottom: 1px solid #000000;
 }
 /* /번호, 제목, 등록일 */
 

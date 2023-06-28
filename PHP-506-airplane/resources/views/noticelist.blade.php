@@ -29,12 +29,13 @@
             <div class="col-2">등록일</div>
         </div>
         @forelse($data as $item)
-        <hr>
+
         <div class="row mainContents">
             <div class="col-2 textCenter afterLine">{{$item->notice_no}}</div>
             <div class="col-8 afterLine"><a href="{{route('notice.show', ['notice' => $item->notice_no])}}">{{$item->notice_title}}</a></div>
             <div class="col-2 textCenter">{{mb_substr($item->created_at, 0, 10)}}</div>
         </div>
+        <hr>
         @empty
         <div class="row">
             <div class="noneContents">공지사항이 없습니다.</div>
