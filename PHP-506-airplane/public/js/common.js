@@ -12,9 +12,11 @@ function throttle(btn, form) {
     btn.addEventListener('click', function (e) {
         if (!timer) {
             timer = setTimeout(function() {
+                // 타이머 초기화
                 timer = null;
-                form.submit();
             }, 1500);
+            // form submit
+            form.submit();
         }
     });
 }
