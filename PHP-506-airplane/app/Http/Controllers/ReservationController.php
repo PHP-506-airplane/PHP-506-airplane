@@ -89,7 +89,7 @@ class ReservationController extends Controller
     }
 // 항공편 설정
     public function check(Request $req) {
-        // 로그인체크
+        // 0627 add 이동호
         if(empty(Auth::user())) {
             Session::put(['request' => $req->all()]);
             Session::put('previous_url', route('reservation.check'));
@@ -200,6 +200,10 @@ class ReservationController extends Controller
 
 // 좌석 출력
     public function checkpost(Request $req){
+        // 0627 add 이동호
+        if(empty(Auth::user())) {
+            return redirect()->route('users.login')->with('alert', '로그인이 필요한 기능입니다.');
+        }
         // Log::debug($req);
         // 왕복/편도 플래그
         $flg = $req->only('hd_li_flg');

@@ -11,10 +11,10 @@ function throttle(btn, form) {
     
     btn.addEventListener('click', function (e) {
         if (!timer) {
-        timer = setTimeout(function() {
-            timer = null;
-            form.submit();
-        }, 1000);
+            timer = setTimeout(function() {
+                timer = null;
+                form.submit();
+            }, 1500);
         }
     });
 }
