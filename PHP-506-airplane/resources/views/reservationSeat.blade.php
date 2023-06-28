@@ -43,15 +43,17 @@
     <div class="tripTab">
         <div class="slideCont">
             <ul>
-                <li class="tab choice" style="width: 50%;">
-                    <a id="aFlight1" onclick="changeTab('aFlight1')">구간1<span class="t_over"> : {{$depPort[0]->port_name}}({{$depPort[0]->port_eng}})->{{$arrPort[0]->port_name}}({{$arrPort[0]->port_eng}})</span></a>
-                </li>
                 @if($flg['hd_li_flg'] === '1')
+                    <li class="tab choice" style="width: 50%;">
+                        <a id="aFlight1" onclick="changeTab('aFlight1')">구간1<span class="t_over"> : {{$depPort[0]->port_name}}({{$depPort[0]->port_eng}})->{{$arrPort[0]->port_name}}({{$arrPort[0]->port_eng}})</span></a>
+                    </li>
                     <li class="tab" style="width: 50%;">
                         <a id="aFlight2" onclick="changeTab('aFlight2')">구간2<span class="t_over"> : {{$arrPort[0]->port_name}}({{$arrPort[0]->port_eng}})->{{$depPort[0]->port_name}}({{$depPort[0]->port_eng}})</span></a>
                     </li>
                 @else
-                <li class="tab choice" style="width: 50%;"></li>
+                    <li class="tab choice" style="width: 100%; text-align:center;">
+                        <a id="aFlight1" onclick="changeTab('aFlight1')">구간1<span class="t_over"> : {{$depPort[0]->port_name}}({{$depPort[0]->port_eng}})->{{$arrPort[0]->port_name}}({{$arrPort[0]->port_eng}})</span></a>
+                    </li>
                 @endif
             </ul>
         </div>

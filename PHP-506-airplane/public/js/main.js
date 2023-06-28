@@ -61,7 +61,6 @@ btn_submit2.addEventListener('click',function(event){
 });
 
 
-
  // 클릭한 옵션의 텍스트를 라벨 안에 넣음
 const handleSelect = function(item) {
     // 출발지
@@ -89,8 +88,6 @@ arr_optionItem.forEach(function(option){
         if(sta_label.value == ''){
             alert('출발지를 입력하세요');
             arr_label.parentNode.classList.remove('active');
-        }else if(sta_label.value === arr_label.value){
-            console.log('aaa');
         }else{
             handleSelect2(option);
         }
@@ -116,7 +113,14 @@ const handleSelect4 = function(item) {
 }
  // 옵션 클릭시 클릭한 옵션을 넘김
  oArr_optionItem.forEach(function(option){
-    option.addEventListener('click', function(){handleSelect4(option)})
+    option.addEventListener('click', function(){
+        if(oSta_label.value == ''){
+            alert('출발지를 입력하세요');
+            oArr_label.parentNode.classList.remove('active');
+        }else{
+            handleSelect4(option);
+        }
+    })
 });
 
 //  왕복
@@ -159,64 +163,104 @@ for (var i = 0; i < items.length; i++) {
 // 카카오맵 api
 var container = document.getElementById('map');
     var options = {
-        center : new kakao.maps.LatLng(36.2683, 127.6358), // 지도의 중심좌표 
-        level : 14 // 지도의 확대 레벨 
+        center : new kakao.maps.LatLng(36.0683, 127.6358), // 지도의 중심좌표 
+        level : 17 // 지도의 확대 레벨 
     };
     
     var map = new kakao.maps.Map(container, options);
-    map.setDraggable(false);  // 맵 이동 막기
     map.setZoomable(false); // 확대,축소 막기 
 
     // 마커를 표시할 위치와 title 객체 배열입니다 
     var positions = [
         {
             title: '원주공항',
-            content:'<div>원주공항</div>',
+            content:'<div>원주공항(WJU)</div>',
             latlng: new kakao.maps.LatLng(37.459244, 127.977174)
         },
         {
             title: '군산공항',
-            content:'<div>군산공항</div>',  
+            content:'<div>군산공항(KUV)</div>',  
             latlng: new kakao.maps.LatLng(35.926094, 126.615779)
         },
         {
             title: '광주공항',
-            content:'<div>광주공항</div>',  
+            content:'<div>광주공항(KWJ)</div>',  
             latlng: new kakao.maps.LatLng(35.139930, 126.811030)
         },
         {
             title: '여수공항',
-            content:'<div>여수공항</div>',
+            content:'<div>여수공항(RSU)</div>',
             latlng: new kakao.maps.LatLng(34.840328, 127.614111)
         },
         {
             title: '사천공항',
-            content:'<div>사천공항</div>',
+            content:'<div>사천공항(HIN)</div>',
             latlng: new kakao.maps.LatLng(35.089780, 128.070582)
         },
         {
             title: '울산공항',
-            content:'<div>울산공항</div>',
+            content:'<div>울산공항(USN)</div>',
             latlng: new kakao.maps.LatLng(35.593570, 129.356540)
         },
         {
             title: '포항경주공항',
-            content:'<div>포항경주공항</div>',
+            content:'<div>포항경주공항(KPO)</div>',
             latlng: new kakao.maps.LatLng(35.984811, 129.433999)
+        },
+        {
+            title: '김포공항',
+            content:'<div>김포공항(GMP)</div>',
+            latlng: new kakao.maps.LatLng(37.559879, 126.794989)
+        },
+        {
+            title: '김해공항',
+            content:'<div>김해공항(PUS)</div>',
+            latlng: new kakao.maps.LatLng(35.172231, 128.948275)
+        },
+        {
+            title: '대구공항',
+            content:'<div>대구공항(TAE)</div>',
+            latlng: new kakao.maps.LatLng(35.900114, 128.637707)
+        },
+        {
+            title: '무안공항',
+            content:'<div>무안공항(MWX)</div>',
+            latlng: new kakao.maps.LatLng(34.993586, 126.387866)
+        },
+        {
+            title: '양양공항',
+            content:'<div>양양공항(YNY)</div>',
+            latlng: new kakao.maps.LatLng(38.058846, 128.662988)
+        },
+        {
+            title: '제주공항',
+            content:'<div>제주공항(CJU)</div>',
+            latlng: new kakao.maps.LatLng(33.510583, 126.491386)
+        },
+        {
+            title: '청주공항',
+            content:'<div>청주공항(CJJ)</div>',
+            latlng: new kakao.maps.LatLng(36.721997, 127.495877)
         }
     ];
 
 
     // 마커 이미지의 이미지 주소입니다
-    var imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png"; 
-        
+    
     for (var i = 0; i < positions.length; i ++) {
-        
+
+        var imageSrc = "../img/icon-airport.png"; // Default marker image
+    
+        // Check if the current marker is '원주공항' to '포항경주공항'
+        if (i >= 0 && i <= 6) {
+            imageSrc = "../img/icon-airport2.png"; // Custom marker image for '원주공항' to '포항경주공항'
+        }
+
         // 마커 이미지의 이미지 크기 입니다
-        var imageSize = new kakao.maps.Size(24, 35); 
+        var imageSize = new kakao.maps.Size(32, 32); 
         
         // 마커 이미지를 생성합니다    
-        var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize); 
+        var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
         
         // 마커를 생성합니다
         var marker = new kakao.maps.Marker({
@@ -225,11 +269,6 @@ var container = document.getElementById('map');
             title : positions[i].title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
             image : markerImage // 마커 이미지
         });
-        // // 커스텀 오버레이를 생성합니다
-        // var customOverlay = new kakao.maps.CustomOverlay({
-        //     position : marker.getPosition(),
-        //     content: positions[i].content
-        // });
 
         var infowindow = new kakao.maps.InfoWindow({
             content : positions[i].content
