@@ -65,7 +65,7 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         // 0623 add 이동호
-        'admin' => \App\Http\Middleware\AdminMiddleware::class,
-        'adminBtn' => \App\Http\Middleware\AdminButtonMiddleware::class,
+        // 'admin' => \App\Http\Middleware\AdminMiddleware::class,
+        // 'adminBtn' => \App\Http\Middleware\AdminButtonMiddleware::class,
     ];
 }

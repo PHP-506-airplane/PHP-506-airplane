@@ -20,6 +20,7 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator as FacadesValidator;
 use App\Http\Middleware\AdminMiddleware;
+use App\Http\Middleware\AdminButtonMiddleware;
 use App\Models\RateInfo;
 
 class NoticeController extends Controller
@@ -27,7 +28,8 @@ class NoticeController extends Controller
     // 미들웨어로 관리자권한 체크
     public function __construct()
     {
-        $this->middleware(AdminMiddleware::class)->only(['create', 'store', 'edit', 'update', 'destory']);
+        $this->middleware(AdminMiddleware::class)->only(['create', 'store', 'edit', 'update', 'destroy']);
+        $this->middleware(AdminButtonMiddleware::class);
     }
 
     /**
@@ -41,18 +43,18 @@ class NoticeController extends Controller
         // return view('noticelist', compact('data')); // v002 del
 
         // v002 add
-        $searchText = $req->input('search');
+        $searchText = $req->search;
 
         $query = NoticeInfo::select(['notice_no', 'notice_title', 'created_at', 'updated_at'])
             ->orderBy('notice_no', 'DESC');
-    
+
         // 검색어를 받아와서 해당하는 공지사항을 검색하고 페이지네이션해서 반환
         if ($searchText) {
             $query->where('notice_title', 'like', '%' . $searchText . '%');
         }
-    
+
         $data = $query->paginate(10);
-    
+
         return view('noticelist', compact('data', 'searchText'));
     }
 
@@ -75,9 +77,9 @@ class NoticeController extends Controller
     public function store(Request $req)
     {
         $validator = Validator::make(
-            $req->only('notice_no', 'title', 'content'),
+            $req->only('title', 'content', 'image'),
             [
-                'title'          => 'required|between:3,50'
+                'title'         => 'required|between:3,50'
                 ,'content'       => 'max:4000'
                 ,'image'         => 'nullable|image|max:2048'
             ]
@@ -95,7 +97,7 @@ class NoticeController extends Controller
             ,'notice_title'     => $req->title
             ,'notice_content'   => $req->content
         ]);
-        
+
         // 이미지가 업로드되었는지 확인
         if ($req->hasFile('image')) {
             $image = $req->file('image');
@@ -109,9 +111,9 @@ class NoticeController extends Controller
             $notice->image_path = $imagePath;
         }
         $notice->save();
-        
+
         $notice_no = NoticeInfo::select('notice_no')->max('notice_no');
-        
+
         return redirect()->route('notice.show', $notice_no);
     }
 
@@ -123,7 +125,7 @@ class NoticeController extends Controller
      */
     public function show($notice_no)
     {
-        return view('noticedetail')->with('data', NoticeInfo::findOrFail($notice_no));
+        return view('noticedetail')->with('data', NoticeInfo::find($notice_no));
     }
 
     /**
@@ -152,9 +154,9 @@ class NoticeController extends Controller
         $validator = Validator::make(
             $req->only('notice_no', 'title', 'content'),
             [
-                'title'          => 'required|between:3,50'
+                'notice_no'     => 'required|integer'
+                ,'title'          => 'required|between:3,50'
                 ,'content'       => 'max:4000'
-                ,'notice_no'     => 'required|integer'
                 ,'image'         => 'nullable|image|max:2048'
             ]
         );
@@ -203,12 +205,12 @@ class NoticeController extends Controller
         return redirect()->route('notice.index')->with('alert', '삭제되었습니다.');
     }
 
-    public function rateinfoget() {
-        $data = RateInfo::select('*')
-            ->get();
+    // public function rateinfoget() {
+    //     $data = RateInfo::select('*')
+    //         ->get();
 
-        return view('rateinfo')->with('data', $data);
-    }
+    //     return view('rateinfo')->with('data', $data);
+    // }
 
     public function baggage() {
         return view('baggageinfo');

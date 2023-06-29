@@ -28,6 +28,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rules;
 use Illuminate\Validation\ValidationException;
 use App\Rules\MinAge;
+use Illuminate\Support\Facades\Cookie;
 
 class UserController extends Controller
 {
@@ -62,6 +63,16 @@ class UserController extends Controller
                 Session::forget('previous_url'); // 세션에서 URL 제거
                 return redirect()->intended($previousUrl); // 이전 페이지로 리다이렉트
             }
+
+            // cookie ver. --------------------------------------------------
+            // if (Cookie::has('prev_url')) {
+            //     Log::debug('유저if들어옴');
+            //     $prevUrl = Cookie::get('prev_url');
+            //     Cookie::forget('prev_url'); // 세션에서 URL 제거
+            //     return redirect()->intended($prevUrl); // 이전 페이지로 리다이렉트
+            // }
+            // /cookie ver. --------------------------------------------------
+            
 
             return redirect()->intended(route('reservation.main'));
         } else {

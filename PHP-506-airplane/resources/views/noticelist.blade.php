@@ -51,7 +51,7 @@
 
     {{-- 검색하면 검색결과 페이지네이션 --}}
     @if ($searchText)
-        <div class="paginate">
+        <div class="paginate" style="min-height: 50px;">
             {{ $data->appends(['search' => $searchText])->links('vendor.pagination.custom') }}
         </div>
     @else
