@@ -114,7 +114,7 @@
             </div>
         </header> 
         {{-- v004 add 이동호 스와이퍼 --}}
-        <div class="swiperMent">특가 항공권</div>
+        <div class="swiperMent" style="font-weight:600">특가 항공권</div>
         <div class="mySwipper">
             <div class="swiper-container">
                 <div class="swiper-wrapper swiper_center">
