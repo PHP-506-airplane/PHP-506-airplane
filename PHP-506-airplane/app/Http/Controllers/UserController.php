@@ -167,9 +167,9 @@ class UserController extends Controller
         }
         
         //반복문 안돌려서 굳이 필요없을 듯
-        $chkList = [
+        $chkList = $req->validate([
             'u_name'      => 'required|regex:/^[가-힣]+$/|min:2|max:30'
-        ];
+        ]);
 
         $baseuser->u_name = $req->u_name;
         $baseuser->save();
