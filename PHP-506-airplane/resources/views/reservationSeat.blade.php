@@ -8,7 +8,7 @@
 --}}
 @extends('layout.layout')
 
-@section('title','좌석')
+@section('title','좌석예약')
 
 @section('css')
 <link rel="stylesheet" href="{{asset('css/reservationSeat.css')}}">
@@ -64,7 +64,7 @@
             <form id="seatPost" action="{{route('reservation.seatpost')}}" method="post">
                 @csrf
                 <ul>
-                    <input type="hidden" name="flg" value="{{$flg['hd_li_flg']}}">
+                    <input type="hidden" class="flg" name="flg" value="{{$flg['hd_li_flg']}}">
                     <input type="hidden" name="fly_no" value="{{$_POST['dep_fly_no']}}">
                     <input type="hidden" name="plane_no" value="{{$_POST['dep_plane_no']}}">
                     @if($flg['hd_li_flg'] === '1')

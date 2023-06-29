@@ -50,7 +50,6 @@ tr2.forEach(function (trElement) {
     if (dep_count >= 1 && arr_count < 10) {
         let pr = sum_price.textContent;
         pr = parseFloat(arrPrice) + dep_total; // 클릭한 arr_price 값에 dep_total 값을 더하여 계산
-        console.log(pr);
         pr = pr.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
         sum_price.textContent = pr +'원'; // 새로운 합계를 sum_price에 업데이트
     }

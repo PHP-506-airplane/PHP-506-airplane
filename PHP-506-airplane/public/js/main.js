@@ -249,11 +249,10 @@ var container = document.getElementById('map');
     
     for (var i = 0; i < positions.length; i ++) {
 
-        var imageSrc = "../img/icon-airport.png"; // Default marker image
+        var imageSrc = "../img/icon-airport.png"; 
     
-        // Check if the current marker is '원주공항' to '포항경주공항'
         if (i >= 0 && i <= 6) {
-            imageSrc = "../img/icon-airport2.png"; // Custom marker image for '원주공항' to '포항경주공항'
+            imageSrc = "../img/icon-airport2.png";
         }
 
         // 마커 이미지의 이미지 크기 입니다
@@ -274,9 +273,6 @@ var container = document.getElementById('map');
             content : positions[i].content
         });
         
-        // 커스텀 오버레이를 지도에 표시합니다
-        // customOverlay.setMap(map);
-
         // 마커에 mouseover 이벤트와 mouseout 이벤트를 등록합니다
         // 이벤트 리스너로는 클로저를 만들어 등록합니다 
         // for문에서 클로저를 만들어 주지 않으면 마지막 마커에만 이벤트가 등록됩니다
@@ -309,7 +305,8 @@ var container = document.getElementById('map');
         "monthNames": ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"]
         },
         showDropdowns: true,                     // 년월 수동 설정 여부
-        autoApply: true,                         // 확인/취소 버튼 사용여부
+        autoApply: true,
+        minDate: moment().startOf('day')            // 현재날 이전 날짜 막기
         // singleDatePicker: true                   // 하나의 달력 사용 여부
     });
 
@@ -324,6 +321,7 @@ var container = document.getElementById('map');
         },
         showDropdowns: true,                     // 년월 수동 설정 여부
         autoApply: true,                         // 확인/취소 버튼 사용여부
+        minDate: moment().startOf('day'),            // 현재날 이전 날짜 막기
         singleDatePicker: true                   // 하나의 달력 사용 여부
     });
 
