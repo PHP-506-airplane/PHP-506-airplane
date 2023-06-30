@@ -164,7 +164,7 @@ for (var i = 0; i < items.length; i++) {
 var container = document.getElementById('map');
     var options = {
         center : new kakao.maps.LatLng(36.0683, 127.6358), // 지도의 중심좌표 
-        level : 17 // 지도의 확대 레벨 
+        level : 20 // 지도의 확대 레벨 
     };
     
     var map = new kakao.maps.Map(container, options);

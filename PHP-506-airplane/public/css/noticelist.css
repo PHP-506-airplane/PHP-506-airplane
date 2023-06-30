@@ -10,7 +10,7 @@ a:hover {
 
 /* min width */
 .nListContainer, .listInfo, .mainContents {
-    min-width: 700px;
+    /* min-width: 700px; */
     max-width: 1000px;
 }
 /* /min width */
@@ -62,7 +62,8 @@ hr:last-child {
 /* 작성 버튼 */
 .divCreateBtn {
     margin: 0 auto;
-    min-width: 700px;
+    width: 80vw;
+    /* min-width: 700px; */
     max-width: 1000px;
     text-align: right;
 }
@@ -81,3 +82,27 @@ hr:last-child {
     margin: 30px auto;
 }
 /* /검색 - 글 없음 */
+
+/* 모바일 */
+@media(max-width:768px) {
+    #maincontent {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+    .noticeH1{
+        font-size: 36px;
+    }
+    .noticeH5 {
+        font-size: 24px;
+    }
+    .col-8 > a{
+        font-size: 14px !important;
+    }
+    .lastline{
+        display: none;
+    }
+  }
+
+ 
+  

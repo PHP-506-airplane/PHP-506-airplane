@@ -11,7 +11,7 @@
 <nav class="navbar navbar-expand-lg bg-light">
   <div class="container-fluid">
     <div style="width:70px"></div>
-    <a class="navbar-brand" href="{{route('reservation.main')}}"><img width="250px" height="35px" class="air" src="{{asset('img/last.png')}}" alt="logo"></a>
+    <a class="navbar-brand" href="{{route('reservation.main')}}"><img style="width:250px; height:35px; margin-left:50px" class="air" src="{{asset('img/last.png')}}" alt="logo"></a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -52,34 +52,3 @@
     </div>
   </div>
 </nav>
-
-{{-- @section('css') 
-    <link rel="stylesheet" href="{{asset('css/header.css')}}">
-@endsection --}}
-
- {{-- <nav class="navbar">
-        <div class="navbar__logo">
-            <i class="fab fa-apple"></i>
-            <a href="{{route('reservation.main')}}"><img width="150px" height="50px" class="air" src="{{asset('img/air.png')}}" alt="logo"></a>
-        </div>
-        @guest
-            <ul class="navbar__menu">
-                <li><a href="{{route('notice.baggage')}}">수하물 안내</a></li>
-                <li><a href="{{route('users.login')}}">로그인</a></li>
-                <li><a href="{{route('users.registration')}}">회원가입</a></li>
-            </ul>
-        @endguest
-               
-        @auth
-            <ul class="navbar__menu">
-                <li>{{Auth::user()->u_name}}님</li>
-                <li><a href="{{route('users.login')}}">로그인</a></li>
-                <li><a href="{{route('users.registration')}}">회원가입</a></li>
-            </ul>
-        @endauth
-        <a href="#" class="navbar__toggleBtn"><i class="fas fa-bars"></i></a>
-    </nav>
-
-@section('js')
-    <script src="{{asset('js/header.js')}}"></script>
-@endsection --}}

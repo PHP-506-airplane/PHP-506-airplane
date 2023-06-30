@@ -154,15 +154,15 @@
         {{-- /스와이퍼 --}}
         <!-- Services-->
          <section class="page-section" id="services">
-            <div class="container sec2">
+            <div class="container sec2" id="container2">
                 <div class="notice"> 
                     {{-- v002 add 이동호 --}}
                      <h2><a href="{{route('notice.index')}}" style="color: #000;">공지사항</a></h2>
                     <ul>
                         @foreach($notices as $notice)
-                            <li>
+                            <li class="noticeli">
                                 <a href="{{route('notice.show', ['notice' => $notice->notice_no])}}">
-                                    <span>{{ $notice->notice_title }}</span>
+                                    <span class="notice-title">{{ $notice->notice_title }}</span>
                                     <span class="notice-date">{{ $notice->created_at->format('Y.m.d') }}</span>
                                 </a>
                             </li>
@@ -171,7 +171,7 @@
                 </div>
                 <div class="map">
                     <div class="map_img">
-                        <h2>국내공항위치</h2>
+                        <h2 class="maph2">국내공항위치</h2>
                         <div class="img1">
                             <span>국내</span>
                             <img src="{{asset('img/icon-airport2.png')}}" alt="">
@@ -181,23 +181,23 @@
                             <img src="{{asset('img/icon-airport.png')}}" alt="">
                         </div>
                     </div>
-                    <div id="map" style="width:400px;height:300px;"></div>
+                    <div id="map"></div>
                 </div>
             </div>
         </section>
 @endsection
         
 @section('js')
-    {{-- 카카오맵api --}}
-    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=ec157c40a3e8affeb7c7cd7bc375b9fc"></script>
-    
-    <script src="{{asset('js/scripts.js')}}"></script>
-    <script src="{{asset('js/main.js')}}"></script>
+        {{-- 카카오맵api --}}
+        <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=ec157c40a3e8affeb7c7cd7bc375b9fc"></script>
+        
+        <script src="{{asset('js/scripts.js')}}"></script>
+        <script src="{{asset('js/main.js')}}"></script>
 
-    <script>
-        function test(event) {
-            const clickedForm = event.target.closest('#formLowCost'); // 클릭된 form을 찾음
-            clickedForm.submit();
-        }
-    </script>
+        <script>
+            function test(event) {
+                const clickedForm = event.target.closest('#formLowCost'); // 클릭된 form을 찾음
+                clickedForm.submit();
+            }
+        </script>
 @endsection

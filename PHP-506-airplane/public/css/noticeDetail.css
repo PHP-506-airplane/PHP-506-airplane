@@ -4,7 +4,7 @@
     border-top: 1px solid #000000;
     border-bottom: 1px solid #000000;
     max-width: 1000px;
-    min-width: 700px;
+    /* min-width: 700px; */
     min-height: 50vh;
 }
 /* /상하단 가로선 */
@@ -55,3 +55,23 @@ img {
     max-width: 900px;
 }
 /* /이미지 최대크기 */
+
+
+/* 반응형 */
+@media(max-width:768px) {
+    .noticeH1{
+        font-size: 36px;
+    }
+    .noticeH5 {
+        font-size: 24px;
+    }
+    .created_date {
+        font-size: 15px;
+    }
+    .nTitleText {
+        font-size:18px;
+    }
+    .nContent {
+        font-size: 12px;
+    }
+}
