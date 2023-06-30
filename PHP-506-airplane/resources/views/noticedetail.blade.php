@@ -36,7 +36,7 @@
                     <img src="{{asset($data->image_path . '?' . time())}}" alt="이미지" class="noticeImg">
                 </div>
                 @endif
-                {{$data->notice_content}}
+                {!!$data->notice_content!!}
             </div>
         </div>
         <div class="nButtons">
