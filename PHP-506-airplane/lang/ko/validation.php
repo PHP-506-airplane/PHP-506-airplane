@@ -61,7 +61,7 @@ return [
     'min' => [
         'numeric' => ':attribute 값이 :min 보다 작습니다.',
         'file' => ':attribute 값이 :min 킬로바이트보다 작습니다.',
-        'string' => ':attribute 값이 :min 글자 이상으로 작성하셔야합니다.',
+        'string' => ':attribute은 :min 글자 이상으로 작성하셔야합니다.',
         'array' => ':attribute 값이 :max 개보다 적습니다.',
     ],
     'not_in' => ':attribute 값이 유효하지 않습니다.',
@@ -127,6 +127,7 @@ return [
         'code'=> '제품 ID',
         'price'=> '가격',
         'context'=> '상세설명',
+        'u_name'=> '이름'
 //        'use'=> '제품용도',
 //        'size'=> '제품규격',
     ],

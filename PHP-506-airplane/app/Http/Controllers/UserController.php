@@ -166,15 +166,22 @@ class UserController extends Controller
             $arrKey[] = 'u_name';
         }
         
-        //반복문 안돌려서 굳이 필요없을 듯
-        $chkList = $req->validate([
+        $req->validate([
             'u_name'      => 'required|regex:/^[가-힣]+$/|min:2|max:30'
         ]);
+
+        if(!$baseuser) {
+            $errors = '시스템 에러가 발생하여 수정에 실패했습니다.<br>잠시 후에 다시 시도해주세요~.';
+            return redirect()
+                ->route('users.useredit')
+                ->with('error', $errors);
+        }
 
         $baseuser->u_name = $req->u_name;
         $baseuser->save();
 
-        return redirect()->back()->with('alert', '수정되었습니다.');
+        // return redirect()->back()->with('alert', '수정되었습니다.');
+        
     }
 
     //탈퇴

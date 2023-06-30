@@ -66,11 +66,11 @@
     </div>
     <br>
     @if ($errors->any())
-    <div class="error">
-        @foreach ($errors->all() as $error)
-            <div>{{$error}}</div>
-        @endforeach
-    </div>
+        <div class="error">
+            @foreach ($errors->all() as $error)
+                <div>{{$error}}</div>
+            @endforeach
+        </div>
     @endif
     {{-- <label>
         <p style="text-align: left; font-size:12px; color:#666">비밀번호 찾기 질문</p>
