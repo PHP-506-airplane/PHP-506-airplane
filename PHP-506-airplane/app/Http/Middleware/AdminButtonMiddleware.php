@@ -29,7 +29,7 @@ class AdminButtonMiddleware
         } else {
             view()->share('isAdmin', false);
         }
-    
+
         return $next($req);
     }
 }

@@ -244,7 +244,7 @@
         width: 80px;
         height: 80px;
         display: inline-block;
-        position: absolute;
+        position: relative;
         bottom: 30px;
         right: 30px;
     }
@@ -283,7 +283,7 @@
 
                 <strong>{{strtoupper($reserveData->dep_port_eng)}}</strong>
             </div>
-            <div class="city cityRight">
+            <div class="city cityRight" style="margin-left: 100px;">
                 <small>{{str_replace('공항', '' , $reserveData->arr_port_name)}}</small>
 
                 <strong>{{strtoupper($reserveData->arr_port_eng)}}</strong>

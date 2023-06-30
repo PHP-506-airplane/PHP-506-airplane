@@ -10,7 +10,7 @@
 --}}
 @extends('layout.layout')
 
-@section('title','Main')
+@section('title','PAPER AIRLINE')
 
 @section('css')
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
@@ -78,7 +78,7 @@
                             </div>
                         </div> 
                         {{-- 편도 --}}
-                         <div id="tab2" class="tab">
+                        <div id="tab2" class="tab">
                             <div class="one-way">
                                 <div class="selectBox2">
                                     <input type="hidden" class="one_s_hd_no" name="one_dep_port_no">
