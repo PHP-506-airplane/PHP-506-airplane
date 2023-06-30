@@ -180,7 +180,7 @@ class UserController extends Controller
         $baseuser->u_name = $req->u_name;
         $baseuser->save();
 
-        // return redirect()->back()->with('alert', '수정되었습니다.');
+        return redirect()->back()->with('alert', '수정되었습니다.');
         
     }
 
