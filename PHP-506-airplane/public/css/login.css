@@ -27,8 +27,7 @@ a{
     width:600px;
     height: 100%;
     margin:0 auto;
-    position: relative;
-    /* background:#ddd; */
+    /* position: relative; */
 }
 #login_form{
     /* text-align:center; */
@@ -99,3 +98,16 @@ hr{
     color:#707070;
 }
 
+@media(min-width:480px) and (max-width:767px) {
+    #login_form {
+        width: 300px;
+    }
+    
+    .loginlabel>input {
+        width: 200px;
+    }
+    .btn {
+        width: 200px;
+    }
+
+  }
