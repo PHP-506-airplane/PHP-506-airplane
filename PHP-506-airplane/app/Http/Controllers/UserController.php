@@ -87,15 +87,13 @@ class UserController extends Controller
     }
 
     function registrationpost(Request $req) {
-        // Log::debug('Login Start');
-        // return $req;
         $req->validate([
             'name'          => 'required|regex:/^[가-힣]+$/|min:2|max:30'  
             ,'email'        => 'required|email|min:5|max:30'  
             ,'password'     => 'required_with:passwordchk|same:passwordchk|regex:/^(?=.*[a-zA-Z])(?=.*[!@#$%^*-])(?=.*[0-9]).{8,20}$/'
             ,'birth'        => ['required', 'date', new MinAge(14)]
         ]);
-        // Log::debug('1 Start');
+
         $data['u_name'] = $req->name;
         $data['u_email'] = $req->email;
         $data['u_gender'] = $req->gender;
@@ -104,6 +102,7 @@ class UserController extends Controller
         $data['qa_no'] = 1;
         $data['qa_answer'] = '1';
 
+        //insert하고 insert된 결과가 user에 담김
         $user = Userinfo::create($data);
         if(!$user) {
             $errors = '시스템 에러가 발생하여 회원가입에 실패했습니다.<br>잠시 후에 다시 시도해주세요~.';
@@ -136,7 +135,7 @@ class UserController extends Controller
     
     //로그아웃
     function logout() {
-        Session::flush();
+        Session::flush();   //세션 파기
         Auth::logout();
         return redirect()->route('reservation.main');
         // return redirect()->back();
@@ -148,47 +147,50 @@ class UserController extends Controller
             return redirect()->route('users.login');
         }
 
+        //지금 로그인 돼있는 엘로퀀트의 u_no만 뽑음
         $user  = Userinfo::find(Auth::user()->u_no);
         
         return view('useredit')->with('data', $user);
     }
 
     function usereditpost(Request $req) {
-        // return $req;
+        //수정한 항목을 담는 배열(루프를 최소한으로 돌리기 위해서)
         $arrKey = [];
 
+        //기존 데이터 가져옴
         $baseuser = Userinfo::find(Auth::user()->u_no);
 
+        //db에 담긴 이름이랑 넣은 이름이랑 같은지 확인하고 다를 경우에만 배열에 담음
         if($req->u_name !== $baseuser->u_name)
         {
             $arrKey[] = 'u_name';
         }
         
-        $chkList = [
+        $req->validate([
             'u_name'      => 'required|regex:/^[가-힣]+$/|min:2|max:30'
-        ];
+        ]);
+
+        if(!$baseuser) {
+            $errors = '시스템 에러가 발생하여 수정에 실패했습니다.<br>잠시 후에 다시 시도해주세요~.';
+            return redirect()
+                ->route('users.useredit')
+                ->with('error', $errors);
+        }
 
         $baseuser->u_name = $req->u_name;
         $baseuser->save();
 
-        // alert()->success('수정 완료');
-        // return view('useredit')->with('data', $baseuser);
-
-        return redirect()->back()->with('alert', '수정되었습니다.');
+        // return redirect()->back()->with('alert', '수정되었습니다.');
+        
     }
 
     //탈퇴
     function withdraw() {
         $id = session('u_no');
-        // return session()->all();
-        // return var_dump(session()->all(), $id);
         $result = Userinfo::destroy(Auth::user()->u_no);
-        // return var_dump($result);
         Session::flush();
         Auth::logout();
 
-        // alert()->warning('회원 탈퇴', '탈퇴하시겠습니까?');
-        
         return redirect()->route('reservation.main');
     }
 
@@ -269,7 +271,6 @@ class UserController extends Controller
         $baseuser->u_pw = Hash::make($req->password);
         $baseuser->save();
 
-        // Session::put('alert', '비밀번호가 변경되었습니다.');
         return redirect()->route('users.useredit')->with('alert','비밀번호가 변경 되었습니다.');
     }
 

@@ -63,17 +63,14 @@
             <option value="2">여</option>
             <option value="3" selected>선택안함</option>
         </select>
-        {{-- <br> --}}
-        {{-- <input type="radio" placeholder="성별" class="size" name="gender" id="u_gender" value="M">남
-        <input type="radio" placeholder="성별" class="size" name="gender" id="u_gender" value="F">여 --}}
     </div>
     <br>
     @if ($errors->any())
-    <div class="error">
-        @foreach ($errors->all() as $error)
-            <div>{{$error}}</div>
-        @endforeach
-    </div>
+        <div class="error">
+            @foreach ($errors->all() as $error)
+                <div>{{$error}}</div>
+            @endforeach
+        </div>
     @endif
     {{-- <label>
         <p style="text-align: left; font-size:12px; color:#666">비밀번호 찾기 질문</p>
@@ -87,7 +84,6 @@
     </label> --}}
             <br>
                 <p>
-                    {{-- <input type="submit" value="회원가입" class="btn"> --}}
                     <button type="button" value="회원가입" class="btn" onclick="register()">회원가입</button>
                 </p>
             </form>

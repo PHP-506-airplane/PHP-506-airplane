@@ -36,6 +36,13 @@
             <p></p>
             </label>
             <br>
+             @if ($errors->any())
+                <div class="error">
+                    @foreach ($errors->all() as $error)
+                        <div>{{$error}}</div>
+                    @endforeach
+                </div>
+             @endif
             <div style="height:30px"></div>
             <p>
                 <input type="button" value="수정" class="btn" id="editBtn">

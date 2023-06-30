@@ -102,9 +102,9 @@ footer{
 }
 /* /에러 메세지 */
 
-.divContentsMain {
-    /* min-height: 100vh; */
-}
+/* .divContentsMain {
+    min-height: 100vh;
+} */
 
 /* 버튼 색깔 */
 .btn-outline-info:hover {
