@@ -47,7 +47,27 @@ function changeTab(tabId) {
 }
 const flg = document.querySelector('.flg');
 // 예약확정 confirm
+function showLoading() {
+    let overlay = document.createElement('div');
+    overlay.className = 'loading-overlay';
+
+    let spinner = document.createElement('div');
+    spinner.className = 'loading-spinner';
+
+    overlay.appendChild(spinner);
+
+    document.body.appendChild(overlay);
+}
+
+function hideLoading() {
+    let overlay = document.querySelector('.loading-overlay');
+    if (overlay) {
+        overlay.remove();
+    }
+}
+
 const seatForm = document.getElementById('seatPost');
+const loadingImg = document.getElementsByClassName('svg-calLoader');
 function reserveBtn(){
     var con_test = confirm("정말 예약 하시겠습니까?");
 
@@ -61,6 +81,7 @@ function reserveBtn(){
                 alert('오는편 좌석을 선택해 주세요.');
                 con_test = false;
             } else {
+                showLoading();
                 seatForm.submit();
             }
         } else {
@@ -68,6 +89,7 @@ function reserveBtn(){
                 alert('좌석을 선택해 주세요.');
                 con_test = false;
             } else {
+                showLoading();
                 seatForm.submit();
             }
         }
