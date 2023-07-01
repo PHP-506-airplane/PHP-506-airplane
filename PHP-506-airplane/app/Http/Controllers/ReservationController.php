@@ -374,6 +374,7 @@ class ReservationController extends Controller
                 ,'t_price'      => $priceInt
             ]);
             $ticketInfo->save();
+
             // 오는편 예약
             $reserveInfo2 = new ReserveInfo([
                 'u_no'=> Auth::user()->u_no
@@ -386,7 +387,7 @@ class ReservationController extends Controller
 
             $tNo2 = ReserveInfo::max('reserve_no');
             $price2 = FlightInfo::select('price')
-            ->where('fly_no', $req->fly_no)
+            ->where('fly_no', $req->fly_no2)
             ->first();
             $priceInt2 = intval($price2->price);
 
