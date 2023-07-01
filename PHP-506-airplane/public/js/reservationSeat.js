@@ -47,23 +47,11 @@ function changeTab(tabId) {
 }
 const flg = document.querySelector('.flg');
 // 예약확정 confirm
+const Divloading = document.getElementById('Divloading');
+const svg = document.getElementById('svgImg');
 function showLoading() {
-    let overlay = document.createElement('div');
-    overlay.className = 'loading-overlay';
-
-    let spinner = document.createElement('div');
-    spinner.className = 'loading-spinner';
-
-    overlay.appendChild(spinner);
-
-    document.body.appendChild(overlay);
-}
-
-function hideLoading() {
-    let overlay = document.querySelector('.loading-overlay');
-    if (overlay) {
-        overlay.remove();
-    }
+    Divloading.classList.add('svgHidden');
+    svg.style.display = 'block';
 }
 
 const seatForm = document.getElementById('seatPost');
