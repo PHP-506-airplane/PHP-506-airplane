@@ -13,6 +13,8 @@ namespace App\Console;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use App\Models\FlightInfo;
+use App\Models\ReserveInfo;
+use App\Models\TicketInfo;
 use Carbon\Carbon;
 use Faker\Factory as FakerFactory;
 use Illuminate\Support\Arr;
@@ -38,7 +40,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         // 매달 1번씩 실행
-        $schedule->command(FlightInfoFactoryCommand::class)->monthlyOn(1, '01:00');
+        // $schedule->command(FlightInfoFactoryCommand::class)->monthlyOn(1, '01:00');
         // $schedule->call(function () {
             // v002 del ---------------------------------------------------------------------
             // 운항 스케줄 api
@@ -88,6 +90,22 @@ class Kernel extends ConsoleKernel
 
         // })->everyMinute(); // php artisan schedule:run 명령어로 즉시 실행시 사용
         // })->dailyAt('10:00'); // 매일 아침 10시에 실행
+
+        // 1년이상 지난 데이터 삭제
+        $schedule->call(function () {
+            $oneYearAgo = Carbon::now()->subYear(); // 오늘로부터 1년전 날짜
+
+            FlightInfo::where('fly_date', '<', $oneYearAgo)
+                ->forceDelete();
+            ReserveInfo::join('flight_info AS fli', 'fli.fly_no', 'reserve_info.fly_no')
+                ->where('fli.fly_date', '<', $oneYearAgo)
+                ->forceDelete();
+            TicketInfo::join('reserve_info AS res', 'res.reserve_no', 'ticket_info.reserve_no')
+                ->join('flight_info AS fli', 'fli.fly_no', 'res.fly_no')
+                ->where('fli.fly_date', '<', $oneYearAgo)
+                ->forceDelete();
+        // })->everyMinute();
+        })->dailyAt('10:00');
     }
 
     /**

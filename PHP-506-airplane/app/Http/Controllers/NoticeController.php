@@ -22,6 +22,9 @@ use Illuminate\Support\Facades\Validator as FacadesValidator;
 use App\Http\Middleware\AdminMiddleware;
 use App\Http\Middleware\AdminButtonMiddleware;
 use App\Models\RateInfo;
+use App\Models\ReserveInfo;
+use App\Models\TicketInfo;
+use Carbon\Carbon;
 
 class NoticeController extends Controller
 {

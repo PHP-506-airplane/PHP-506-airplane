@@ -27,22 +27,34 @@
         </div>
     @endif
     {{-- /에러메세지 --}}
-        <form action="{{route('notice.update', ['notice' => $data->notice_no])}}" method="POST" enctype="multipart/form-data">
+        <form action="{{route('notice.update', ['notice' => $data->notice_no])}}" method="POST"enctype="multipart/form-data">
             @csrf
             @method('put')
-            <label for="title" class="labelTitle">제목 :</label>
-            <input type="text" name="title" id="title" value="{{count($errors) > 0 ? old('title') : $data->notice_title}}" class="inputText">  
+            <label for="title" class="labelTitle">제목 : </label>
+            <input type="text" name="title" id="title" class="inputText" value="{{count($errors) > 0 ? old('title') : $data->notice_title}}" class="inputText">
             <br>
-            <div contentEditable="true" class="divContent" id="divContent" oninput="updateTextarea()">
+            <label for="content"></label>
+            {{-- <div contentEditable="true" class="divContent" id="divContent" oninput="updateContentTextarea()">
                 @if($data->image_path)
                 <div class="imageContainer">
                     <img id="currentImage" src="{{asset($data->image_path . '?' . time())}}" alt="이미지" class="noticeImg">
                 </div>
                 @endif
-                {{count($errors) > 0 ? old('content') : $data->notice_content}}
+                {!!count($errors) > 0 ? old('content') : $data->notice_content!!}
             </div>
-            <textarea name="content" id="content" cols="30" rows="10" class="textareaContent">{{count($errors) > 0 ? old('content') : $data->notice_content}}</textarea>
-            <input type="file" name="image" id="image" onchange="displaySelectedImage(event)">
+            <textarea name="content" id="content" class="textareaContent">{{old('content')}}</textarea> --}}
+            <div contentEditable="true" class="divContent" id="divContent" oninput="updateContentTextarea()">
+                @if($data->image_path)
+                <div class="imageContainer">
+                    <img id="currentImage" src="{{asset($data->image_path . '?' . time())}}" alt="이미지" class="noticeImg">
+                </div>
+                @endif
+                <div id="textContainer">
+                    {!! count($errors) > 0 ? old('content') : $data->notice_content !!}
+                </div>
+            </div>
+            <textarea name="content" id="content" class="textareaContent">{{ old('content') }}</textarea>
+            <input type="file" name="image" onchange="displaySelectedImage(event)">
             <div class="editBtns">
                 <button type="submit" class="btn btn-outline-success">수정</button>
                 <button type="button" onclick="location.href='{{route('notice.show', ['notice' => $data->notice_no])}}'" class="btn btn-outline-danger">취소</button>
