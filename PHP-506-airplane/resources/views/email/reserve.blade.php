@@ -48,6 +48,7 @@
         text-transform: uppercase;
         margin: 30px auto;
         display: inline-block;
+        border: 1px solid #ccc
     }
 
     .boarding-pass small {
@@ -240,13 +241,13 @@
     }
 
     /* QR코드 */
-    .imgQr {
+    img {
         width: 80px;
         height: 80px;
         display: inline-block;
-        position: relative;
-        bottom: 30px;
-        right: 30px;
+        position: absolute;
+        bottom: 45px;
+        left: 250px;
     }
     /* /QR코드 */
 
@@ -307,8 +308,8 @@
                     <strong>{{$reserveData->seat_no}}</strong>
                 </div>
                 <div class="box">
-                    <small>Class</small>
-                    <strong>E</strong>
+                    <small>Flight</small>
+                    <strong>{{$reserveData->flight_num}}</strong>
                 </div>
             </div>
             <div class="times">

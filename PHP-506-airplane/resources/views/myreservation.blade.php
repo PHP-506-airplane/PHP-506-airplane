@@ -65,8 +65,8 @@
                         <strong>{{$val['seat_no']}}</strong>
                     </div>
                     <div class="box">
-                        <small>Class</small>
-                        <strong>E</strong>
+                        <small>Flight</small>
+                        <strong>{{$val['flight_num']}}</strong>
                     </div>
                 </div>
                 <div class="times">
