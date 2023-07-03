@@ -88,7 +88,7 @@ class UserController extends Controller
 
     function registrationpost(Request $req) {
         $req->validate([
-            'name'          => 'required|regex:/^[가-힣]+$/|min:2|max:30'  
+            'name'          => 'required|regex:/^[가-힣]+$/u|min:2|max:30'  
             ,'email'        => 'required|email|min:5|max:30'  
             ,'password'     => 'required_with:passwordchk|same:passwordchk|regex:/^(?=.*[a-zA-Z])(?=.*[!@#$%^*-])(?=.*[0-9]).{8,20}$/'
             ,'birth'        => ['required', 'date', new MinAge(14)]
