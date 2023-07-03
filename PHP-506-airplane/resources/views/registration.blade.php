@@ -27,14 +27,16 @@
     <label>
     <div>
     <p style="text-align: left; font-size:12px; color:#666; margin-top:1rem">이름</p>
-    <input type="text" placeholder="한글 2~30글자 사이로 입력해주세요" class="size" name="name" id="name" autocomplete="off">
+    <input type="text" placeholder="한글 2~30글자 사이로 입력해주세요" class="size" name="name" id="name" oninput="chkName()" autocomplete="off">
+    <div id="chk_name_msg"></div> 
     </div>
     </label>
     <br>
     <label>
         <div>
             <p style="text-align: left; font-size:12px; color:#666; margin-top:1rem">이메일</p>
-            <input type="text" placeholder="이메일 형식에 맞게 써주세요" class="size" name="email" id="email" autocomplete="off">
+            <input type="text" placeholder="이메일 형식에 맞게 써주세요" class="size" name="email" id="email" oninput="chkEmail()" autocomplete="off">
+            <div id="chk_email_msg"></div>
             <br>
             <button type="button" id="errMsgemail" onclick="chkEmail()">이메일 중복 확인</button>
         </div>
@@ -53,7 +55,8 @@
     <br>
     <label>
         <p style="text-align: left; font-size:12px; color:#666; margin-top:1rem">생년월일</p>
-        <input type="date" placeholder="생년월일을 입력해주세요" class="size" name="birth" id="u_birth">
+        <input type="date" placeholder="생년월일을 입력해주세요" class="size" name="birth" id="u_birth" oninput="chkBirth()">
+        <div id="chk_birth_msg"></div> 
     </label>
     <br>
     <div class="gender">
@@ -100,4 +103,5 @@
 @section('js')
     <script src="{{asset('js/chkPw.js')}}"></script>
     <script src="{{asset('js/checkemail.js')}}"></script>
+    <script src="{{asset('js/registration.js')}}"></script>
 @endsection
