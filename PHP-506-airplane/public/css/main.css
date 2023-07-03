@@ -290,6 +290,9 @@ a{
 #lists {
   background-color: #efeff6;
 }
+#lists:hover {
+  background: rgb(205, 204, 225);
+}
 /* 마우스오버 애니메이션 */
 ul.type1 li {
   position: relative; 
