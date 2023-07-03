@@ -226,9 +226,14 @@ ol {
     background:url('../img/seatInfo.png')no-repeat center;
 
 }
+@media (max-width: 1600px){
+    #seatPost{
+        left: 25%;
+    }
+}
 @media (max-width: 1400px) {
     .name_box h2 {
-      display: none;
+        display: none;
     }
     .map{
         margin-left: 100px;
@@ -236,10 +241,10 @@ ol {
     #seatPost{
         left: 20%;
     }
-  }
-  @media (max-width: 1200px) {
+}
+@media (max-width: 1200px) {
     .name_box h2 {
-      display: none;
+        display: none;
     }
     .map{
         margin-left: 0px;
@@ -247,15 +252,38 @@ ol {
     #seatPost{
         left: 10%;
     }
-  }
-  @media (max-width: 993px) {
-    .name_box h2 {
-      display: none;
-    }
+}
+@media (max-width: 1050px) {
     .map{
-        margin-left: -10px;
+        margin-left: 50px;
     }
-    #seatPost{
+    .info{
         display: none;
     }
-  }
+}
+@media (max-width: 775px) {
+    .seatMap{
+        display: block;
+    }
+    #seatPost{
+        position:relative;
+        left: 0;
+    }
+    .map{
+        margin-left: 0;
+    }
+    .name_box{
+        width: auto;
+        display: block;
+    }
+    .slideCont > ul > li > a{
+        font-size: 14px;
+    }
+    
+}
+@media (max-width: 515px) {
+    .slideCont > ul > li > a{
+        font-size: 8px;
+    }
+}
+
