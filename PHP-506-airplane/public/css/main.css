@@ -167,8 +167,8 @@ a{
   position: absolute; 
   left: 0;
   width: 100%;
-  background: #b3b3b3;
-  color: #fff;
+  background: #fcfafa;
+  color: #000;
   list-style-type: none;
   padding: 0;
   border-radius: 6px;
@@ -176,18 +176,23 @@ a{
   max-height: 0;
   z-index: 99;
   transition: .3s ease-in;
+  font-size: 15px;
+  border-radius: 2px;
+  border: 0.5 solid #d9dbe1;
 }
 
 .selectBox2.active .optionList {
   max-height: 375px;
 }
 .selectBox2 .opItem{
-  border-bottom: 1px dashed rgb(170, 72, 72);
+  /* border-bottom: 0.5px solid rgb(31, 31, 31); */
+  border-radius: 2px;
   padding: 5px 15px 5px;
   transition: .1s;
+  margin: 2px;
 }
 .selectBox2 .opItem:hover {
-  background: rgb(175, 93, 93);
+  background: rgb(205, 204, 225);
 }
 .selectBox2 .opItem:last-child {
   border-bottom: 0 none;
@@ -283,7 +288,7 @@ a{
 }
 
 #lists {
-  background-color: rgb(164, 186, 233);
+  background-color: #efeff6;
 }
 /* 마우스오버 애니메이션 */
 ul.type1 li {
@@ -296,7 +301,7 @@ ul.type1 li {
 
 ul.type1 li span {
   position: absolute; 
-  background: rgb(160, 190, 235); 
+  background: #ced4da; 
   transition: all 0.5s;
 }
 ul.type1 li span:nth-child(1) {
