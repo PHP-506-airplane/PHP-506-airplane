@@ -127,7 +127,7 @@
                                         <span></span>
                                         <span></span>
                                         <span></span>
-                                        <form action="{{route('reservation.checkpost')}}" method="POST" id="formLowCost" onclick="test(event)">
+                                        <form action="{{route('reservation.checkpost')}}" method="POST" id="formLowCost" onclick="swiperClick(event)">
                                             @csrf
                                             <img src="{{asset('lowCostImg/'. $i .'.png?' . time())}}" alt="IMG" class="swiper_img">
                                             <div>{{str_replace('공항','',$lowCost[$i]->dep_name)}} → {{str_replace('공항','',$lowCost[$i]->arr_name)}}</div>
@@ -153,11 +153,11 @@
         </div>
         {{-- /스와이퍼 --}}
         <!-- Services-->
-         <section class="page-section" id="services">
+        <section class="page-section" id="services">
             <div class="container sec2" id="container2">
                 <div class="notice"> 
                     {{-- v002 add 이동호 --}}
-                     <h2><a href="{{route('notice.index')}}" style="color: #000;">공지사항</a></h2>
+                    <h2><a href="{{route('notice.index')}}" style="color: #000;">공지사항</a></h2>
                     <ul>
                         @foreach($notices as $notice)
                             <li class="noticeli">
@@ -195,8 +195,9 @@
         <script src="{{asset('js/main.js')}}"></script>
 
         <script>
-            function test(event) {
+            function swiperClick(event) {
                 const clickedForm = event.target.closest('#formLowCost'); // 클릭된 form을 찾음
+                showLoading();
                 clickedForm.submit();
             }
         </script>

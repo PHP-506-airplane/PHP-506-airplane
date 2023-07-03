@@ -11,6 +11,7 @@ function confirmCancel() {
     let con = confirm("예약을 취소 하시겠습니까?");
 
     if(con === true) {
+        showLoading();
         formCancel.submit();
     }
 }

@@ -20,3 +20,13 @@ function throttle(btn, form) {
         }
     });
 }
+
+// 로딩이미지
+const Divloading = document.getElementById('Divloading');
+const svg = document.getElementById('svgImg');
+const loadingImg = document.getElementsByClassName('svg-calLoader');
+
+function showLoading() {
+    Divloading.classList.add('svgHidden');
+    svg.style.display = 'block';
+}

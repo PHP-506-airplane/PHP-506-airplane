@@ -47,15 +47,7 @@ function changeTab(tabId) {
 }
 const flg = document.querySelector('.flg');
 // 예약확정 confirm
-const Divloading = document.getElementById('Divloading');
-const svg = document.getElementById('svgImg');
-function showLoading() {
-    Divloading.classList.add('svgHidden');
-    svg.style.display = 'block';
-}
-
 const seatForm = document.getElementById('seatPost');
-const loadingImg = document.getElementsByClassName('svg-calLoader');
 function reserveBtn(){
     var con_test = confirm("정말 예약 하시겠습니까?");
 
