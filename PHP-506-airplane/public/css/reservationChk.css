@@ -101,37 +101,59 @@ table tbody tr td{
     font-size: 18px;
 }
 
-/* 총금액 */
+/*  */
 .total_price{
-    position: relative;
-    margin: 70px 0;
+    margin: 100px 0;
     border-top: 1px solid #000;
     border-bottom: 1px solid #000;
 }
-.total_price dt{
+/* 버튼+총금액 */
+.btnArea::before{
+    content: "";
     position: absolute;
-    left: 20px;
-    height: 80px;
-    line-height: 80px;
-    font-size: 18px;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: #f9f9f9;
+    opacity: .8;
 }
-.total_price dd{
-    height: 80px;
-    padding-right: 30px;
-    border-top: 1px solid #e8e8e8;
+.btnArea{
+    position: fixed;
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
     text-align: right;
-    line-height: 80px;
-    font-size: 22px;
-    color: #000;
+    right: 100px;
+    bottom: 50px;
+}
+.price{
+    display: flex;
+    z-index: 99;
+}
+.price a{
+    width: 20%;
+    height: 100%;
+    border: 2px solid #b3b3b3;
+    border-radius: 50rem;
+    background: url('../img/arrow_up.png')no-repeat center;
+}
+.price > p{
+    box-sizing: border-box;
+    width: 380px;
+    font-size: 24px;
+    line-height: 55px;
+    padding: 5px 20px 5px 20px;
+    margin: 0 20px;
+    border-radius: 0.5rem;
+    border: 1px solid #b3b3b3;
+    text-align: left;
 }
 .chk_btn{
-    position: fixed;
+    z-index: 99;
     border-radius: 0.5rem;
-    right: 40px;
-    bottom: 55px;
     text-align: center;
     width: 8%;
-    height: 60px;
     font-size: 1.125rem;
     background-color: #fff;
     border: 2px solid #b3b3b3;
@@ -142,3 +164,31 @@ table tbody tr td{
     color: #fff;
     background-color: #b3b3b3;
 }
+#data {
+    appearance: none;
+    background-color: #ffffff;
+    width: 16px;
+    height: 16px;
+    border: 1px solid #cccfdb;
+    margin: 0;
+    border-radius: 50%;
+    display: grid;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+  }
+  
+#data::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    transform: scale(0);
+    transition: 0.3s transform ease-in-out;
+    box-shadow: inset 6px 6px #ffffff;
+  }
+  
+#data:checked {
+    background: #2958f3;
+    border-color: #8e8e8e;
+  }

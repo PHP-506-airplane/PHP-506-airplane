@@ -23,7 +23,7 @@ tr.forEach(function (trElement) {
     radioButton.checked = true;
     // 가격
     const depPrice = this.querySelector('.dep_price').value;
-    dep_total = parseFloat(depPrice); ;
+    dep_total = parseFloat(depPrice);
   });
 });
 
