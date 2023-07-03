@@ -20,6 +20,7 @@ use App\Models\ReserveInfo;
 use App\Models\SeatInfo;
 use App\Models\TicketInfo;
 use App\Models\Userinfo;
+use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -450,7 +451,6 @@ class ReservationController extends Controller
                 ,'fly_no' => $req->fly_no
                 ,'plane_no' => $req->plane_no
             ]);
-
             $reserveInfo3->save();
 
             $tNo3 = ReserveInfo::max('reserve_no');
@@ -503,6 +503,7 @@ class ReservationController extends Controller
             return redirect()->route('users.login');
         }
 
+        $date = Carbon::now()->subDay();
         $data = [];
         $data = 
             ReserveInfo::join('flight_info AS fli', 'reserve_info.fly_no', 'fli.fly_no')
@@ -513,7 +514,7 @@ class ReservationController extends Controller
                 ->join('user_info AS user', 'reserve_info.u_no', 'user.u_no')
                 ->join('ticket_info AS ticket', 'reserve_info.reserve_no', 'ticket.reserve_no')
                 ->where('reserve_info.u_no', Auth::user()->u_no)
-                ->where('fli.fly_date', '>=', now())
+                ->where('fli.fly_date', '>=', $date)
                 ->select(
                     'reserve_info.*'
                     ,'fli.fly_date'
@@ -531,6 +532,7 @@ class ReservationController extends Controller
                     ,'fli.fly_no'
                     ,'ticket.t_no'
                 )
+                ->groupBy('fli.fly_no')
                 ->orderBy('fli.fly_date')
                 ->orderBy('fli.dep_time')
                 ->limit(30)
