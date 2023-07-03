@@ -25,10 +25,10 @@
     }
 
     .cal-loader__plane {
-        fill: $c-hilight;
+        /* fill: $c-hilight; */
     }
     .cal-loader__path {
-        stroke: $c-front; 
+        /* stroke: $c-front;  */
         animation: 1.4s ease-in-out infinite loader-path;
     }
 
