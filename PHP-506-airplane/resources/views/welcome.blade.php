@@ -96,7 +96,7 @@
                                     <input type="text" placeholder="도착지" class="oArr_label form-control" readonly>
                                     <ul class="optionList">
                                         @forelse($data as $val)
-                                            <li class="oArr_optionItem opItem" value="{{$val->port_no}}">{{$val->port_name}}</li>
+                                            <li class="oArr_optionItem opItem" id="lists" value="{{$val->port_no}}">{{$val->port_name}}</li>
                                             @empty
                                             <li class="arr_optionItem opItem">데이터없음</li>
                                         @endforelse
