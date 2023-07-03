@@ -24,7 +24,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [ReservationController::class, 'main'])->name('reservation.main');
+Route::get('/', [ReservationController::class, 'main']);
 
 // 0612 유저
 Route::get('/users/login', [UserController::class, 'login'])->name('users.login');
