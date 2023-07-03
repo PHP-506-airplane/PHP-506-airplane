@@ -7,11 +7,20 @@
 
 const formCancel = document.getElementById('formCancel');
 
-function confirmCancel() {
-    let con = confirm("예약을 취소 하시겠습니까?");
+// function confirmCancel() {
+//     let con = confirm("예약을 취소 하시겠습니까?");
 
+//     if(con === true) {
+//         showLoading();
+//         formCancel.submit();
+//     }
+// }
+
+function cancelClick(event) {
+    const clickedForm = event.target.closest('#formCancel'); // 클릭된 form을 찾음
+    let con = confirm("예약을 취소 하시겠습니까?");
     if(con === true) {
         showLoading();
-        formCancel.submit();
+        clickedForm.submit();
     }
 }

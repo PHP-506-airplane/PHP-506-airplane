@@ -98,7 +98,7 @@
                         @csrf
                         <input type="hidden" name="reserve_no" value="{{$val['reserve_no']}}">
                         <input type="hidden" name="t_no" value="{{$val['t_no']}}">
-                        <button type="button" onclick="confirmCancel()" class="btn btn-outline-success">예약 취소</button>
+                        <button type="button" onclick="cancelClick(event)" class="btn btn-outline-success">예약 취소</button>
                     </form>
                 </div>
                 <img src="{{asset('img/qr.png')}}" alt="QR code" class="imgQr">
