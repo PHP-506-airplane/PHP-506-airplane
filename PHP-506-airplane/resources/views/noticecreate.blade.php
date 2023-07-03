@@ -26,18 +26,18 @@
         </div>
     @endif
 
-    <form action="{{route('notice.store')}}" method="POST" class="formCreate" enctype="multipart/form-data">
+    <form action="{{route('notice.store')}}" method="POST" class="formCreate" enctype="multipart/form-data" onsubmit="updateContentTextarea()">
         @csrf
         <label for="title" class="labelTitle">제목 : </label>
         <input type="text" name="title" id="title" class="inputText" value="{{old('title')}}">
         <hr>
         <label for="content"></label>
         {{-- <div contentEditable="true" class="divContent" id="divContent" oninput="updateTextarea()">
-                <img id="selectedImage" src="#" alt="선택된 이미지" class="noticeImg" style="display: none;">
-                {{old('content')}}
-        </div> --}}
-        <div contentEditable="true" class="divContent" id="divContent" oninput="updateContentTextarea()">
             {{old('content')}}
+        </div> --}}
+        <div contentEditable="true" class="divContent" id="divContent">
+            {{-- <img id="selectedImage" src="#" alt="선택된 이미지" class="noticeImg" style="display: none;"> --}}
+            {!!old('content')!!}
         </div>
         <textarea name="content" id="content" class="textareaContent">{{old('content')}}</textarea>
         <input type="file" name="image" onchange="displaySelectedImage(event)">
