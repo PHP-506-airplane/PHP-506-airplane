@@ -33,6 +33,7 @@
             <label>
             <p style="text-align: left; font-size:12px; color:#666">비밀번호</p>
             <input type="password" placeholder="비밀번호를 입력하세요" class="size" name="password" id="password" oninput="chkPw()">
+            <div class="space1"></div>
             </label>
             <br>
             <p style="text-align: left; font-size:12px; color:#666">비밀번호 확인</p>
