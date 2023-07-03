@@ -504,7 +504,6 @@ class ReservationController extends Controller
         }
 
         $date = Carbon::now()->subDay();
-        $data = [];
         $data = 
             ReserveInfo::join('flight_info AS fli', 'reserve_info.fly_no', 'fli.fly_no')
                 ->join('airplane_info AS airp', 'fli.plane_no', 'airp.plane_no')
@@ -535,7 +534,6 @@ class ReservationController extends Controller
                 ->groupBy('fli.fly_no')
                 ->orderBy('fli.fly_date')
                 ->orderBy('fli.dep_time')
-                ->limit(30)
                 ->get();
 
         return view('myreservation')->with('data', $data);
