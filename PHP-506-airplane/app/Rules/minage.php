@@ -24,6 +24,6 @@ class MinAge implements Rule
 
     public function message()
     {
-        return '가입은 14세 이상만 가능합니다.';
+        return '가입은 만14세 이상부터 가능합니다.';
     }
 }
