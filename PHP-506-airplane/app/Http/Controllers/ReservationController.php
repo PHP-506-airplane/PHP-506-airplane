@@ -403,7 +403,7 @@ class ReservationController extends Controller
             $reserveInfo->save();
 
             // 예약정보 저장 후 티켓 저장
-            $tNo = ReserveInfo::max('reserve_no');
+            $tNo = $reserveInfo->reserve_no;
             $price = FlightInfo::select('price')
             ->where('fly_no', $req->fly_no)
             ->first();
@@ -428,7 +428,7 @@ class ReservationController extends Controller
 
             $reserveInfo2->save();
 
-            $tNo2 = ReserveInfo::max('reserve_no');
+            $tNo2 = $reserveInfo2->reserve_no;
             $price2 = FlightInfo::select('price')
             ->where('fly_no', $req->fly_no2)
             ->first();
@@ -453,7 +453,7 @@ class ReservationController extends Controller
             ]);
             $reserveInfo3->save();
 
-            $tNo3 = ReserveInfo::max('reserve_no');
+            $tNo3 = $reserveInfo3->reserve_no;
             $price3 = FlightInfo::select('price')
             ->where('fly_no', $req->fly_no)
             ->first();
@@ -548,7 +548,8 @@ class ReservationController extends Controller
         }
 
         ReserveInfo::destroy($req->reserve_no);
-        TicketInfo::where('t_no', $req->t_no)->delete();
+        TicketInfo::destroy($req->t_no);
+        // TicketInfo::where('t_no', $req->t_no)->delete();
 
         return redirect()->route('reservation.myreservation')->with('alert', '취소가 완료되었습니다.');
     }
