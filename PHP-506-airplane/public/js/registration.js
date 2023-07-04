@@ -8,7 +8,7 @@ function chkName() {
 
     if(p2.test(p1.value)===false) {
         chkNameMsg.style.color = 'red'
-        chkNameMsg.innerHTML = '❕이름은 한글 2~30글자 사이로 입력해주세요.'
+        chkNameMsg.innerHTML = '❕한글 2~30글자 사이로 입력해주세요.'
     }
     else {
         chkNameMsg.style.color = 'green';
