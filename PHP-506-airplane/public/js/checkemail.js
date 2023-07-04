@@ -1,6 +1,6 @@
 let emailButtonClicked = false; //초기값으로 false줌
 
-async function chkEmail() {
+async function chkEmail2() {
     const id = document.getElementById('email');
     const div = document.getElementById('testtest');
     const url = "/api/mail?email=" + id.value;

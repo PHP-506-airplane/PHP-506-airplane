@@ -38,7 +38,7 @@
             <input type="text" placeholder="이메일 형식에 맞게 써주세요" class="size" name="email" id="email" oninput="chkEmail()" autocomplete="off">
             <div id="chk_email_msg"></div>
             <br>
-            <button type="button" id="errMsgemail" onclick="chkEmail()">이메일 중복 확인</button>
+            <button type="button" id="errMsgemail" onclick="chkEmail2()">이메일 중복 확인</button>
         </div>
     </label> 
     <br>

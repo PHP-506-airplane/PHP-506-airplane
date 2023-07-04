@@ -127,7 +127,8 @@ return [
         'code'=> '제품 ID',
         'price'=> '가격',
         'context'=> '상세설명',
-        'u_name'=> '이름'
+        'u_name'=> '이름',
+        'birth' => '생년월일'
 //        'use'=> '제품용도',
 //        'size'=> '제품규격',
     ],
