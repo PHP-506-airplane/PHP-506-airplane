@@ -136,6 +136,8 @@ class ReservationController extends Controller
         // 0627 add 이동호
         if(empty(Auth::user())) {
             Session::put(['request' => $req->all()]);
+            //요청, 접근하려고 했던 페이지 담음
+            //put(이름, 값)
             Session::put('previous_url', route('reservation.check'));
             return redirect()->route('users.login')->with('alert', '로그인이 필요한 기능입니다.');
         }
