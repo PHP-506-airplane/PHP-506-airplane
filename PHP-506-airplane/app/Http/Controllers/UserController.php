@@ -188,7 +188,7 @@ class UserController extends Controller
         Session::flush();
         Auth::logout();
 
-        return redirect()->route('reservation.main');
+        return redirect()->route('reservation.main')->with('alert', '탈퇴되었습니다.');
     }
 
     //이메일 인증
