@@ -44,7 +44,7 @@ function chkBirth() {
         age--;
     }
 	// 만나이를 떄문에 조건을 건다
-	if(age<14) {
+	if(age<15) {
         p6.innerHTML = '만 14세 이상만 가입이 가능합니다.';
         p6.style.color = 'red';
     } else {
