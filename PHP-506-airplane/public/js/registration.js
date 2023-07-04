@@ -8,12 +8,12 @@ function chkName() {
 
     if(p2.test(p1.value)===false) {
         chkNameMsg.style.color = 'red'
-        chkEmailMsg.style.fontsize = '8px';
+        chkNameMsg.style.fontSize = '12px';
         chkNameMsg.innerHTML = '❕한글 2~30글자 사이로 입력해주세요.'
     }
     else {
         chkNameMsg.style.color = 'green';
-        chkEmailMsg.style.fontsize = '8px';
+        chkNameMsg.style.fontSize = '12px';
         chkNameMsg.innerHTML = '✔️사용가능한 이름입니다.';
     }
 }
@@ -25,12 +25,12 @@ function chkEmail() {
 
     if(p4.test(p3.value)===false) {
         chkEmailMsg.style.color = 'red';
-        chkEmailMsg.style.fontsize = '8px';
+        chkEmailMsg.style.fontSize = '12px';
         chkEmailMsg.innerHTML = '❕올바른 이메일 형식이 아닙니다.'
     }
     else {
         chkEmailMsg.style.color = 'green';
-        chkEmailMsg.style.fontsize = '8px';
+        chkEmailMsg.style.fontSize = '12px';
         chkEmailMsg.innerHTML = '✔️이메일 중복 확인을 해주세요.';
     }
 }
