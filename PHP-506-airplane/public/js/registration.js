@@ -38,20 +38,30 @@ function chkBirth() {
 	const birthDay = new Date(p5.value);
     let age = 0;
 
-	age = now.getFullYear() - birthDay.getFullYear();
+	// age = now.getFullYear() - birthDay.getFullYear();
 	
-	if(now.getTime() < birthDay.getFullYear()) {
+	// if(now.getTime() < birthDay.getFullYear()) {
+    //     age--;
+    // }
+	// // 만나이를 떄문에 조건을 건다
+	// if(age<15) {
+    //     p6.innerHTML = '만 14세 이상만 가입이 가능합니다.';
+    //     p6.style.color = 'red';
+    // } else {
+    //     p6.innerHTML = '가입이 가능한 나이입니다.';
+    //     p6.style.color = 'green';
+    // }
+    age = now.getFullYear() - birthDay.getFullYear();
+    const m = now.getMonth() - birthDay.getMonth();
+    if (m < 0 || (m === 0 && now.getDate() < birthDay.getDate())) {
         age--;
     }
-	// 만나이를 떄문에 조건을 건다
-	if(age<15) {
+
+    if(age<14) {
         p6.innerHTML = '만 14세 이상만 가입이 가능합니다.';
         p6.style.color = 'red';
     } else {
         p6.innerHTML = '가입이 가능한 나이입니다.';
         p6.style.color = 'green';
     }
-	
-	return age;
-	
 }
