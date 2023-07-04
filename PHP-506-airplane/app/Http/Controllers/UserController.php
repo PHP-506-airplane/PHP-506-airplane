@@ -10,25 +10,14 @@
 namespace App\Http\Controllers;
 
 use App\Mail\SendEmail;
-use App\Models\AdminInfo;
-use App\Models\EmailVerify;
-use App\Models\User;
 use App\Models\Userinfo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
-use Illuminate\Auth\Events\PasswordReset; // 패스워드 변경 이벤트
-use Illuminate\Console\View\Components\Alert;
-use Illuminate\Support\Facades\Password;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\Rules;
-use Illuminate\Validation\ValidationException;
 use App\Rules\MinAge;
-use Illuminate\Support\Facades\Cookie;
 
 class UserController extends Controller
 {
@@ -89,7 +78,7 @@ class UserController extends Controller
     function registrationpost(Request $req) {
         $req->validate([
             'name'          => 'required|regex:/^[가-힣]+$/u|min:2|max:30'  
-            ,'email'        => 'required|email|min:5|max:30|regex:/^([0-9a-zA-Z_\.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/'
+            ,'email'        => 'required|email|min:5|max:30|regex:/^([0-9a-zA-Z_\.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){2,3}$/'
             ,'password'     => 'required_with:passwordchk|same:passwordchk|regex:/^(?=.*[a-zA-Z])(?=.*[!@#$%^*-])(?=.*[0-9]).{8,20}$/u'
             ,'birth'        => ['required', 'date', new MinAge(14)]
         ]);
@@ -138,6 +127,14 @@ class UserController extends Controller
         Session::flush();   //세션 파기
         Auth::logout();
         return redirect()->route('reservation.main');
+        // return redirect()->back();
+    }
+
+    //비밀번호 로그아웃
+    function logoutPw() {
+        Session::flush();   //세션 파기
+        Auth::logout();
+        return redirect()->route('reservation.main')->with('alert', '비밀번호가 변경되었습니다.');
         // return redirect()->back();
     }
 
@@ -271,7 +268,7 @@ class UserController extends Controller
         $baseuser->u_pw = Hash::make($req->password);
         $baseuser->save();
 
-        return redirect()->route('users.useredit')->with('alert','비밀번호가 변경 되었습니다.');
+        return redirect()->route('users.logoutPw');
     }
 
     

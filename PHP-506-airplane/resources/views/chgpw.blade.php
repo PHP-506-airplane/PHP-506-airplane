@@ -47,7 +47,7 @@
         </form>
         <hr>
         <p class="find">
-            <span><a href="{{route('users.registration')}}">회원가입</a></span>
+            {{-- <span><a href="{{route('users.registration')}}">회원가입</a></span> --}}
             <span><a href="{{route('reservation.main')}}">취소</a></span>
         </p>
         </div>

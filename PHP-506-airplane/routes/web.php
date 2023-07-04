@@ -32,6 +32,7 @@ Route::post('/users/loginpost', [UserController::class, 'loginpost'])->name('use
 Route::get('/users/registration', [UserController::class, 'registration'])->name('users.registration');
 Route::post('/users/registrationpost', [UserController::class, 'registrationpost'])->name('users.registration.post');
 Route::get('/users/logout', [UserController::class, 'logout'])->name('users.logout');
+Route::get('/users/logoutPw', [UserController::class, 'logoutPw'])->name('users.logoutPw');
 Route::get('/users/withdraw', [UserController::class, 'withdraw'])->name('users.withdraw');
 Route::get('/users/useredit', [UserController::class, 'useredit'])->name('users.useredit');
 Route::put('/users/usereditpost', [UserController::class, 'usereditpost'])->name('users.useredit.post');

@@ -67,7 +67,7 @@ return [
     'not_in' => ':attribute 값이 유효하지 않습니다.',
     'numeric' => ':attribute 값이 숫자가 아닙니다.',
     'present' => ':attribute 필드가 누락되었습니다.',
-    'regex' => ':attribute 값의 형식이 유효하지 않습니다.',
+    'regex' => ':attribute 형식이 유효하지 않습니다.',
     'required' => ':attribute 항목은 필수 항목입니다.',
     'required_if' => ':attribute 값이 누락되었습니다 (:other 값이 :value 일 때는 필수).',
     'required_unless' => ':attribute 값이 누락되었습니다 (:other 값이 :value 이(가) 아닐 때는 필수).',
