@@ -78,7 +78,7 @@ class UserController extends Controller
     function registrationpost(Request $req) {
         $req->validate([
             'name'          => 'required|regex:/^[가-힣]+$/u|min:2|max:30'  
-            ,'email'        => 'required|email|min:5|max:30|regex:/^([0-9a-zA-Z_\.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){2,3}$/'
+            ,'email'        => 'required|email|min:5|max:30|regex:/^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i'
             ,'password'     => 'required_with:passwordchk|same:passwordchk|regex:/^(?=.*[a-zA-Z])(?=.*[!@#$%^*-])(?=.*[0-9]).{8,20}$/u'
             ,'birth'        => ['required', 'date', new MinAge(14)]
         ]);
