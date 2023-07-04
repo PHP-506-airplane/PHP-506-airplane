@@ -111,3 +111,14 @@ footer{
     color: white;
 }
 /* /버튼 색깔 */
+
+@media(min-width:370px) and (max-width:767px) {
+    .textCenter {
+    text-align: center;
+    /* height: 30px; */
+    color: rgb(0, 0, 0);
+    /* line-height: 30px; */
+    bottom: 0;
+    font-size: 0.2rem;
+}
+}
