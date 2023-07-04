@@ -32,7 +32,7 @@
             <br>
             <label>
             <p style="text-align: left; font-size:12px; color:#666">이메일</p>
-            <input type="text" name="u_email" id="u_email" value="{{count($errors) > 0 ? old('u_email') : $data->u_email}}" disabled placeholder="">
+            <input type="text" name="u_email" id="u_email" value="{{$data->u_email}}" disabled placeholder="">
             <p></p>
             </label>
             <br>
