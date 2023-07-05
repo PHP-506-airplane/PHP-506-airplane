@@ -533,6 +533,7 @@ class ReservationController extends Controller
                     ,'fli.fly_no'
                     ,'ticket.t_no'
                 )
+                ->groupBy('fli.fly_no')
                 ->orderBy('fli.fly_date')
                 ->orderBy('fli.dep_time')
                 ->get();
