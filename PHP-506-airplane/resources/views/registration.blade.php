@@ -35,7 +35,7 @@
                 <label>
                     <div>
                         <p style="text-align: left; font-size:12px; color:#666; margin-top:1rem">이메일</p>
-                        <input type="text" placeholder="이메일 형식에 맞게 써주세요" class="size" name="email" id="email" oninput="chkEmail()" value="{{old('email')}}" autocomplete="off">
+                        <input type="text" placeholder="이메일 형식에 맞게 써주세요" class="size" name="email" id="email" oninput="chkEmail()" onkeydown="clickedFalse()" value="{{old('email')}}" autocomplete="off">
                         <div id="chk_email_msg"></div>
                         <br>
                         <button type="button" id="errMsgemail" onclick="chkEmail2()">이메일 중복 확인</button>
