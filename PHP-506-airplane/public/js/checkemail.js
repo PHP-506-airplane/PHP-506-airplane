@@ -35,6 +35,12 @@ async function chkEmail2() {
     .catch(error => alert(error.message));
 }
 
+const emailInput = document.getElementById('email');
+
+function clickedFalse() {
+    emailButtonClicked = false;
+}
+
 const registForm = document.getElementById('registForm');
 function register() {
     if (emailButtonClicked) {
