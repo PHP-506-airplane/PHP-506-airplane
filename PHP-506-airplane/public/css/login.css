@@ -98,7 +98,7 @@ hr{
     color:#707070;
 }
 
-@media(min-width:480px) and (max-width:767px) {
+@media(min-width:380px) and (max-width:767px) {
     #login_form {
         width: 300px;
     }

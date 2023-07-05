@@ -1,4 +1,4 @@
-let emailButtonClicked = false; //초기값으로 false줌
+let emailButtonClicked = false; //초기값으로 false줌(중복 확인 버튼이 눌러졌는지 확인하기 위해서)
 
 async function chkEmail2() {
     const id = document.getElementById('email');
@@ -17,13 +17,13 @@ async function chkEmail2() {
     }
 
     fetch(url, {
-        method: 'POST'  //생성된 url을 post로 
+        method: 'POST'  //생성된 url을 post로(이메일 중복확인 요청)
     })
     .then(res => {
         if(!res.ok) {
             throw new Error(res.status + ' : API Response Error');
         }
-        return res.json();
+        return res.json(); //응답 데이터를 json형태로
     }) 
     .then(apiData => {
         // div.innerHTML = apiData['message'];
