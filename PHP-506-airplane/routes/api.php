@@ -21,3 +21,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 // 이메일 중복
 Route::post('/mail', [ApiController::class, 'chkEmail']);
+
+// // 결제 --------------------------------
+// Route::get('users/getCurrentUser', [UserController::class, 'getCurrentUser']);
+// Route::get('pay/getMerchantUidAndSetPrice', [PayController::class, 'getMerchantUidAndSetPrice']);
+// Route::post('pay/complete', [PayController::class, 'complete']);
+// Route::post('pay/removePayAuth', [PayController::class, 'removePayAuth']);
+// // 결제 --------------------------------

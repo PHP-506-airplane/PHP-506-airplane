@@ -11,6 +11,7 @@ use App\Http\Controllers\ApiController;
 use App\Http\Controllers\NoticeController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ReservationController;
+use App\Http\Controllers\PayController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -39,8 +40,8 @@ Route::put('/users/usereditpost', [UserController::class, 'usereditpost'])->name
 
 // 0612 이메일
 // 이메일 전송
-Route::get('/mails/mail', [MailController::class, 'mail'])->name('mails.mail');
-Route::post('/mails/mailpost', [MailController::class, 'mailpost'])->name('mails.mail.post');
+// Route::get('/mails/mail', [MailController::class, 'mail'])->name('mails.mail');
+// Route::post('/mails/mailpost', [MailController::class, 'mailpost'])->name('mails.mail.post');
 
 // 이메일 인증
 Route::get('/users/emailverify/{code}', [UserController::class, 'emailverify'])->name('emailverifys.emailverify');
@@ -74,7 +75,14 @@ Route::resource('/notice', NoticeController::class);
 Route::get('/reservation/myreservation', [ReservationController::class, 'myreservation'])->name('reservation.myreservation');
 // 예약 취소
 Route::post('/reservation/myreservation', [ReservationController::class, 'rescancle'])->name('reservation.rescancle');
-// 할인율 안내 페이지
+// 결제 페이지 --------------------------------------------------
+// Route::get('/users/getCurrentUser', [UserController::class, 'getCurrentUser']);
+Route::get('/users/getCurrentUser', [UserController::class, 'getCurrentUser'])->name('users.getCurrentUser');
+Route::get('/pay/getMerchantUidAndSetPrice', [PayController::class, 'getMerchantUidAndSetPrice']);
+Route::post('/pay/complete', [PayController::class, 'complete']);
+Route::post('/pay/removePayAuth', [PayController::class, 'removePayAuth']);
+// /결제 페이지 --------------------------------------------------
+
 
 // 0613 add 오재훈
 // 예약 조회(항공편 선택) 페이지

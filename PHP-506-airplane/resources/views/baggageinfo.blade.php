@@ -16,7 +16,7 @@
 @endsection
 
 @section('contents')
-<div class="baggageinfoHeader">
+{{-- <div class="baggageinfoHeader">
     <h1 class="noticeH1">수하물 안내</h1>
     <h5 class="noticeH5">수하물 관련 규정을 확인하세요.</h5>
 </div>
@@ -103,9 +103,144 @@
             </tr>
         </tbody>
     </table>
-</div>
+</div> --}}
+
+<button id="pay_btn" onclick="requestPay({{ auth()->check() }})">결제하기</button>
+<div style="min-height: 830px"></div>
 @endsection
 
 @section('js')
 {{-- <script src="{{asset('js/baggageinfo.js')}}"></script> --}}
+<!-- jQuery -->
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
+<!-- iamport.payment.js -->
+<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+<script>    
+    var IMP = window.IMP; // 생략 가능
+    IMP.init("imp11776700"); // 예시 : imp00000000
+    function requestPay(isLogin) {
+        
+        // 로그인 체크
+        if (!isLogin) {
+            alert("로그인 후 이용할 수 있습니다.");
+            return;
+        }
+
+
+        // 값 세팅
+        getCurrentUserInfo();
+        let temp = getMerchantUid_setPrice();
+        let merchant_uid = temp.merchant_uid;
+        let pay_auth_id = temp.pay_auth_id;
+        let amount = temp.price;
+        
+
+        // 결제창 호출 코드
+        IMP.request_pay({ // 파라미터
+            pg: "kakaopay", // pg사
+            pay_method: "card", // 결제 수단
+            merchant_uid: merchant_uid, //주문번호
+            name: '항공권',  //결제창에서 보여질 이름
+            amount: amount,  //가격 
+            buyer_name: buyer_name,// 구매자 이름
+            buyer_tel: buyer_tel, // 구매자 전화번호
+        }, function (rsp) { 
+            if (rsp.success) { // 결제 성공
+
+                $.ajax({
+                    headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                    url: "/pay/complete",
+                    method: "POST",
+                    dataType : "JSON",
+                    data: {
+                        imp_uid: rsp.imp_uid,
+                        merchant_uid: rsp.merchant_uid,
+                        pay_auth_id : pay_auth_id,
+                        goods_id : goods_id,
+                    },
+                    success: function(data) {
+                        if(data.result.code!=200){
+                            //결제실패(웹서버측 실패)   
+                            // TODO : 환불 코드
+                            alert("위조된 결제 시도에 의해 결제에 실패했습니다.");  
+                            removePayAuth(pay_auth_id);// pay_auth 값 지우기
+                        }else{
+                            //결제성공(웹서버측 성공)
+                            alert("결제에 성공했습니다.");
+                        }
+                    },
+                    error: function(data) {
+                        console.log("error" +data);
+                    }
+                });
+            } else {
+                removePayAuth(pay_auth_id); // pay_auth 값 지우기
+                alert("결제에 실패했습니다. : " +  rsp.error_msg);
+            }
+        });
+    }
+    
+    // 현재 사용자의 정보를 가져오는 함수
+    function getCurrentUserInfo() {
+        $.ajax({
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+            // url: "/users/getCurrentUser",
+            url: "{{ route('users.getCurrentUser') }}",
+            type: "get",
+            async:false, // 동기방식(전역변수에 값 저장하려면 필요)
+            dataType : "json",
+            success : function(data) {
+                buyer_name = data.name;
+                buyer_tel = data.tel;
+            },
+            error: function(request,status,error){ 
+                alert("code = "+ request.status + " message = " + request.responseText + " error = " + error); 
+                console.log("code = "+ request.status + " message = " + request.responseText + " error = " + error);
+            }
+        });
+    }
+    
+	// 주문번호를 가져오는 함수 
+    function getMerchantUid_setPrice() {
+        var result = "";
+        $.ajax({
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+            url: "/pay/getMerchantUidAndSetPrice",
+            type: "GET",
+            async:false, // 동기방식(전역변수에 값 저장하려면 필요)
+            dataType: "json",
+            data : {
+                // TODO: flight_no로 바꾸기
+                goods_id : 1
+            },
+            success : function(data) {
+                result = data;
+            },
+            error: function(request,status,error){ 
+                alert("code = "+ request.status + " message = " + request.responseText + " error = " + error); 
+                console.log("code = "+ request.status + " message = " + request.responseText + " error = " + error);
+                result = "error";
+            }
+        });
+        return result;
+    }
+
+    function removePayAuth(removePayAuthId) {
+        $.ajax({
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+            url: "/pay/removePayAuth",
+            method: "POST",
+            dataType : "text",
+            data: {
+                removePayAuthId : removePayAuthId
+            },
+            success: function() {
+                
+            },
+            error: function(request, status, error) {
+                console.log("status : " + request.status + ", message : " + request.responseText + ", error : " + error);
+            }
+        });
+    }
+</script>
 @endsection

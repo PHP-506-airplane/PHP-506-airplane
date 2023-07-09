@@ -8,6 +8,7 @@
  *                  v003 0620 이동호 add 나의 예약 조회 페이지
  *                  v004 0621 이동호 add 최저가 항공
  *                  v005 0623 이동호 add 메일전송, TicketInfo insert
+ *                  v006 0709 이동호 add 중복결제 방지
 **************************************************/
 
 namespace App\Http\Controllers;
@@ -38,6 +39,7 @@ class ReservationController extends Controller
     // 기능		: 예약 정보 데이터를 가져옴
     // 파라미터	:   String      $tNo
     // 리턴값	:   Collection
+    // ---------------------------------
     function getReserveData($tNo)
     {
         return ReserveInfo::join('flight_info AS fli', 'reserve_info.fly_no', 'fli.fly_no')
@@ -68,6 +70,19 @@ class ReservationController extends Controller
                 'ticket.t_price'
             )
             ->get();
+    }
+
+    public function dupChk($fly_no, $seat_no) {
+        $resedData = 
+            ReserveInfo::where('fly_no', $fly_no)
+                ->where('seat_no', $seat_no)
+                ->first();
+
+        if($resedData) {
+            return true;
+        }
+
+        return false;
     }
 
     public function main() {
@@ -385,14 +400,39 @@ class ReservationController extends Controller
                 return redirect()->back()->with('alert', '가는편 여정을 선택해주세요.');
             }
 
-            return view('reservationSeat', compact('data', 'seat', 'availableSeats', 'flg','depPort','arrPort'));
+            // return view('reservationSeat', compact('data', 'seat', 'availableSeats', 'flg','depPort','arrPort'));
+            return redirect()->route('reservation.seatpost')->with('data', 'seat', 'availableSeats', 'flg','depPort','arrPort');
             }
     }
 // 예약하기
     public function seatpost(Request $req){
+        // 중복결제 방지 v006
+        // $resedData = 
+        //     ReserveInfo::where('fly_no', $req->fly_no)
+        //         ->where('seat_no', $req->seat_no)
+        //         ->first();
+
+        // if($resedData) {
+        //     // return redirect()->route('reservation.seatpost')->with('alert', '이미 예약된 좌석입니다.');
+        //     return redirect()->route('reservation.main')->with('alert', '이미 예약된 좌석입니다.');
+        // }
+        if ($this->dupChk($req->fly_no, $req->seat_no)) {
+            return redirect()->route('reservation.main')->with('alert', '이미 예약된 좌석입니다.');
+        }
+        if ($this->dupChk($req->fly_no2, $req->seat_no2)) {
+            return redirect()->route('reservation.main')->with('alert', '이미 예약된 좌석입니다.');
+        }
+
         $userinfo = Userinfo::where('u_email', Auth::user()->u_email)->first();
 
         if($req->flg =='1'){
+
+            if ($this->dupChk($req->fly_no, $req->seat_no)) {
+                return redirect()->route('reservation.main')->with('alert', '가는편이 이미 예약된 좌석입니다.');
+            }
+            if ($this->dupChk($req->fly_no2, $req->seat_no2)) {
+                return redirect()->route('reservation.main')->with('alert', '오는편이 이미 예약된 좌석입니다.');
+            }
             // 가는편 예약
             // 예약정보(reserve_info) 저장
             $reserveInfo = new ReserveInfo([
@@ -446,6 +486,10 @@ class ReservationController extends Controller
             Mail::to(Auth::user()->u_email)->send(new SendReserve($userinfo, $reserveData2));
 
         }else{
+            if ($this->dupChk($req->fly_no, $req->seat_no3)) {
+                return redirect()->route('reservation.main')->with('alert', '이미 예약된 좌석입니다.');
+            }
+            
             // 편도 예약
             $reserveInfo3 = new ReserveInfo([
                 'u_no'=> Auth::user()->u_no
