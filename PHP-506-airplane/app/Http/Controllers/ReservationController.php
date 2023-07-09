@@ -100,6 +100,10 @@ class ReservationController extends Controller
 
         // 왕복이면 쿼리 추가
         if ($fly_no2 && $seat_no2) {
+            // $query 뒤에 추가함
+            // 익명 함수(클로저)를 정의함
+            // 이 익명 함수는 $subQuery라는 변수를 받고, 익명함수는 자체적인 스코프를 가지고있어서
+            // 스코프가 다르기때문에 외부에서 정의된(스코프가 다른) $fly_no2와 $seat_no2 변수를 사용할 수 있도록 use ($fly_no2, $seat_no2) 를 적어줌
             $query->orWhere(function ($subQuery) use ($fly_no2, $seat_no2) {
                 $subQuery->where('fly_no', $fly_no2)
                     ->where('seat_no', $seat_no2);
