@@ -275,8 +275,6 @@ class UserController extends Controller
         $user = Userinfo::find(auth()->user()->u_no);
         $userData['name'] = $user->u_name;
         $userData['tel'] = $user->u_tel;
-        // $userData['name'] = '이동호';
-        // $userData['tel'] = '01066690538';
 
         return response()->json($userData);
     }
