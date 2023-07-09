@@ -138,6 +138,8 @@
         // 결제창 호출 코드
         IMP.request_pay({ // 파라미터
             pg: "kakaopay", // pg사
+            // pg: "tosspay",
+            // pg: "html5_inicis", // ********** 이니시스는 진짜로 결제되고 밤에 취소된다고 하니 주의 **********
             pay_method: "card", // 결제 수단
             merchant_uid: merchant_uid, //주문번호
             name: '항공권',  //결제창에서 보여질 이름
