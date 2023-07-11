@@ -72,6 +72,13 @@ class ReservationController extends Controller
             ->get();
     }
 
+    /**
+     * 예약된 좌석을 확인하는 함수
+     *
+     * @param string $fly_no 가는편 항공편 번호
+     * @param string $seat_no 가는편 좌석 번호
+     * @return bool 예약된 좌석이 존재하는 경우 true, 아닌 경우 false를 반환
+     */
     public function dupChk($fly_no, $seat_no) {
         $resedData = 
             ReserveInfo::where('fly_no', $fly_no)
@@ -79,42 +86,6 @@ class ReservationController extends Controller
                 ->first();
 
         if($resedData) {
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
-     * 예약된 좌석을 확인하는 함수
-     *
-     * @param string $fly_no 가는편 항공편 번호
-     * @param string $seat_no 가는편 좌석 번호
-     * @param string|null $fly_no2 오는편 항공편 번호 (선택)
-     * @param string|null $seat_no2 오는편 좌석 번호 (선택)
-     * @return bool 예약된 좌석이 존재하는 경우 true, 아닌 경우 false를 반환
-     */
-    public function chkRes($fly_no, $seat_no, $fly_no2 = null, $seat_no2 = null) {
-        // 편도 쿼리 생성
-        $query = ReserveInfo::whereIn('fly_no', [$fly_no]);
-
-        // 왕복이면 쿼리 추가
-        if ($fly_no2 && $seat_no2) {
-            // $query 뒤에 추가함
-            // 익명 함수(클로저)를 정의함
-            // 이 익명 함수는 $subQuery라는 변수를 받고, 익명함수는 자체적인 스코프를 가지고있어서
-            // 스코프가 다르기때문에 외부에서 정의된(스코프가 다른) $fly_no2와 $seat_no2 변수를 사용할 수 있도록 use ($fly_no2, $seat_no2) 를 적어줌
-            $query->orWhere(function ($subQuery) use ($fly_no2, $seat_no2) {
-                $subQuery->where('fly_no', $fly_no2)
-                    ->where('seat_no', $seat_no2);
-            });
-        }
-
-        // 좌석 번호로 예약된 좌석 확인
-        $resExists = $query->whereIn('seat_no', [$seat_no])
-            ->exists();
-
-        if ($resExists) {
             return true;
         }
 
@@ -456,8 +427,21 @@ class ReservationController extends Controller
         $userinfo = Userinfo::where('u_email', Auth::user()->u_email)->first();
 
         if($req->flg =='1'){
-            if ($this->chkRes($req->fly_no, $req->seat_no, $req->fly_no2, $req->seat_no2)) {
-                return redirect()->route('reservation.main')->with('alert', '이미 예약된 좌석 입니다.');
+            $hasRes1 = $this->dupChk($req->fly_no, $req->seat_no);
+            $hasRes2 = $this->dupChk($req->fly_no2, $req->seat_no2);
+
+            Log::debug([$hasRes1, $hasRes2]);
+
+            if ($hasRes1 && $hasRes2) {
+                $alertMsg = '가는편과 오는편이 모두 이미 예약된 좌석입니다.';
+            } else if ($hasRes1) {
+                $alertMsg = '가는편이 이미 예약된 좌석입니다.';
+            } else if ($hasRes2) {
+                $alertMsg = '오는편이 이미 예약된 좌석입니다.';
+            }
+
+            if (isset($alertMsg)) {
+                return redirect()->route('reservation.main')->with('alert', $alertMsg);
             }
             // $resExists = ReserveInfo::whereIn('fly_no', [$req->fly_no, $req->fly_no2])
             // ->whereIn('seat_no', [$req->seat_no, $req->seat_no2])
