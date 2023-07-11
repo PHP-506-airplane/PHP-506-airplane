@@ -115,7 +115,10 @@ class NoticeController extends Controller
         }
         $notice->save();
 
-        $notice_no = NoticeInfo::select('notice_no')->max('notice_no');
+        // 0711 udt 이동호
+        // $notice_no = NoticeInfo::select('notice_no')->max('notice_no');
+        $notice_no = NoticeInfo::select('notice_no')->where('notice_no', $notice->notice_no);
+
 
         return redirect()->route('notice.show', $notice_no);
     }
