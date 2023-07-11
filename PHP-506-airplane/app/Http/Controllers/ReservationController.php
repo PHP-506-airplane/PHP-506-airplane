@@ -80,17 +80,22 @@ class ReservationController extends Controller
      * @return bool 예약된 좌석이 존재하는 경우 true, 아닌 경우 false를 반환
      */
     public function dupChk($fly_no, $seat_no) {
-        $resedData = 
-            ReserveInfo::where('fly_no', $fly_no)
-                ->where('seat_no', $seat_no)
-                ->first();
-
-        if($resedData) {
-            return true;
-        }
-
-        return false;
+        return ReserveInfo::where('fly_no', $fly_no)
+            ->where('seat_no', $seat_no)
+            ->exists();
     }
+    // public function dupChk($fly_no, $seat_no, $fly_no2 = null, $seat_no2 = null) {
+    //     $result = 
+    //         ReserveInfo::where('fly_no', $fly_no)
+    //         ->where('seat_no', $seat_no);
+
+    //     if ($fly_no2 && $seat_no2) {
+    //         $result->orWhere('fly_no', $fly_no2)
+    //             ->where('seat_no', $seat_no);
+    //     }
+
+    //     $result->exists();
+    // }
 
     public function main() {
         // $result = AirportInfo::select('*')->get(); //v002 del 이동호
@@ -432,12 +437,19 @@ class ReservationController extends Controller
 
             Log::debug([$hasRes1, $hasRes2]);
 
-            if ($hasRes1 && $hasRes2) {
-                $alertMsg = '가는편과 오는편이 모두 이미 예약된 좌석입니다.';
-            } else if ($hasRes1) {
-                $alertMsg = '가는편이 이미 예약된 좌석입니다.';
-            } else if ($hasRes2) {
-                $alertMsg = '오는편이 이미 예약된 좌석입니다.';
+            // if ($hasRes1 && $hasRes2) {
+            //     $alertMsg = '가는편과 오는편이 모두 이미 예약된 좌석입니다.';
+            // } else if ($hasRes1) {
+            //     $alertMsg = '가는편이 이미 예약된 좌석입니다.';
+            // } else if ($hasRes2) {
+            //     $alertMsg = '오는편이 이미 예약된 좌석입니다.';
+            // }
+            $alertMsg = '이미 예약된 좌석입니다. : ';
+            if ($hasRes1) {
+                $alertMsg .= '\n' . '가는편, ' . $req->seat_no;
+            }
+            if ($hasRes2) {
+                $alertMsg .= '\n' . '오는편, ' . $req->seat_no2;
             }
 
             if (isset($alertMsg)) {
