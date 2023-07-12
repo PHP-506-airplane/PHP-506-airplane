@@ -189,7 +189,7 @@
             // url: "/users/getCurrentUser",
             url: "{{ route('users.getCurrentUser') }}",
             type: "get",
-            async:false, // 동기방식(전역변수에 값 저장하려면 필요)
+            async: false, // 동기방식(전역변수에 값 저장하려면 필요)
             dataType : "json",
             success : function(data) {
                 buyer_name = data.name;
