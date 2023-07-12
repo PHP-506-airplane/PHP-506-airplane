@@ -105,17 +105,66 @@
     </table>
 </div> --}}
 
-<button id="pay_btn" onclick="requestPay({{ auth()->check() }})">결제하기</button>
+<button onclick="requestPay()">결제하기</button>
+
+
 <div style="min-height: 830px"></div>
+
 @endsection
 
 @section('js')
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+
+{{-- <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script> --}}
+
+<script>
+    let IMP = window.IMP;
+    IMP.init("imp11776700"); // 예: imp00000000
+
+    function requestPay() {
+        // IMP.request_pay(param, callback) 결제창 호출
+        IMP.request_pay({ // param
+            pg: "kakaopay" // pg사
+            // ,pg: "tosspay"
+            // ,pg: "html5_inicis" // ********** 이니시스는 진짜로 결제되고 밤에 취소된다고 하니 주의 **********
+            ,pay_method: "card"
+            ,name: "항공권" // 상품명
+            ,amount: 99999 // 가격
+            ,buyer_email: "ldh517525@gmail.com"
+            ,buyer_name: "풀스택" // 구매자명
+        }, function(res) { // callback
+            if (res.success) {
+                // 결제 성공 시 로직
+                // TODO : DB insert 추가
+                let resData = {
+                    // 저장할 데이터 추가하기
+                    amount: res.paid_amount
+                }
+
+                axios.post('/pay/store', resData)
+                .then(function(res) {
+                    // DB 저장 성공 시 로직
+                    alert('예약이 완료되었습니다.');
+                    // TODO : 결제성공 페이지 추가후 URL교체
+                    window.location.href = "/reservation/myreservation";
+                })
+                .catch(function(error) {
+                    // DB 저장 실패 시 로직
+                    console.log(error);
+                    
+                    // 오류 메시지 확인
+                    let errorMessage = error.response ? error.response.data.message : error.message;
+                    alert('예약을 저장하는중 오류가 발생했습니다.\n' + errorMessage);
+                });
+            } else {
+                // 결제 실패 시 로직
+                alert("결제에 실패했습니다.\n" +  res.error_msg);
+            }
+        });
+    }
+</script>
 {{-- <script src="{{asset('js/baggageinfo.js')}}"></script> --}}
-<!-- jQuery -->
-<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
-<!-- iamport.payment.js -->
-<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
-<script>    
+{{-- <script>    
     var IMP = window.IMP; // 생략 가능
     IMP.init("imp11776700"); // 예시 : imp00000000
     function requestPay(isLogin) {
@@ -188,61 +237,61 @@
             headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
             // url: "/users/getCurrentUser",
             url: "{{ route('users.getCurrentUser') }}",
-            type: "get",
-            async: false, // 동기방식(전역변수에 값 저장하려면 필요)
-            dataType : "json",
-            success : function(data) {
-                buyer_name = data.name;
-                buyer_tel = data.tel;
-            },
-            error: function(request,status,error){ 
-                alert("code = "+ request.status + " message = " + request.responseText + " error = " + error); 
-                console.log("code = "+ request.status + " message = " + request.responseText + " error = " + error);
-            }
-        });
-    }
-    
-	// 주문번호를 가져오는 함수 
-    function getMerchantUid_setPrice() {
-        var result = "";
-        $.ajax({
-            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-            url: "/pay/getMerchantUidAndSetPrice",
-            type: "GET",
-            async:false, // 동기방식(전역변수에 값 저장하려면 필요)
-            dataType: "json",
-            data : {
-                // TODO: flight_no로 바꾸기
-                goods_id : 1
-            },
-            success : function(data) {
-                result = data;
-            },
-            error: function(request,status,error){ 
-                alert("code = "+ request.status + " message = " + request.responseText + " error = " + error); 
-                console.log("code = "+ request.status + " message = " + request.responseText + " error = " + error);
-                result = "error";
-            }
-        });
-        return result;
-    }
+type: "get",
+async: false, // 동기방식(전역변수에 값 저장하려면 필요)
+dataType : "json",
+success : function(data) {
+buyer_name = data.name;
+buyer_tel = data.tel;
+},
+error: function(request,status,error){
+alert("code = "+ request.status + " message = " + request.responseText + " error = " + error);
+console.log("code = "+ request.status + " message = " + request.responseText + " error = " + error);
+}
+});
+}
 
-    function removePayAuth(removePayAuthId) {
-        $.ajax({
-            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-            url: "/pay/removePayAuth",
-            method: "POST",
-            dataType : "text",
-            data: {
-                removePayAuthId : removePayAuthId
-            },
-            success: function() {
-                
-            },
-            error: function(request, status, error) {
-                console.log("status : " + request.status + ", message : " + request.responseText + ", error : " + error);
-            }
-        });
-    }
-</script>
+// 주문번호를 가져오는 함수
+function getMerchantUid_setPrice() {
+var result = "";
+$.ajax({
+headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+url: "/pay/getMerchantUidAndSetPrice",
+type: "GET",
+async:false, // 동기방식(전역변수에 값 저장하려면 필요)
+dataType: "json",
+data : {
+// TODO: flight_no로 바꾸기
+goods_id : 1
+},
+success : function(data) {
+result = data;
+},
+error: function(request,status,error){
+alert("code = "+ request.status + " message = " + request.responseText + " error = " + error);
+console.log("code = "+ request.status + " message = " + request.responseText + " error = " + error);
+result = "error";
+}
+});
+return result;
+}
+
+function removePayAuth(removePayAuthId) {
+$.ajax({
+headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+url: "/pay/removePayAuth",
+method: "POST",
+dataType : "text",
+data: {
+removePayAuthId : removePayAuthId
+},
+success: function() {
+
+},
+error: function(request, status, error) {
+console.log("status : " + request.status + ", message : " + request.responseText + ", error : " + error);
+}
+});
+}
+</script> --}}
 @endsection

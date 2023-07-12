@@ -11,4 +11,9 @@ class Payment extends Model
 {
     use HasFactory, SoftDeletes;
     protected $table = 'payment';
+    protected $fillable = [
+        'u_no',
+        'price',
+        'reserve_no',
+    ];
 }

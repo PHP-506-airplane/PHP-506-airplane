@@ -15,13 +15,9 @@ return new class extends Migration
     {
         Schema::create('payment', function (Blueprint $table) {
             $table->id();
-            $table->string('merchant_uid', 1000);
-            $table->string('imp_uid', 1000);
-            $table->integer('amount');
-            $table->integer('status');
-            $table->integer('buy_user_id');
-            $table->integer('sale_user_id');
-            $table->integer('goods_id');
+            $table->integer('u_no');
+            $table->integer('reserve_no');
+            $table->integer('price');
             $table->timestamps();
             $table->softDeletes();
         });

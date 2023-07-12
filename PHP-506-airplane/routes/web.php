@@ -77,10 +77,11 @@ Route::get('/reservation/myreservation', [ReservationController::class, 'myreser
 Route::post('/reservation/myreservation', [ReservationController::class, 'rescancle'])->name('reservation.rescancle');
 // 결제 페이지 --------------------------------------------------
 // Route::get('/users/getCurrentUser', [UserController::class, 'getCurrentUser']);
-Route::get('/users/getCurrentUser', [UserController::class, 'getCurrentUser'])->name('users.getCurrentUser');
-Route::get('/pay/getMerchantUidAndSetPrice', [PayController::class, 'getMerchantUidAndSetPrice']);
-Route::post('/pay/complete', [PayController::class, 'complete']);
-Route::post('/pay/removePayAuth', [PayController::class, 'removePayAuth']);
+Route::post('/pay/store', [PayController::class, 'store'])->name('pay.store');
+// Route::get('/users/getCurrentUser', [UserController::class, 'getCurrentUser'])->name('users.getCurrentUser');
+// Route::get('/pay/getMerchantUidAndSetPrice', [PayController::class, 'getMerchantUidAndSetPrice']);
+// Route::post('/pay/complete', [PayController::class, 'complete']);
+// Route::post('/pay/removePayAuth', [PayController::class, 'removePayAuth']);
 // /결제 페이지 --------------------------------------------------
 
 

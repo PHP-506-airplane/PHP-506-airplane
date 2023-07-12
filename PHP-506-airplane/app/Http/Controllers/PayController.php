@@ -7,12 +7,39 @@ use App\Models\PayAuth;
 use App\Models\Payment;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
+use Illuminate\Database\QueryException;
 
 class PayController extends Controller
 {
+    public function store(Request $request)
+    {
+        // 요청에서 데이터 추출
+        $u_no = Auth::user()->u_no;
+        $price = $request->amount;
+        $res_no = 1; // 예약번호 PK 수정하기
+
+        try {
+            // DB에 데이터 저장
+            Payment::create([
+                'u_no'          => $u_no
+                ,'price'        => $price
+                ,'reserve_no'   => $res_no
+                ,'created_at'   => now()
+                ,'updated_at'   => now()
+            ]);
+
+            // 응답
+            return response()->json(['msg' => 'Payment save success'], 200);
+        } catch (QueryException $e) {
+            // 오류 응답
+            return response()->json(['msg' => 'Failed save payment \n' . $e->getMessage()], 500);
+        }
+    }
+
     public function getMerchantUidAndSetPrice() {
         // 주문번호 규칙 : 연월일(YYMMDD) + 숫자or영어 랜덤 5자리 = 11자리
         $today = date("ymd");
