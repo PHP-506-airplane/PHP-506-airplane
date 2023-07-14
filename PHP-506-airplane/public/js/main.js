@@ -342,8 +342,8 @@ let swiper = new Swiper('.swiper-container', {
         disableOnInteraction : false, // 스와이프 후 자동 재생이 비활성화 되지 않게
     },
     navigation: {
-        prevEl: '.swiper-button-prev', // 이전 슬라이드 버튼
-        nextEl: '.swiper-button-next', // 다음 슬라이드 버튼
+        prevEl: '.swiper-btn-prev', // 이전 슬라이드 버튼
+        nextEl: '.swiper-btn-next', // 다음 슬라이드 버튼
     },
     breakpoints: { //반응형 조건 속성
         300: {

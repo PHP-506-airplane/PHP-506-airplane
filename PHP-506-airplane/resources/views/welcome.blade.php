@@ -113,8 +113,35 @@
                 </div>
             </div>
         </header> 
+        {{-- 아이콘 --}}
+        <div class="icons container">
+            <h1>부가서비스</h1>
+            <div class="icons_inner">
+                <div class="box box1">
+                    <img src="{{asset('img/reserve-icon.png')}}" alt="">
+                    <p><strong>예약 조회</strong></p>
+                </div>
+                <div class="box box2">
+                    <img src="{{asset('img/mileage-icon.png')}}" alt="">
+                    <p><strong>마일리지 안내</strong></p>
+                </div>
+                <div class="box box3">
+                    <img src="{{asset('img/user-icon.png')}}" alt="">
+                    <p><strong>마이페이지</strong></p>
+                </div>
+                <div class="box box4">
+                    <img src="{{asset('img/luggage-icon.png')}}" alt="">
+                    <p><strong>수하물 안내</strong></p>
+                </div>
+                <div class="box box5">
+                    <img src="{{asset('img/insurance-icon.png')}}" alt="">
+                    <p><strong>여행자 보험</strong></p>
+                </div>
+            </div>
+        </div>
         {{-- v004 add 이동호 스와이퍼 --}}
-        <div class="swiperMent" style="font-weight:600">특가 항공권</div>
+    <div class="wrap">
+        <div class="swiperMent container" style="font-weight:600"><h1>특가 항공권</h1></div>
         <div class="mySwipper">
             <div class="swiper-container">
                 <div class="swiper-wrapper swiper_center">
@@ -129,10 +156,19 @@
                                     <span></span>
                                     <form action="{{route('reservation.checkpost')}}" method="POST" id="formLowCost" onclick="swiperClick(event)">
                                         @csrf
-                                        <img src="{{asset('lowCostImg/'. $i .'.png?' . time())}}" alt="IMG" class="swiper_img">
-                                        <div>{{str_replace('공항','',$lowCost[$i]->dep_name)}} → {{str_replace('공항','',$lowCost[$i]->arr_name)}}</div>
-                                        <div>{{$lowCost[$i]->fly_date}}</div>
-                                        <div>{{number_format($lowCost[$i]->price)}}원</div>
+                                        <div class="goods-img">
+                                            <img src="{{asset('lowCostImg/'. $i .'.png?' . time())}}" alt="IMG" class="swiper_img">
+                                        </div>
+                                        <div class="goods-cont">
+                                            <i class="bul">편도운항</i>
+                                            <div class="goods-loc">
+                                                <span class="start">{{str_replace('공항','',$lowCost[$i]->dep_name)}}</span>
+                                                <span class="mid"></span>
+                                                <span class="end">{{str_replace('공항','',$lowCost[$i]->arr_name)}}</span>
+                                            </div>
+                                            <div class="goods-date">{{$lowCost[$i]->fly_date}}</div>
+                                            <div class="goods-price">KRW {{number_format($lowCost[$i]->price)}}</div>
+                                        </div>
                                         <input type="hidden" name="hd_li_flg" value="0">
                                         <input type="hidden" name="dep_port_no" value="{{$lowCost[$i]->dep_no}}">
                                         <input type="hidden" name="one_dep_port_no" value="{{$lowCost[$i]->dep_no}}">
@@ -148,9 +184,12 @@
                         </div>
                     @endfor
                 </div>
+                <div class="swiper-btn-next"></div>
+                <div class="swiper-btn-prev"></div>
             </div>
             <div class="swiper-pagination"></div>
         </div>
+    </div>
         {{-- /스와이퍼 --}}
         <!-- Services-->
         <section class="page-section" id="services">
@@ -162,6 +201,7 @@
                         @foreach($notices as $notice)
                             <li class="noticeli">
                                 <a href="{{route('notice.show', ['notice' => $notice->notice_no])}}">
+                                    <span><img src="{{asset('img/megaphone-icon.png')}}" alt=""></span>
                                     <span class="notice-title">{{ $notice->notice_title }}</span>
                                     <span class="notice-date">{{ $notice->created_at->format('Y.m.d') }}</span>
                                 </a>

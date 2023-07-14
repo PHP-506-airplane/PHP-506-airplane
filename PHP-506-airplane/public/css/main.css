@@ -127,6 +127,9 @@ a{
   background-color: transparent;
   border: none;
 }
+.form-control:focus{
+  background-color: transparent;
+}
 .selectBox2 * {
   box-sizing: border-box; 
 }
@@ -201,6 +204,57 @@ a{
 .selectBox2 .optionList::-webkit-scrollbar-track {background: transparent; }
 .selectBox2 .optionList::-webkit-scrollbar-thumb {background: #303030; border-radius: 45px;}
 .selectBox2 .optionList::-webkit-scrollbar-thumb:hover {background: #303030;}
+
+/* 아이콘 */
+.icons{
+  margin: 30px auto;
+  height: 35vh;
+}
+.icons_inner{
+  padding-top: 10px;
+  display: flex;
+  gap: 1em;
+  flex-wrap: wrap;
+}
+.icons_inner .box{
+  width: 220px;
+  height: 19vh;
+  flex-basis: 150px;
+  flex-grow: 1;
+  text-align: center;
+  border-radius: 15px;
+  background-color: rgba(255,255,255,.9);;
+  cursor: pointer;
+  transition: all 0.5s;
+  overflow: hidden;
+}
+.icons_inner .box p{
+  padding-top: 5px;
+  font-size: 22px;
+  color: #1e1e1e;
+}
+.icons_inner .box:hover{
+  background-color: rgb(248, 50, 60);
+}
+.icons_inner .box:hover p{
+  color: #fff;
+}
+.icons_inner .box:hover img{
+  color: #fff;
+}
+.icons_inner .box:hover.box::after{
+  content: '';
+  width: 48px;
+  height: 48px;
+  position: absolute;
+  display: block;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.icons_inner .box img{
+  margin-top: 40px;
+}
 .sec2{
   display: flex;
   justify-content: space-between;
@@ -248,23 +302,25 @@ a{
   color: #2e2e2e;
   font-weight: 500;
 }
-
 #map {
   width: 400px;
   height: 300px;
 }
 /* v004 add 이동호 스와이퍼 */
+.wrap{
+  padding-top: 20px;
+  width: 100%;
+  background-color: #efeff6;
+}
 .swiperMent {
-  font-size: 28px;
-  width: 900px;
-  margin: 10px auto;
+  margin: 30px auto;  
 }
 .mySwipper {
-  max-width: 910px;
+  max-width: 1400px;
   margin: 0 auto;
   overflow: hidden;
   position: relative;
-  height: 330px;
+  height: 390px;
 }
 .swiper_center {
   text-align: center;
@@ -273,8 +329,8 @@ a{
   margin: 10px;
 }
 .swiper_img {
-  width: 200px;
-  height: 200px;
+  width: 100%;
+  height: 100%;
   box-shadow: 1px 1px 1px 1px gray;
 }
 .swiper-pagination-bullet {
@@ -283,70 +339,159 @@ a{
 .swiper-slide {
   left: -32.5px;
 }
+/* swiper navigation 추가 */
+.swiper-btn-next{
+  position: absolute;
+  width: 39px;
+  height: 39px;
+  background: url('../img/btn_goods_next.png');
+  top: 40%;
+  right: 0;
+  z-index: 99;
+}
+.swiper-btn-prev{
+  position: absolute;
+  width: 39px;
+  height: 39px;
+  background: url('../img/btn_goods_next.png');
+  transform: rotate(180deg);
+  top: 40%;
+  left: 0;
+  z-index: 99;
+}
 #formLowCost {
   cursor: pointer;
 }
-
 #lists {
   background-color: #efeff6;
 }
 #lists:hover {
   background: rgb(205, 204, 225);
 }
-/* 마우스오버 애니메이션 */
-ul.type1 li {
-  position: relative; 
-  display: inline-block; 
-  padding: 5px;
-  width: 225px; 
-  height: 280px;
+/* swiper 내용 css */
+.goods-img{
+  width: 100%;
+  height: 170px;
+  overflow: hidden;
+}
+.goods-cont{
+  position: relative;
+  height: 100%;
+  padding: 10px 0;
+}
+.goods-cont .bul{
+  display: inline-block;
+  padding: 6px 9px;
+  margin-bottom: 5px;
+  font-size: 13px;
+  font-weight: 700;
+  color: rgb(26, 26, 26);
+  background-color: rgb(204, 204, 204);
+  border-radius: 20px;
+  transition: background-color 0s ease 0s, color 0.2s ease 0s;
+}
+.goods-loc{
+  height: 30px;
+  font-size: 19px;
+  font-weight: 700;
+  color: rgb(26, 26, 26);
+  vertical-align: middle;
+  overflow: hidden;
+  line-height: 1.1;
+}
+.start{
+  display: inline-block;
+  width: 70px;
+  vertical-align: middle;
+  overflow: hidden;
+}
+.mid{
+  display: inline-block;
+    margin: 0px 5px;
+    width: 25px;
+    height: 11px;
+    vertical-align: middle;
+    background: url('../img/arr_location.png') 100% 50% no-repeat;
+}
+.end{
+  display: inline-block;
+  width: 70px;
+  vertical-align: middle;
+  overflow: hidden;
+}
+.goods-date{
+  font-size: 12px;
+  color: #767676;
+}
+.goods-price{
+  font-size: 28px;
+  font-weight: bold;
 }
 
-ul.type1 li span {
+/* 마우스오버 애니메이션 */
+ul.type1{
+  padding-left: 3.5rem !important;
+}
+ul.type1 > li {
+  position: relative; 
+  display: inline-block;
+  background-color: #fff; 
+  width: 225px; 
+  height: 350px;
+}
+ul.type1 > li:hover .bul{
+  background-color: red;
+  color: #fff;
+}
+ul.type1 > li:hover .goods-price{
+  color: red;
+}
+ul.type1 > li > span {
   position: absolute; 
-  background: #ced4da; 
+  background: red; 
   transition: all 0.5s;
 }
-ul.type1 li span:nth-child(1) {
+ul.type1 > li > span:nth-child(1) {
   left: 0; 
   top: 0; 
   width: 0; 
-  height: 2px;
+  height: 4px;
 }
-ul.type1 li span:nth-child(2) {
+ul.type1 > li > span:nth-child(2) {
   right: -2px; 
   top: 0; 
-  width: 2px; 
+  width: 4px; 
   height: 0;
 }
-ul.type1 li span:nth-child(3) {
+ul.type1 > li > span:nth-child(3) {
   right: 0; 
   bottom: 0; 
   width: 0; 
-  height: 2px;
+  height: 4px;
 }
-ul.type1 li span:nth-child(4) {
+ul.type1 > li > span:nth-child(4) {
   left: 0; 
   bottom: 0; 
-  width: 2px; 
+  width: 4px; 
   height: 0;
 }
-ul.type1 li:hover span:nth-child(1) {
+ul.type1 > li:hover > span:nth-child(1) {
   width: 100%;
 }
-ul.type1 li:hover span:nth-child(2) {
+ul.type1 > li:hover > span:nth-child(2) {
   height: 100%;
 }
-ul.type1 li:hover span:nth-child(3) {
+ul.type1 > li:hover > span:nth-child(3) {
   width: 100%;
 }
-ul.type1 li:hover span:nth-child(4) {
+ul.type1 > li:hover > span:nth-child(4) {
   height: 100%;
 }
 /* /마우스오버 애니메이션 */
-
 /* /v004 add 이동호 스와이퍼 */
-
+.notice-title{
+  width: 80%;
+}
 /* 모바일 */
 @media(min-width:370px) and (max-width:767px) {
   .round-way, .one-way {
@@ -354,7 +499,6 @@ ul.type1 li:hover span:nth-child(4) {
     width: 100%;
     height: 400px;
     flex-wrap: wrap;
-    /* gap: 1em; */
     padding: 15px;
     padding-left: 25px;
     flex-direction: row;
