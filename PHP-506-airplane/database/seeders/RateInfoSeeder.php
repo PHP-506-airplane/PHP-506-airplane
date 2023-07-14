@@ -19,7 +19,6 @@ class RateInfoSeeder extends Seeder
             ['kind_of_rate' => '성인', 'rate_per' => '0']
             ,['kind_of_rate' => '유아', 'rate_per' => '100']
             ,['kind_of_rate' => '소아', 'rate_per' => '10']
-            ,['kind_of_rate' => '장애인', 'rate_per' => '40']
         ]);
     }
 }

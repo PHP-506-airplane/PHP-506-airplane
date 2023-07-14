@@ -26,9 +26,20 @@ class SeatInfoSeeder extends Seeder
             $seats = $this->generateSeats();
 
             foreach ($seats as $seat) {
+                $seat_str = mb_substr($seat, 0, 1);
+                $level = '';
+                if ($seat_str === 'A') {
+                    $level = '0';
+                } else if ($seat_str === 'B' || $seat_str === 'C') {
+                    $level = '1';
+                } else {
+                    $level = '2';
+                }
+
                 SeatInfo::create([
                     'seat_no'   => $seat // 좌석 번호
                     ,'plane_no' => $i // 비행기 번호
+                    ,'seat_level' => $level
                 ]);
             }
         }

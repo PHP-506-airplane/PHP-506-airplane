@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('ticket_info', function (Blueprint $table) {
-            $table->integer('rate_no', 1);
+            $table->integer('rate_no');
         });
     }
 
