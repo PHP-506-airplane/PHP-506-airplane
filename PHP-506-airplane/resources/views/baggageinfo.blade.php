@@ -16,6 +16,7 @@
 @endsection
 
 @section('contents')
+{{Auth::user()->u_no}}
 {{-- <div class="baggageinfoHeader">
     <h1 class="noticeH1">수하물 안내</h1>
     <h5 class="noticeH5">수하물 관련 규정을 확인하세요.</h5>
@@ -105,7 +106,7 @@
     </table>
 </div> --}}
 
-<button onclick="requestPay()">결제하기</button>
+{{-- <button onclick="requestPay()">결제하기</button> --}}
 
 
 <div style="min-height: 830px"></div>
@@ -117,7 +118,7 @@
 
 {{-- <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script> --}}
 
-<script>
+{{-- <script>
     let IMP = window.IMP;
     IMP.init("imp11776700"); // 예: imp00000000
 
@@ -141,7 +142,7 @@
                     amount: res.paid_amount
                 }
 
-                axios.post('/pay/store', resData)
+                axios.post('localhost/api/pay/store', resData)
                 .then(function(res) {
                     // DB 저장 성공 시 로직
                     alert('예약이 완료되었습니다.');
@@ -162,7 +163,7 @@
             }
         });
     }
-</script>
+</script> --}}
 {{-- <script src="{{asset('js/baggageinfo.js')}}"></script> --}}
 {{-- <script>    
     var IMP = window.IMP; // 생략 가능

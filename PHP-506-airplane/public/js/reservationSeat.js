@@ -49,7 +49,9 @@ const flg = document.querySelector('.flg');
 // 예약확정 confirm
 const seatForm = document.getElementById('seatPost');
 function reserveBtn(){
-    var con_test = confirm("정말 예약 하시겠습니까?");
+    let con_test = confirm("정말 예약 하시겠습니까?");
+    let fly_no = document.getElementById('fly_no').value;
+    let fly_no2 = document.getElementById('fly_no2').value;
 
     if (con_test == true) {
         if (flg.value == 1) {
@@ -62,7 +64,29 @@ function reserveBtn(){
                 con_test = false;
             } else {
                 showLoading();
-                seatForm.submit();
+                // seatForm.submit();
+
+                let price1 = 
+                    getPrice(fly_no)
+                    .then(function(price) {
+                        let price1 = price;
+                    })
+                    .then({
+                        
+                    })
+                    .catch(function(err) {
+                        console.log(err);
+                    });
+
+                let price2 =
+                    getPrice(fly_no2)
+                    .then(function(price) {
+                        console.log(fly_no2 + ":" + price);
+                        console.log(price1 + "," + price2);
+                    })
+                    .catch(function(err) {
+                        console.log(err);
+                    });
             }
         } else {
             if (s_name.value == '') {
@@ -70,10 +94,22 @@ function reserveBtn(){
                 con_test = false;
             } else {
                 showLoading();
-                seatForm.submit();
+                // seatForm.submit();
+                getPrice(fly_no.value);
             }
         }
     }
 }
+// fly_no.value
+async function getPrice(pk) {
+    try {
+        const res = await axios.post('/api/pay/price', pk);
+        const price = await res.data.price;
+        return price;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 
 

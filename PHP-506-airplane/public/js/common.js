@@ -30,3 +30,8 @@ function showLoading() {
     Divloading.classList.add('svgHidden');
     svg.style.display = 'block';
 }
+
+function removeLoading() {
+    Divloading.classList.remove('svgHidden');
+    svg.style.display = 'none';
+}

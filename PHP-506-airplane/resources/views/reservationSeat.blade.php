@@ -64,10 +64,10 @@
                 @csrf
                 <ul>
                     <input type="hidden" class="flg" name="flg" value="{{$flg['hd_li_flg']}}">
-                    <input type="hidden" name="fly_no" value="{{$_POST['dep_fly_no']}}">
+                    <input type="hidden" name="fly_no" value="{{$_POST['dep_fly_no']}}" id="fly_no">
                     <input type="hidden" name="plane_no" value="{{$_POST['dep_plane_no']}}">
                     @if($flg['hd_li_flg'] === '1')
-                        <input type="hidden" name="fly_no2" value="{{$_POST['arr_fly_no']}}">
+                        <input type="hidden" name="fly_no2" value="{{$_POST['arr_fly_no']}}" id="fly_no2">
                         <input type="hidden" name="plane_no2" value="{{$_POST['arr_plane_no']}}">
                     @endif
                     <li class="u_name">이름 : <span>{{Auth::user()->u_name}}</span></li>
@@ -89,6 +89,7 @@
                     @endif
                 </ul>
                 <button type="button" class="chk_btn" onclick="reserveBtn()">예약하기</button>
+                {{-- <button type="button" class="chk_btn" onclick="requestPay()">결제하기</button> --}}
             </form>
         </div>
         {{-- 왕복편 --}}
@@ -167,6 +168,62 @@
 </div>
 @endsection
 @section('js')
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
     <script src="{{asset('js/scripts.js')}}"></script>
     <script src="{{asset('js/reservationSeat.js')}}"></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+
+{{-- <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script> --}}
+
+    <script>
+        let IMP = window.IMP;
+        IMP.init("imp11776700"); // 예: imp00000000
+
+        function requestPay() {
+            // IMP.request_pay(param, callback) 결제창 호출
+            IMP.request_pay({ // param
+                pg: "kakaopay" // pg사
+                // ,pg: "tosspay"
+                // ,pg: "html5_inicis" // ********** 이니시스는 진짜로 결제되고 나중에 취소된다고 하니 주의 **********
+                ,pay_method: "card"
+                ,name: "항공권" // 상품명
+                ,amount: "{{$_POST['dep_fly_no']}}"// 가격
+                ,buyer_email: "{{ Auth::user()->u_email }}"
+                ,buyer_name: "풀스택" // 구매자명
+            }, function(res) { // callback
+                if (res.success) {
+                    // 결제 성공 시 로직
+                    // TODO : DB insert 추가
+                    let resData = {
+                        // 저장할 데이터 추가하기
+                        amount: res.paid_amount
+                        ,u_no: "{{ Auth::user()->u_no }}"
+                    }
+
+                    axios.post('/api/pay/store', resData)
+                    .then(function(res) {
+                        // DB 저장 성공 시 로직
+                        console.log(res);
+                        alert('예약이 완료되었습니다.');
+                        removeLoading();
+                        // TODO : 결제성공 페이지 추가후 URL교체
+                        // window.location.href = "/reservation/myreservation";
+                    })
+                    .catch(function(error) {
+                        // DB 저장 실패 시 로직
+                        console.log(error);
+                        
+                        // 오류 메시지 확인
+                        let errorMessage = error.response ? error.response.data.message : error.message;
+                        alert('예약을 저장하는중 오류가 발생했습니다.\n' + errorMessage);
+                        removeLoading();
+                    });
+                } else {
+                    // 결제 실패 시 로직
+                    alert("결제에 실패했습니다.\n" +  res.error_msg);
+                    removeLoading();
+                }
+            });
+        }
+    </script>
 @endsection
