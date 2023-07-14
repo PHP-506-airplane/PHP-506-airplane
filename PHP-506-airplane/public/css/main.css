@@ -14,44 +14,13 @@ ul{
 a{
   text-decoration: none;
 }
-.btn {
-  border: none;
-  display: block;
-  text-align: center;
-  cursor: pointer;
-  text-transform: uppercase;
-  outline: none;
-  overflow: hidden;
-  position: relative;
+#searchbtn{
+  width: 10%;
+  height: 30%;
   color: #fff;
-  font-weight: 700;
-  font-size: 15px;
-  background-color: rgb(248, 50, 60);
-  padding: 17px 50px;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.20);
+  background-color: rgb(125, 117, 109);
+  border: 1px solid rgb(125, 117, 109);
 }
-.btn span {
-  position: relative; 
-  z-index: 1;
-}
-.btn:after {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 0;
-  height: 490%;
-  width: 170%;
-  background: #78c7d2;
-  -webkit-transition: all .5s ease-in-out;
-  transition: all .5s ease-in-out;
-  -webkit-transform: translateX(-98%) translateY(-25%) rotate(45deg);
-  transform: translateX(-98%) translateY(-25%) rotate(45deg);
-}
-.btn:hover:after {
-  -webkit-transform: translateX(-9%) translateY(-25%) rotate(45deg);
-  transform: translateX(-9%) translateY(-25%) rotate(45deg);
-}
-
 /***********
 *** Tabs ***
 ***********/
@@ -218,7 +187,6 @@ a{
 }
 .icons_inner .box{
   width: 220px;
-  height: 19vh;
   flex-basis: 150px;
   flex-grow: 1;
   text-align: center;
@@ -280,6 +248,7 @@ a{
 .sec2 .notice ul li a{
   display: flex;
   justify-content: space-between;
+  align-items: center;
   font-weight: bold;
   color: #2e2e2e;
 }
@@ -382,9 +351,10 @@ a{
 .goods-cont .bul{
   display: inline-block;
   padding: 6px 9px;
+  font-style: normal;
   margin-bottom: 5px;
   font-size: 13px;
-  font-weight: 700;
+  font-weight: 600;
   color: rgb(26, 26, 26);
   background-color: rgb(204, 204, 204);
   border-radius: 20px;
@@ -494,6 +464,9 @@ ul.type1 > li:hover > span:nth-child(4) {
 }
 /* 모바일 */
 @media(min-width:370px) and (max-width:767px) {
+  .icons{
+    height: 70vh;
+  }
   .round-way, .one-way {
     position: relative;
     width: 100%;
@@ -523,19 +496,19 @@ ul.type1 > li:hover > span:nth-child(4) {
     display: flex;
     flex-direction: column;
   }
-
   .notice>ul {
     width: 350px;
 
   }
-
+  .notice-title{
+    font-size: 12px;
+  }
   .map {
     margin-top: 60px;
-    margin-left: 30px;
   }
 
   .maph2 {
-    min-width: 90%;
+    min-width: 100%;
   }
 
   .img1 {
@@ -551,11 +524,15 @@ ul.type1 > li:hover > span:nth-child(4) {
     color: white;
     font-weight: 400;
 }
+
 }
 
 
 /* 태블릿 */
 @media(min-width: 768px) and (max-width:1023px){
+  .icons{
+    height: 50vh;
+  }
   .round-way, .one-way {
     position: relative;
     width: 100%;
@@ -595,6 +572,7 @@ ul.type1 > li:hover > span:nth-child(4) {
     margin-left: 50px;
 
   }
+  
 
   .notice>h2 {
     margin-left: 50px;
