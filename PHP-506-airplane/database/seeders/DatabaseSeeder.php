@@ -17,33 +17,33 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         // 공항정보 시더
-        $this->call(AirportInfoSeeder::class);
+        // $this->call(AirportInfoSeeder::class);
 
         // 관리자 시더
-        $this->call(UserInfoSeeder::class);
+        // $this->call(UserInfoSeeder::class);
 
         // 항공사 정보 시더
-        $this->call(AirLineInfoSeeder::class);
+        // $this->call(AirLineInfoSeeder::class);
         
         // 비행기 정보 시더
-        $this->call(AirplaneInfoSeeder::class);
+        // $this->call(AirplaneInfoSeeder::class);
 
         // 좌석 정보 시더
-        $this->call(SeatInfoSeeder::class);
+        // $this->call(SeatInfoSeeder::class);
 
         // 예약 정보 테스트 시더
         // $this->call(TestSeeder::class);
         
         // 할인율 시더
-        $this->call(RateInfoSeeder::class);
+        // $this->call(RateInfoSeeder::class);
 
 
         // 공지사항 팩토리
-        \App\Models\NoticeInfo::factory(2000)->create();
+        // \App\Models\NoticeInfo::factory(2000)->create();
 
         // 운항정보 팩토리
-        // for($i = 0; $i < 2; $i++) {
-            // \App\Models\FlightInfo::factory(500)->create();
+        // for($i = 0; $i < 5; $i++) {
+        //     \App\Models\FlightInfo::factory(500)->create();
         // }
 
         // 예약정보 팩토리
@@ -52,8 +52,8 @@ class DatabaseSeeder extends Seeder
         // }
         
         // 티켓정보 팩토리
-        // for($i = 0; $i < 200; $i++) {
-        //     \App\Models\TicketInfo::factory(500)->create();
-        // }
+        for($i = 0; $i < 300; $i++) {
+            \App\Models\TicketInfo::factory(500)->create();
+        }
     }
 }

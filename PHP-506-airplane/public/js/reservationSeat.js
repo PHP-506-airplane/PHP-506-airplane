@@ -48,7 +48,7 @@ function changeTab(tabId) {
 const flg = document.querySelector('.flg');
 // 예약확정 confirm
 const seatForm = document.getElementById('seatPost');
-function reserveBtn(){
+async function reserveBtn(){
     let con_test = confirm("정말 예약 하시겠습니까?");
     let fly_no = document.getElementById('fly_no').value;
     let fly_no2 = document.getElementById('fly_no2').value;
@@ -66,27 +66,16 @@ function reserveBtn(){
                 showLoading();
                 // seatForm.submit();
 
-                let price1 = 
-                    getPrice(fly_no)
-                    .then(function(price) {
-                        let price1 = price;
-                    })
-                    .then({
-                        
-                    })
-                    .catch(function(err) {
-                        console.log(err);
-                    });
+                try {
+                    let price1 = await getPrice(fly_no);
+                    let price2 = await getPrice(fly_no2);
 
-                let price2 =
-                    getPrice(fly_no2)
-                    .then(function(price) {
-                        console.log(fly_no2 + ":" + price);
-                        console.log(price1 + "," + price2);
-                    })
-                    .catch(function(err) {
-                        console.log(err);
-                    });
+                    let totalPrice = price1 + price2;
+                    console.log(price1 + "," + price2);
+                    console.log("Total price: " + totalPrice);
+                } catch (error) {
+                    console.log(error);
+                }
             }
         } else {
             if (s_name.value == '') {
@@ -95,7 +84,12 @@ function reserveBtn(){
             } else {
                 showLoading();
                 // seatForm.submit();
-                getPrice(fly_no.value);
+                try {
+                    let price = await getPrice(fly_no);
+                    console.log(price);
+                } catch (error) {
+                    console.log(error);
+                }
             }
         }
     }
@@ -108,6 +102,7 @@ async function getPrice(pk) {
         return price;
     } catch (error) {
         console.log(error);
+        throw error;
     }
 }
 
