@@ -16,34 +16,9 @@ use Illuminate\Support\Facades\Log;
 
 class PayController extends Controller
 {
-    public function store(Request $req)
-    {
-
-        // 요청에서 데이터 추출
-        $res_no = 1; // 예약번호 PK 수정하기
-
+    public function price($pk) {
         try {
-            // DB에 데이터 저장
-            Payment::create([
-                'u_no'          => $req->u_no
-                ,'price'        => $req->amount
-                ,'reserve_no'   => $res_no
-                ,'merchant_uid' => 1
-                ,'created_at'   => now()
-                ,'updated_at'   => now()
-            ]);
-
-            // 응답
-            return response()->json(['msg' => 'Payment save success'], 200);
-        } catch (QueryException $e) {
-            // 오류 응답
-            return response()->json(['msg' => 'Failed save payment \n' . $e->getMessage()], 500);
-        }
-    }
-
-    public function price(Request $req) {
-        try {
-            $price = FlightInfo::select('price')->where('fly_no', 1)->first();
+            $price = FlightInfo::select('price')->where('fly_no', $pk)->first();
             return response()->json(['price' => $price->price], 200);
         } catch (QueryException $e) {
             // 오류 응답

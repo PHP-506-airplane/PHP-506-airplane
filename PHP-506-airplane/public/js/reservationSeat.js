@@ -49,55 +49,48 @@ const flg = document.querySelector('.flg');
 // 예약확정 confirm
 const seatForm = document.getElementById('seatPost');
 async function reserveBtn(){
-    let con_test = confirm("정말 예약 하시겠습니까?");
     let fly_no = document.getElementById('fly_no').value;
     let fly_no2 = document.getElementById('fly_no2').value;
 
-    if (con_test == true) {
-        if (flg.value == 1) {
-            if (s_name.value == '') {
-                alert('가는편 좌석을 선택해 주세요.');
-                con_test = false;
-            }
-            else if (s_name2.value == '') {
-                alert('오는편 좌석을 선택해 주세요.');
-                con_test = false;
-            } else {
-                showLoading();
-                // seatForm.submit();
-
-                try {
-                    let price1 = await getPrice(fly_no);
-                    let price2 = await getPrice(fly_no2);
-
-                    let totalPrice = price1 + price2;
-                    console.log(price1 + "," + price2);
-                    console.log("Total price: " + totalPrice);
-                } catch (error) {
-                    console.log(error);
-                }
-            }
+    if (flg.value == 1) {
+        if (s_name.value == '') {
+            alert('가는편 좌석을 선택해 주세요.');
+        }
+        else if (s_name2.value == '') {
+            alert('오는편 좌석을 선택해 주세요.');
         } else {
-            if (s_name.value == '') {
-                alert('좌석을 선택해 주세요.');
-                con_test = false;
-            } else {
-                showLoading();
-                // seatForm.submit();
-                try {
-                    let price = await getPrice(fly_no);
-                    console.log(price);
-                } catch (error) {
-                    console.log(error);
-                }
+            showLoading();
+            // seatForm.submit();
+            try {
+                let price1 = await getPrice(fly_no);
+                let price2 = await getPrice(fly_no2);
+                let totalPrice = price1 + price2;
+                requestPay(totalPrice);
+            } catch (error) {
+                console.log(error);
+            }
+        }
+    } else {
+        if (s_name.value == '') {
+            alert('좌석을 선택해 주세요.');
+        } else {
+            showLoading();
+            // seatForm.submit();
+            try {
+                let totalPrice = await getPrice(fly_no);
+                requestPay(totalPrice);
+            } catch (error) {
+                console.log(error);
             }
         }
     }
 }
-// fly_no.value
+
+// 가격 가져오는 api
 async function getPrice(pk) {
     try {
-        const res = await axios.post('/api/pay/price', pk);
+        // const res = await axios.post('/api/pay/price', { pk: pk });
+        const res = await axios.get('/api/pay/price/' + pk);
         const price = await res.data.price;
         return price;
     } catch (error) {

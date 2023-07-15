@@ -25,5 +25,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::post('/mail', [ApiController::class, 'chkEmail']);
 
 // 결제
-Route::post('/pay/store', [PayController::class, 'store']);
-Route::post('/pay/price', [PayController::class, 'price']);
+// 가격 가져오기
+Route::get('/pay/price/{pk}', [PayController::class, 'price']);
