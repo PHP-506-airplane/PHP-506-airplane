@@ -47,7 +47,7 @@ a{
 }
 .login{
     font-size:25px;
-    font-weight: 900;
+    /* font-weight: 900; */
     color:#333;
 }
 
@@ -58,18 +58,18 @@ a{
     background-color: #fff;
     /* margin-left:10px; */
     border:none;
-    /* border-radius: 5px; */
+    /* border-radius: 2px; */
 }
 
 .btn{
     width:310px;
     height: 40px;
     font-size:15px;
-    background-color: #dc3545;
+    background-color: #e1182c;
     color:#fff;
     border:none;
     cursor: pointer;
-    /* border-radius: 5px; */
+    border-radius: 2px;
 }
 .btn:hover{
     background:#adcce5;
