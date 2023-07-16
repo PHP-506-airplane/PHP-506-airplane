@@ -179,7 +179,7 @@
         let IMP = window.IMP;
         IMP.init("imp11776700"); // 예: imp00000000
 
-        function requestPay(totalPrice) {
+        function requestPay(totalPrice, cachedData) {
             // IMP.request_pay(param, callback) 결제창 호출
             IMP.request_pay({ // param
                 pg: "kakaopay" // pg사
@@ -195,6 +195,7 @@
                     seatForm.submit();
                 } else {
                     // 결제 실패 시 로직
+                    clearResCache(cachedData);
                     alert("결제에 실패했습니다.\n" +  res.error_msg);
                     removeLoading();
                 }

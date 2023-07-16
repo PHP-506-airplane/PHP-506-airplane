@@ -32,3 +32,5 @@ Route::get('/reservations/duplicate-check/{fly_no}/{seat_no}', [ReservationContr
 Route::get('/pay/price/{pk}', [PayController::class, 'price']);
 // 중복예약 방지 캐싱
 Route::post('/reservations/cache', [ReservationController::class, 'caching']);
+// 캐시 지우기
+Route::post('/reservations/clearCache', [ReservationController::class, 'clearCache']);

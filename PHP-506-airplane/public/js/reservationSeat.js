@@ -62,9 +62,9 @@ const flg = document.querySelector('.flg');
 const seatForm = document.getElementById('seatPost');
 async function reserveBtn(){
     let fly_no = document.getElementById('fly_no').value;
-    let fly_no2 = document.getElementById('fly_no2').value;
 
     if (flg.value == 1) {
+        let fly_no2 = document.getElementById('fly_no2').value;
         if (s_name.value == '') {
             alert('가는편 좌석을 선택해 주세요.');
         }
@@ -89,24 +89,25 @@ async function reserveBtn(){
                     alert(alertMsg);
                     removeLoading();
                 } else {
-                    let data1 = {
-                        fly_no: fly_no
-                        ,seat_no: s_name.value
-                    }
+                    let caching = await axios.post('/api/reservations/cache', {
+                        fly_no: fly_no,
+                        seat_no: s_name.value
+                    });
 
-                    let data2 = {
-                        fly_no: fly_no2
-                        ,seat_no: s_name2.value
-                    }
-
-                    let caching = await axios.post('/api/reservations/cache', data1);
-                    let caching2 = await axios.post('/api/reservations/cache', data2);
+                    let caching2 = await axios.post('/api/reservations/cache', {
+                        fly_no: fly_no2,
+                        seat_no: s_name2.value
+                    });
 
                     if (caching.data.success && caching2.data.success) {
                         let price1 = await getPrice(fly_no);
                         let price2 = await getPrice(fly_no2);
                         let totalPrice = price1 + price2;
-                        requestPay(totalPrice);
+                        let cachedData = [
+                            [fly_no, s_name.value],
+                            [fly_no2, s_name2.value]
+                        ];
+                        requestPay(totalPrice, cachedData);
                     } else {
                         removeLoading();
                         alert('이미 진행중인 예약입니다.');
@@ -137,13 +138,17 @@ async function reserveBtn(){
 
                     if (caching.data.success) {
                         let totalPrice = await getPrice(fly_no);
-                        requestPay(totalPrice);
+                        let cachedData = [
+                            [fly_no, s_name.value]
+                        ];
+                        requestPay(totalPrice, cachedData);
                     } else {
                         removeLoading();
                         alert('이미 진행중인 예약입니다.\n' + caching.data.msg);
                     }
                 }
             } catch (error) {
+                removeLoading();
                 console.log(error);
             }
         }
@@ -161,4 +166,18 @@ async function getPrice(pk) {
         console.log(error);
         throw error;
     }
+}
+
+// 캐시 지우기
+async function clearResCache(cachedData) {
+    cachedData.forEach(async (data) => {
+        try {
+            await axios.post('/api/reservations/clearCache', {
+            fly_no: data[0],
+            seat_no: data[1]
+        });
+        } catch (error) {
+            console.log(error);
+        }
+    });
 }

@@ -262,6 +262,7 @@ class ReservationController extends Controller
         //  return view('welcome')->with('data',$result); //v002 del 이동호
         return view('welcome', compact('notices', 'data', 'lowCost'));
     }
+
     // 항공편 설정
     public function check(Request $req)
     {
@@ -514,9 +515,7 @@ class ReservationController extends Controller
             if (!isset($req->dep_fly_no)) {
                 return redirect()->back()->with('alert', '가는편 여정을 선택해주세요.');
             }
-
-            // return view('reservationSeat', compact('data', 'seat', 'availableSeats', 'flg','depPort','arrPort'));
-            return redirect()->route('reservation.seatpost')->with('data', 'seat', 'availableSeats', 'flg', 'depPort', 'arrPort');
+            return view('reservationSeat', compact('data', 'seat', 'availableSeats', 'flg','depPort','arrPort'));
         }
     }
     // 예약하기
@@ -533,12 +532,12 @@ class ReservationController extends Controller
                         'seat_no' => $req->seat_no
                         ,'fly_no' => $req->fly_no
                         ,'plane_no' => $req->plane_no
-                    ],
-                    [
+                    ]
+                    ,[
                         'seat_no' => $req->seat_no2
                         ,'fly_no' => $req->fly_no2
                         ,'plane_no' => $req->plane_no2
-                    ],
+                    ]
                 ];
 
                 $reserveNos = [];
@@ -547,11 +546,21 @@ class ReservationController extends Controller
                     $reserveNos[] = $reserveNo;
                 }
 
-                $resData = $this->getReserveData($reserveNos[0]);
-                Mail::to(Auth::user()->u_email)->send(new SendReserve($userinfo, $resData));
+                $reserveNos = [$reserveNos[0], $reserveNos[1]]; // 각 예약 번호를 배열로 저장
 
-                $resData2 = $this->getReserveData($reserveNos[1]);
-                Mail::to(Auth::user()->u_email)->send(new SendReserve($userinfo, $resData2));
+                foreach ($reserveNos as $reserveNo) {
+                    $resData = $this->getReserveData($reserveNo);
+                    Mail::to(Auth::user()->u_email)->send(new SendReserve($userinfo, $resData));
+                }
+
+                $cacheKeys = [
+                    'res_' . $req->fly_no . '_' . $req->seat_no,
+                    'res_' . $req->fly_no2 . '_' . $req->seat_no2
+                ];
+                
+                foreach ($cacheKeys as $cacheKey) {
+                    Cache::forget($cacheKey);
+                }
 
                 DB::commit();
             } catch (Exception $e) {
@@ -573,6 +582,9 @@ class ReservationController extends Controller
 
                 $resData = $this->getReserveData($reserveNo);
                 Mail::to(Auth::user()->u_email)->send(new SendReserve($userinfo, $resData));
+
+                $cacheKey = 'res_' . $req->fly_no . '_' . $req->seat_no;
+                Cache::forget($cacheKey);
 
                 DB::commit();
             } catch (Exception $e) {
