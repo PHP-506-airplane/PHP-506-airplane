@@ -5,9 +5,9 @@ let s_name2 = document.querySelector('.show_name2');
 let choice = document.querySelector('.tab');
 
 // 가는편 좌석 선택
-seats.forEach(function(seat){
-    seat.addEventListener('click', function(){
-        seats.forEach(function(seat){
+seats.forEach(function (seat) {
+    seat.addEventListener('click', function () {
+        seats.forEach(function (seat) {
             seat.classList.remove('selected');
         });
         seat.classList.toggle('selected');
@@ -16,9 +16,9 @@ seats.forEach(function(seat){
 });
 
 // 오는편 좌석 선택
-seats2.forEach(function(seat){
-    seat.addEventListener('click', function(){
-        seats2.forEach(function(seat){
+seats2.forEach(function (seat) {
+    seat.addEventListener('click', function () {
+        seats2.forEach(function (seat) {
             seat.classList.remove('selected');
         });
         seat.classList.toggle('selected');
@@ -32,18 +32,29 @@ function changeTab(tabId) {
     var tabId2 = document.getElementById('aFlight2');
     var map = document.getElementsByClassName('map');
 
-    if(tabId == 'aFlight1'){
+    if (tabId == 'aFlight1') {
         tabId1.parentElement.classList.add('choice');
         tabId2.parentElement.classList.remove('choice');
         map[0].classList.add('active');
         map[1].classList.remove('active');
-    }else{
+    } else {
         tabId2.parentElement.classList.add('choice');
         tabId1.parentElement.classList.remove('choice');
         map[1].classList.add('active');
         map[0].classList.remove('active');
     }
-            
+
+}
+// 중복확인 api
+async function checkDupRes(fly_no, seat_no) {
+    try {
+        const response = await axios.get(`/api/reservations/duplicate-check/${fly_no}/${seat_no}`);
+        const data = response.data;
+        return data.is_duplicate;
+    } catch (error) {
+        console.log(error);
+        throw error;
+    }
 }
 const flg = document.querySelector('.flg');
 // 예약확정 confirm
@@ -62,12 +73,29 @@ async function reserveBtn(){
             showLoading();
             // seatForm.submit();
             try {
-                let price1 = await getPrice(fly_no);
-                let price2 = await getPrice(fly_no2);
-                let totalPrice = price1 + price2;
-                requestPay(totalPrice);
+                // 중복 확인을 위해 API 호출
+                let isDuplicate1 = await checkDupRes(fly_no, s_name.value);
+                let isDuplicate2 = await checkDupRes(fly_no2, s_name2.value);
+                let alertMsg = '이미 예약된 좌석입니다. : ';
+                if (isDuplicate1) {
+                    alertMsg += '\n가는편, ' + s_name.value;
+                }
+                if (isDuplicate2) {
+                    alertMsg += '\n오는편, ' + s_name2.value;
+                }
+
+                if (isDuplicate1 || isDuplicate2) {
+                    alert(alertMsg);
+                    removeLoading();
+                } else {
+                    let price1 = await getPrice(fly_no);
+                    let price2 = await getPrice(fly_no2);
+                    let totalPrice = price1 + price2;
+                    requestPay(totalPrice);
+                }
             } catch (error) {
                 console.log(error);
+                removeLoading();
             }
         }
     } else {
@@ -77,8 +105,14 @@ async function reserveBtn(){
             showLoading();
             // seatForm.submit();
             try {
-                let totalPrice = await getPrice(fly_no);
-                requestPay(totalPrice);
+                let isDuplicate = await checkDupRes(fly_no, s_name.value);
+                if (isDuplicate) {
+                    alert('이미 예약된 좌석입니다.');
+                    removeLoading();
+                } else {
+                    let totalPrice = await getPrice(fly_no);
+                    requestPay(totalPrice);
+                }
             } catch (error) {
                 console.log(error);
             }
@@ -98,6 +132,3 @@ async function getPrice(pk) {
         throw error;
     }
 }
-
-
-

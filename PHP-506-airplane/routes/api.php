@@ -4,6 +4,7 @@ use App\Http\Controllers\ApiController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PayController;
+use App\Http\Controllers\ReservationController;
 
 
 /*
@@ -25,5 +26,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::post('/mail', [ApiController::class, 'chkEmail']);
 
 // 결제
+// 좌석 중복 확인
+Route::get('/reservations/duplicate-check/{fly_no}/{seat_no}', [ReservationController::class, 'dupChk']);
 // 가격 가져오기
 Route::get('/pay/price/{pk}', [PayController::class, 'price']);

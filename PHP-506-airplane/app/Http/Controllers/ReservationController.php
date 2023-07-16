@@ -35,6 +35,9 @@ use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Str;
+use Illuminate\Database\QueryException;
+
 
 class ReservationController extends Controller
 {
@@ -56,39 +59,45 @@ class ReservationController extends Controller
             ->where('reserve_info.u_no', Auth::user()->u_no)
             ->where('reserve_info.reserve_no', $tNo)
             ->select(
-                'reserve_info.*',
-                'fli.fly_date',
-                'dep.port_name AS dep_port_name',
-                'dep.port_eng AS dep_port_eng',
-                'arr.port_name  AS arr_port_name',
-                'arr.port_eng AS arr_port_eng',
-                'fli.flight_num',
-                'fli.dep_time',
-                'fli.arr_time',
-                'airp.plane_name',
-                'airl.line_name',
-                'airl.line_code',
-                'user.u_name',
-                'fli.fly_no',
-                'ticket.t_no',
-                'ticket.t_price'
+                'reserve_info.*'
+                ,'fli.fly_date'
+                ,'dep.port_name AS dep_port_name'
+                ,'dep.port_eng AS dep_port_eng'
+                ,'arr.port_name  AS arr_port_name'
+                ,'arr.port_eng AS arr_port_eng'
+                ,'fli.flight_num'
+                ,'fli.dep_time'
+                ,'fli.arr_time'
+                ,'airp.plane_name'
+                ,'airl.line_name'
+                ,'airl.line_code'
+                ,'user.u_name'
+                ,'fli.fly_no'
+                ,'ticket.t_no'
+                ,'ticket.t_price'
             )
             ->get();
     }
 
-    /**
-     * 예약된 좌석을 확인하는 함수
-     *
-     * @param string $fly_no 가는편 항공편 번호
-     * @param string $seat_no 가는편 좌석 번호
-     * @return bool 예약된 좌석이 존재하는 경우 true, 아닌 경우 false를 반환
-     */
+    // ---------------------------------
+    // 메소드명	: dupChk
+    // 기능		: 예약된 좌석을 확인
+    // 파라미터	: Int       $fly_no
+    //            String    $seat_no
+    // 리턴값	: json      bool
+    // ---------------------------------
     public function dupChk($fly_no, $seat_no)
     {
-        return ReserveInfo::where('fly_no', $fly_no)
-            ->where('seat_no', $seat_no)
-            ->exists();
+        try {
+            $dup = ReserveInfo::where('fly_no', $fly_no)
+                ->where('seat_no', $seat_no)
+                ->exists();
+            return response()->json(['is_duplicate' => $dup]);
+        } catch (QueryException $e) {
+            return response()->json(['msg' => 'API Error \n' . $e->getMessage()], 500);
+        }
     }
+
     // public function dupChk($fly_no, $seat_no, $fly_no2 = null, $seat_no2 = null) {
     //     $result = 
     //         ReserveInfo::where('fly_no', $fly_no)
@@ -102,12 +111,6 @@ class ReservationController extends Controller
     //     $result->exists();
     // }
 
-    /**
-     * 예약 정보를 저장
-     *
-     * @param array $data 예약 데이터
-     * @return int 예약 번호
-     */
     // ---------------------------------
     // 메소드명	: saveReservation
     // 기능		: 예약 정보를 저장
@@ -117,10 +120,10 @@ class ReservationController extends Controller
     public function saveReservation($data)
     {
         $reserveInfo = new ReserveInfo([
-            'u_no' => Auth::user()->u_no,
-            'seat_no' => $data['seat_no'],
-            'fly_no' => $data['fly_no'],
-            'plane_no' => $data['plane_no'],
+            'u_no' => Auth::user()->u_no
+            ,'seat_no' => $data['seat_no']
+            ,'fly_no' => $data['fly_no']
+            ,'plane_no' => $data['plane_no']
         ]);
 
         $reserveInfo->save();
@@ -132,19 +135,24 @@ class ReservationController extends Controller
         $priceInt = intval($price->price);
 
         $ticketInfo = new TicketInfo([
-            'reserve_no' => $tNo,
-            't_price' => $priceInt,
+            'reserve_no' => $tNo
+            ,'t_price' => $priceInt
         ]);
 
         $ticketInfo->save();
 
+        $today = date("ymd");
+        $user = Auth::user()->u_no;
+        // 주문번호 규칙 : 연월일(YYMMDD) + 유저PK + 숫자or영어 랜덤 5자리
+        $merchant_uid = $today.$user.Str::random(5);
+
         $payment = new Payment([
-            'u_no' => Auth::user()->u_no,
-            'price' => $priceInt,
-            'reserve_no' => $tNo,
-            'merchant_uid' => 1,
-            'created_at' => now(),
-            'updated_at' => now()
+            'u_no' => $user
+            ,'price' => $priceInt
+            ,'reserve_no' => $tNo
+            ,'merchant_uid' => $merchant_uid
+            ,'created_at' => now()
+            ,'updated_at' => now()
         ]);
 
         $payment->save();
@@ -175,14 +183,14 @@ class ReservationController extends Controller
             FlightInfo::join('airport_info AS dep', 'flight_info.dep_port_no', 'dep.port_no')
             ->join('airport_info AS arr', 'flight_info.arr_port_no', 'arr.port_no')
             ->select(
-                'flight_info.fly_no',
-                'flight_info.fly_date',
-                'flight_info.price',
-                'dep.port_name AS dep_name',
-                'dep.port_no AS dep_no',
-                'arr.port_name AS arr_name',
-                'arr.port_no AS arr_no',
-                'flight_info.plane_no'
+                'flight_info.fly_no'
+                ,'flight_info.fly_date'
+                ,'flight_info.price'
+                ,'dep.port_name AS dep_name'
+                ,'dep.port_no AS dep_no'
+                ,'arr.port_name AS arr_name'
+                ,'arr.port_no AS arr_no'
+                ,'flight_info.plane_no'
             )
             ->where('flight_info.fly_date', '>', now())
             ->orderBy('price')
@@ -477,21 +485,6 @@ class ReservationController extends Controller
         $userinfo = Userinfo::where('u_email', Auth::user()->u_email)->first();
 
         if ($req->flg == '1') {
-            $hasRes1 = $this->dupChk($req->fly_no, $req->seat_no);
-            $hasRes2 = $this->dupChk($req->fly_no2, $req->seat_no2);
-
-            $alertMsg = '이미 예약된 좌석입니다. : ';
-            if ($hasRes1) {
-                $alertMsg .= '\n' . '가는편, ' . $req->seat_no;
-            }
-            if ($hasRes2) {
-                $alertMsg .= '\n' . '오는편, ' . $req->seat_no2;
-            }
-
-            if ($hasRes1 || $hasRes2) {
-                return redirect()->route('reservation.main')->with('alert', $alertMsg);
-            }
-
             try {
                 DB::beginTransaction();
 
@@ -527,10 +520,6 @@ class ReservationController extends Controller
                 return redirect()->route('reservation.main')->with('alert', '예약중 오류가 발생했습니다.');
             }
         } else {
-            if ($this->dupChk($req->fly_no, $req->seat_no3)) {
-                return redirect()->route('reservation.main')->with('alert', '이미 예약된 좌석입니다.');
-            }
-
             try {
                 DB::beginTransaction();
 
@@ -618,7 +607,6 @@ class ReservationController extends Controller
             Log::error($e);
             return redirect()->route('reservation.main')->with('alert', '예약 취소중 오류가 발생했습니다.');
         }
-
 
         // ReserveInfo::destroy($req->reserve_no);
         // TicketInfo::destroy($req->t_no);
