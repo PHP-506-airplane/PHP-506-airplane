@@ -37,7 +37,8 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 use Illuminate\Database\QueryException;
-
+use Illuminate\Support\Facades\Cache;
+use SebastianBergmann\Type\TrueType;
 
 class ReservationController extends Controller
 {
@@ -95,6 +96,45 @@ class ReservationController extends Controller
             return response()->json(['is_duplicate' => $dup]);
         } catch (QueryException $e) {
             return response()->json(['msg' => 'API Error \n' . $e->getMessage()], 500);
+        }
+    }
+
+    public function caching(Request $req) {
+        try {
+            // 캐시 키 생성
+            $cacheKey = 'res_' . $req->fly_no . '_' . $req->seat_no;
+            $isRes = Cache::get($cacheKey);
+            Log::debug('캐시확인 : ', [Cache::get($cacheKey)]);
+
+            Log::debug($isRes);
+            if (!$isRes) {
+                // 캐시 생성
+                Cache::put($cacheKey, 1);
+                Log::debug('캐시생성 : ', [Cache::get($cacheKey)]);
+                return response()->json(['success' => true]);
+            } else {
+                return response()->json(['success' => false]);
+            }
+        } catch (Exception $e) {
+            // 예외 처리
+            Log::error('캐시생성 실패 : ' . $e->getMessage());
+            return response()->json(['error' => 'Caching failed'], 500);
+        }
+    }
+
+    public function clearCache(Request $req) {
+        try {
+            // 캐시 키 생성
+            $cacheKey = 'res_' . $req->fly_no . '_' . $req->seat_no;
+
+            // 캐시 삭제
+            Cache::forget($cacheKey);
+
+            return response()->json(['success' => true]);
+        } catch (Exception $e) {
+            // 예외 처리
+            Log::error('캐시 지우기 실패 : ' . $e->getMessage());
+            return response()->json(['error' => 'Cache clearing failed'], 500);
         }
     }
 

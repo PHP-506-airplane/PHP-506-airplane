@@ -30,3 +30,5 @@ Route::post('/mail', [ApiController::class, 'chkEmail']);
 Route::get('/reservations/duplicate-check/{fly_no}/{seat_no}', [ReservationController::class, 'dupChk']);
 // 가격 가져오기
 Route::get('/pay/price/{pk}', [PayController::class, 'price']);
+// 중복예약 방지 캐싱
+Route::post('/reservations/cache', [ReservationController::class, 'caching']);

@@ -56,6 +56,7 @@ async function checkDupRes(fly_no, seat_no) {
         throw error;
     }
 }
+
 const flg = document.querySelector('.flg');
 // 예약확정 confirm
 const seatForm = document.getElementById('seatPost');
@@ -88,10 +89,28 @@ async function reserveBtn(){
                     alert(alertMsg);
                     removeLoading();
                 } else {
-                    let price1 = await getPrice(fly_no);
-                    let price2 = await getPrice(fly_no2);
-                    let totalPrice = price1 + price2;
-                    requestPay(totalPrice);
+                    let data1 = {
+                        fly_no: fly_no
+                        ,seat_no: s_name.value
+                    }
+
+                    let data2 = {
+                        fly_no: fly_no2
+                        ,seat_no: s_name2.value
+                    }
+
+                    let caching = await axios.post('/api/reservations/cache', data1);
+                    let caching2 = await axios.post('/api/reservations/cache', data2);
+
+                    if (caching.data.success && caching2.data.success) {
+                        let price1 = await getPrice(fly_no);
+                        let price2 = await getPrice(fly_no2);
+                        let totalPrice = price1 + price2;
+                        requestPay(totalPrice);
+                    } else {
+                        removeLoading();
+                        alert('이미 진행중인 예약입니다.');
+                    }
                 }
             } catch (error) {
                 console.log(error);
@@ -110,8 +129,19 @@ async function reserveBtn(){
                     alert('이미 예약된 좌석입니다.');
                     removeLoading();
                 } else {
-                    let totalPrice = await getPrice(fly_no);
-                    requestPay(totalPrice);
+                    let data = {
+                        fly_no: fly_no
+                        ,seat_no: s_name.value
+                    }
+                    let caching = await axios.post('/api/reservations/cache', data);
+
+                    if (caching.data.success) {
+                        let totalPrice = await getPrice(fly_no);
+                        requestPay(totalPrice);
+                    } else {
+                        removeLoading();
+                        alert('이미 진행중인 예약입니다.\n' + caching.data.msg);
+                    }
                 }
             } catch (error) {
                 console.log(error);
