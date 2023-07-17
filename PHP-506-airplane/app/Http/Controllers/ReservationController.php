@@ -160,9 +160,9 @@ class ReservationController extends Controller
     public function saveReservation($data)
     {
         $reserveInfo = new ReserveInfo([
-            'u_no' => Auth::user()->u_no
-            ,'seat_no' => $data['seat_no']
-            ,'fly_no' => $data['fly_no']
+            'u_no'      => Auth::user()->u_no
+            ,'seat_no'  => $data['seat_no']
+            ,'fly_no'   => $data['fly_no']
             ,'plane_no' => $data['plane_no']
         ]);
 
@@ -176,23 +176,21 @@ class ReservationController extends Controller
 
         $ticketInfo = new TicketInfo([
             'reserve_no' => $tNo
-            ,'t_price' => $priceInt
+            ,'t_price'   => $priceInt
         ]);
 
         $ticketInfo->save();
 
         $today = date("ymd");
         $user = Auth::user()->u_no;
-        // 주문번호 규칙 : 연월일(YYMMDD) + 유저PK + 숫자or영어 랜덤 5자리
-        $merchant_uid = $today.$user.Str::random(5);
+        // 주문번호 규칙 : 연월일(YYMMDD) + 유저PK + 숫자or영어 랜덤 7자리
+        $merchant_uid = $today.$user.Str::random(7);
 
         $payment = new Payment([
-            'u_no' => $user
-            ,'price' => $priceInt
-            ,'reserve_no' => $tNo
+            'u_no'          => $user
+            ,'price'        => $priceInt
+            ,'reserve_no'   => $tNo
             ,'merchant_uid' => $merchant_uid
-            ,'created_at' => now()
-            ,'updated_at' => now()
         ]);
 
         $payment->save();

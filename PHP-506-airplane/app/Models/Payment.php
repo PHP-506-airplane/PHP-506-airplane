@@ -15,5 +15,6 @@ class Payment extends Model
         'u_no'
         ,'price'
         ,'reserve_no'
+        ,'merchant_uid'
     ];
 }
