@@ -73,6 +73,8 @@
                 <ul>
                     <li class="u_name">이름 : <span>{{Auth::user()->u_name}}</span></li>
                     <li>탑승객 : <span>성인 : {{$_POST['ADULT']}}</span></li>
+                    <li>탑승객 : <span>소아 : {{$_POST['CHILD']}}</span></li>
+                    <li>탑승객 : <span>유아 : {{$_POST['BABY']}}</span></li>
                     <li class="s_li">
                         <h3>가는편(구간1)</h3>
                         <span class="material-symbols-outlined">

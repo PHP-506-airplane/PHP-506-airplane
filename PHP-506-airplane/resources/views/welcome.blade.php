@@ -81,8 +81,8 @@
                                     <input type="hidden" class="passenger BABY" name="BABY">
                                     <a href="#none" class="selected_passenger">
                                         <span class="ADULT">성인0 </span>
-                                        <span class="CHILD">유아0 </span>
-                                        <span class="BABY">소아0 </span>
+                                        <span class="CHILD">소아0 </span>
+                                        <span class="BABY">유아0 </span>
                                     </a>
                                     <div class="layer_passenger">
                                         <div class="layer_content">
@@ -98,7 +98,7 @@
                                             </dl>
                                             <dl>
                                                 <dt>
-                                                    <label>유아</label>
+                                                    <label>소아</label>
                                                 </dt>
                                                 <dd class="sel_passenger">
                                                     <a class="btn_minus" href="#none" onclick="changeCount('CHILD', -1);">빼기</a>
@@ -108,7 +108,7 @@
                                             </dl>
                                             <dl>
                                                 <dt>
-                                                    <label>소아</label>
+                                                    <label>유아</label>
                                                 </dt>
                                                 <dd class="sel_passenger">
                                                     <a class="btn_minus" href="#none" onclick="changeCount('BABY', -1);">빼기</a>
