@@ -43,9 +43,11 @@ function clickedFalse() {
 
 const registForm = document.getElementById('registForm');
 function register() {
+    showLoading();
     if (emailButtonClicked) {
         registForm.submit();
     } else {
+        removeLoading();
         alert('이메일 중복확인이 필요합니다.');
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Mail;
 
+use App\Models\EmailVerify;
 use App\Models\User;
 use App\Models\Userinfo;
 use Illuminate\Bus\Queueable;
@@ -16,44 +17,46 @@ class SendEmail extends Mailable
     use Queueable, SerializesModels;
 
     protected $user;
+    protected $emailVerify;
 
     /**
      * Create a new message instance.
      */
-    public function __construct(Userinfo $user)
+    public function __construct(Userinfo $user, EmailVerify $emailVerify)
     {
         $this->user = $user;
+        $this->emailVerify = $emailVerify;
     }
 
-    /**
-     * Get the message envelope.
-     */
-    public function envelope(): Envelope
-    {
-        return new Envelope(
-            subject: 'Send Email',
-        );
-    }
+    // /**
+    //  * Get the message envelope.
+    //  */
+    // public function envelope(): Envelope
+    // {
+    //     return new Envelope(
+    //         subject: 'Send Email',
+    //     );
+    // }
 
-    /**
-     * Get the message content definition.
-     */
-    public function content(): Content
-    {
-        return new Content(
-            view: 'view.name',
-        );
-    }
+    // /**
+    //  * Get the message content definition.
+    //  */
+    // public function content(): Content
+    // {
+    //     return new Content(
+    //         view: 'view.name',
+    //     );
+    // }
 
-    /**
-     * Get the attachments for the message.
-     *
-     * @return array<int, \Illuminate\Mail\Mailables\Attachment>
-     */
-    public function attachments(): array
-    {
-        return [];
-    }
+    // /**
+    //  * Get the attachments for the message.
+    //  *
+    //  * @return array<int, \Illuminate\Mail\Mailables\Attachment>
+    //  */
+    // public function attachments(): array
+    // {
+    //     return [];
+    // }
 
     /**
      * Build the message.
@@ -63,8 +66,10 @@ class SendEmail extends Mailable
     public function build()
     {
         $user = $this->user;
-        return $this->view('email.sendemail')->with('user',$user)
-        //이메일 제목
-        ->subject('이메일 확인');
+        $emailVerify = $this->emailVerify;
+        return $this->view('email.regist')
+            ->with('user', $user)
+            ->with('emailVerify', $emailVerify)
+            ->subject('이메일 인증을 완료해주세요.');
     }
 }
