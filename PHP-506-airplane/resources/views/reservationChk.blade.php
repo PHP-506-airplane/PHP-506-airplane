@@ -42,6 +42,9 @@
             </ul>
         </div>
         <div class="location">
+            <input type="hidden" name="ADULT" value="{{$_GET['ADULT']}}">
+            <input type="hidden" name="CHILD" value="{{$_GET['CHILD']}}">
+            <input type="hidden" name="BABY" value="{{$_GET['BABY']}}">
             <input type="hidden" name="dep_port_no" value="{{$depPort[0]->port_no}}">
             <input type="hidden" name="arr_port_no" value="{{$arrPort[0]->port_no}}">
             @if($flg['hd_li_flg'] === '1')

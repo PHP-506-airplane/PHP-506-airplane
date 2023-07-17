@@ -71,8 +71,53 @@
                                         @endforelse
                                     </ul>
                                 </div>
-                                <div class="selectBox2">
+                                <div class="selectBox2 dateBox">
                                     <input type="text" id="txtDate" class="form-control" name="fly_date" />
+                                </div>
+                                <div class="selectBox2 sbox">
+                                    <input type="text" class="passenger form-control" readonly >
+                                    <input type="hidden" class="passenger ADULT" name="ADULT">
+                                    <input type="hidden" class="passenger CHILD" name="CHILD">
+                                    <input type="hidden" class="passenger BABY" name="BABY">
+                                    <a href="#none" class="selected_passenger">
+                                        <span class="ADULT">성인0 </span>
+                                        <span class="CHILD">유아0 </span>
+                                        <span class="BABY">소아0 </span>
+                                    </a>
+                                    <div class="layer_passenger">
+                                        <div class="layer_content">
+                                            <dl>
+                                                <dt>
+                                                    <label>성인</label>
+                                                </dt>
+                                                <dd class="sel_passenger">
+                                                    <a class="btn_minus" href="#none" onclick="changeCount('ADULT', -1);">빼기</a>
+                                                    <input class="booking passenger ADULT" id="ADULT" title="인원수" type="text" value="0">
+                                                    <a class="btn_plus" href="#none" onclick="changeCount('ADULT', 1);">더하기</a>
+                                                </dd>
+                                            </dl>
+                                            <dl>
+                                                <dt>
+                                                    <label>유아</label>
+                                                </dt>
+                                                <dd class="sel_passenger">
+                                                    <a class="btn_minus" href="#none" onclick="changeCount('CHILD', -1);">빼기</a>
+                                                    <input class="booking passenger CHILD" id="CHILD" title="인원수" type="text" value="0">
+                                                    <a class="btn_plus" href="#none" onclick="changeCount('CHILD', 1);">더하기</a>
+                                                </dd>
+                                            </dl>
+                                            <dl>
+                                                <dt>
+                                                    <label>소아</label>
+                                                </dt>
+                                                <dd class="sel_passenger">
+                                                    <a class="btn_minus" href="#none" onclick="changeCount('BABY', -1);">빼기</a>
+                                                    <input class="booking passenger BABY" id="BABY" title="인원수" type="text" value="0">
+                                                    <a class="btn_plus" href="#none" onclick="changeCount('BABY', 1);">더하기</a>
+                                                </dd>
+                                            </dl>
+                                        </div>
+                                    </div>
                                 </div>
                                     <button type="submit" class="btn btn-submit" id="searchbtn"><span>조회</span></button>
                             </div>

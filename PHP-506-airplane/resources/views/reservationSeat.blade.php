@@ -62,15 +62,17 @@
             <h2>예매자 정보</h2>
             <form id="seatPost" action="{{route('reservation.seatpost')}}" method="post">
                 @csrf
+                <input type="hidden" class="flg" name="flg" value="{{$flg['hd_li_flg']}}">
+                <input type="hidden" name="fly_no" value="{{$_POST['dep_fly_no']}}" id="fly_no">
+                <input type="hidden" name="plane_no" value="{{$_POST['dep_plane_no']}}">
+                @if($flg['hd_li_flg'] === '1')
+                    <input type="hidden" name="fly_no2" value="{{$_POST['arr_fly_no']}}" id="fly_no2">
+                    <input type="hidden" name="plane_no2" value="{{$_POST['arr_plane_no']}}">
+                @endif
+                
                 <ul>
-                    <input type="hidden" class="flg" name="flg" value="{{$flg['hd_li_flg']}}">
-                    <input type="hidden" name="fly_no" value="{{$_POST['dep_fly_no']}}" id="fly_no">
-                    <input type="hidden" name="plane_no" value="{{$_POST['dep_plane_no']}}">
-                    @if($flg['hd_li_flg'] === '1')
-                        <input type="hidden" name="fly_no2" value="{{$_POST['arr_fly_no']}}" id="fly_no2">
-                        <input type="hidden" name="plane_no2" value="{{$_POST['arr_plane_no']}}">
-                    @endif
                     <li class="u_name">이름 : <span>{{Auth::user()->u_name}}</span></li>
+                    <li>탑승객 : <span>성인 : {{$_POST['ADULT']}}</span></li>
                     <li class="s_li">
                         <h3>가는편(구간1)</h3>
                         <span class="material-symbols-outlined">

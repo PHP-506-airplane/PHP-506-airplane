@@ -362,3 +362,43 @@ let swiper = new Swiper('.swiper-container', {
     observer: true,
     observeParents: true,
 });
+
+function changeCount(target,v){
+    var countElement = document.getElementById(target);
+    var currentCount = parseInt(countElement.value);
+    var newCount = currentCount + v;
+    countElement.value = newCount;
+
+   // 선택된 인원 업데이트
+   var selectedPassengerElement = document.querySelector('.selected_passenger');
+   var passengerSpans = selectedPassengerElement.querySelectorAll('span');
+   const ADULT = document.querySelector('.ADULT');
+   const CHILD = document.querySelector('.CHILD');
+   const BABY = document.querySelector('.BABY');
+   for (var i = 0; i < passengerSpans.length; i++) {
+     if (passengerSpans[i].classList.contains(target)) {
+        if(target == 'ADULT'){
+            target = '성인'
+            passengerSpans[i].textContent = target + newCount;
+            ADULT.value = newCount;
+        }else if(target == 'CHILD'){
+            target = '유아'
+            passengerSpans[i].textContent = target + newCount;
+            CHILD.value = newCount;
+        }else{
+            target = '소아'
+            passengerSpans[i].textContent = target + newCount;
+            BABY.value = newCount;
+        }
+       break;
+     }
+   }
+
+}
+
+const selected_passenger = document.querySelector('.selected_passenger');
+const layerP = document.querySelector('.layer_passenger');
+// 라벨을 클릭시 출발지 옵션 목록이 열림/닫힘
+selected_passenger.addEventListener('click', function(){
+    layerP.classList.toggle('on');
+});

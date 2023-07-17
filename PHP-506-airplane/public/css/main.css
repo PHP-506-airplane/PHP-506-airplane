@@ -77,6 +77,83 @@ a{
   background-color: #efeff6;
   padding: 10px;
 }
+.selected_passenger{
+  width: 100%;
+  position: absolute;
+  top: 10px;
+  left: -20px;
+  font-size: 18px;
+  font-weight: 500;
+  color: #2e2e2e;
+}
+.selected_passenger > span::after{
+  content: ', ';
+}
+.selected_passenger > span:last-child::after{
+  content: '';
+}
+.layer_passenger{
+    display: none;
+    position: absolute;
+    bottom: -351px;
+    right: -10px;
+    margin: 0 auto;
+    width: 250px;
+    height: 362px;
+    padding-right: 50px;
+    padding-left: 50px;
+    border: 1px solid #4d4d4d;
+    z-index: 35;
+    background-color: #fff;
+}
+.layer_content{
+  margin-top: 20px;
+}
+.layer_content dl dt{
+    display: block;
+    margin-bottom: 5px;
+    font-size: 16px;
+    font-weight: 700;
+    color: rgb(51, 51, 51);
+}
+.sel_passenger{
+    margin-top: 10px;
+    width: 150px;
+    height: 40px;
+    border: 1px solid rgb(204, 204, 204);
+    text-align: center;
+    border-radius: 3px;
+    box-sizing: border-box;
+}
+.sel_passenger .btn_minus{
+  display: inline-block;
+  float: left;
+  width: 28px;
+  height: 40px;
+  vertical-align: middle;
+  background: url(//contents-image.twayair.com/homepage/images/ico/ico_minus02.png) 50% 50% no-repeat;
+  border-right: 1px solid rgb(204, 204, 204);
+  text-indent: -9999px;
+}
+.sel_passenger input{
+    padding: 0px;
+    width: 75px;
+    height: 25px;
+    font-size: 20px;
+    color: rgb(128, 128, 128);
+    text-align: center;
+    border: 0px;
+}
+.sel_passenger .btn_plus{
+    float: right;
+    display: inline-block;
+    width: 30px;
+    height: 40px;
+    vertical-align: middle;
+    border-left: 1px solid rgb(204, 204, 204);
+    background: url(//contents-image.twayair.com/homepage/images/ico/ico_plus02.png) 50% 50% no-repeat;
+    text-indent: -9999px;
+}
 /* Tab on */
 .on {
   display: block !important;
@@ -112,6 +189,13 @@ a{
   margin-right: 15px;
   cursor: pointer;
   font-size: 24px;
+}
+.sbox{
+  width: 20% !important;
+  background: url('../img/user-icon2.png') calc(100% - 7px) center no-repeat;
+}
+.dateBox{
+  background: url('../img/calendar-icon.png')calc(100% - 7px) center no-repeat;
 }
 .selectBox2:after {
   content: '';
