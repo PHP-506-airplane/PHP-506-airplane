@@ -16,8 +16,7 @@
 @endsection
 
 @section('contents')
-{{Auth::user()->u_no}}
-{{-- <div class="baggageinfoHeader">
+<div class="baggageinfoHeader">
     <h1 class="noticeH1">수하물 안내</h1>
     <h5 class="noticeH5">수하물 관련 규정을 확인하세요.</h5>
 </div>
@@ -104,12 +103,9 @@
             </tr>
         </tbody>
     </table>
-</div> --}}
+</div>
 
 {{-- <button onclick="requestPay()">결제하기</button> --}}
-
-
-<div style="min-height: 830px"></div>
 
 @endsection
 

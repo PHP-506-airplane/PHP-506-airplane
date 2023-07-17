@@ -122,3 +122,9 @@ footer{
     font-size: 0.2rem;
 }
 }
+
+/* 에러 메세지 */
+.errMsg {
+    color: red;
+}
+/* /에러 메세지 */
