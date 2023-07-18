@@ -20,6 +20,11 @@ const hd_li_flg = document.querySelector('.hd_li_flg');
 const btn_submit = document.querySelector('.btn-submit');
 const btn_submit2 = document.querySelector('.btn-submit2');
 
+//인원수 설정
+const ADULT = document.querySelector('#ADULT');
+const CHILD = document.querySelector('#CHILD');
+const BABY = document.querySelector('#BABY');
+
 // 왕복/편도 flg
 hd_li_no1.addEventListener('click', function(){
     hd_li_flg.value = '1';
@@ -60,6 +65,27 @@ btn_submit2.addEventListener('click',function(event){
     }
 });
 
+btn_submit.addEventListener('click', function(event) {
+    const ADULT = document.querySelector('#ADULT');
+    const CHILD = document.querySelector('#CHILD');
+    const BABY = document.querySelector('#BABY');
+    //인원수 선택이 안됐을 때(왕복)
+       if(ADULT.value + CHILD.value + BABY.value < 1) {
+        alert("인원수를 설정해주세요.");
+        event.preventDefault();
+    }   
+});
+
+btn_submit2.addEventListener('click', function(event) {
+    const ADULT = document.querySelector('#ADULT');
+    const CHILD = document.querySelector('#CHILD');
+    const BABY = document.querySelector('#BABY');
+    //인원수 선택이 안됐을 때(편도)
+        if(ADULT.value + CHILD.value + BABY.value < 1) {
+         alert("인원수를 설정해주세요.");
+         event.preventDefault();
+        }
+});
 
  // 클릭한 옵션의 텍스트를 라벨 안에 넣음
 const handleSelect = function(item) {
@@ -363,38 +389,62 @@ let swiper = new Swiper('.swiper-container', {
     observeParents: true,
 });
 
-function changeCount(target,v){
+function changeCount(target, v) {
     var countElement = document.getElementById(target);
+    // 문자열 숫자로 변환
     var currentCount = parseInt(countElement.value);
     var newCount = currentCount + v;
+  
+    // 0 미만이면 값을 0으로 설정
+    newCount = Math.max(newCount, 0);
+    newCount = Math.min(newCount, 4);
+  
+    const ADULT = document.querySelector('.ADULT');
+    const CHILD = document.querySelector('.CHILD');
+    const BABY = document.querySelector('.BABY');
+
+
+    //성인 기본으로 1명 고정(성인 최소값 1)
+    if(ADULT.value < 0) {
+        ADULT.value = 1;
+    }
+    // 유아 수가 성인 수보다 클 때 유아 수를 증가하지 않도록 처리
+    if(target === 'BABY' && newCount > ADULT.value) {
+      alert("유아 1명당 성인 1명의 동반은 필수입니다.");
+      return;
+    }
+
+    // if(ADULT.value = BABY.value) {
+    //     ADULT.value = BABY.value;
+    // }
+
+
     countElement.value = newCount;
-
-   // 선택된 인원 업데이트
-   var selectedPassengerElement = document.querySelector('.selected_passenger');
-   var passengerSpans = selectedPassengerElement.querySelectorAll('span');
-   const ADULT = document.querySelector('.ADULT');
-   const CHILD = document.querySelector('.CHILD');
-   const BABY = document.querySelector('.BABY');
-   for (var i = 0; i < passengerSpans.length; i++) {
-     if (passengerSpans[i].classList.contains(target)) {
-        if(target == 'ADULT'){
-            target = '성인'
-            passengerSpans[i].textContent = target + newCount;
-            ADULT.value = newCount;
-        }else if(target == 'CHILD'){
-            target = '유아'
-            passengerSpans[i].textContent = target + newCount;
-            CHILD.value = newCount;
-        }else{
-            target = '소아'
-            passengerSpans[i].textContent = target + newCount;
-            BABY.value = newCount;
+  
+    // 선택된 인원 업데이트
+    // .selected_passenger안의 span전부 선택
+    var selectedPassengerElement = document.querySelector('.selected_passenger');
+    var passengerSpans = selectedPassengerElement.querySelectorAll('span');
+  
+    for (var i = 0; i < passengerSpans.length; i++) {
+      if (passengerSpans[i].classList.contains(target)) {
+        if (target === 'ADULT') {
+          target = '성인';
+          passengerSpans[i].textContent = target + newCount;
+          ADULT.value = newCount;
+        } else if (target === 'CHILD') {
+          target = '소아';
+          passengerSpans[i].textContent = target + newCount;
+          CHILD.value = newCount;
+        } else {
+          target = '유아';
+          passengerSpans[i].textContent = target + newCount;
+          BABY.value = newCount;
         }
-       break;
-     }
-   }
-
-}
+        break;
+      }
+    }
+  }
 
 const selected_passenger = document.querySelector('.selected_passenger');
 const layerP = document.querySelector('.layer_passenger');
@@ -402,3 +452,14 @@ const layerP = document.querySelector('.layer_passenger');
 selected_passenger.addEventListener('click', function(){
     layerP.classList.toggle('on');
 });
+
+//성인과 유아의 수 설정
+function adultbaby() {
+    const adultid = document.getElementById('ADULT');
+    const babyid = document.getElementById('BABY');
+
+     //유아의 수와 성인의 수가 같은 상황에서 성인의 수를 줄였을 때 유아의 수를 성인의 수에 맞춰서 줄어들게 함
+     if(adultid.value < babyid.value) {
+        babyid.value = adultid.value;
+    }
+}

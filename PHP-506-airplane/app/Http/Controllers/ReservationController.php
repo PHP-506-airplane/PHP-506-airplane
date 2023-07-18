@@ -19,6 +19,7 @@ use App\Mail\SendReserve;
 use App\Models\NoticeInfo;
 use App\Models\AirportInfo;
 use App\Models\FlightInfo;
+use App\Models\Mileage;
 use App\Models\Payment;
 use App\Models\ReserveInfo;
 use App\Models\SeatInfo;
@@ -160,9 +161,9 @@ class ReservationController extends Controller
     public function saveReservation($data)
     {
         $reserveInfo = new ReserveInfo([
-            'u_no' => Auth::user()->u_no
-            ,'seat_no' => $data['seat_no']
-            ,'fly_no' => $data['fly_no']
+            'u_no'      => Auth::user()->u_no
+            ,'seat_no'  => $data['seat_no']
+            ,'fly_no'   => $data['fly_no']
             ,'plane_no' => $data['plane_no']
         ]);
 
@@ -176,26 +177,38 @@ class ReservationController extends Controller
 
         $ticketInfo = new TicketInfo([
             'reserve_no' => $tNo
-            ,'t_price' => $priceInt
+            ,'t_price'   => $priceInt
         ]);
 
         $ticketInfo->save();
 
         $today = date("ymd");
         $user = Auth::user()->u_no;
-        // 주문번호 규칙 : 연월일(YYMMDD) + 유저PK + 숫자or영어 랜덤 5자리
-        $merchant_uid = $today.$user.Str::random(5);
+        // 주문번호 규칙 : 연월일(YYMMDD) + 유저PK + 숫자or영어 랜덤 7자리
+        $merchant_uid = $today.$user.Str::random(7);
 
         $payment = new Payment([
-            'u_no' => $user
-            ,'price' => $priceInt
-            ,'reserve_no' => $tNo
+            'u_no'          => $user
+            ,'price'        => $priceInt
+            ,'reserve_no'   => $tNo
             ,'merchant_uid' => $merchant_uid
-            ,'created_at' => now()
-            ,'updated_at' => now()
         ]);
 
         $payment->save();
+
+        $mileage = $priceInt * 0.05;
+        $userMile = Mileage::where('u_no', $user)->first();
+
+        if ($userMile) {
+            $userMile->u_mile += $mileage;
+        } else {
+            $userMile = new Mileage([
+                'u_no' => $user
+                ,'u_mile' => $mileage
+            ]);
+        }
+
+        $userMile->save();
 
         return $tNo;
     }
@@ -527,6 +540,11 @@ class ReservationController extends Controller
             try {
                 DB::beginTransaction();
 
+                $cacheKeys = [
+                    'res_' . $req->fly_no . '_' . $req->seat_no,
+                    'res_' . $req->fly_no2 . '_' . $req->seat_no2
+                ];
+
                 $flightData = [
                     [
                         'seat_no' => $req->seat_no
@@ -553,11 +571,6 @@ class ReservationController extends Controller
                     Mail::to(Auth::user()->u_email)->send(new SendReserve($userinfo, $resData));
                 }
 
-                $cacheKeys = [
-                    'res_' . $req->fly_no . '_' . $req->seat_no,
-                    'res_' . $req->fly_no2 . '_' . $req->seat_no2
-                ];
-                
                 foreach ($cacheKeys as $cacheKey) {
                     Cache::forget($cacheKey);
                 }
@@ -566,6 +579,9 @@ class ReservationController extends Controller
             } catch (Exception $e) {
                 DB::rollBack();
                 Log::error($e);
+                foreach ($cacheKeys as $cacheKey) {
+                    Cache::forget($cacheKey);
+                }
                 return redirect()->route('reservation.main')->with('alert', '예약중 오류가 발생했습니다.');
             }
         } else {
@@ -590,6 +606,7 @@ class ReservationController extends Controller
             } catch (Exception $e) {
                 DB::rollBack();
                 Log::error($e);
+                Cache::forget($cacheKey);
                 return redirect()->route('reservation.main')->with('alert', '예약중 오류가 발생했습니다.');
             }
         }

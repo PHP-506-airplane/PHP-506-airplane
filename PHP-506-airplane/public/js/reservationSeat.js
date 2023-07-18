@@ -10,6 +10,7 @@ seats.forEach(function (seat) {
         seats.forEach(function (seat) {
             seat.classList.remove('selected');
         });
+        //toggle을 이용해 선택된 좌석에 css를 입혀줌
         seat.classList.toggle('selected');
         s_name.value = seat.querySelector('#s_name').value;
     });

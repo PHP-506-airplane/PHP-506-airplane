@@ -38,28 +38,6 @@ Route::get('/users/withdraw', [UserController::class, 'withdraw'])->name('users.
 Route::get('/users/useredit', [UserController::class, 'useredit'])->name('users.useredit');
 Route::put('/users/usereditpost', [UserController::class, 'usereditpost'])->name('users.useredit.post');
 
-// 0612 이메일
-// 이메일 전송
-// Route::get('/mails/mail', [MailController::class, 'mail'])->name('mails.mail');
-// Route::post('/mails/mailpost', [MailController::class, 'mailpost'])->name('mails.mail.post');
-
-// 이메일 인증
-Route::get('/users/emailverify/{code}', [UserController::class, 'emailverify'])->name('emailverifys.emailverify');
-
-// 이메일 재인증
-Route::get('/users/emailverify_resend', [UserController::class, 'emailverify_resend'])->name('emailverifys_resend.emailverify_resend');
-
-// 이메일 찾기
-// Route::get('/users/findemail', [UserController::class, 'findemail'])->name('findemails.findemail');
-// Route::post('/users/findemailpost', [UserController::class, 'findemail'])->name('findemails.findemail.post');
-
-// 이메일 찾기 답변
-// Route::post('/users/emailanswer', [UserController::class, 'emailanswer'])->name('emailanswers.emailanswer');
-
-// 비밀번호 찾기
-// Route::get('/users/findpassword', [UserController::class, 'findpassword'])->name('findpasswords.findpassword');
-// Route::post('/users/findpasswordpost', [UserController::class, 'findpasswordpost'])->name('findpasswords.findpassword.post');
-
 // 비밀번호 변경
 Route::get('/users/chgpw', [UserController::class, 'chgpw'])->name('users.chgpw');
 Route::put('/users/chgpwpost', [UserController::class, 'chgpwpost'])->name('users.chgpw.post');
@@ -75,15 +53,12 @@ Route::resource('/notice', NoticeController::class);
 Route::get('/reservation/myreservation', [ReservationController::class, 'myreservation'])->name('reservation.myreservation');
 // 예약 취소
 Route::post('/reservation/myreservation', [ReservationController::class, 'rescancle'])->name('reservation.rescancle');
-// 결제 페이지 --------------------------------------------------
-// Route::get('/users/getCurrentUser', [UserController::class, 'getCurrentUser']);
-// Route::post('/pay/store', [PayController::class, 'store'])->name('pay.store');
-// Route::get('/users/getCurrentUser', [UserController::class, 'getCurrentUser'])->name('users.getCurrentUser');
-// Route::get('/pay/getMerchantUidAndSetPrice', [PayController::class, 'getMerchantUidAndSetPrice']);
-// Route::post('/pay/complete', [PayController::class, 'complete']);
-// Route::post('/pay/removePayAuth', [PayController::class, 'removePayAuth']);
-// /결제 페이지 --------------------------------------------------
-
+// 메일 인증(가입 시)
+Route::get('/users/verify/{code}', [UserController::class, 'verify'])->name('users.verify');
+// 메일 재전송(가입 시)
+Route::get('/resend-email', [UserController::class, 'resendemail'])->name('user.resendemail');
+// 아이디 / 비밀번호 찾기 페이지
+Route::get('/users/find/{type}', [UserController::class, 'find'])->name('users.find');
 
 // 0613 add 오재훈
 // 예약 조회(항공편 선택) 페이지

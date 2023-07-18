@@ -5,17 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class EmailVerify extends Model
+class Mileage extends Model
 {
     use HasFactory;
-    protected $table = 'regist_verify';
+    protected $table = 'mileage';
     protected $primaryKey = 'u_no';
+    public $timestamps = false;
     protected $fillable = [
         'u_no'
-        ,'verification_code'
-        ,'validity_period'
-        ,'email_verified_at'
+        ,'u_mile'
     ];
-
-    public $timestamps = false;
 }

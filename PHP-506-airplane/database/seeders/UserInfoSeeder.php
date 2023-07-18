@@ -28,7 +28,7 @@ class UserInfoSeeder extends Seeder
             [
                 'u_email'       => 'admin@a.a'
                 ,'u_pw'         => Hash::make('qwer1234!')
-                ,'u_gender'     => 'M'
+                ,'u_gender'     => 0
                 ,'u_name'       => '관리자'
                 ,'u_birth'      => '19961123'
                 ,'qa_no'        => 2

@@ -10,6 +10,7 @@
 namespace App\Http\Controllers;
 
 use App\Mail\SendEmail;
+use App\Models\EmailVerify;
 use App\Models\Userinfo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -18,6 +19,9 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 use App\Rules\MinAge;
+use Exception;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Laravel\Socialite\Facades\Socialite;
 
 class UserController extends Controller
@@ -28,8 +32,14 @@ class UserController extends Controller
     }
     
     function loginpost(Request $req) {
+        $req->validate([
+            'u_email'   => 'required|email|max:100'  
+            ,'u_pw'     => 'required|regex:/^(?=.*[a-zA-Z])(?=.*[!@#$%^*-])(?=.*[0-9]).{8,20}$/'
+        ]);
 
         $user = Userinfo::where('u_email', $req->u_email)->first();
+
+        $emailVertify = EmailVerify::where('u_no', $user->u_no)->first();
 
         if(!$user || !Hash::check($req->u_pw, $user->u_pw)){
             // Log::debug($req->password . ' : '.$user->password);
@@ -37,16 +47,16 @@ class UserController extends Controller
             return redirect()->back()->with('alert', $error);
         }
 
-        $validation = $req->validate([
-            'u_email'    => 'required|email|max:100'  
-            ,'u_pw' => 'required|regex:/^(?=.*[a-zA-Z])(?=.*[!@#$%^*-])(?=.*[0-9]).{8,20}$/'
-        ]);
+        if(!$emailVertify->email_verified_at) {
+            $resendEmailUrl = route('user.resendemail', ['u_email' => $user->u_email]);
+            return redirect()->back()->with('emailMsg', '메일인증이 완료되지 않은 계정입니다.')->with('resend_email_url', $resendEmailUrl);
+        }
         
         Auth::login($user);
 
         if(Auth::check()) {
             session($user->only('u_email'));
-            
+
             // v002 add 이동호
             if (Session::has('previous_url')) {
                 $previousUrl = Session::get('previous_url');
@@ -62,7 +72,6 @@ class UserController extends Controller
             //     return redirect()->intended($prevUrl); // 이전 페이지로 리다이렉트
             // }
             // /cookie ver. --------------------------------------------------
-            
 
             return redirect()->intended(route('reservation.main'));
         } else {
@@ -81,46 +90,60 @@ class UserController extends Controller
             'name'          => 'required|regex:/^[가-힣]+$/u|min:2|max:30'  
             ,'email'        => 'required|email|min:5|max:30|regex:/^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i'
             ,'password'     => 'required_with:passwordchk|same:passwordchk|regex:/^(?=.*[a-zA-Z])(?=.*[!@#$%^*-])(?=.*[0-9]).{8,20}$/u'
+            ,'passwordchk'  => 'required_with:password|same:password|regex:/^(?=.*[a-zA-Z])(?=.*[!@#$%^*-])(?=.*[0-9]).{8,20}$/u'
             ,'birth'        => ['required', 'date', new MinAge(14)]
+            ,'qa_no'        => 'required|regex:/[1-4]*$/'
+            ,'qa_answer'    => 'required|max:30'
         ]);
 
-        $data['u_name'] = $req->name;
-        $data['u_email'] = $req->email;
-        $data['u_gender'] = $req->gender;
-        $data['u_pw'] = Hash::make($req->password);
-        $data['u_birth'] = $req->birth;
-        $data['qa_no'] = 1;
-        $data['qa_answer'] = '1';
+        try {
+            DB::beginTransaction();
+            $data['u_name'] = $req->name;
+            $data['u_email'] = $req->email;
+            $data['u_gender'] = $req->gender;
+            $data['u_pw'] = Hash::make($req->password);
+            $data['u_birth'] = $req->birth;
+            $data['qa_no'] = $req->qa_no;
+            $data['qa_answer'] = $req->qa_answer;
 
-        //insert하고 insert된 결과가 user에 담김
-        $user = Userinfo::create($data);
-        if(!$user) {
-            $errors = '시스템 에러가 발생하여 회원가입에 실패했습니다.<br>잠시 후에 다시 시도해주세요~.';
+            //insert하고 insert된 결과가 user에 담김
+            $user = Userinfo::create($data);
+            // if(!$user) {
+            //     $errors = '시스템 에러가 발생하여 회원가입에 실패했습니다.<br>잠시 후에 다시 시도해주세요~.';
+            //     return redirect()
+            //         ->route('users.registration')
+            //         ->with('error', $errors);
+            // }
+
+            $verification_code = Str::random(30); // 인증 코드 생성
+            // $validity_period = now()->addMinutes(10); // 유효기간 설정
+            $validity_period = now()->addMinute(5); // 유효기간 설정
+
+            $userEmail['u_no'] = $user->u_no;
+            $userEmail['verification_code'] = $verification_code;
+            $userEmail['validity_period'] = $validity_period;
+            $emailVerify = EmailVerify::create($userEmail);
+
+            // if(!$emailVerify) {
+            //     $errors = '시스템 에러가 발생하여 회원가입에 실패했습니다.<br>잠시 후에 다시 시도해주세요~.';
+            //     return redirect()
+            //         ->route('users.registration')
+            //         ->with('error', $errors);
+            // }
+
+            Mail::to($user->u_email)->send(new SendEmail($user, $emailVerify));
+
+            DB::commit();
+
+            //회원가입 완료 로그인 페이지로 이동
             return redirect()
-                ->route('users.registration')
-                ->with('error', $errors);
+                ->route('users.login')
+                ->with('alert', '가입하신 이메일로 인증메일이 발송되었습니다.\n인증을 완료해주세요.');
+        } catch (Exception $e) {
+            DB::rollBack();
+            Log::error($e);
+            return redirect()->back()->with('alert', '시스템 에러가 발생하여 회원가입에 실패했습니다.\n잠시 후에 다시 시도해주세요~.');
         }
-
-        // $email_pk = Userinfo::select('u_no')->max('u_no');
-        // $verification_code = Str::random(30); // 인증 코드 생
-        // $validity_period = now()->addMinutes(30); // 유효기간 설정
-
-        // $data2['u_no'] = $email_pk;
-        // $data2['verification_code'] = $verification_code;
-        // $data2['validity_period'] = $validity_period;
-
-        // $email = EmailVerify::create($data2);
-  
-        // $user->verification_code = $verification_code;
-        // $user->validity_period = $validity_period;
-        // $user->save();
-
-        // Mail::to($user->u_email)->send(new SendEmail($user));
-
-        //회원가입 완료 로그인 페이지로 이동
-        return redirect()
-            ->route('users.login')
-            ->with('alert', '회원가입을 완료했습니다.\n가입하신 아이디와 비밀번호로 로그인해 주세요.');
     }
     
     //로그아웃
@@ -169,7 +192,7 @@ class UserController extends Controller
         ]);
 
         if(!$baseuser) {
-            $errors = '시스템 에러가 발생하여 수정에 실패했습니다.<br>잠시 후에 다시 시도해주세요~.';
+            $errors = '시스템 에러가 발생하여 수정에 실패했습니다.\n잠시 후에 다시 시도해주세요~.';
             return redirect()
                 ->route('users.useredit')
                 ->with('error', $errors);
@@ -193,57 +216,89 @@ class UserController extends Controller
     }
 
     //이메일 인증
-    function emailverify($code) {
+    function verify($code) {
+        try {
+            DB::beginTransaction();
+            $user = EmailVerify::where('verification_code', $code)
+            ->join('user_info AS user', 'regist_verify.u_no', 'user.u_no')
+            ->first();
 
-        $user = Userinfo::where('verification_code', $code)->first();
+            Log::debug($user);
 
-        if (!$user) {
-            $error = '유효하지 않은 이메일 주소입니다.';
-            return redirect()->route('users.login')->with('error', $error);
+            if (!$user) {
+                $error = '인증이 완료되었거나 유효하지 않은 이메일 주소입니다.';
+                return redirect()->route('users.login')->with('emailMsg', $error);
+            }
+
+            $currentTime = now();
+            $validityPeriod = $user->validity_period;
+
+            if ($currentTime > $validityPeriod) {
+                $error = '인증 유효시간이 만료되었습니다.';
+                $resendEmailUrl = route('user.resendemail', ['u_email' => $user->u_email]);
+                return redirect()->route('users.login')->with('emailMsg', $error)->with('resend_email_url', $resendEmailUrl);
+            }
+
+            $user->verification_code = null;
+            $user->validity_period = null;
+            $user->email_verified_at = now();
+            $user->save();
+            DB::commit();
+
+            return redirect()->route('users.login')->with('alert', '이메일 인증이 완료되었습니다.\n가입하신 이메일과 비밀번호로 로그인 해 주세요.');
+        } catch (Exception $e) {
+            DB::rollBack();
+            Log::error($e);
+            return redirect()->route('users.login')->with('alert', '인증중 오류가 발생했습니다.');
         }
-
-        $currentTime = now();
-        $validityPeriod = $user->validity_period;
-
-        if ($currentTime > $validityPeriod) {
-            $error = '인증 유효시간이 만료되었습니다.';
-            $resendEmailUrl = route('emailverifys_resend.emailverify_resend', ['u_email' => $user->email]);
-            return redirect()->back()->with('error', $error)->with('emailverifys_resend.emailverify_resend', true)->with('resend_email_url', $resendEmailUrl);
-        }
-
-        $user->verification_code = null;
-        $user->validity_period = null;
-        $user->email_verified_at = now();
-        $user->save();
-
-        $success = '이메일 인증이 완료되었습니다.<br>가입하신 아이디와 비밀번호로 로그인 해 주십시오.';
-        return redirect()->route('users.login')->with('alert', $success);
     }
 
-    function emailverify_resend(Request $req) {
-        $user = Userinfo::where('u_email', $req->email)->first();
+    function resendemail(Request $req) {
+        try {
+            DB::beginTransaction();
+            // Log::debug('재전송 req : ', [$req->u_email]);
+            $user = Userinfo::where('u_email', $req->u_email)
+                ->join('regist_verify AS reg', 'reg.u_no', 'user_info.u_no')
+                ->first();
 
-        if (!$user) {
-            $error = '해당 이메일로 가입된 계정이 없습니다.';
-            return redirect()->back()->with('error', $error);
+            $mail = EmailVerify::where('u_no', $user->u_no)
+                ->first();
+            Log::debug('유저 : ', [$user]);
+
+            if (!$user) {
+                $error = '해당 이메일로 가입된 계정이 없습니다.';
+                return redirect()->route('users.login')->with('emailMsg', $error);
+            }
+
+            if ($mail->email_verified_at) {
+                $error = '해당 계정은 이미 이메일 인증이 완료되었습니다.';
+                return redirect()->route('users.login')->with('emailMsg', $error);
+            }
+
+            if ($user->send_at >= now()->subMinutes(5)) {
+                $error = '메일발송은 최소 5분간격으로 가능합니다.';
+                $resendEmailUrl = route('user.resendemail', ['u_email' => $user->u_email]);
+                return redirect()->back()->with('emailMsg', $error)->with('resend_email_url', $resendEmailUrl);
+            }
+
+            $verification_code = Str::random(30);
+            $validity_period = now()->addMinute(5);
+
+            $mail->verification_code = $verification_code;
+            $mail->validity_period = $validity_period;
+            $mail->send_at = now();
+            $mail->save();
+
+            Mail::to($user->u_email)->send(new SendEmail($user, $mail));
+            DB::commit();
+
+            $success = '인증 메일을 재전송하였습니다.\n메일함을 확인하여 계정을 활성화해 주세요.';
+            return redirect()->back()->with('alert', $success);
+        } catch (Exception $e) {
+            DB::rollBack();
+            Log::error($e);
+            return redirect()->route('users.login')->with('alert', '인증중 오류가 발생했습니다.');
         }
-
-        if ($user->email_verified_at) {
-            $error = '해당 계정은 이미 이메일 인증이 완료되었습니다.';
-            return redirect()->back()->with('error', $error);
-        }
-
-        $verification_code = Str::random(30);
-        $validity_period = now()->addMinutes(1);
-
-        $user->verification_code = $verification_code;
-        $user->validity_period = $validity_period;
-        $user->save();
-
-        Mail::to($user->email)->send(new SendEmail($user));
-
-        $success = '이메일 인증 메일을 재전송하였습니다.<br>이메일을 확인하여 계정을 활성화해 주세요.';
-        return redirect()->back()->with('alert', $success);
     }
 
 
@@ -279,31 +334,33 @@ class UserController extends Controller
 
         return response()->json($userData);
     }
-
-    public function redirect($provider){
-        return Socialite::driver($provider)->redirect();
-    }
-
-    protected function Callback($provider)
-    {
-        $socialUser = Socialite::driver($provider)->user();
-
-        $user = Userinfo::where('u_email', $socialUser->getEmail())->first();
-
-        // db와 email이 일치하지 않을경우 새로운 사용자 만들고 로그인 처리
-        if (!$user) {
-            $new_user = UserInfo::create([
-                'u_email' => $socialUser->getEmail(),
-                'u_name'  => '오재훈',
-            ]);
-            Auth::login($new_user);
-        }else{
-            // db와 email이 일치할 경우 로그인 처리
-            Auth::login($user);
+    public function find(Request $req) {
+            return view('find')->with('type', $req->type);
         }
-
-        return redirect()->intended('/');
+        public function redirect($provider){
+            return Socialite::driver($provider)->redirect();
+        }
+    
+        protected function Callback($provider)
+        {
+            $socialUser = Socialite::driver($provider)->user();
+    
+            $user = Userinfo::where('u_email', $socialUser->getEmail())->first();
+    
+            // db와 email이 일치하지 않을경우 새로운 사용자 만들고 로그인 처리
+            if (!$user) {
+                $new_user = UserInfo::create([
+                    'u_email' => $socialUser->getEmail(),
+                    'u_name'  => '오재훈',
+                ]);
+                Auth::login($new_user);
+            }else{
+                // db와 email이 일치할 경우 로그인 처리
+                Auth::login($user);
+            }
+    
+            return redirect()->intended('/');
+        }
     }
-}
 
 
