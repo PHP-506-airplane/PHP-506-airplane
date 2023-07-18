@@ -666,4 +666,9 @@ class ReservationController extends Controller
 
         return redirect()->route('reservation.myreservation')->with('alert', '취소가 완료되었습니다.');
     }
+
+    // 예약 환불
+    public function refund(){
+        return view('refundticket');
+    }
 }

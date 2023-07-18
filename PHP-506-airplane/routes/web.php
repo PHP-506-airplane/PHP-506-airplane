@@ -90,3 +90,9 @@ Route::post('/reservation/myreservation', [ReservationController::class, 'rescan
 Route::get('/reservation/check', [ReservationController::class, 'check'])->name('reservation.check');
 Route::post('/reservation/checkpost', [ReservationController::class, 'checkpost'])->name('reservation.checkpost');
 Route::post('/reservation/seatpost', [ReservationController::class, 'seatpost'])->name('reservation.seatpost');
+
+// social 로그인
+Route::get('/login/{provider}', [UserController::class, 'redirect']);
+Route::get('/login/{provider}/callback', [UserController::class, 'Callback']);
+// 예약 환불
+Route::get('/reservation/refund',[ReservationController::class,'refund']);

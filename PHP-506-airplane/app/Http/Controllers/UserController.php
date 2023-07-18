@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 use App\Rules\MinAge;
+use Laravel\Socialite\Facades\Socialite;
 
 class UserController extends Controller
 {
@@ -278,5 +279,31 @@ class UserController extends Controller
 
         return response()->json($userData);
     }
+
+    public function redirect($provider){
+        return Socialite::driver($provider)->redirect();
+    }
+
+    protected function Callback($provider)
+    {
+        $socialUser = Socialite::driver($provider)->user();
+
+        $user = Userinfo::where('u_email', $socialUser->getEmail())->first();
+
+        // db와 email이 일치하지 않을경우 새로운 사용자 만들고 로그인 처리
+        if (!$user) {
+            $new_user = UserInfo::create([
+                'u_email' => $socialUser->getEmail(),
+                'u_name'  => '오재훈',
+            ]);
+            Auth::login($new_user);
+        }else{
+            // db와 email이 일치할 경우 로그인 처리
+            Auth::login($user);
+        }
+
+        return redirect()->intended('/');
+    }
 }
+
 

@@ -97,7 +97,21 @@ hr{
 .find a:hover{
     color:#707070;
 }
-
+.btn-kakao{
+    color: #333;
+    background-color: yellow !important;
+    line-height: 1.8rem;
+}
+.btn-naver{
+    color: #333;
+    background-color: rgb(20, 211, 20) !important;
+    line-height: 2rem;
+}
+.btn-google{
+    color: #333;
+    background-color: rgb(228, 215, 215) !important;
+    line-height: 2rem;
+}
 @media(min-width:380px) and (max-width:767px) {
     #login_form {
         width: 300px;

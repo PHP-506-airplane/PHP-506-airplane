@@ -11,8 +11,13 @@
         "guzzlehttp/guzzle": "^7.2",
         "laravel/framework": "^9.0",
         "laravel/sanctum": "^2.14",
+        "laravel/socialite": "^5.8",
         "laravel/tinker": "^2.7",
-        "realrashid/sweet-alert": "^7.0"
+        "realrashid/sweet-alert": "^7.0",
+        "socialiteproviders/google": "^4.1",
+        "socialiteproviders/kakao": "^4.2",
+        "socialiteproviders/naver": "^4.1",
+        "socialiteproviders/zoho": "^4.1"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.8",
@@ -65,4 +70,6 @@
     },
     "minimum-stability": "dev",
     "prefer-stable": true
+    
+
 }

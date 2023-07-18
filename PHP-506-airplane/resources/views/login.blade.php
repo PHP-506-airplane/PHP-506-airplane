@@ -42,6 +42,15 @@
         <p class="find">
             <span><a href="{{route('users.registration')}}">회원가입</a></span>
         </p>
+        <a href="{{ url('/login/kakao') }}" class="btn btn-primary btn-kakao">
+            <i><img src="{{asset('img/kakao-icon.svg')}}" alt="" style="width: 24px;height:24px;"></i>&nbsp;카카오로 로그인
+        </a><br><br>
+        <a href="{{ url('/login/naver') }}" class="btn btn-primary btn-naver">
+            <i><img src="{{asset('img/naver-icon.svg')}}" alt="" style="width: 20px;height:20px;"></i>&nbsp;네이버로 로그인
+        </a><br><br>
+        <a href="{{ url('/login/google') }}" class="btn btn-primary btn-google">
+            <i><img src="{{asset('img/google-icon.svg')}}" alt="" style="width: 24px;height:24px;"></i>&nbsp;구글로 로그인
+        </a>
     </div>
 </div>
 
