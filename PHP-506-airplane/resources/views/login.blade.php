@@ -56,8 +56,8 @@
             </form>
             <hr>
             <p class="find">
-                <span><a href="{{route('users.registration')}}">이메일 찾기</a></span>
-                <span><a href="{{route('users.registration')}}">비밀번호 찾기</a></span>
+                <span><a href="{{route('users.find', ['type' => 'id'])}}">이메일 찾기</a></span>
+                <span><a href="{{route('users.find', ['type' => 'pw'])}}">비밀번호 찾기</a></span>
                 <span><a href="{{route('users.registration')}}">회원가입</a></span>
             </p>
         </div>

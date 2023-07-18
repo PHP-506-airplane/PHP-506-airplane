@@ -31,10 +31,10 @@ class UserController extends Controller
     }
     
     function loginpost(Request $req) {
-        $req->validate([
-            'u_email'        => 'required|email|min:5|max:30|regex:/^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i'
-            ,'u_pw'     => 'required|regex:/^(?=.*[a-zA-Z])(?=.*[!@#$%^*-])(?=.*[0-9]).{8,20}$/u'
-        ]);
+        // $req->validate([
+        //     'u_email'        => 'required|email|min:5|max:30|regex:/^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i'
+        //     ,'u_pw'     => 'required|regex:/^(?=.*[a-zA-Z])(?=.*[!@#$%^*-])(?=.*[0-9]).{8,20}$/u'
+        // ]);
 
         $user = Userinfo::where('u_email', $req->u_email)->first();
 
@@ -337,6 +337,10 @@ class UserController extends Controller
         $userData['tel'] = $user->u_tel;
 
         return response()->json($userData);
+    }
+
+    public function find(Request $req) {
+        return view('find')->with('type', $req->type);
     }
 }
 
