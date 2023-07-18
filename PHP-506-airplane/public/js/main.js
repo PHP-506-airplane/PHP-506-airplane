@@ -460,6 +460,6 @@ function adultbaby() {
 
      //유아의 수와 성인의 수가 같은 상황에서 성인의 수를 줄였을 때 유아의 수를 성인의 수에 맞춰서 줄어들게 함
      if(adultid.value < babyid.value) {
-        babyid.value = adultid.value - 1;
+        babyid.value = adultid.value;
     }
 }

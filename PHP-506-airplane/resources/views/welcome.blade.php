@@ -91,7 +91,7 @@
                                                     <label>성인</label>
                                                 </dt>
                                                 <dd class="sel_passenger">
-                                                    <a class="btn_minus" href="#none" onclick="changeCount('ADULT', -1);">빼기</a>
+                                                    <a class="btn_minus" href="#none" onclick="changeCount('ADULT', -1); adultbaby()">빼기</a>
                                                     <input class="booking passenger ADULT" id="ADULT" title="인원수" type="text" value="0" oninput="adultbaby()">
                                                     <a class="btn_plus" href="#none" onclick="changeCount('ADULT', 1);">더하기</a>
                                                 </dd>
@@ -111,7 +111,7 @@
                                                     <label>유아</label>
                                                 </dt>
                                                 <dd class="sel_passenger">
-                                                    <a class="btn_minus" href="#none" onclick="changeCount('BABY', -1);">빼기</a>
+                                                    <a class="btn_minus" href="#none" onclick="changeCount('BABY', -1); adultbaby()">빼기</a>
                                                     <input class="booking passenger BABY" id="BABY" title="인원수" type="text" value="0" oninput="adultbaby()">
                                                     <a class="btn_plus" href="#none" onclick="changeCount('BABY', 1);">더하기</a>
                                                 </dd>
@@ -167,7 +167,7 @@
                                                     <label>성인</label>
                                                 </dt>
                                                 <dd class="sel_passenger">
-                                                    <a class="btn_minus" href="#none" onclick="changeCount('ADULT', -1);">빼기</a>
+                                                    <a class="btn_minus" href="#none" onclick="changeCount('ADULT', -1); adultbaby()">빼기</a>
                                                     <input class="booking passenger ADULT" id="ADULT" title="인원수" type="number" value="0" onchange="adultbaby()">
                                                     <a class="btn_plus" href="#none" onclick="changeCount('ADULT', 1);">더하기</a>
                                                 </dd>
@@ -187,7 +187,7 @@
                                                     <label>유아</label>
                                                 </dt>
                                                 <dd class="sel_passenger">
-                                                    <a class="btn_minus" href="#none" onclick="changeCount('BABY', -1);">빼기</a>
+                                                    <a class="btn_minus" href="#none" onclick="changeCount('BABY', -1); adultbaby()">빼기</a>
                                                     <input class="booking passenger BABY" id="BABY" title="인원수" type="text" value="0" onchange="adultbaby()">
                                                     <a class="btn_plus" href="#none" onclick="changeCount('BABY', 1);">더하기</a>
                                                 </dd>
