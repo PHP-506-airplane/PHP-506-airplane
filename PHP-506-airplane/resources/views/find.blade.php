@@ -15,16 +15,22 @@
 @endsection
 
 @section('contents')
-    @if($type === 'id')
+    {{-- @if($type === 'id')
         아이디 찾기
     @elseif($type === 'pw')
         비밀번호 찾기
     @else
         에러임
-    @endif
+    @endif --}}
+<div class="con">
+    <div>
+        <span>아이디 찾기</span>
+    </div>
+    <h3>아이디 찾기</h3>
+</div>
 @endsection
 
 @section('js')
-    {{-- <script src="{{asset('js/find.js')}}"></script> --}}
+    <script src="{{asset('js/find.js')}}"></script>
 @endsection
 

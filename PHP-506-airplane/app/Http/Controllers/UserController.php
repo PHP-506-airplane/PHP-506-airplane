@@ -31,10 +31,10 @@ class UserController extends Controller
     }
     
     function loginpost(Request $req) {
-        // $req->validate([
-        //     'u_email'        => 'required|email|min:5|max:30|regex:/^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i'
-        //     ,'u_pw'     => 'required|regex:/^(?=.*[a-zA-Z])(?=.*[!@#$%^*-])(?=.*[0-9]).{8,20}$/u'
-        // ]);
+        $req->validate([
+            'u_email'   => 'required|email|max:100'  
+            ,'u_pw'     => 'required|regex:/^(?=.*[a-zA-Z])(?=.*[!@#$%^*-])(?=.*[0-9]).{8,20}$/'
+        ]);
 
         $user = Userinfo::where('u_email', $req->u_email)->first();
 
@@ -50,11 +50,6 @@ class UserController extends Controller
             $resendEmailUrl = route('user.resendemail', ['u_email' => $user->u_email]);
             return redirect()->back()->with('emailMsg', '메일인증이 완료되지 않은 계정입니다.')->with('resend_email_url', $resendEmailUrl);
         }
-
-        $validation = $req->validate([
-            'u_email'    => 'required|email|max:100'  
-            ,'u_pw' => 'required|regex:/^(?=.*[a-zA-Z])(?=.*[!@#$%^*-])(?=.*[0-9]).{8,20}$/'
-        ]);
         
         Auth::login($user);
 
