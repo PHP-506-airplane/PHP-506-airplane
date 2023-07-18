@@ -127,4 +127,9 @@ footer{
 .errMsg {
     color: red;
 }
+
+.link {
+    color: blue;
+    text-decoration: underline;
+}
 /* /에러 메세지 */

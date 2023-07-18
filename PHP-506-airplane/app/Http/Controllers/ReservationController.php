@@ -588,6 +588,7 @@ class ReservationController extends Controller
             } catch (Exception $e) {
                 DB::rollBack();
                 Log::error($e);
+                Cache::forget($cacheKey);
                 return redirect()->route('reservation.main')->with('alert', '예약중 오류가 발생했습니다.');
             }
         }
