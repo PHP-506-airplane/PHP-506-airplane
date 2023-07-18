@@ -46,7 +46,7 @@ emailFindBtn.addEventListener('click', function() {
             resultSpan.style.color = result.color;
 
             let loginLink = document.createElement('a');
-            loginLink.href = "{{ route('users.login') }}";
+            loginLink.href = "/users/login";
             loginLink.textContent = '로그인 페이지로 이동';
             loginLink.classList.add('aPoint');
     
