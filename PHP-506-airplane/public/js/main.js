@@ -363,38 +363,52 @@ let swiper = new Swiper('.swiper-container', {
     observeParents: true,
 });
 
-function changeCount(target,v){
+function changeCount(target, v) {
     var countElement = document.getElementById(target);
+    // 문자열 숫자로 변환
     var currentCount = parseInt(countElement.value);
     var newCount = currentCount + v;
+  
+    // 0 미만이면 값을 0으로 설정
+    newCount = Math.max(newCount, 0);
+    newCount = Math.min(newCount, 4);
+  
+    const ADULT = document.querySelector('.ADULT');
+    const CHILD = document.querySelector('.CHILD');
+    const BABY = document.querySelector('.BABY');
+
+    // 유아 수가 성인 수보다 클 때 유아 수를 증가하지 않도록 처리
+    if(target === 'BABY' && newCount > ADULT.value) {
+      alert("유아 1명당 성인 1명의 동반은 필수입니다.");
+      return;
+    }
+
     countElement.value = newCount;
-
-   // 선택된 인원 업데이트
-   var selectedPassengerElement = document.querySelector('.selected_passenger');
-   var passengerSpans = selectedPassengerElement.querySelectorAll('span');
-   const ADULT = document.querySelector('.ADULT');
-   const CHILD = document.querySelector('.CHILD');
-   const BABY = document.querySelector('.BABY');
-   for (var i = 0; i < passengerSpans.length; i++) {
-     if (passengerSpans[i].classList.contains(target)) {
-        if(target == 'ADULT'){
-            target = '성인'
-            passengerSpans[i].textContent = target + newCount;
-            ADULT.value = newCount;
-        }else if(target == 'CHILD'){
-            target = '소아'
-            passengerSpans[i].textContent = target + newCount;
-            CHILD.value = newCount;
-        }else{
-            target = '유아'
-            passengerSpans[i].textContent = target + newCount;
-            BABY.value = newCount;
+  
+    // 선택된 인원 업데이트
+    // .selected_passenger안의 span전부 선택
+    var selectedPassengerElement = document.querySelector('.selected_passenger');
+    var passengerSpans = selectedPassengerElement.querySelectorAll('span');
+  
+    for (var i = 0; i < passengerSpans.length; i++) {
+      if (passengerSpans[i].classList.contains(target)) {
+        if (target === 'ADULT') {
+          target = '성인';
+          passengerSpans[i].textContent = target + newCount;
+          ADULT.value = newCount;
+        } else if (target === 'CHILD') {
+          target = '소아';
+          passengerSpans[i].textContent = target + newCount;
+          CHILD.value = newCount;
+        } else {
+          target = '유아';
+          passengerSpans[i].textContent = target + newCount;
+          BABY.value = newCount;
         }
-       break;
-     }
-   }
-
-}
+        break;
+      }
+    }
+  }
 
 const selected_passenger = document.querySelector('.selected_passenger');
 const layerP = document.querySelector('.layer_passenger');
