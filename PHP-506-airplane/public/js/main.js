@@ -382,11 +382,11 @@ function changeCount(target,v){
             passengerSpans[i].textContent = target + newCount;
             ADULT.value = newCount;
         }else if(target == 'CHILD'){
-            target = '유아'
+            target = '소아'
             passengerSpans[i].textContent = target + newCount;
             CHILD.value = newCount;
         }else{
-            target = '소아'
+            target = '유아'
             passengerSpans[i].textContent = target + newCount;
             BABY.value = newCount;
         }
