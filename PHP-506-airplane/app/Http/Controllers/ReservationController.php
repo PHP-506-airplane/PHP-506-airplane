@@ -100,6 +100,12 @@ class ReservationController extends Controller
         }
     }
 
+    // ---------------------------------
+    // 메소드명	: caching
+    // 기능		: 운항정보PK와 좌석번호로 캐시를 생성
+    // 파라미터	: Request      $req
+    // 리턴값	: json         bool
+    // ---------------------------------
     public function caching(Request $req) {
         try {
             // 캐시 키 생성
@@ -123,6 +129,12 @@ class ReservationController extends Controller
         }
     }
 
+    // ---------------------------------
+    // 메소드명	: clearCache
+    // 기능		: 운항정보PK와 좌석번호로 생성된 캐시를 삭제
+    // 파라미터	: Request      $req
+    // 리턴값	: json         bool
+    // ---------------------------------
     public function clearCache(Request $req) {
         try {
             // 캐시 키 생성
@@ -138,19 +150,6 @@ class ReservationController extends Controller
             return response()->json(['error' => 'Cache clearing failed'], 500);
         }
     }
-
-    // public function dupChk($fly_no, $seat_no, $fly_no2 = null, $seat_no2 = null) {
-    //     $result = 
-    //         ReserveInfo::where('fly_no', $fly_no)
-    //         ->where('seat_no', $seat_no);
-
-    //     if ($fly_no2 && $seat_no2) {
-    //         $result->orWhere('fly_no', $fly_no2)
-    //             ->where('seat_no', $seat_no);
-    //     }
-
-    //     $result->exists();
-    // }
 
     // ---------------------------------
     // 메소드명	: saveReservation

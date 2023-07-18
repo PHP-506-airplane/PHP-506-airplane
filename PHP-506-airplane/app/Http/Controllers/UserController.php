@@ -1,14 +1,17 @@
 <?php
+
 /**************************************************
  * 프로젝트명   : PHP-506-airplane
  * 디렉토리     : app/Http/Controllers
  * 파일명       : UserController.php
  * 이력         :   v001 0612 박수연 new
  *                  v002 0626 이동호 add 이전페이지 기억
-**************************************************/
+ *                  v003 0718 이동호 add 이메일 인증, 찾기, 트랜잭션
+ **************************************************/
 
 namespace App\Http\Controllers;
 
+use App\Mail\FindPassword;
 use App\Mail\SendEmail;
 use App\Models\EmailVerify;
 use App\Models\Userinfo;
@@ -22,18 +25,21 @@ use App\Rules\MinAge;
 use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Password;
 use Laravel\Socialite\Facades\Socialite;
 
 class UserController extends Controller
 {
     //로그인
-    function login() {
+    function login()
+    {
         return view('login');
     }
-    
-    function loginpost(Request $req) {
+
+    function loginpost(Request $req)
+    {
         $req->validate([
-            'u_email'   => 'required|email|max:100'  
+            'u_email'   => 'required|email|max:100'
             ,'u_pw'     => 'required|regex:/^(?=.*[a-zA-Z])(?=.*[!@#$%^*-])(?=.*[0-9]).{8,20}$/'
         ]);
 
@@ -41,20 +47,23 @@ class UserController extends Controller
 
         $emailVertify = EmailVerify::where('u_no', $user->u_no)->first();
 
-        if(!$user || !Hash::check($req->u_pw, $user->u_pw)){
+        if (!$user || !Hash::check($req->u_pw, $user->u_pw)) {
             // Log::debug($req->password . ' : '.$user->password);
             $error = '아이디와 비밀번호를 확인하세요';
             return redirect()->back()->with('alert', $error);
         }
 
-        if(!$emailVertify->email_verified_at) {
+        if (!$emailVertify->email_verified_at) {
             $resendEmailUrl = route('user.resendemail', ['u_email' => $user->u_email]);
             return redirect()->back()->with('emailMsg', '메일인증이 완료되지 않은 계정입니다.')->with('resend_email_url', $resendEmailUrl);
         }
-        
+
         Auth::login($user);
 
-        if(Auth::check()) {
+        if (Auth::check()) {
+            if ($user->temp_pw === '1') {
+                Session::put('alert', '임시 비밀번호로 로그인 하셨습니다.\n비밀번호를 변경해주세요.');
+            }
             session($user->only('u_email'));
 
             // v002 add 이동호
@@ -81,13 +90,15 @@ class UserController extends Controller
     }
 
     //회원가입
-    function registration() {
+    function registration()
+    {
         return view('registration');
     }
 
-    function registrationpost(Request $req) {
+    function registrationpost(Request $req)
+    {
         $req->validate([
-            'name'          => 'required|regex:/^[가-힣]+$/u|min:2|max:30'  
+            'name'          => 'required|regex:/^[가-힣]+$/u|min:2|max:30'
             ,'email'        => 'required|email|min:5|max:30|regex:/^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i'
             ,'password'     => 'required_with:passwordchk|same:passwordchk|regex:/^(?=.*[a-zA-Z])(?=.*[!@#$%^*-])(?=.*[0-9]).{8,20}$/u'
             ,'passwordchk'  => 'required_with:password|same:password|regex:/^(?=.*[a-zA-Z])(?=.*[!@#$%^*-])(?=.*[0-9]).{8,20}$/u'
@@ -116,7 +127,6 @@ class UserController extends Controller
             // }
 
             $verification_code = Str::random(30); // 인증 코드 생성
-            // $validity_period = now()->addMinutes(10); // 유효기간 설정
             $validity_period = now()->addMinute(5); // 유효기간 설정
 
             $userEmail['u_no'] = $user->u_no;
@@ -145,9 +155,10 @@ class UserController extends Controller
             return redirect()->back()->with('alert', '시스템 에러가 발생하여 회원가입에 실패했습니다.\n잠시 후에 다시 시도해주세요~.');
         }
     }
-    
+
     //로그아웃
-    function logout() {
+    function logout()
+    {
         Session::flush();   //세션 파기
         Auth::logout();
         return redirect()->route('reservation.main');
@@ -155,7 +166,8 @@ class UserController extends Controller
     }
 
     //비밀번호 로그아웃
-    function logoutPw() {
+    function logoutPw()
+    {
         Session::flush();   //세션 파기
         Auth::logout();
         return redirect()->route('reservation.main')->with('alert', '비밀번호가 변경되었습니다.');
@@ -163,18 +175,20 @@ class UserController extends Controller
     }
 
     //회원정보 수정
-    function useredit() {
-        if(auth()->guest()) {
+    function useredit()
+    {
+        if (auth()->guest()) {
             return redirect()->route('users.login');
         }
 
         //지금 로그인 돼있는 엘로퀀트의 u_no만 뽑음
         $user  = Userinfo::find(Auth::user()->u_no);
-        
+
         return view('useredit')->with('data', $user);
     }
 
-    function usereditpost(Request $req) {
+    function usereditpost(Request $req)
+    {
         //수정한 항목을 담는 배열(루프를 최소한으로 돌리기 위해서)
         $arrKey = [];
 
@@ -182,16 +196,15 @@ class UserController extends Controller
         $baseuser = Userinfo::find(Auth::user()->u_no);
 
         //db에 담긴 이름이랑 넣은 이름이랑 같은지 확인하고 다를 경우에만 배열에 담음
-        if($req->u_name !== $baseuser->u_name)
-        {
+        if ($req->u_name !== $baseuser->u_name) {
             $arrKey[] = 'u_name';
         }
-        
+
         $req->validate([
             'u_name'      => 'required|regex:/^[가-힣]+$/|min:2|max:30'
         ]);
 
-        if(!$baseuser) {
+        if (!$baseuser) {
             $errors = '시스템 에러가 발생하여 수정에 실패했습니다.\n잠시 후에 다시 시도해주세요~.';
             return redirect()
                 ->route('users.useredit')
@@ -202,11 +215,11 @@ class UserController extends Controller
         $baseuser->save();
 
         return redirect()->back()->with('alert', '수정되었습니다.');
-        
     }
 
     //탈퇴
-    function withdraw() {
+    function withdraw()
+    {
         $id = session('u_no');
         $result = Userinfo::destroy(Auth::user()->u_no);
         Session::flush();
@@ -215,13 +228,19 @@ class UserController extends Controller
         return redirect()->route('reservation.main')->with('alert', '탈퇴되었습니다.');
     }
 
-    //이메일 인증
-    function verify($code) {
+    // ---------------------------------
+    // 메소드명	: verify
+    // 기능		: 인증코드를 받아 유저인증
+    // 파라미터	: String      $code
+    // 리턴값	:             redirect         
+    // ---------------------------------
+    function verify($code)
+    {
         try {
             DB::beginTransaction();
             $user = EmailVerify::where('verification_code', $code)
-            ->join('user_info AS user', 'regist_verify.u_no', 'user.u_no')
-            ->first();
+                ->join('user_info AS user', 'regist_verify.u_no', 'user.u_no')
+                ->first();
 
             Log::debug($user);
 
@@ -253,7 +272,14 @@ class UserController extends Controller
         }
     }
 
-    function resendemail(Request $req) {
+    // ---------------------------------
+    // 메소드명	: resendemail
+    // 기능		: 인증메일을 재전송
+    // 파라미터	: Request      $req
+    // 리턴값	:              redirect         
+    // ---------------------------------
+    function resendemail(Request $req)
+    {
         try {
             DB::beginTransaction();
             // Log::debug('재전송 req : ', [$req->u_email]);
@@ -303,64 +329,186 @@ class UserController extends Controller
 
 
     // 비밀번호 변경
-    function chgpw() {
+    function chgpw()
+    {
         return view('chgpw');
     }
-    
+
     function chgpwpost(Request $req)
     {
 
         $baseuser = Userinfo::find(Auth::user()->u_no);
 
-        if(!Hash::check($req->nowpassword, $baseuser->u_pw)) {
+        if (!Hash::check($req->nowpassword, $baseuser->u_pw)) {
             return redirect()->back()->with('alert', '비밀번호가 일치하지 않습니다.');
         }
 
-        
+
         $chkList = [
             'password' => 'required_with:passwordchk|same:passwordchk|regex:/^(?=.*[a-zA-Z])(?=.*[!@#$%^*-])(?=.*[0-9]).{8,20}$/'
         ];
 
         $baseuser->u_pw = Hash::make($req->password);
+
+        // 임시 비밀번호일경우 플래그 변경
+        if ($baseuser->temp_pw === '1') {
+            $baseuser->temp_pw = '0';
+        }
         $baseuser->save();
 
         return redirect()->route('users.logoutPw');
     }
 
-    public function getCurrentUser() {
+    public function getCurrentUser()
+    {
         $user = Userinfo::find(auth()->user()->u_no);
         $userData['name'] = $user->u_name;
         $userData['tel'] = $user->u_tel;
 
         return response()->json($userData);
     }
-    public function find(Request $req) {
-            return view('find')->with('type', $req->type);
+    public function find(Request $req)
+    {
+        return view('find')->with('type', $req->type);
+    }
+    public function redirect($provider)
+    {
+        return Socialite::driver($provider)->redirect();
+    }
+
+    protected function Callback($provider)
+    {
+        $socialUser = Socialite::driver($provider)->user();
+
+        $user = Userinfo::where('u_email', $socialUser->getEmail())->first();
+
+        // db와 email이 일치하지 않을경우 새로운 사용자 만들고 로그인 처리
+        if (!$user) {
+            $new_user = UserInfo::create([
+                'u_email' => $socialUser->getEmail(),
+                'u_name'  => '오재훈',
+            ]);
+            Auth::login($new_user);
+        } else {
+            // db와 email이 일치할 경우 로그인 처리
+            Auth::login($user);
         }
-        public function redirect($provider){
-            return Socialite::driver($provider)->redirect();
-        }
-    
-        protected function Callback($provider)
-        {
-            $socialUser = Socialite::driver($provider)->user();
-    
-            $user = Userinfo::where('u_email', $socialUser->getEmail())->first();
-    
-            // db와 email이 일치하지 않을경우 새로운 사용자 만들고 로그인 처리
-            if (!$user) {
-                $new_user = UserInfo::create([
-                    'u_email' => $socialUser->getEmail(),
-                    'u_name'  => '오재훈',
+
+        return redirect()->intended('/');
+    }
+
+    // ---------------------------------
+    // 메소드명	: findEmail
+    // 기능		: 일치하는 정보의 이메일을 찾음
+    // 파라미터	: Request      $req
+    // 리턴값	: json         
+    // ---------------------------------
+    public function findEmail(Request $req) {
+        try {
+            DB::beginTransaction();
+
+            $email = Userinfo::where('u_name', $req->name)
+                ->where('u_birth', $req->birth)
+                ->where('qa_no', $req->qa_no)
+                ->where('qa_answer', $req->qa_anw)
+                ->select('u_email')
+                ->first();
+
+            if (!$email) {
+                return response()
+                ->json([
+                    'success'   => false
+                    ,'msg'      => '일치하는 정보가 없습니다.'
+                    ,'color'    => 'red'
                 ]);
-                Auth::login($new_user);
-            }else{
-                // db와 email이 일치할 경우 로그인 처리
-                Auth::login($user);
             }
-    
-            return redirect()->intended('/');
+
+            return response()
+                ->json([
+                    'success'   => true
+                    ,'msg'      => $req->name . '님의 이메일은 ' . $email->u_email . '입니다.'
+                    ,'color'    => 'black'
+                ]);
+        } catch (Exception $e) {
+            Log::debug($e);
+            return response()
+                ->json([
+                    'success'   => false
+                    ,'msg'      => '시스템 에러'
+                    ,'color'    => 'red'
+                ]);
         }
     }
 
+    // ---------------------------------
+    // 메소드명	: findPw
+    // 기능		: 일치하는 정보의 비밀번호 변경 링크를 메일로 발송
+    // 파라미터	: Request      $req
+    // 리턴값	: json         
+    // ---------------------------------
+    public function findPw(Request $req) {
+        try {
+            DB::beginTransaction();
 
+            $user = Userinfo::where('u_email', $req->email)
+                ->where('u_name', $req->name)
+                ->where('qa_no', $req->qa_no)
+                ->where('qa_answer', $req->qa_anw)
+                ->first();
+
+            if (!$user) {
+                return response()
+                ->json([
+                    'success'   => false
+                    ,'msg'      => '일치하는 정보가 없습니다.'
+                    ,'color'    => 'red'
+                ]);
+            }
+
+            $lower = 'abcdefghijklmnopqrstuvwxyz';
+            $upper = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            $special = '!@#$%^*-';
+            $numbers = '0123456789';
+            
+            $allChars = $lower . $upper . $special . $numbers;
+            $tempPw = '';
+
+            // 각 종류의 문자를 하나씩 포함하는지 확인
+            $tempPw .= $lower[random_int(0, strlen($lower) - 1)];
+            $tempPw .= $upper[random_int(0, strlen($upper) - 1)];
+            $tempPw .= $special[random_int(0, strlen($special) - 1)];
+            $tempPw .= $numbers[random_int(0, strlen($numbers) - 1)];
+
+            // 나머지 문자를 임의로 추가
+            for ($i = 0; $i < 6; $i++) {
+                $index = random_int(0, strlen($allChars) - 1);
+                $tempPw .= $allChars[$index];
+            }
+
+            // 임시 비밀번호를 무작위로 섞기
+            $tempPw = str_shuffle($tempPw);
+
+            $user->u_pw = Hash::make($tempPw);
+            $user->temp_pw = 1;
+            $user->save();
+
+            Mail::to($user->u_email)->send(new FindPassword($user, $tempPw));
+            DB::commit();
+            return response()
+                ->json([
+                    'success'   => true
+                    ,'msg'      => '입력하신 이메일로 임시 비밀번호가 발송되었습니다.'
+                    ,'color'    => 'black'
+                ]);
+            } catch (Exception $e) {
+                DB::rollback();
+                Log::debug($e);
+                return response()
+                    ->json([
+                        'success'   => false
+                        ,'msg'      => '시스템 에러'
+                        ,'color'    => 'red'
+                    ]);
+            }
+    }
+}

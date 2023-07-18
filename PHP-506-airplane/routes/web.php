@@ -59,6 +59,8 @@ Route::get('/users/verify/{code}', [UserController::class, 'verify'])->name('use
 Route::get('/resend-email', [UserController::class, 'resendemail'])->name('user.resendemail');
 // 아이디 / 비밀번호 찾기 페이지
 Route::get('/users/find/{type}', [UserController::class, 'find'])->name('users.find');
+// 아이디 찾기
+
 
 // 0613 add 오재훈
 // 예약 조회(항공편 선택) 페이지
