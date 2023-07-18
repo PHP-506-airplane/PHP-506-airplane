@@ -92,7 +92,7 @@
                                                 </dt>
                                                 <dd class="sel_passenger">
                                                     <a class="btn_minus" href="#none" onclick="changeCount('ADULT', -1);">빼기</a>
-                                                    <input class="booking passenger ADULT" id="ADULT" title="인원수" type="text" value="0">
+                                                    <input class="booking passenger ADULT" id="ADULT" title="인원수" type="text" value="0" oninput="adultbaby()">
                                                     <a class="btn_plus" href="#none" onclick="changeCount('ADULT', 1);">더하기</a>
                                                 </dd>
                                             </dl>
@@ -112,14 +112,14 @@
                                                 </dt>
                                                 <dd class="sel_passenger">
                                                     <a class="btn_minus" href="#none" onclick="changeCount('BABY', -1);">빼기</a>
-                                                    <input class="booking passenger BABY" id="BABY" title="인원수" type="text" value="0">
+                                                    <input class="booking passenger BABY" id="BABY" title="인원수" type="text" value="0" oninput="adultbaby()">
                                                     <a class="btn_plus" href="#none" onclick="changeCount('BABY', 1);">더하기</a>
                                                 </dd>
                                             </dl>
                                         </div>
                                     </div>
                                 </div>
-                                    <button type="submit" class="btn btn-submit" id="searchbtn"><span>조회</span></button>
+                                    <button type="submit" class="btn btn-submit" id="searchbtn" onclick="boardSum()"><span>조회</span></button>
                             </div>
                         </div> 
                         {{-- 편도 --}}
@@ -168,7 +168,7 @@
                                                 </dt>
                                                 <dd class="sel_passenger">
                                                     <a class="btn_minus" href="#none" onclick="changeCount('ADULT', -1);">빼기</a>
-                                                    <input class="booking passenger ADULT" id="ADULT" title="인원수" type="number" value="0" min="1" max="4">
+                                                    <input class="booking passenger ADULT" id="ADULT" title="인원수" type="number" value="0" onchange="adultbaby()">
                                                     <a class="btn_plus" href="#none" onclick="changeCount('ADULT', 1);">더하기</a>
                                                 </dd>
                                             </dl>
@@ -188,14 +188,14 @@
                                                 </dt>
                                                 <dd class="sel_passenger">
                                                     <a class="btn_minus" href="#none" onclick="changeCount('BABY', -1);">빼기</a>
-                                                    <input class="booking passenger BABY" id="BABY" title="인원수" type="text" value="0">
+                                                    <input class="booking passenger BABY" id="BABY" title="인원수" type="text" value="0" onchange="adultbaby()">
                                                     <a class="btn_plus" href="#none" onclick="changeCount('BABY', 1);">더하기</a>
                                                 </dd>
                                             </dl>
                                         </div>
                                     </div>
                                 </div>
-                                <button type="submit" class="btn btn-submit2" id="searchbtn"><span>조회</span></button>
+                                <button type="submit" class="btn btn-submit2" id="searchbtn" onclick="boardSum()"><span>조회</span></button>
                             </div>
                         </div>
                     </form>
