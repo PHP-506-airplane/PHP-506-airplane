@@ -5,11 +5,12 @@ html{
 Boarding Pass
 --------------------*/
 .total{
+    height: 89vh;
+    padding-top: 10%;
     text-align: center;
-    margin: 0 auto;
 }
 .boarding-pass {
-    width: 750px;
+    width: 850px;
     background: #fff;
     border-radius: 12px;
     box-shadow: 0 5px 30px rgba(0, 0, 0, .2);

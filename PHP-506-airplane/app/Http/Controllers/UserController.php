@@ -337,30 +337,32 @@ class UserController extends Controller
     public function find(Request $req) {
             return view('find')->with('type', $req->type);
         }
-        public function redirect($provider){
-            return Socialite::driver($provider)->redirect();
+        
+    // 소셜로그인
+    public function redirect($provider){
+        return Socialite::driver($provider)->redirect();
+    }
+    
+    protected function Callback($provider)
+    {
+        $socialUser = Socialite::driver($provider)->user();
+
+        $user = Userinfo::where('u_email', $socialUser->getEmail())->first();
+
+        // db와 email이 일치하지 않을경우 새로운 사용자 만들고 로그인 처리
+        if (!$user) {
+            $new_user = UserInfo::create([
+                'u_email' => $socialUser->getEmail(),
+                'u_name'  => '오재훈',
+            ]);
+            Auth::login($new_user);
+        }else{
+            // db와 email이 일치할 경우 로그인 처리
+            Auth::login($user);
         }
-    
-        protected function Callback($provider)
-        {
-            $socialUser = Socialite::driver($provider)->user();
-    
-            $user = Userinfo::where('u_email', $socialUser->getEmail())->first();
-    
-            // db와 email이 일치하지 않을경우 새로운 사용자 만들고 로그인 처리
-            if (!$user) {
-                $new_user = UserInfo::create([
-                    'u_email' => $socialUser->getEmail(),
-                    'u_name'  => '오재훈',
-                ]);
-                Auth::login($new_user);
-            }else{
-                // db와 email이 일치할 경우 로그인 처리
-                Auth::login($user);
-            }
-    
-            return redirect()->intended('/');
-        }
+
+        return redirect()->intended('/');
+    }
     }
 
 
