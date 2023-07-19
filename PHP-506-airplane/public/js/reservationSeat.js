@@ -9,20 +9,31 @@ let peoNum = document.getElementById('peoNum').getAttribute('peoNums');
 // 가는편 좌석 선택
 seats.forEach(function (seat) {
     seat.addEventListener('click', function () {
+        let arr = [];
         // 인원수 만큼 좌석 선택되었는지 확인
         let selectedSeats = document.querySelectorAll('.fast a.selected');
-        if (selectedSeats.length >= peoNum) {
-            return; // 이미 인원수 만큼 좌석이 선택된 경우, 추가 선택을 막음
+        if (arr.length >= peoNum) {
+            ; // 이미 인원수 만큼 좌석이 선택된 경우, 추가 선택을 막음
         }
+        arr.push('');
 
+
+      
         // seats.forEach(function (seat) {
         //     seat.classList.remove('selected');
         // });
-
+        if (seat.classList.toggle('selected')) {
+            seats.forEach(function (seat) {
+                    seat.classList.remove('selected');
+                });
+        }
         seat.classList.toggle('selected');
         s_name.value = seat.querySelector('#s_name').value;
+
+
     });
 });
+
 
 // 오는편 좌석 선택
 seats2.forEach(function (seat) {
