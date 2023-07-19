@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PayController;
 use App\Http\Controllers\ReservationController;
+use App\Http\Controllers\UserController;
 
 
 /*
@@ -25,6 +26,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 // 이메일 중복
 Route::post('/mail', [ApiController::class, 'chkEmail']);
 
+// 0716 이동호
 // 결제
 // 좌석 중복 확인
 Route::get('/reservations/duplicate-check/{fly_no}/{seat_no}', [ReservationController::class, 'dupChk']);
@@ -34,3 +36,8 @@ Route::get('/pay/price/{pk}', [PayController::class, 'price']);
 Route::post('/reservations/cache', [ReservationController::class, 'caching']);
 // 캐시 지우기
 Route::post('/reservations/clearCache', [ReservationController::class, 'clearCache']);
+// 이메일 찾기
+Route::post('/users/email', [UserController::class, 'findEmail']);
+// 비밀번호 찾기
+Route::post('/users/password', [UserController::class, 'findPw']);
+
