@@ -13,8 +13,10 @@ namespace App\Console;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use App\Models\FlightInfo;
+use App\Models\Payment;
 use App\Models\ReserveInfo;
 use App\Models\TicketInfo;
+use App\Models\Userinfo;
 use Carbon\Carbon;
 use Faker\Factory as FakerFactory;
 use Illuminate\Support\Arr;
@@ -91,21 +93,30 @@ class Kernel extends ConsoleKernel
         // })->everyMinute(); // php artisan schedule:run 명령어로 즉시 실행시 사용
         // })->dailyAt('10:00'); // 매일 아침 10시에 실행
 
-        // 1년이상 지난 데이터 삭제
+        // 2년이상 지난 데이터 삭제
         $schedule->call(function () {
-            $oneYearAgo = Carbon::now()->subYear(); // 오늘로부터 1년전 날짜
+            $twoYearsAgo = Carbon::now()->subYears(2); // 오늘로부터 2년전 날짜
 
-            FlightInfo::where('fly_date', '<', $oneYearAgo)
+            FlightInfo::where('fly_date', '<', $twoYearsAgo)
                 ->forceDelete();
+
             ReserveInfo::join('flight_info AS fli', 'fli.fly_no', 'reserve_info.fly_no')
-                ->where('fli.fly_date', '<', $oneYearAgo)
+                ->where('fli.fly_date', '<', $twoYearsAgo)
                 ->forceDelete();
+
             TicketInfo::join('reserve_info AS res', 'res.reserve_no', 'ticket_info.reserve_no')
                 ->join('flight_info AS fli', 'fli.fly_no', 'res.fly_no')
-                ->where('fli.fly_date', '<', $oneYearAgo)
+                ->where('fli.fly_date', '<', $twoYearsAgo)
                 ->forceDelete();
-        // })->everyMinute();
+
+            Payment::where('deleted_at', '<', $twoYearsAgo)
+                ->forceDelete();
+
+            Userinfo::where('deleted_at', '<', $twoYearsAgo)
+            ->forceDelete();
+
         })->dailyAt('10:00');
+
     }
 
     /**
