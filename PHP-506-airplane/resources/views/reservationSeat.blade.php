@@ -59,8 +59,9 @@
         </div>
     </div>
     <div class="seatMap">
-        <div class="name_box">
-            <h2>좌석 선택 인원수</h2>
+        {{-- <div class="name_box"> --}}
+            {{-- <h2>좌석 선택 인원수</h2> --}}
+            <br>
             <form id="seatPost" action="{{route('reservation.seatpost')}}" method="post">
                 @csrf
                 <input type="hidden" class="flg" name="flg" value="{{$flg['hd_li_flg']}}">
@@ -73,9 +74,9 @@
                 
                 <ul>
                     {{-- <li class="u_name">이름 : <span>{{Auth::user()->u_name}}</span></li> --}}
-                    <li><span>{{intval($_POST['ADULT']) + intval($_POST['CHILD'])}}명</span></li>
+                    <li><span class="imponum">좌석 선택 인원 : {{intval($_POST['ADULT']) + intval($_POST['CHILD'])}}명</span></li>
                     {{-- <li><span>소아 : {{$_POST['CHILD']}}</span></li> --}}
-                    <li><span>유아 : {{$_POST['BABY']}}</span></li>
+                    {{-- <li><span>유아 : {{$_POST['BABY']}}</span></li> --}}
                     {{-- <li class="s_li">
                         <h3>가는편(구간1)</h3>
                         <span class="material-symbols-outlined">
@@ -96,7 +97,7 @@
                 {{-- <button type="button" class="chk_btn" onclick="reserveBtn()">결제하기</button> --}}
                 {{-- <button type="button" class="chk_btn" onclick="requestPay()">결제하기</button> --}}
             </form>
-        </div>
+        {{-- </div> --}}
         {{-- 왕복편 --}}
         {{-- 예약된 좌석 비교 --}}
         @if($flg['hd_li_flg'] === '1')
