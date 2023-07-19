@@ -74,7 +74,7 @@
                 
                 <ul>
                     {{-- <li class="u_name">이름 : <span>{{Auth::user()->u_name}}</span></li> --}}
-                    <li><span class="imponum">좌석 선택 인원 : {{intval($_POST['ADULT']) + intval($_POST['CHILD'])}}명</span></li>
+                    <li><span peoNums="{{intval($_POST['ADULT']) + intval($_POST['CHILD'])}}" id="peoNum">{{intval($_POST['ADULT']) + intval($_POST['CHILD'])}}명</span></li>
                     {{-- <li><span>소아 : {{$_POST['CHILD']}}</span></li> --}}
                     {{-- <li><span>유아 : {{$_POST['BABY']}}</span></li> --}}
                     {{-- <li class="s_li">
