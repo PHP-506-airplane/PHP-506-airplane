@@ -3,58 +3,145 @@ let seats2 = document.querySelectorAll('.fast2 a');
 let s_name = document.querySelector('.show_name');
 let s_name2 = document.querySelector('.show_name2');
 let choice = document.querySelector('.tab');
+// 인원수 입력란 가져오기
+let peoNum = document.getElementById('peoNum').getAttribute('peoNums');
+
+// 선택한 좌석들을 저장할 배열
+let selectedSeats = [];
 
 // 가는편 좌석 선택
 seats.forEach(function (seat) {
     seat.addEventListener('click', function () {
-        seats.forEach(function (seat) {
+        // 이미 인원수 만큼 좌석이 선택된 경우, 추가 선택을 막음
+        if (selectedSeats.length >= peoNum && !selectedSeats.includes(seat)) {
+            return;
+        }
+
+        // 좌석 선택 또는 해제
+        if (selectedSeats.includes(seat)) {
             seat.classList.remove('selected');
-        });
-        //toggle을 이용해 선택된 좌석에 css를 입혀줌
-        seat.classList.toggle('selected');
+            selectedSeats = selectedSeats.filter((item) => item !== seat);
+        } else {
+            seat.classList.add('selected');
+            selectedSeats.push(seat);
+        }
+
         s_name.value = seat.querySelector('#s_name').value;
+
+        // 선택한 좌석이 인원수를 초과하는 경우, 가장 처음 선택한 좌석 선택 해제
+        while (selectedSeats.length > peoNum) {
+            let firstSelectedSeat = selectedSeats.shift();
+            firstSelectedSeat.classList.remove('selected');
+        }
     });
 });
+
+// let seats = document.querySelectorAll('.fast a');
+// let seats2 = document.querySelectorAll('.fast2 a');
+// let s_name = document.querySelector('.show_name');
+// let s_name2 = document.querySelector('.show_name2');
+// let choice = document.querySelector('.tab');
+// // 인원수 입력란 가져오기
+// let peoNum = document.getElementById('peoNum').getAttribute('peoNums');
+// let arr = [];
+
+// 가는편 좌석 선택
+// seats.forEach(function (seat) {
+//     seat.addEventListener('click', function () {
+//         let arr = [];
+//         // 인원수 만큼 좌석 선택되었는지 확인
+//         let selectedSeats = document.querySelectorAll('.fast a.selected');
+//         if (arr.length >= peoNum) {
+//             ; // 이미 인원수 만큼 좌석이 선택된 경우, 추가 선택을 막음
+//         }
+//         arr.push('');
+
+
+
+//         // seats.forEach(function (seat) {
+//         //     seat.classList.remove('selected');
+//         // });
+//         if (seat.classList.toggle('selected')) {
+//             seats.forEach(function (seat) {
+//                     seat.classList.remove('selected');
+//                 });
+//         }
+//         seat.classList.toggle('selected');
+//         s_name.value = seat.querySelector('#s_name').value;
+
+
+//     });
+// });
+
 
 // 오는편 좌석 선택
 seats2.forEach(function (seat) {
     seat.addEventListener('click', function () {
-        seats2.forEach(function (seat) {
-            seat.classList.remove('selected');
-        });
+        // 인원수 만큼 좌석 선택되었는지 확인
+        let selectedSeats = document.querySelectorAll('.fast2 a.selected');
+        if (selectedSeats.length >= peoNum) {
+            return; // 이미 인원수 만큼 좌석이 선택된 경우, 추가 선택을 막음
+        }
+
+        // seats2.forEach(function (seat) {
+        //     seat.classList.remove('selected');
+        // });
+
         seat.classList.toggle('selected');
         s_name2.value = seat.querySelector('#s_name2').value;
     });
 });
+// // 가는편 좌석 선택
+// seats.forEach(function (seat) {
+//     seat.addEventListener('click', function () {
+//         seats.forEach(function (seat) {
+//             seat.classList.remove('selected');
+//         });
+//         //toggle을 이용해 선택된 좌석에 css를 입혀줌
+//         seat.classList.toggle('selected');
+//         s_name.value = seat.querySelector('#s_name').value;
+//     });
+// });
 
-// 가는편/오는편 탭
-function changeTab(tabId) {
-    var tabId1 = document.getElementById('aFlight1');
-    var tabId2 = document.getElementById('aFlight2');
-    var map = document.getElementsByClassName('map');
+// // 오는편 좌석 선택
+// seats2.forEach(function (seat) {
+//     seat.addEventListener('click', function () {
+//         seats2.forEach(function (seat) {
+//             seat.classList.remove('selected');
+//         });
+//         seat.classList.toggle('selected');
+//         s_name2.value = seat.querySelector('#s_name2').value;
+//     });
+// });
 
-    if (tabId == 'aFlight1') {
-        tabId1.parentElement.classList.add('choice');
-        tabId2.parentElement.classList.remove('choice');
-        map[0].classList.add('active');
-        map[1].classList.remove('active');
-    } else {
-        tabId2.parentElement.classList.add('choice');
-        tabId1.parentElement.classList.remove('choice');
-        map[1].classList.add('active');
-        map[0].classList.remove('active');
-    }
+// // 가는편/오는편 탭
+// function changeTab(tabId) {
+//     var tabId1 = document.getElementById('aFlight1');
+//     var tabId2 = document.getElementById('aFlight2');
+//     var map = document.getElementsByClassName('map');
 
-}
+//     if (tabId == 'aFlight1') {
+//         tabId1.parentElement.classList.add('choice');
+//         tabId2.parentElement.classList.remove('choice');
+//         map[0].classList.add('active');
+//         map[1].classList.remove('active');
+//     } else {
+//         tabId2.parentElement.classList.add('choice');
+//         tabId1.parentElement.classList.remove('choice');
+//         map[1].classList.add('active');
+//         map[0].classList.remove('active');
+//     }
+// }
+
 // 중복확인 api
 async function checkDupRes(fly_no, seat_no) {
     try {
-        const response = await axios.get(`/api/reservations/duplicate-check/${fly_no}/${seat_no}`);
-        const data = response.data;
+        const res = await axios.get(`/api/reservations/duplicate-check/${fly_no}/${seat_no}`);
+        const data = res.data;
         return data.is_duplicate;
-    } catch (error) {
-        console.log(error);
-        throw error;
+    } catch (err) {
+        console.log(err);
+        throw err;
     }
 }
 
@@ -174,9 +261,9 @@ async function clearResCache(cachedData) {
     cachedData.forEach(async (data) => {
         try {
             await axios.post('/api/reservations/clearCache', {
-            fly_no: data[0],
-            seat_no: data[1]
-        });
+                fly_no: data[0],
+                seat_no: data[1]
+            });
         } catch (error) {
             console.log(error);
         }

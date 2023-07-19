@@ -278,6 +278,7 @@ class ReservationController extends Controller
     // 항공편 설정
     public function check(Request $req)
     {
+        Log::debug($req);
         // 0627 add 이동호
         if (empty(Auth::user())) {
             Session::put(['request' => $req->all()]);
@@ -293,6 +294,9 @@ class ReservationController extends Controller
         if ($sessionReq !== null) {
             $req = new Request($sessionReq);
             $_GET['fly_date'] = $req->fly_date;
+            $_GET['ADULT'] = $req->ADULT;
+            $_GET['CHILD'] = $req->CHILD;
+            $_GET['BABY'] = $req->BABY;
         }
 
 
@@ -419,6 +423,8 @@ class ReservationController extends Controller
     // 좌석 출력
     public function checkpost(Request $req)
     {
+        Log::debug($req);
+
         // 0627 add 이동호
         if (empty(Auth::user())) {
             return redirect()->route('users.login')->with('alert', '로그인이 필요한 기능입니다.');
@@ -685,4 +691,7 @@ class ReservationController extends Controller
 
         return redirect()->route('reservation.myreservation')->with('alert', '취소가 완료되었습니다.');
     }
+
 }
+
+

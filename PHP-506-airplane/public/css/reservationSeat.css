@@ -238,6 +238,10 @@ ol {
     background:url('../img/tlqkf.png')no-repeat center;
 
 }
+
+.imponum {
+    font-size: 30px;
+}
 @media (max-width: 1600px){
     #seatPost{
         left: 25%;
