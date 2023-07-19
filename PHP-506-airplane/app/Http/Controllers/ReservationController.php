@@ -278,6 +278,7 @@ class ReservationController extends Controller
     // 항공편 설정
     public function check(Request $req)
     {
+        Log::debug($req);
         // 0627 add 이동호
         if (empty(Auth::user())) {
             Session::put(['request' => $req->all()]);
@@ -419,6 +420,8 @@ class ReservationController extends Controller
     // 좌석 출력
     public function checkpost(Request $req)
     {
+        Log::debug($req);
+
         // 0627 add 이동호
         if (empty(Auth::user())) {
             return redirect()->route('users.login')->with('alert', '로그인이 필요한 기능입니다.');
@@ -630,6 +633,7 @@ class ReservationController extends Controller
             ->join('airport_info AS arr', 'fli.arr_port_no', 'arr.port_no')
             ->join('user_info AS user', 'reserve_info.u_no', 'user.u_no')
             ->join('ticket_info AS ticket', 'reserve_info.reserve_no', 'ticket.reserve_no')
+            ->join('payment as pay', 'pay.reserve_no','reserve_info.reserve_no')
             ->where('reserve_info.u_no', Auth::user()->u_no)
             ->where('fli.fly_date', '>=', $date)
             ->select(
@@ -647,7 +651,8 @@ class ReservationController extends Controller
                 'airl.line_code',
                 'user.u_name',
                 'fli.fly_no',
-                'ticket.t_no'
+                'ticket.t_no',
+                'pay.merchant_uid'
             )
             // ->groupBy('fli.fly_no')
             ->orderBy('fli.fly_date')

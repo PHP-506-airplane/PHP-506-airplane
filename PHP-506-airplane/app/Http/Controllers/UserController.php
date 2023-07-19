@@ -367,37 +367,36 @@ class UserController extends Controller
 
         return response()->json($userData);
     }
-    public function find(Request $req)
-    {
-        return view('find')->with('type', $req->type);
-    }
-    public function redirect($provider)
-    {
-        return Socialite::driver($provider)->redirect();
-    }
-
-    protected function Callback($provider)
-    {
-        $socialUser = Socialite::driver($provider)->user();
-
-        $user = Userinfo::where('u_email', $socialUser->getEmail())->first();
-
-        // db와 email이 일치하지 않을경우 새로운 사용자 만들고 로그인 처리
-        if (!$user) {
-            $new_user = UserInfo::create([
-                'u_email' => $socialUser->getEmail(),
-                'u_name'  => '오재훈',
-            ]);
-            Auth::login($new_user);
-        } else {
-            // db와 email이 일치할 경우 로그인 처리
-            Auth::login($user);
+    public function find(Request $req) {
+            return view('find')->with('type', $req->type);
         }
 
-        return redirect()->intended('/');
-    }
-
-    // ---------------------------------
+        public function redirect($provider){
+            return Socialite::driver($provider)->redirect();
+        }
+    
+        protected function Callback($provider)
+        {
+            $socialUser = Socialite::driver($provider)->user();
+    
+            $user = Userinfo::where('u_email', $socialUser->getEmail())->first();
+    
+            // db와 email이 일치하지 않을경우 새로운 사용자 만들고 로그인 처리
+            if (!$user) {
+                $new_user = UserInfo::create([
+                    'u_email' => $socialUser->getEmail(),
+                    'u_name'  => '오재훈',
+                ]);
+                Auth::login($new_user);
+            }else{
+                // db와 email이 일치할 경우 로그인 처리
+                Auth::login($user);
+            }
+    
+            return redirect()->intended('/');
+        }
+    
+// ---------------------------------
     // 메소드명	: findEmail
     // 기능		: 일치하는 정보의 이메일을 찾음
     // 파라미터	: Request      $req
@@ -440,75 +439,6 @@ class UserController extends Controller
         }
     }
 
-    // ---------------------------------
-    // 메소드명	: findPw
-    // 기능		: 일치하는 정보의 비밀번호 변경 링크를 메일로 발송
-    // 파라미터	: Request      $req
-    // 리턴값	: json         
-    // ---------------------------------
-    public function findPw(Request $req) {
-        try {
-            DB::beginTransaction();
 
-            $user = Userinfo::where('u_email', $req->email)
-                ->where('u_name', $req->name)
-                ->where('qa_no', $req->qa_no)
-                ->where('qa_answer', $req->qa_anw)
-                ->first();
 
-            if (!$user) {
-                return response()
-                ->json([
-                    'success'   => false
-                    ,'msg'      => '일치하는 정보가 없습니다.'
-                    ,'color'    => 'red'
-                ]);
-            }
-
-            $lower = 'abcdefghijklmnopqrstuvwxyz';
-            $upper = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-            $special = '!@#$%^*-';
-            $numbers = '0123456789';
-            
-            $allChars = $lower . $upper . $special . $numbers;
-            $tempPw = '';
-
-            // 각 종류의 문자를 하나씩 포함하는지 확인
-            $tempPw .= $lower[random_int(0, strlen($lower) - 1)];
-            $tempPw .= $upper[random_int(0, strlen($upper) - 1)];
-            $tempPw .= $special[random_int(0, strlen($special) - 1)];
-            $tempPw .= $numbers[random_int(0, strlen($numbers) - 1)];
-
-            // 나머지 문자를 임의로 추가
-            for ($i = 0; $i < 6; $i++) {
-                $index = random_int(0, strlen($allChars) - 1);
-                $tempPw .= $allChars[$index];
-            }
-
-            // 임시 비밀번호를 무작위로 섞기
-            $tempPw = str_shuffle($tempPw);
-
-            $user->u_pw = Hash::make($tempPw);
-            $user->temp_pw = 1;
-            $user->save();
-
-            Mail::to($user->u_email)->send(new FindPassword($user, $tempPw));
-            DB::commit();
-            return response()
-                ->json([
-                    'success'   => true
-                    ,'msg'      => '입력하신 이메일로 임시 비밀번호가 발송되었습니다.'
-                    ,'color'    => 'black'
-                ]);
-            } catch (Exception $e) {
-                DB::rollback();
-                Log::debug($e);
-                return response()
-                    ->json([
-                        'success'   => false
-                        ,'msg'      => '시스템 에러'
-                        ,'color'    => 'red'
-                    ]);
-            }
     }
-}
