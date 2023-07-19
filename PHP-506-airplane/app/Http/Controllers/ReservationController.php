@@ -687,4 +687,12 @@ class ReservationController extends Controller
     public function refund(){
         return view('refundticket');
     }
+
+    //좌석 선택 후 상세 정보 입력 페이지로 이동
+    function reserveInsert()
+    {
+        return view('reserveInsert');
+    }
 }
+
+
