@@ -71,5 +71,3 @@ Route::post('/reservation/seatpost', [ReservationController::class, 'seatpost'])
 // social 로그인
 Route::get('/login/{provider}', [UserController::class, 'redirect']);
 Route::get('/login/{provider}/callback', [UserController::class, 'Callback']);
-// 예약 환불
-Route::get('/reservation/refund',[ReservationController::class,'refund']);

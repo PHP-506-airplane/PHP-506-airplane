@@ -99,6 +99,7 @@
                         <input type="hidden" name="reserve_no" value="{{$val['reserve_no']}}">
                         <input type="hidden" name="t_no" value="{{$val['t_no']}}">
                         <input type="hidden" class="p_id" name="p_id" value="{{$val['merchant_uid']}}">
+                        <input type="hidden" class="id" name="id" value="{{$val['id']}}">
                         <button type="button" onclick="cancelClick(event)" class="btn btn-outline-success">예약 취소</button>
                     </form>
                 </div>
@@ -122,6 +123,11 @@
 @endsection
 
 @section('js')
+{{-- <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script> --}}
+<script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
 <script src="{{asset('js/myreservation.js')}}"></script>
 <script>
 

@@ -41,3 +41,7 @@ Route::post('/users/email', [UserController::class, 'findEmail']);
 // 비밀번호 찾기
 Route::post('/users/password', [UserController::class, 'findPw']);
 
+Route::post('/reservations/getToken', [PayController::class, 'getToken']);
+Route::post('/reservations/refundPay', [PayController::class, 'refundPay']);
+
+

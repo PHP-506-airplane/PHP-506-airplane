@@ -649,7 +649,8 @@ class ReservationController extends Controller
                 'user.u_name',
                 'fli.fly_no',
                 'ticket.t_no',
-                'pay.merchant_uid'
+                'pay.merchant_uid',
+                'pay.id'
             )
             // ->groupBy('fli.fly_no')
             ->orderBy('fli.fly_date')
@@ -683,10 +684,5 @@ class ReservationController extends Controller
         // TicketInfo::where('t_no', $req->t_no)->delete();
 
         return redirect()->route('reservation.myreservation')->with('alert', '취소가 완료되었습니다.');
-    }
-
-    // 예약 환불
-    public function refund(){
-        return view('refundticket');
     }
 }
