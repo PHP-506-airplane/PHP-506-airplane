@@ -58,7 +58,7 @@
         {{-- 비밀번호 찾기 탭 --}}
         <div class="tabContent" id="pwContent">
             <h3>비밀번호 찾기</h3>
-            <form id="pwFindForm login_form" method="POST">
+            <form id="pwFindForm" method="POST">
                 @csrf
                 <input type="text" placeholder="이메일" name="email" value="{{ old('email') }}">
                 <br>
