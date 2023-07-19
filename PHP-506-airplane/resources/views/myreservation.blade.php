@@ -98,6 +98,7 @@
                         @csrf
                         <input type="hidden" name="reserve_no" value="{{$val['reserve_no']}}">
                         <input type="hidden" name="t_no" value="{{$val['t_no']}}">
+                        <input type="hidden" class="p_id" name="p_id" value="{{$val['merchant_uid']}}">
                         <button type="button" onclick="cancelClick(event)" class="btn btn-outline-success">예약 취소</button>
                     </form>
                 </div>
@@ -122,4 +123,7 @@
 
 @section('js')
 <script src="{{asset('js/myreservation.js')}}"></script>
+<script>
+
+</script>
 @endsection
