@@ -6,33 +6,72 @@ let choice = document.querySelector('.tab');
 // 인원수 입력란 가져오기
 let peoNum = document.getElementById('peoNum').getAttribute('peoNums');
 
+// 선택한 좌석들을 저장할 배열
+let selectedSeats = [];
+
 // 가는편 좌석 선택
 seats.forEach(function (seat) {
     seat.addEventListener('click', function () {
-        let arr = [];
-        // 인원수 만큼 좌석 선택되었는지 확인
-        let selectedSeats = document.querySelectorAll('.fast a.selected');
-        if (arr.length >= peoNum) {
-            ; // 이미 인원수 만큼 좌석이 선택된 경우, 추가 선택을 막음
+        // 이미 인원수 만큼 좌석이 선택된 경우, 추가 선택을 막음
+        if (selectedSeats.length >= peoNum && !selectedSeats.includes(seat)) {
+            return;
         }
-        arr.push('');
 
-
-      
-        // seats.forEach(function (seat) {
-        //     seat.classList.remove('selected');
-        // });
-        if (seat.classList.toggle('selected')) {
-            seats.forEach(function (seat) {
-                    seat.classList.remove('selected');
-                });
+        // 좌석 선택 또는 해제
+        if (selectedSeats.includes(seat)) {
+            seat.classList.remove('selected');
+            selectedSeats = selectedSeats.filter((item) => item !== seat);
+        } else {
+            seat.classList.add('selected');
+            selectedSeats.push(seat);
         }
-        seat.classList.toggle('selected');
+
         s_name.value = seat.querySelector('#s_name').value;
 
-
+        // 선택한 좌석이 인원수를 초과하는 경우, 가장 처음 선택한 좌석 선택 해제
+        while (selectedSeats.length > peoNum) {
+            let firstSelectedSeat = selectedSeats.shift();
+            firstSelectedSeat.classList.remove('selected');
+        }
     });
 });
+
+// let seats = document.querySelectorAll('.fast a');
+// let seats2 = document.querySelectorAll('.fast2 a');
+// let s_name = document.querySelector('.show_name');
+// let s_name2 = document.querySelector('.show_name2');
+// let choice = document.querySelector('.tab');
+// // 인원수 입력란 가져오기
+// let peoNum = document.getElementById('peoNum').getAttribute('peoNums');
+// let arr = [];
+
+// 가는편 좌석 선택
+// seats.forEach(function (seat) {
+//     seat.addEventListener('click', function () {
+//         let arr = [];
+//         // 인원수 만큼 좌석 선택되었는지 확인
+//         let selectedSeats = document.querySelectorAll('.fast a.selected');
+//         if (arr.length >= peoNum) {
+//             ; // 이미 인원수 만큼 좌석이 선택된 경우, 추가 선택을 막음
+//         }
+//         arr.push('');
+
+
+
+//         // seats.forEach(function (seat) {
+//         //     seat.classList.remove('selected');
+//         // });
+//         if (seat.classList.toggle('selected')) {
+//             seats.forEach(function (seat) {
+//                     seat.classList.remove('selected');
+//                 });
+//         }
+//         seat.classList.toggle('selected');
+//         s_name.value = seat.querySelector('#s_name').value;
+
+
+//     });
+// });
 
 
 // 오는편 좌석 선택

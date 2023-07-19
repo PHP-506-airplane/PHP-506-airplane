@@ -294,6 +294,9 @@ class ReservationController extends Controller
         if ($sessionReq !== null) {
             $req = new Request($sessionReq);
             $_GET['fly_date'] = $req->fly_date;
+            $_GET['ADULT'] = $req->ADULT;
+            $_GET['CHILD'] = $req->CHILD;
+            $_GET['BABY'] = $req->BABY;
         }
 
 
