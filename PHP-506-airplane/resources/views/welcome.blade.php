@@ -152,9 +152,9 @@
                                 </div>
                                 <div class="selectBox2 sbox">
                                     <input type="text" class="passenger form-control" readonly >
-                                    <input type="hidden" class="passenger ADULT" name="ADULT">
-                                    <input type="hidden" class="passenger CHILD" name="CHILD">
-                                    <input type="hidden" class="passenger BABY" name="BABY">
+                                    <input type="hidden" class="passenger ADULT" name="ADULThidden" id="ADULThidden">
+                                    <input type="hidden" class="passenger CHILD" name="ADULThidden" id="CHILDhidden">
+                                    <input type="hidden" class="passenger BABY" name="ADULThidden" id="BABYhidden">
                                     <a href="#none" class="selected_passenger">
                                         <span class="ADULT">성인0 </span>
                                         <span class="CHILD">소아0 </span>
@@ -168,7 +168,7 @@
                                                 </dt>
                                                 <dd class="sel_passenger">
                                                     <a class="btn_minus" href="#none" onclick="changeCount('ADULT', -1); adultbaby()">빼기</a>
-                                                    <input class="booking passenger ADULT" id="ADULT" title="인원수" type="number" value="0" onchange="adultbaby()">
+                                                    <input class="booking passenger ADULT" name="ADULT" id="ADULTinput" title="인원수" type="number" onchange="adultbaby()">
                                                     <a class="btn_plus" href="#none" onclick="changeCount('ADULT', 1);">더하기</a>
                                                 </dd>
                                             </dl>
@@ -178,7 +178,7 @@
                                                 </dt>
                                                 <dd class="sel_passenger">
                                                     <a class="btn_minus" href="#none" onclick="changeCount('CHILD', -1);">빼기</a>
-                                                    <input class="booking passenger CHILD" id="CHILD" title="인원수" type="text" value="0">
+                                                    <input class="booking passenger CHILD" name="CHILD" id="CHILDinput" title="인원수" type="text">
                                                     <a class="btn_plus" href="#none" onclick="changeCount('CHILD', 1);">더하기</a>
                                                 </dd>
                                             </dl>
@@ -188,7 +188,7 @@
                                                 </dt>
                                                 <dd class="sel_passenger">
                                                     <a class="btn_minus" href="#none" onclick="changeCount('BABY', -1); adultbaby()">빼기</a>
-                                                    <input class="booking passenger BABY" id="BABY" title="인원수" type="text" value="0" onchange="adultbaby()">
+                                                    <input class="booking passenger BABY" name="BABY" id="BABYinput" title="인원수" type="text" onchange="adultbaby()">
                                                     <a class="btn_plus" href="#none" onclick="changeCount('BABY', 1);">더하기</a>
                                                 </dd>
                                             </dl>
@@ -207,7 +207,7 @@
         <div class="icons container">
             <h1>부가서비스</h1>
             <div class="icons_inner">
-                <div class="box box1">
+                <div class="box box1" onclick="location.href='{{ route('reservation.myreservation') }}'">
                     <img src="{{asset('img/reserve-icon.png')}}" alt="">
                     <p><strong>예약 조회</strong></p>
                 </div>
@@ -219,7 +219,7 @@
                     <img src="{{asset('img/user-icon.png')}}" alt="">
                     <p><strong>마이페이지</strong></p>
                 </div>
-                <div class="box box4">
+                <div class="box box4" onclick="location.href='{{ route('notice.baggage') }}'">
                     <img src="{{asset('img/luggage-icon.png')}}" alt="">
                     <p><strong>수하물 안내</strong></p>
                 </div>

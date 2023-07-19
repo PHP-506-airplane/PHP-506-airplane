@@ -399,15 +399,18 @@ function changeCount(target, v) {
     newCount = Math.max(newCount, 0);
     newCount = Math.min(newCount, 4);
   
-    const ADULT = document.querySelector('.ADULT');
-    const CHILD = document.querySelector('.CHILD');
-    const BABY = document.querySelector('.BABY');
+    // const ADULT = document.querySelector('.ADULT');
+    // const CHILD = document.querySelector('.CHILD');
+    // const BABY = document.querySelector('.BABY');
+    const ADULT = document.getElementById('ADULThidden');
+    const CHILD = document.getElementById('CHILDhidden');
+    const BABY = document.getElementById('BABYhidden');
+
+    const ADULTinput = document.getElementById('ADULTinput');
+    const CHILDinput = document.getElementById('CHILDinput');
+    const BABYinput = document.getElementById('BABYinput');
 
 
-    //성인 기본으로 1명 고정(성인 최소값 1)
-    if(ADULT.value < 0) {
-        ADULT.value = 1;
-    }
     // 유아 수가 성인 수보다 클 때 유아 수를 증가하지 않도록 처리
     if(target === 'BABY' && newCount > ADULT.value) {
       alert("유아 1명당 성인 1명의 동반은 필수입니다.");
@@ -417,7 +420,6 @@ function changeCount(target, v) {
     // if(ADULT.value = BABY.value) {
     //     ADULT.value = BABY.value;
     // }
-
 
     countElement.value = newCount;
   
@@ -432,14 +434,17 @@ function changeCount(target, v) {
           target = '성인';
           passengerSpans[i].textContent = target + newCount;
           ADULT.value = newCount;
+          ADULTinput.value = newCount;
         } else if (target === 'CHILD') {
           target = '소아';
           passengerSpans[i].textContent = target + newCount;
           CHILD.value = newCount;
+          CHILDinput.value = newCount;
         } else {
           target = '유아';
           passengerSpans[i].textContent = target + newCount;
           BABY.value = newCount;
+          BABYinput.value = newCount;
         }
         break;
       }
