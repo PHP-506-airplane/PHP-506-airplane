@@ -1,4 +1,4 @@
-{{-- 
+{{--
 /**************************************************
  * 프로젝트명   : PHP-506-airplane
  * 디렉토리     : views
@@ -10,23 +10,26 @@
 
 @section('title', '이메일/비밀번호 찾기')
 
-@section('css') 
-    <link rel="stylesheet" href="{{asset('css/find.css')}}">
+@section('css')
+<link rel="stylesheet" href="{{asset('css/find.css')}}">
 @endsection
 
 @section('contents')
-    {{-- @if($type === 'id')
+{{-- @if($type === 'id')
         아이디 찾기
     @elseif($type === 'pw')
         비밀번호 찾기
     @else
         에러임
     @endif --}}
-    <div id="type" data-type="{{ $type }}"></div>
-    <div class="tabs con" id="con">
+<div id="type" data-type="{{ $type }}"></div>
+<div id="con" class="find">
+    <div class="tabs find_form">
         {{-- 탭 선택 --}}
         <a class="tab" id="idTab">이메일 찾기</a>
         <a class="tab" id="pwTab">비밀번호 찾기</a>
+        <br>
+        <br>
         {{-- /탭 선택 --}}
 
         {{-- 이메일 찾기 탭 --}}
@@ -48,10 +51,10 @@
                 <br>
                 <input type="text" placeholder="질문의 답변" name="qa_anw">
                 <br>
+                <span id="resultSpan"></span>
                 <button type="button" id="emailFindButton" class="btn">이메일 찾기</button>
                 <button type="button" onclick="location.href='{{ route('users.login'); }}'" class="btn">취소</button>
             </form>
-            <span id="resultSpan"></span>
         </div>
         {{-- /이메일 찾기 탭 --}}
 
@@ -79,10 +82,9 @@
         </div>
         {{-- /비밀번호 찾기 탭 --}}
     </div>
-    
+</div>
 @endsection
 
 @section('js')
-    <script src="{{asset('js/find.js')}}"></script>
+<script src="{{asset('js/find.js')}}"></script>
 @endsection
-

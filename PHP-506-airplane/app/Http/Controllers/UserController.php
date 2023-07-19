@@ -422,10 +422,23 @@ class UserController extends Controller
                 ]);
             }
 
+            // 이메일 주소에서 @를 기준으로 배열로 분리
+            $emailParts = explode('@', $email->u_email);
+            // 이메일의 앞부분
+            $firstPart = mb_substr($emailParts[0], 0, 3);
+            // 이메일의 도메인
+            $secondPart = $emailParts[1];
+            // 앞부분의 길이
+            $firstPartLength = strlen($emailParts[0]) - strlen($firstPart);
+            // 잘라낸만큼 *으로 채우기
+            $hiddenPart = str_repeat('*', $firstPartLength);
+
+            $emailAdderss = $firstPart . $hiddenPart . '@' . $secondPart;
+
             return response()
                 ->json([
                     'success'   => true
-                    ,'msg'      => $req->name . '님의 이메일은 ' . $email->u_email . '입니다.'
+                    ,'msg'      => $req->name . '님의 이메일은 ' . $emailAdderss . '입니다.'
                     ,'color'    => 'black'
                 ]);
         } catch (Exception $e) {

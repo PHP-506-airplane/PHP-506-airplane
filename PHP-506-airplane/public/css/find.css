@@ -59,11 +59,11 @@ a{
     margin:0 auto;
     /* position: relative; */
 }
-#login_form{
+.find_form{
     /* text-align:center; */
     /* border-radius: 10px; */
     padding:50px;
-    background: #f8f9fa;
+    background: #faf8f8;
     text-align: center;
     position: absolute;
     top:50%;
@@ -76,7 +76,7 @@ a{
     color:#333;
 }
 
-.size{
+.find{
     width:300px;
     height:30px;
     padding-left:10px;
@@ -103,6 +103,19 @@ hr{
     margin-top:20px;
     background:#eee;
     
+}
+h3 {
+    margin-bottom: 20px;
+}
+#idTab::after {
+    content: ' |';
+    color: #333;
+}
+input, select {
+    margin: 10px;
+}
+button {
+    margin-top: 20px;
 }
 
 @media(min-width:380px) and (max-width:767px) {

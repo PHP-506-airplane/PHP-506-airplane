@@ -52,6 +52,7 @@ emailFindBtn.addEventListener('click', function() {
     
             resultSpan.appendChild(document.createElement('br'));
             resultSpan.appendChild(loginLink);
+            resultSpan.appendChild(document.createElement('br'));
         })
         .catch(function(error) {
             alert('잠시 후 다시 시도해주세요.');
