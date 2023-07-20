@@ -87,7 +87,9 @@ pwFindBtn.addEventListener('click', function() {
         .then(function(res) {
             let result = res.data;
             alert(result.msg);
-            location.href="/users/login"
+            if (result.success) {
+                location.href="/users/login"
+            }
         })
         .catch(function(error) {
             alert('잠시 후 다시 시도해주세요.');

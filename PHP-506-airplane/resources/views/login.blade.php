@@ -60,6 +60,7 @@
             <span><a href="{{route('users.find', ['type' => 'pw'])}}">비밀번호 찾기</a></span>
             <span><a href="{{route('users.registration')}}">회원가입</a></span>
         </p>
+        <br>
         <a href="{{ url('/login/kakao') }}" class="btn btn-primary btn-kakao">
             <i><img src="{{asset('img/kakao-icon.svg')}}" alt="" style="width: 24px;height:24px;"></i>&nbsp;카카오로 로그인
         </a><br><br>

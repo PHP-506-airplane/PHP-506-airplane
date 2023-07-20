@@ -410,6 +410,8 @@ class UserController extends Controller
                 ->where('u_birth', $req->birth)
                 ->where('qa_no', $req->qa_no)
                 ->where('qa_answer', $req->qa_anw)
+                // 관리자 계정이면 검색안되게
+                ->where('admin_flg', '!=', '1')
                 ->select('u_email')
                 ->first();
 
@@ -451,9 +453,10 @@ class UserController extends Controller
                 ]);
         }
     }
+
     // ---------------------------------
     // 메소드명	: findPw
-    // 기능		: 일치하는 정보의 비밀번호 변경 링크를 메일로 발송
+    // 기능		: 일치하는 정보의 임시 비밀번호를 메일로 발송
     // 파라미터	: Request      $req
     // 리턴값	: json         
     // ---------------------------------
