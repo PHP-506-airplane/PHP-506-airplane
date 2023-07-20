@@ -26,6 +26,7 @@
                         <option value="{{ $val->line_no }}">{{ $val->line_name }}</option>
                     @endforeach
                 </select>
+                {{-- 출발/도착공항 추가 --}}
                 <button type="button" id="searchBtn">검색</button>
             </form>
         </div>
