@@ -18,7 +18,7 @@
     <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
       <ul class="navbar-nav">
         <li class="nav-item" style="font-weight:600">
-          <a class="nav-link active" aria-current="page" href="{{route('reservation.main')}}">Home</a>
+          <a class="nav-link active" aria-current="page" href="{{route('reservation.myreservation')}}">마이페이지</a>
         </li>
         @guest
              <li class="nav-item justify-content-end" style="font-weight:600">
@@ -42,6 +42,9 @@
                 {{Auth::user()->u_name}}님
             </a>
             <ul class="dropdown-menu justify-content-end" style="font-weight:600">
+                @if(Auth::user()->admin_flg === '1')
+                  <li><a class="dropdown-item" href="{{route('admin.index')}}" style="color: red;">관리자 페이지</a></li>
+                @endif
                 <li><a class="dropdown-item" href="{{route('users.useredit')}}">회원정보 수정</a></li>
                 <li><a class="dropdown-item" href="{{route('reservation.myreservation')}}">예약 조회</a></li>
                 <li><a class="dropdown-item" href="{{route('users.logout')}}">로그아웃</a></li>
