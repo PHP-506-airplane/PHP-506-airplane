@@ -39,6 +39,7 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Http;
 use SebastianBergmann\Type\TrueType;
 
 class ReservationController extends Controller
@@ -184,7 +185,7 @@ class ReservationController extends Controller
         $today = date("ymd");
         $user = Auth::user()->u_no;
         // 주문번호 규칙 : 연월일(YYMMDD) + 유저PK + 숫자or영어 랜덤 7자리
-        $merchant_uid = $today.$user.Str::random(7);
+        $merchant_uid = $data['merchant_uid'];
 
         $payment = new Payment([
             'u_no'          => $user
@@ -555,11 +556,13 @@ class ReservationController extends Controller
                         'seat_no' => $req->seat_no
                         ,'fly_no' => $req->fly_no
                         ,'plane_no' => $req->plane_no
+                        ,'merchant_uid' => $req->merchant_uid
                     ]
                     ,[
                         'seat_no' => $req->seat_no2
                         ,'fly_no' => $req->fly_no2
                         ,'plane_no' => $req->plane_no2
+                        ,'merchant_uid' => $req->merchant_uid
                     ]
                 ];
 
@@ -656,7 +659,8 @@ class ReservationController extends Controller
                 'fli.fly_no',
                 'ticket.t_no',
                 'pay.merchant_uid',
-                'pay.id'
+                'pay.id',
+                'pay.price'
             )
             // ->groupBy('fli.fly_no')
             ->orderBy('fli.fly_date')
@@ -665,6 +669,19 @@ class ReservationController extends Controller
 
         return view('myreservation')->with('data', $data);
     }
+
+    public function getToken(){
+        // 엑세스 토큰 발급
+        $result  = Http::withHeaders([
+            'Content-Type' => 'application/json'
+        ])->post('https://api.iamport.kr/users/getToken', [
+            'imp_key' => '0833844628848866',
+            'imp_secret' => 'l17oW36JAtRW7TaNjsZeBTLwdM0XbIFYJysHLDYzSBdn3yDgkDIM36G75yQ29SImMWw130HxvvbzIJNv',
+        ]);
+        $arr_result = json_decode($result, true);
+        return $arr_result["response"]["access_token"];
+    }
+    
 
     // v003 이동호 add 예약 취소
     public function rescancle(Request $req)
@@ -676,8 +693,54 @@ class ReservationController extends Controller
         // v007 add 트랜잭션
         DB::beginTransaction();
         try {
+            // ---------------------------환불--------------------------
+        // 생성된 토큰 가져옴
+        $accessToken = $this->getToken();
+        // Log::debug('access Token', [$accessToken]);
+        // 환불하려는 결제 정보를 아임포트의 payment_id를 기준으로 데이터베이스에서 조회합니다.
+
+        // Log::alert($paymentInfo);
+        // $userName = auth()->user()->u_name;
+
+        // 결제 정보가 없거나 이미 환불된 경우 등 예외 상황을 처리합니다.
+        // if (!$req->merchant_uid || $paymentInfo->refunded) {
+        //     // 환불할 수 없는 경우에 대한 처리를 여기에 추가합니다.
+        //     return response()->json(['message' => '환불할 수 없는 결제 정보입니다.'], 400);
+        // }
+        Log::debug($req);
+        // try{
+            $response = Http::withHeaders([
+                'Content-Type' => 'application/json',
+                'Authorization' => $accessToken
+            ])->post("https://api.iamport.kr/payments/cancel", [
+                'merchant_uid' => $req->merchant_uid, // 주문번호
+                'amount' => $req->price, // 환불할 금액
+                'reason' => '고객 요청에 의한 환불', // 환불 사유
+            ]);
+            // Log::debug($response);
+            // 아임포트 API로 환불 요청을 보냅니다.
+            // 아임포트 API의 응답을 확인하고, 환불 결과에 따라 처리합니다.
+            // if ($response->successful()) {
+            //     // 환불 성공
+            //     // 환불 정보를 데이터베이스에 저장하거나 환불 처리를 기록하는 등의 작업을 수행합니다.
+            //     // 예를 들어, $paymentInfo->update(['refunded' => true]) 등의 코드를 추가할 수 있습니다.
+            //     return response()->json(['message' => '환불이 성공적으로 완료되었습니다.']);
+            // } else {
+            //     // 환불 실패
+            //     // 환불 실패에 대한 처리를 여기에 추가합니다.
+            //     $errorMessage = $response['message'] ?? '환불에 실패하였습니다.';
+            //     return response()->json(['message' => $errorMessage], $response->status());
+            // }
+            
+        // }catch (Exception $e){
+        //     Log::error($e);
+        //     return response()->json(['message' => '환불에 실패하였습니다.'], 500);
+        // }
+        // end ---------------------------환불--------------------------
+
             ReserveInfo::where('reserve_no', $req->reserve_no)->delete();
             TicketInfo::where('reserve_no', $req->reserve_no)->delete();
+            Payment::where('merchant_uid', $req->merchant_uid)->delete();
             DB::commit();
         } catch (Exception $e) {
             DB::rollBack();

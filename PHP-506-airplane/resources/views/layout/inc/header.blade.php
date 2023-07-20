@@ -18,7 +18,7 @@
     <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
       <ul class="navbar-nav">
         <li class="nav-item" style="font-weight:600">
-          <a class="nav-link active" aria-current="page" href="{{route('reservation.main')}}">Home</a>
+          <a class="nav-link active" aria-current="page" href="{{route('reservation.myreservation')}}">마이페이지</a>
         </li>
         @guest
              <li class="nav-item justify-content-end" style="font-weight:600">

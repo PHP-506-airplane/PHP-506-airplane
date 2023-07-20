@@ -522,4 +522,10 @@ class UserController extends Controller
                     ]);
             }
     }
+
+    // 마이페이지
+    function mypage()
+    {
+        return view('mypage');
+    }
 }

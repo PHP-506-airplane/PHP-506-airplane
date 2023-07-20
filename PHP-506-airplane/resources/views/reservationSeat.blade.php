@@ -67,6 +67,7 @@
                 <input type="hidden" class="flg" name="flg" value="{{$flg['hd_li_flg']}}">
                 <input type="hidden" name="fly_no" value="{{$_POST['dep_fly_no']}}" id="fly_no">
                 <input type="hidden" name="plane_no" value="{{$_POST['dep_plane_no']}}">
+                <input type="hidden" name="merchant_uid" id="merchant_uid">
                 @if($flg['hd_li_flg'] === '1')
                     <input type="hidden" name="fly_no2" value="{{$_POST['arr_fly_no']}}" id="fly_no2">
                     <input type="hidden" name="plane_no2" value="{{$_POST['arr_plane_no']}}">
@@ -77,7 +78,7 @@
                     <li><span peoNums="{{intval($_POST['ADULT']) + intval($_POST['CHILD'])}}" id="peoNum">좌석 선택 인원수 : {{intval($_POST['ADULT']) + intval($_POST['CHILD'])}}명</span></li>
                     {{-- <li><span>소아 : {{$_POST['CHILD']}}</span></li> --}}
                     {{-- <li><span>유아 : {{$_POST['BABY']}}</span></li> --}}
-                    {{-- <li class="s_li">
+                    <li class="s_li">
                         <h3>가는편(구간1)</h3>
                         <span class="material-symbols-outlined">
                             chair
@@ -92,7 +93,7 @@
                                 </span>
                             <input type="text" class="show_name2" name="seat_no2" readonly>
                         </li>
-                    @endif --}}
+                    @endif
                 </ul>
                 <button type="button" class="chk_btn" onclick="reserveBtn()">결제하기</button>
                 {{-- <button type="button" class="chk_btn" onclick="requestPay()">결제하기</button> --}}
@@ -186,8 +187,8 @@
 
     <script>
         let IMP = window.IMP;
-        IMP.init("imp11776700"); // 예: imp00000000
-
+        IMP.init("imp68041162"); // 예: imp00000000
+        let merchant_uid = document.querySelector('#merchant_uid');
         function requestPay(totalPrice, cachedData) {
             // IMP.request_pay(param, callback) 결제창 호출
             IMP.request_pay({ // param
@@ -201,6 +202,7 @@
                 ,buyer_name: "{{ Auth::user()->u_name }}" // 구매자명
             }, function(res) { // callback
                 if (res.success) {
+                    merchant_uid.value = res.merchant_uid;
                     seatForm.submit();
                 } else {
                     // 결제 실패 시 로직

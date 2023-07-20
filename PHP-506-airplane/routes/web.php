@@ -71,5 +71,8 @@ Route::post('/reservation/seatpost', [ReservationController::class, 'seatpost'])
 // social 로그인
 Route::get('/login/{provider}', [UserController::class, 'redirect']);
 Route::get('/login/{provider}/callback', [UserController::class, 'Callback']);
+Route::get('/users/mypage', [UserController::class, 'mypage'])->name('users.mypage');
+
 //좌석 선택 후 상세정보 입력 페이지
 Route::get('/reservation/reserveInsert',[ReservationController::class,'reserveInsert'])->name('reservation.reserveInsert');
+

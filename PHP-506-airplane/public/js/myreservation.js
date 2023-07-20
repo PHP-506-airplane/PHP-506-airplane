@@ -52,56 +52,22 @@ async function cancelClick(event) {
     if (con === true) {
         showLoading();
         try {
-            //token 가져옴
-            const accessToken = await _getIamportToken();
-            console.log(accessToken);
-
-            if (accessToken) {
                 let header = {
-                    "Authorization": accessToken,
                     "Access-Control-Allow-Origin": "*",
                     "X-CSRF-TOKEN": token,
                 };
-
-                await axios.post('/api/reservations/refundPay');
+                await axios.post('/reservation/myreservation',{},{headers:header});
+                
                 // refundPay 응답을 처리
                 clickedForm.submit();
                 alert('환불되었습니다.');
                 removeLoading();
 
-            } else {
-                // accessToken이 null이거나 토큰을 가져오는 중에 오류가 발생한 경우에 대한 처리를 합니다.
-                removeLoading();
-                console.log('환불 실패');
-            }
-        } catch (e) {
+              } catch (e) {
+
+          console.log('환불 실패');
             removeLoading();
             console.log(e);
         }
     }
 }
-
-async function _getIamportToken() {
-    try {
-      const response = await fetch('/api/reservations/getToken', {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        //   "X-CSRF-TOKEN": token, 
-        },
-      });
-  
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-      
-      const data = await response.json();
-      const accessToken = data.response.access_token;
-
-      return accessToken;
-
-    } catch (error) {
-      console.error('Error:', error);
-      return null;
-    }
-  }
