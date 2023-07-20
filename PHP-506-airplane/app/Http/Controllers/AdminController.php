@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Middleware\AdminPageMiddleware;
+use App\Models\FlightInfo;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
@@ -14,6 +15,7 @@ class AdminController extends Controller
     }
 
     public function index() {
-        return view('admin');
+        $data = FlightInfo::get();
+        return view('admin')->with($data);
     }
 }
