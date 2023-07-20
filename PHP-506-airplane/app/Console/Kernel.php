@@ -10,6 +10,7 @@
 
 namespace App\Console;
 
+use App\Mail\sendReminder;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use App\Models\FlightInfo;
@@ -22,6 +23,7 @@ use Faker\Factory as FakerFactory;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 
 class Kernel extends ConsoleKernel
 {
@@ -95,28 +97,12 @@ class Kernel extends ConsoleKernel
 
         // 2년이상 지난 데이터 삭제
         $schedule->call(function () {
-            $twoYearsAgo = Carbon::now()->subYears(2); // 오늘로부터 2년전 날짜
-
-            FlightInfo::where('fly_date', '<', $twoYearsAgo)
-                ->forceDelete();
-
-            ReserveInfo::join('flight_info AS fli', 'fli.fly_no', 'reserve_info.fly_no')
-                ->where('fli.fly_date', '<', $twoYearsAgo)
-                ->forceDelete();
-
-            TicketInfo::join('reserve_info AS res', 'res.reserve_no', 'ticket_info.reserve_no')
-                ->join('flight_info AS fli', 'fli.fly_no', 'res.fly_no')
-                ->where('fli.fly_date', '<', $twoYearsAgo)
-                ->forceDelete();
-
-            Payment::where('deleted_at', '<', $twoYearsAgo)
-                ->forceDelete();
-
-            Userinfo::where('deleted_at', '<', $twoYearsAgo)
-            ->forceDelete();
-
+            $this->deleteData();
         })->dailyAt('10:00');
 
+        $schedule->call(function () {
+            $this->sendRemindEmail();
+        })->everyMinute();
     }
 
     /**
@@ -129,5 +115,61 @@ class Kernel extends ConsoleKernel
         $this->load(__DIR__ . '/Commands');
 
         require base_path('routes/console.php');
+    }
+
+    protected function deleteData() {
+        $twoYearsAgo = Carbon::now()->subYears(2); // 오늘로부터 2년전 날짜
+
+        FlightInfo::where('fly_date', '<', $twoYearsAgo)
+            ->forceDelete();
+
+        ReserveInfo::join('flight_info AS fli', 'fli.fly_no', 'reserve_info.fly_no')
+            ->where('fli.fly_date', '<', $twoYearsAgo)
+            ->forceDelete();
+
+        TicketInfo::join('reserve_info AS res', 'res.reserve_no', 'ticket_info.reserve_no')
+            ->join('flight_info AS fli', 'fli.fly_no', 'res.fly_no')
+            ->where('fli.fly_date', '<', $twoYearsAgo)
+            ->forceDelete();
+
+        Payment::where('deleted_at', '<', $twoYearsAgo)
+            ->forceDelete();
+
+        Userinfo::where('deleted_at', '<', $twoYearsAgo)
+            ->forceDelete();
+    }
+
+    protected function sendRemindEmail() {
+        $datas = 
+            // 오늘 이후의 날짜
+            // 2023-07-20 14:30:00같은 Carbon 객체에서 toDateString()을 호출하면 "2023-07-20"을 반환함
+            FlightInfo::where('fly_date', '>=', Carbon::now()->toDateString())
+                // 1일 이내의 날짜
+                ->where('fly_date', '<=', Carbon::now()->addDays(1)->toDateString())
+                // 현재 시간 + 3시간
+                ->where('dep_time', '=', Carbon::now()->addHours(3)->format('Hi'))
+                ->join('reserve_info AS res', 'flight_info.fly_no', 'res.fly_no')
+                ->join('user_info AS user', 'res.u_no', 'user.u_no')
+                ->join('airport_info AS dep', 'flight_info.dep_port_no', 'dep.port_no')
+                ->join('airport_info AS arr', 'flight_info.arr_port_no', 'arr.port_no')
+                ->join('airplane_info AS airp', 'flight_info.plane_no', 'airp.plane_no')
+                ->join('airline_info AS airl', 'airp.line_no', 'airl.line_no')
+                ->select(
+                    'user.u_name'
+                    ,'user.u_email'
+                    ,'airl.line_name'
+                    ,'flight_info.dep_time'
+                    ,'flight_info.arr_time'
+                    ,'flight_info.fly_date'
+                    ,'dep.port_name AS dep_port_name'
+                    ,'arr.port_name AS arr_port_name'
+                )
+                ->get();
+
+        if ($datas) {
+            foreach ($datas as $data) {
+                Mail::to($data->u_email)->send(new sendReminder($data));
+            }
+        }
     }
 }

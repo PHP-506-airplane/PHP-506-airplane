@@ -7,6 +7,7 @@
  *                  v002 0612 이동호 add 공지사항 리스트
 **************************************************/
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ApiController;
 use App\Http\Controllers\NoticeController;
 use App\Http\Controllers\UserController;
@@ -59,7 +60,9 @@ Route::get('/users/verify/{code}', [UserController::class, 'verify'])->name('use
 Route::get('/resend-email', [UserController::class, 'resendemail'])->name('user.resendemail');
 // 아이디 / 비밀번호 찾기 페이지
 Route::get('/users/find/{type}', [UserController::class, 'find'])->name('users.find');
-// 아이디 찾기
+// 관리자 페이지
+Route::get('/admin/list', [AdminController::class, 'index'])->name('admin.index');
+
 
 
 // 0613 add 오재훈

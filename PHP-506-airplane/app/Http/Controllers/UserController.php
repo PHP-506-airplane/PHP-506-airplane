@@ -410,6 +410,8 @@ class UserController extends Controller
                 ->where('u_birth', $req->birth)
                 ->where('qa_no', $req->qa_no)
                 ->where('qa_answer', $req->qa_anw)
+                // 관리자 계정이면 검색안되게
+                ->where('admin_flg', '!=', '1')
                 ->select('u_email')
                 ->first();
 
