@@ -94,7 +94,7 @@
                         </li>
                     @endif --}}
                 </ul>
-                {{-- <button type="button" class="chk_btn" onclick="reserveBtn()">결제하기</button> --}}
+                <button type="button" class="chk_btn" onclick="reserveBtn()">결제하기</button>
                 {{-- <button type="button" class="chk_btn" onclick="requestPay()">결제하기</button> --}}
             </form>
         {{-- </div> --}}
@@ -171,7 +171,7 @@
         @endif
         <div class="info"></div>
         <div class="btnArea">
-            <button type="submit" class="chk_btn" onclick="location.href='{{route('reservation.reserveInsert')}}'">다음</button>
+            {{-- <button type="submit" class="chk_btn" onclick="location.href='{{route('reservation.reserveInsert')}}'">다음</button> --}}
         </div>
     </div>
 </div>
