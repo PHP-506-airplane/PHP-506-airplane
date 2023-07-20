@@ -18,6 +18,7 @@
 
 @section('contents')
 <div class="container">
+    <div id="test"></div>
     <h1 class="title">좌석 선택</h1>
     <div class="step">
         <h2>Step</h2>
@@ -77,7 +78,7 @@
                     <li><span peoNums="{{intval($_POST['ADULT']) + intval($_POST['CHILD'])}}" id="peoNum">좌석 선택 인원수 : {{intval($_POST['ADULT']) + intval($_POST['CHILD'])}}명</span></li>
                     {{-- <li><span>소아 : {{$_POST['CHILD']}}</span></li> --}}
                     {{-- <li><span>유아 : {{$_POST['BABY']}}</span></li> --}}
-                    {{-- <li class="s_li">
+                    <li class="s_li">
                         <h3>가는편(구간1)</h3>
                         <span class="material-symbols-outlined">
                             chair
@@ -92,9 +93,9 @@
                                 </span>
                             <input type="text" class="show_name2" name="seat_no2" readonly>
                         </li>
-                    @endif --}}
+                    @endif
                 </ul>
-                <button type="button" class="chk_btn" onclick="reserveBtn()">결제하기</button>
+                <button type="button" class="chk_btn" onclick="reserveBtn();">결제하기</button>
                 {{-- <button type="button" class="chk_btn" onclick="requestPay()">결제하기</button> --}}
             </form>
         {{-- </div> --}}
@@ -169,9 +170,10 @@
             </ol>
         </div>
         @endif
+        <input type="hidden">
         <div class="info"></div>
         <div class="btnArea">
-            {{-- <button type="submit" class="chk_btn" onclick="location.href='{{route('reservation.reserveInsert')}}'">다음</button> --}}
+            {{-- <button type="submit" class="chk_btn" onclick="location.href='{{route('reservation.reserveInsert')}}';">다음</button> --}}
         </div>
     </div>
 </div>
