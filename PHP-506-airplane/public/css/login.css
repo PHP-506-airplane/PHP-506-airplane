@@ -10,7 +10,9 @@ body, table, div, p ,span{font-family:'Noto Sans KR';}
 p {
     margin-bottom: 0;
 }
-
+input{
+    border: none;
+}
 .pwPTag {
     margin-top: 1rem;
 }
@@ -119,6 +121,17 @@ hr{
     color: #333;
     background-color: rgb(228, 215, 215) !important;
     line-height: 2rem;
+}
+.login_etc{
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+}
+#withdraw{
+    cursor: pointer;
+}
+#withdraw:hover{
+    color: #707070;
 }
 @media(min-width:380px) and (max-width:767px) {
     #login_form {

@@ -71,3 +71,25 @@ async function cancelClick(event) {
         }
     }
 }
+
+function showTab(activeTabId, activeContentId) {
+    // 모든 탭 콘텐츠 숨기기
+    var tabContents = document.getElementsByClassName("tabContent");
+    for (var i = 0; i < tabContents.length; i++) {
+        tabContents[i].style.display = "none";
+    }
+
+    // 모든 탭 비활성화
+    var tabLinks = document.getElementsByClassName("tabA");
+    for (var i = 0; i < tabLinks.length; i++) {
+        tabLinks[i].classList.remove("choice");
+    }
+
+    // 선택된 탭 콘텐츠 보이기
+    var activeContent = document.getElementById(activeContentId);
+    activeContent.style.display = "block";
+
+    // 선택된 탭 활성화
+    var activeTab = document.getElementById(activeTabId);
+    activeTab.parentNode.classList.add("choice");
+}

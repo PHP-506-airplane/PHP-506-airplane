@@ -14,7 +14,9 @@ html{
 body {
     font-family: 'Noto Sans KR', sans-serif;
 }
-
+ul{
+    list-style: none;
+}
 /* 헤더 */
 .navHeader {
     width: 100vw;
@@ -31,16 +33,187 @@ body {
 
 /* 푸터 */
 footer{
-    height: 30px;
     width: 100%;
-    background-color: rgb(221, 221, 221);
-    color: rgb(0, 0, 0);
+    text-align: left !important;
+    background: #efeff6;
+    color: #2e2e2e;
     z-index: 999999;
     line-height: 30px;
     position: relative;
     bottom: 0;
 }
+footer ul >li >a{
+    color: #2e2e2e;
+}
+.foot_menuwrap{
+    display: table;
+    width: 100%;
+    position: relative;
+    padding: 50px 50px;
+}
+footer .group_wrap {
+    position: relative;
+    height: 54px;
+    display: none;
+}
+footer .foot_menuwrap dl:first-child {
+    padding-left: 0;
+    border-left: none;
+}
+footer .foot_menuwrap dl {
+    display: table-cell;
+    height: 100%;
+    width: 33.33%;
+    padding-left: 20px;
+    box-sizing: border-box;
+}
+footer .foot_menuwrap dl dt {
+    margin-bottom: 10px;
+    margin-left: 30px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #2e2e2e;
+}
+footer .foot_menuwrap dl dt a {
+    color: #2e2e2e;
+}
+footer .foot_menuwrap dl dd {
+    position: relative;
+}
+footer .foot_menuwrap dl dd:after {
+    content: '';
+    clear: both;
+    display: block;
+}
+footer .foot_menuwrap dl dd ul {
+    display: inline-block;
+    width: 50%;
+    float: left;
+    box-sizing: border-box;
+}
 
+footer address {
+    position: relative;
+    box-sizing: border-box;
+}
+footer address .info_wrap {
+    position: relative;
+}
+footer address .info_wrap > li > ul {
+    position: relative;
+    display: inline-block;
+}
+footer address .info_wrap > li > ul > li {
+    float: left;
+    font-size: 13px;
+    color: #909090;
+}
+footer address .info_wrap > li > ul > li .corp {
+    margin-right: 10px;
+    color: #2e2e2e;
+    font-size: 14px;
+}
+footer address .info_wrap > li > ul:after {
+    content: '';
+    clear: both;
+    display: block;
+}
+footer address .copy_area{
+    margin-left: 65px;
+}
+footer address .copy_area .copy {
+    display: inline-block;
+    margin-right: 10px;
+    font-size: 14px;
+    color: #909090;
+}
+footer address .btn_popup {
+    padding: 0px 11px 0px 7px;
+    font-size: 12px;
+    background: transparent;
+    color: #6d6d6d;
+    line-height: 20px;
+    min-height: 23px;
+    border-color: #909090;
+    margin-right: 4px;
+    height: 23px;
+    box-sizing: border-box;
+    padding-bottom: 4px;
+}
+footer address .special_logo {
+    margin-top: 28px;
+    position: relative;
+}
+footer address .special_logo > ul {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+footer address .special_logo > ul > li:first-child {
+    margin-left: 0;
+}
+.fl {
+    float: left;
+}
+footer address .special_logo .star_men .star_members {
+    display: inline-block;
+    width: 234px;
+    height: 23px;
+    background-position: 0 -145px;
+}
+caption, legend, .hidden {
+    position: absolute;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+    width: 0 !important;
+    height: 0 !important;
+    font-size: 0 !important;
+    line-height: 0 !important;
+}
+footer address .special_logo > ul:after {
+    content: '';
+    clear: both;
+    display: block;
+}
+footer address .special_logo .skytrax {
+    width: 175px;
+    height: 60px;
+    background: url(../image/common/new_logo_skytrax_ko.png) 0 0 no-repeat;
+    background-size: auto 60px;
+}
+footer address .special_logo .i_mecena {
+    width: 163px;
+    height: 55px;
+    background-position: 0 -294px;
+    margin-left: 10px;
+}
+footer address .special_logo > ul > li {
+    margin-left: 30px;
+}
+footer address .special_logo:after {
+    content: '';
+    clear: both;
+    display: block;
+}
+footer .sns_wrap {
+    position: absolute;
+    top: 0;
+    right: 0;
+    text-align: right;
+    z-index: 1;
+}
+footer .sns_wrap>.fr {
+    display: inline-block;
+    float: inherit;
+}
+footer .sns_wrap .sns_list {
+    position: relative;
+    display: flex;
+}
+footer .sns_wrap .sns_list li {
+    margin-left: 10px;
+}
 /* .footerContainer {
     padding-top: .8125rem; 
     min-height: 100%;

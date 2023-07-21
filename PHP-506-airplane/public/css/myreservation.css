@@ -78,7 +78,7 @@ Boarding Pass
 Header
 --------------------*/
 .boarding-pass header {
-    background: linear-gradient(to bottom, #36475f, #2c394f);
+    background: linear-gradient(to bottom, #e1182c, red);
     padding: 12px 20px;
     height: 53px;
     /* width: 360px;
@@ -261,3 +261,45 @@ Strap
     right: 30px;
 }
 /* /QR코드 */
+
+/* tab */
+.tabArea {
+    width: 100%;
+    border-top: 1px solid #661e43;
+    border-bottom: 1px solid #661e43;
+    box-shadow: 5px 8px 5px rgba(150,150,150,.4);
+    display: inline-block;
+    text-align: center;
+}
+.tabTypeA {
+    list-style: none;
+    height: 5vh;
+    margin-bottom: 0;
+    padding: 0;
+}
+.tabA {
+    display: inline-block;
+    width: 33%;
+    height: 100%;
+    line-height: 3em;
+    margin-right:0;
+    cursor: pointer;
+}
+.tabA a {
+    display: block;
+    text-decoration: none;
+    color: black;
+}
+.tabContent {
+    display: none;
+}
+.activeTab {
+    display: block;
+}
+.choice{
+    background-color: #e1182c;
+}
+.choice a{
+    color: #fff;
+
+}
