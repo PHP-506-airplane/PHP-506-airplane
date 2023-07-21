@@ -5,6 +5,7 @@
     box-sizing: border-box;
 }
 html{
+    height: 100%;
     overflow-x: hidden;
 }
 .notosanskr * { 
@@ -107,6 +108,19 @@ footer address .info_wrap > li > ul > li {
     float: left;
     font-size: 13px;
     color: #909090;
+}
+footer address .info_wrap > li > ul > li:before {
+    content: '';
+    display: inline-block;
+    margin: 0 10px;
+    width: 1px;
+    height: 12px;
+    background: #acacac;
+}
+footer address .info_wrap > li > ul > li:first-child::before {
+    content: '';
+    display: inline-block;
+    background-color: transparent;
 }
 footer address .info_wrap > li > ul > li .corp {
     margin-right: 10px;

@@ -38,13 +38,18 @@
             <div class="container">
                 <div class="masthead-subheading">
                     {{-- 왕복,편도 탭 메뉴 --}}
+                    <div class="search_title">
+                        <span>CHANGE WITH AIRLINE : : <img src="{{asset('img/logom.png')}}"></span>
+                    </div>
                     <div class="tabs">
-                        <ul class="tabs-list">
-                            <li class="on hd_li_no1"><a href="#tab1">왕복</a></li>
-                            <li class="hd_li_no2"><a href="#tab2">편도</a></li>
-                        </ul>
                         <form action="{{route('reservation.check')}}" method="get">
                             @csrf
+                        <ul class="tabs-list">
+                            <div class="list_inner">
+                                <li class="on hd_li_no1"><a href="#tab1">왕복</a></li>
+                                <li class="hd_li_no2"><a href="#tab2">편도</a></li>
+                            </div>
+                        </ul>
                         <div id="tab1"class="tab on"> 
                             {{-- 왕복 --}}
                             <div class="round-way">
