@@ -501,7 +501,7 @@ class ReservationController extends Controller
                 return redirect()->back()->with('alert', '오는편 여정을 선택해주세요.');
             }
 
-            return view('reservationSeat', compact('data', 'data2', 'seat', 'availableSeats', 'availableSeats2', 'flg', 'depPort', 'arrPort'));
+            return view('reserveInsert', compact('data', 'data2', 'seat', 'availableSeats', 'availableSeats2', 'flg', 'depPort', 'arrPort'));
         } else {
             // 편도
             $data = DB::table('reserve_info as res')
@@ -534,7 +534,7 @@ class ReservationController extends Controller
             if (!isset($req->dep_fly_no)) {
                 return redirect()->back()->with('alert', '가는편 여정을 선택해주세요.');
             }
-            return view('reservationSeat', compact('data', 'seat', 'availableSeats', 'flg','depPort','arrPort'));
+            return view('reserveInsert', compact('data', 'seat', 'availableSeats', 'flg','depPort','arrPort'));
         }
     }
     // 예약하기

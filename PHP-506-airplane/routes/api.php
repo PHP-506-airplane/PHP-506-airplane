@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ApiController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -40,6 +41,8 @@ Route::post('/reservations/clearCache', [ReservationController::class, 'clearCac
 Route::post('/users/email', [UserController::class, 'findEmail']);
 // 비밀번호 찾기
 Route::post('/users/password', [UserController::class, 'findPw']);
-
+// 관리자페이지 정보 조회
+Route::post('/admin/search', [AdminController::class, 'search']);
+Route::get('/admin/search', [AdminController::class, 'search']);
 
 
