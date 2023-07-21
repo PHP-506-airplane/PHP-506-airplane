@@ -425,6 +425,7 @@ class ReservationController extends Controller
     public function checkpost(Request $req)
     {
         Log::debug($req);
+        $peoNum = intval($_POST['ADULT']) + intval($_POST['CHILD']) + intval($_POST['BABY']);
 
         // 0627 add 이동호
         if (empty(Auth::user())) {
@@ -500,8 +501,7 @@ class ReservationController extends Controller
             } elseif (!isset($req->arr_fly_no)) {
                 return redirect()->back()->with('alert', '오는편 여정을 선택해주세요.');
             }
-
-            return view('reserveInsert', compact('data', 'data2', 'seat', 'availableSeats', 'availableSeats2', 'flg', 'depPort', 'arrPort'));
+            return view('reservationSeat', compact('data', 'data2', 'seat', 'availableSeats', 'availableSeats2', 'flg', 'depPort', 'arrPort','peoNum'));
         } else {
             // 편도
             $data = DB::table('reserve_info as res')
@@ -618,7 +618,7 @@ class ReservationController extends Controller
                 return redirect()->route('reservation.main')->with('alert', '예약중 오류가 발생했습니다.');
             }
         }
-        return redirect()->route('reservation.myreservation')->with('alert', '예약이 완료되었습니다.\n가입시 등록하신 이메일로 예약정보가 발송되었습니다.');
+        return redirect()->route('reservation.peoInsert')->with('alert', '예약이 완료되었습니다.\n가입시 등록하신 이메일로 예약정보가 발송되었습니다.');
     }
 
     // v003 이동호 add 나의 예약 조회 페이지
@@ -753,6 +753,16 @@ class ReservationController extends Controller
         // TicketInfo::where('t_no', $req->t_no)->delete();
 
         return redirect()->route('reservation.myreservation')->with('alert', '취소가 완료되었습니다.');
+    }
+
+    public function peoInsert() {
+        return view('reserveInsert');
+        // return $_POST;
+    }
+
+    public function peoInsertPost(Request $req){
+        // return $_POST;
+        return redirect()->route('reservation.checkpost');
     }
 
 }
