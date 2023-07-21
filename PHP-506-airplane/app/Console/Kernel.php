@@ -95,6 +95,10 @@ class Kernel extends ConsoleKernel
         // })->everyMinute(); // php artisan schedule:run 명령어로 즉시 실행시 사용
         // })->dailyAt('10:00'); // 매일 아침 10시에 실행
 
+        // 명령어
+        // 한번 실행 : php artisan schedule:run
+        // 계속 실행 : php artisan schedule:work
+
         // 2년이상 지난 데이터 삭제
         $schedule->call(function () {
             $this->deleteData();
