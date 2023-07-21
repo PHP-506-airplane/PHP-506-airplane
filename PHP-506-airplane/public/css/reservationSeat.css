@@ -242,6 +242,10 @@ ol {
 .imponum {
     font-size: 30px;
 }
+
+.possipeo {
+    font-size: 20px;
+}
 @media (max-width: 1600px){
     #seatPost{
         left: 25%;

@@ -61,7 +61,6 @@
     </div>
     <div class="seatMap">
         {{-- <div class="name_box"> --}}
-            {{-- <h2>좌석 선택 인원수</h2> --}}
             <br>
             <form id="seatPost" action="{{route('reservation.seatpost')}}" method="post">
                 @csrf
@@ -76,10 +75,31 @@
                 
                 <ul>
                     {{-- <li class="u_name">이름 : <span>{{Auth::user()->u_name}}</span></li> --}}
-                    <li><span peoNums="{{intval($_POST['ADULT']) + intval($_POST['CHILD'])}}" id="peoNum">좌석 선택 인원수 : {{intval($_POST['ADULT']) + intval($_POST['CHILD'])}}명</span></li>
-                    {{-- <li><span>소아 : {{$_POST['CHILD']}}</span></li> --}}
-                    {{-- <li><span>유아 : {{$_POST['BABY']}}</span></li> --}}
-                    <li class="s_li">
+                    <li><span class="possipeo" peoNums="{{intval($_POST['ADULT']) + intval($_POST['CHILD'])}}" id="peoNum">좌석 선택 인원수</span></li>
+                    <br>
+                    <span class="possipeo">{{intval($_POST['ADULT']) + intval($_POST['CHILD'])}}명</span></li>
+                    <br>
+                @if(isset($peoNum))
+                    @for($i = 1; $i <= $peoNum; $i++)
+                        <li class="s_li">
+                        <h3>가는편(구간1)</h3>
+                        <span class="material-symbols-outlined">
+                            chair
+                            </span>
+                        <input type="text" class="show_name" name="seat_no" id="show_name{{$i}}" readonly>
+                    </li>
+                    @if($flg['hd_li_flg'] === '1')
+                        <li class="s_li">
+                            <h3>오는편(구간2)</h3>
+                            <span class="material-symbols-outlined">
+                                chair
+                                </span>
+                            <input type="text" class="show_name2" name="seat_no2" id="show_name2{{$i}}" readonly>
+                        </li>
+                    @endif
+                    @endfor
+                @endif
+                    {{-- <li class="s_li">
                         <h3>가는편(구간1)</h3>
                         <span class="material-symbols-outlined">
                             chair
@@ -94,9 +114,9 @@
                                 </span>
                             <input type="text" class="show_name2" name="seat_no2" readonly>
                         </li>
-                    @endif
+                    @endif --}}
                 </ul>
-                <button type="button" class="chk_btn" onclick="reserveBtn();">결제하기</button>
+                {{-- <button type="button" class="chk_btn" onclick="reserveBtn();">결제하기</button> --}}
                 {{-- <button type="button" class="chk_btn" onclick="requestPay()">결제하기</button> --}}
             </form>
         {{-- </div> --}}
@@ -174,7 +194,8 @@
         <input type="hidden">
         <div class="info"></div>
         <div class="btnArea">
-            {{-- <button type="submit" class="chk_btn" onclick="location.href='{{route('reservation.reserveInsert')}}';">다음</button> --}}
+            {{-- <button type="submit" class="chk_btn">다음</button> --}}
+            <button type="submit" class="chk_btn" onclick="location.href='{{route('reservation.peoInsert')}}';">다음</button>
         </div>
     </div>
 </div>

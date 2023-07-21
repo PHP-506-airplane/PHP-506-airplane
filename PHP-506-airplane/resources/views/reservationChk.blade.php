@@ -18,6 +18,7 @@
 
 <div class="container">
     <form action="{{route('reservation.checkpost')}}" method="post">
+    {{-- <form action="{{route('reservation.submitForm')}}" method="post"> --}}
         @csrf
         <h1>항공편 선택</h1>
         <div class="step">
@@ -180,6 +181,7 @@
                 <a href="#"></a>
                 <p><span class="tit">총금액(KRW)</span><strong class="sum_price">0</strong></p>
             </div> --}}
+            {{-- <button type="submit" class="chk_btn" onclick="{{route('reservation.peoInsert')}}">다음</button> --}}
             <button type="submit" class="chk_btn">다음</button>
         </div>
     </div>
