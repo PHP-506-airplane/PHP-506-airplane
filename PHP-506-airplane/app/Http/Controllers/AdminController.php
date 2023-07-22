@@ -20,6 +20,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\View;
+use App\Jobs\SendEmailCancel;
 
 class AdminController extends Controller
 {
@@ -167,9 +168,13 @@ class AdminController extends Controller
                 )
                 ->get();
         
+            // foreach ($userList as $user) {
+            //     // Log::debug($user);
+            //     Mail::to($user->u_email)->send(new ResCancel($user, $data->del_reason));
+            // }
             foreach ($userList as $user) {
-                // Log::debug($user);
-                Mail::to($user->u_email)->send(new ResCancel($user, $data->del_reason));
+                // 큐에 작업 추가
+                SendEmailCancel::dispatch($user, $data->del_reason);
             }
 
             DB::commit();

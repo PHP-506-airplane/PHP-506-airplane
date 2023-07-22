@@ -9,7 +9,7 @@
 @section('contents')
     <div class="adminHeader"><span onclick="location.href='{{ route('admin.index'); }}'" id="headerSpan">Shoong 관리자 페이지</span></div>
     <div id="cont">
-        <div>
+        <div id="divSearchForm">
             <form id="searchForm" method="GET" style="margin: 20px;" action="{{ route('admin.search') }}">
                 @csrf
                 <input type="date" name="dateStart" id="dateStart" value="{{ $today }}">
@@ -40,6 +40,7 @@
                     <option value="2">결항</option>
                 </select>
                 <button type="submit" id="searchBtn" class="btn btn-outline-dark btn-sm" onclick="showLoading();">검색</button>
+                <button type="button" class="btn btn-outline-dark btn-sm" id="addModalBtn" data-bs-toggle="modal" data-bs-target="#addModal">운항정보 추가</button>
             </form>
         </div>
         <div id="resultDiv" class="container">
@@ -156,6 +157,28 @@
                         <input type="hidden" name="fly_no" id="flightId">
                         <button type="button" id="delBtn" class="btn btn-danger" onclick="showLoading();">결항</button>
                     </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{-- 모달 창: 운항정보 추가 --}}
+    <div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addModalLabel">운항정보 추가</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="addForm" method="post">
+                        @csrf
+                        {{-- TODO : 입력input 추가 --}}
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+                    <button type="submit" form="addForm" class="btn btn-primary">추가</button>
                 </div>
             </div>
         </div>

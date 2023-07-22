@@ -65,3 +65,8 @@ footer {
     margin: 5px;
     padding: 5px;
 }
+
+#divSearchForm input, select {
+    position: relative;
+    top: 2px;
+}

@@ -62,6 +62,7 @@ delBtn.addEventListener('click', function() {
                 removeLoading()
             );
     } else {
+        removeLoading();
         alert('결항 취소.');
     }
 });

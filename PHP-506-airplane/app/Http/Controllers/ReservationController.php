@@ -576,7 +576,8 @@ class ReservationController extends Controller
 
                 foreach ($reserveNos as $reserveNo) {
                     $resData = $this->getReserveData($reserveNo);
-                    Mail::to(Auth::user()->u_email)->send(new SendReserve($userinfo, $resData));
+                    // Mail::to(Auth::user()->u_email)->send(new SendReserve($userinfo, $resData));
+                    Mail::to(Auth::user()->u_email)->queue(new SendReserve($userinfo, $resData));
                 }
 
                 foreach ($cacheKeys as $cacheKey) {
@@ -624,7 +625,7 @@ class ReservationController extends Controller
     // v003 이동호 add 나의 예약 조회 페이지
     public function myreservation()
     {
-       
+
         if (empty(Auth::user())) {
             // 로그인하지 않은 유저가 접근한 페이지를 세션에 저장
             Session::put('previous_url', route('reservation.myreservation'));
