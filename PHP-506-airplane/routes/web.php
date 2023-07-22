@@ -62,6 +62,10 @@ Route::get('/resend-email', [UserController::class, 'resendemail'])->name('user.
 Route::get('/users/find/{type}', [UserController::class, 'find'])->name('users.find');
 // 관리자 페이지
 Route::get('/admin/list', [AdminController::class, 'index'])->name('admin.index');
+// 관리자페이지 정보 조회
+Route::get('/admin/search', [AdminController::class, 'search'])->name('admin.search');
+// 관리자페이지 운항정보 삭제
+Route::delete('/admin/delete', [AdminController::class, 'delete'])->name('admin.delete');
 
 
 

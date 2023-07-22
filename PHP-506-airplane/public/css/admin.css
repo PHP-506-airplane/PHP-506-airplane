@@ -1,0 +1,67 @@
+* {
+    font-family: 'Noto Sans KR', sans-serif;
+}
+
+a {
+    margin: 10px;
+    color: black;
+    text-decoration: none;
+}
+
+.jsPage {
+    display: inline-block;
+    max-width: 50px; 
+}
+
+.after::after {
+    display: inline-block;
+    position: relative;
+    left: 55px;
+    content: '→';
+}
+
+nav {
+    display: none !important;
+}
+
+footer {
+    display: none !important;
+}
+
+.adminHeader {
+    margin: 0;
+    padding: 10px;
+    font-size: 20px;
+    color: white;
+    font-weight: 700;
+    background-color: #0000009d;
+}
+
+#row {
+    background-color: #0000009d;
+    color: white;
+    height: 50px !important;
+    line-height: 50px;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+#resultRow > .row > .col {
+    height: 31px;
+}
+
+#cont {
+    min-height: 750px;
+    margin: 30px auto;
+    text-align: center;
+}
+
+#headerSpan {
+    cursor: pointer;
+}
+
+.modal-body > .row {
+    border-bottom: 1px solid #cccccc5d;
+    margin: 5px;
+    padding: 5px;
+}
