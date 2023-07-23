@@ -1,0 +1,120 @@
+* {
+    font-family: 'Noto Sans KR', sans-serif;
+}
+
+a {
+    margin: 10px;
+    color: black;
+    text-decoration: none;
+}
+
+.jsPage {
+    display: inline-block;
+    max-width: 50px; 
+}
+
+/* .after::after {
+    display: inline-block;
+    position: relative;
+    left: 35px;
+    content: '→';
+} */
+
+nav {
+    display: none !important;
+}
+
+footer {
+    display: none !important;
+}
+
+.adminHeader {
+    margin: 0;
+    padding: 10px;
+    font-size: 20px;
+    color: white;
+    font-weight: 700;
+    background-color: #0000009d;
+}
+
+#row {
+    background-color: #0000009d;
+    color: white;
+    height: 50px !important;
+    line-height: 50px;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+#resultRow > .row > .col {
+    height: 31px;
+}
+
+#cont {
+    min-height: 750px;
+    margin: 30px auto;
+    text-align: center;
+}
+
+#headerSpan {
+    cursor: pointer;
+}
+
+.modal-body > .row {
+    border-bottom: 1px solid #cccccc5d;
+    margin: 5px;
+    padding: 5px;
+}
+
+#divSearchForm input, select {
+    position: relative;
+    top: 2px;
+}
+
+#addForm > div {
+    margin: 10px;
+}
+
+.arrow {
+    text-align: center;
+    margin-top: 3px;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.txtCenter {
+    text-align: center !important;
+}
+
+#mobile {
+    font-size: 900px;
+    margin-top: 500px;
+}
+
+.txt {
+    color:#979797;
+    font-size:12px;
+}
+
+.spanReason {
+    font-weight: 900;
+}
+
+.colorRed {
+    color: red;
+}
+
+.spanDelayReason {
+    margin-top: 5px;
+    margin-bottom: 0;
+    color: blue;
+}
+
+#addModalBtn {
+    position: fixed;
+    right: 350px;
+}
