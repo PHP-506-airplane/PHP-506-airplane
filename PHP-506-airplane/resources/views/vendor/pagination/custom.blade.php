@@ -60,6 +60,7 @@
     $nextBlockPage = min($paginator->lastPage(), $paginator->currentPage() + $block);
 @endphp
 @if ($paginator->hasMorePages())
+    <a href="{{ $paginator->url($paginator->lastPage()) }}"><span style="color: black; margin-right:10px;">...</span>{{ $paginator->lastPage() }}</a>
     <a href="{{ $paginator->url($nextBlockPage) }}" rel="next">></a>
 @else
     <a href="{{ $paginator->url($nextBlockPage) }}" rel="next" class="pageHidden">></a>

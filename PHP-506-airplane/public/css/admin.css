@@ -16,7 +16,7 @@ a {
 .after::after {
     display: inline-block;
     position: relative;
-    left: 55px;
+    left: 35px;
     content: '→';
 }
 
@@ -69,4 +69,47 @@ footer {
 #divSearchForm input, select {
     position: relative;
     top: 2px;
+}
+
+#addForm > div {
+    margin: 10px;
+}
+
+.arrow {
+    text-align: center;
+    margin-top: 3px;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.txtCenter {
+    text-align: center !important;
+}
+
+#mobile {
+    font-size: 900px;
+    margin-top: 500px;
+}
+
+.txt {
+    color:#979797;
+    font-size:12px;
+}
+
+.spanReason {
+    font-weight: 900;
+}
+
+.colorRed {
+    color: red;
+}
+
+.spanDelayReason {
+    margin-top: 5px;
+    margin-bottom: 0;
+    color: blue;
 }

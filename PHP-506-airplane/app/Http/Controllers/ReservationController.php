@@ -182,9 +182,7 @@ class ReservationController extends Controller
 
         $ticketInfo->save();
 
-        $today = date("ymd");
         $user = Auth::user()->u_no;
-        // 주문번호 규칙 : 연월일(YYMMDD) + 유저PK + 숫자or영어 랜덤 7자리
         $merchant_uid = $data['merchant_uid'];
 
         $payment = new Payment([

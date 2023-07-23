@@ -66,6 +66,10 @@ Route::get('/admin/list', [AdminController::class, 'index'])->name('admin.index'
 Route::get('/admin/search', [AdminController::class, 'search'])->name('admin.search');
 // 관리자페이지 운항정보 삭제
 Route::delete('/admin/delete', [AdminController::class, 'delete'])->name('admin.delete');
+// 관리자페이지 운항정보 추가
+Route::post('/admin/store', [AdminController::class, 'store'])->name('admin.store');
+// 관리자페이지 지연
+Route::put('/admin/update', [AdminController::class, 'update'])->name('admin.update');
 
 
 
