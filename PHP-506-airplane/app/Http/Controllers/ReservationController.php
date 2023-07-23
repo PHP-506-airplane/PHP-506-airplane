@@ -424,8 +424,26 @@ class ReservationController extends Controller
     // 좌석 출력
     public function checkpost(Request $req)
     {
-        Log::debug($req);
-        $peoNum = intval($_POST['ADULT']) + intval($_POST['CHILD']) + intval($_POST['BABY']);
+        // 예시로 사용자가 선택한 인원 수와 해당 인원들의 이름을 받아왔다고 가정
+        $adultCount = intval($_POST['ADULT']);
+        $childCount = intval($_POST['CHILD']);
+
+        // 사용자가 입력한 인원에 따라 각 인원들의 이름을 담을 배열을 생성
+        $names = [];
+
+        // 성인, 유아, 소아 인원 수에 따라 이름 배열에 이름을 추가
+        for ($i = 1; $i <= $adultCount; $i++) {
+            $names[] = "성인{$i}"; // 성인 이름 추가
+        }
+
+        for ($i = 1; $i <= $childCount; $i++) {
+            $names[] = "소아{$i}"; // 유아 이름 추가
+        }
+       
+        // Log::debug($req);
+        $pass_name = $names; 
+        $peoNum = $adultCount + $childCount;
+        
 
         // 0627 add 이동호
         if (empty(Auth::user())) {
@@ -501,7 +519,7 @@ class ReservationController extends Controller
             } elseif (!isset($req->arr_fly_no)) {
                 return redirect()->back()->with('alert', '오는편 여정을 선택해주세요.');
             }
-            return view('reservationSeat', compact('data', 'data2', 'seat', 'availableSeats', 'availableSeats2', 'flg', 'depPort', 'arrPort','peoNum'));
+            return view('reservationSeat', compact('data', 'data2', 'seat', 'availableSeats', 'availableSeats2', 'flg', 'depPort', 'arrPort','peoNum','pass_name'));
         } else {
             // 편도
             $data = DB::table('reserve_info as res')
@@ -534,14 +552,14 @@ class ReservationController extends Controller
             if (!isset($req->dep_fly_no)) {
                 return redirect()->back()->with('alert', '가는편 여정을 선택해주세요.');
             }
-            return view('reserveInsert', compact('data', 'seat', 'availableSeats', 'flg','depPort','arrPort'));
+            return view('reservationSeat', compact('data', 'seat', 'availableSeats', 'flg','depPort','arrPort'));
         }
     }
     // 예약하기
     public function seatpost(Request $req)
     {
-        $userinfo = Userinfo::where('u_email', Auth::user()->u_email)->first();
 
+        $userinfo = Userinfo::where('u_email', Auth::user()->u_email)->first();
         if ($req->flg == '1') {
             try {
                 DB::beginTransaction();
@@ -556,6 +574,9 @@ class ReservationController extends Controller
                         'seat_no' => $req->seat_no
                         ,'fly_no' => $req->fly_no
                         ,'plane_no' => $req->plane_no
+                        ,'merchant_uid' => $req->merchant_uid
+                        ,'merchant_uid' => $req->merchant_uid
+                        ,'merchant_uid' => $req->merchant_uid
                         ,'merchant_uid' => $req->merchant_uid
                     ]
                     ,[
@@ -618,7 +639,7 @@ class ReservationController extends Controller
                 return redirect()->route('reservation.main')->with('alert', '예약중 오류가 발생했습니다.');
             }
         }
-        return redirect()->route('reservation.peoInsert')->with('alert', '예약이 완료되었습니다.\n가입시 등록하신 이메일로 예약정보가 발송되었습니다.');
+        return redirect()->route('reservation.peoInsert')->with('alert', '예약이 완료되었습니다.\n가입시 등록하신 이메일로 예약정보가 발송되었습니다.')->compact('peoNum');
     }
 
     // v003 이동호 add 나의 예약 조회 페이지
@@ -758,15 +779,33 @@ class ReservationController extends Controller
         return redirect()->route('reservation.myreservation')->with('alert', '취소가 완료되었습니다.');
     }
 
-    public function peoInsert() {
-        return view('reserveInsert');
-        // return $_POST;
+    public function peoInsert(Request $req) {
+        $peoNum = intval($req->ADULT) + intval($req->CHILD) + intval($req->BABY);
+        // 예시로 사용자가 선택한 인원 수와 해당 인원들의 이름을 받아왔다고 가정
+        $adultCount = intval($req->ADULT);
+        $childCount = intval($req->CHILD);
+        $babyCount = intval($req->BABY);
+
+        // 사용자가 입력한 인원에 따라 각 인원들의 이름을 담을 배열을 생성
+        $names = [];
+
+        // 성인, 유아, 소아 인원 수에 따라 이름 배열에 이름을 추가
+        for ($i = 1; $i <= $adultCount; $i++) {
+            $names[] = "성인{$i}"; // 성인 이름 추가
+        }
+        for ($i = 1; $i <= $childCount; $i++) {
+            $names[] = "소아{$i}"; // 유아 이름 추가
+        }
+        for ($i = 1; $i <= $babyCount; $i++) {
+            $names[] = "유아{$i}"; // 유아 이름 추가
+        }
+       
+        // Log::debug($req);
+        $pass_name = $names; 
+
+        return view('reserveInsert', compact('peoNum','pass_name'));
     }
 
-    public function peoInsertPost(Request $req){
-        // return $_POST;
-        return redirect()->route('reservation.checkpost');
-    }
 
 }
 

@@ -75,5 +75,4 @@ Route::post('/reservation/seatpost', [ReservationController::class, 'seatpost'])
 Route::get('/login/{provider}', [UserController::class, 'redirect']);
 Route::get('/login/{provider}/callback', [UserController::class, 'Callback']);
 
-Route::get('/reservation/peoInsert',[ReservationController::class,'peoInsert'])->name('reservation.peoInsert');
-Route::post('/reservation/peoInsertPost',[ReservationController::class,'peoInsertPost'])->name('reservation.peoInsertPost');
+Route::post('/reservation/peoInsert',[ReservationController::class,'peoInsert'])->name('reservation.peoInsert');
