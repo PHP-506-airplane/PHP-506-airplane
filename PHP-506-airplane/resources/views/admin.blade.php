@@ -52,7 +52,7 @@
                     <option value="2">결항</option>
                 </select>
                 <button type="submit" id="searchBtn" class="btn btn-outline-dark btn-sm" onclick="showLoading();">검색</button>
-                <button type="button" class="btn btn btn-outline-info btn-sm" id="addModalBtn" data-bs-toggle="modal" data-bs-target="#addModal">운항정보 추가</button>
+                <button type="button" class="btn btn-outline-info btn-sm" id="addModalBtn" data-bs-toggle="modal" data-bs-target="#addModal">운항정보 추가</button>
             </form>
         </div>
         <div id="resultDiv" class="container">
@@ -62,8 +62,10 @@
                 <div class="col">편명</div>
                 <div class="col">항공사</div>
                 <div class="col col-1">출발지</div>
+                <div class="col-md-auto"></div>
                 <div class="col col-1">도착지</div>
                 <div class="col col-1">출발</div>
+                <div class="col-md-auto"></div>
                 <div class="col col-1">도착</div>
                 <div class="col col-1">예약석</div>
                 <div class="col col-1">지연 사유</div>
@@ -77,8 +79,10 @@
                         <div class="col">{{ Str::upper($item->flight_num) }}</div>
                         <div class="col">{{ $item->line_name }}</div>
                         <div class="col after col-1">{{ str_replace('공항', '', $item->dep_port_name) }}</div>
+                        <div class="col-md-auto">→</div>
                         <div class="col col-1">{{ str_replace('공항', '', $item->arr_port_name) }}</div>
                         <div class="col after col-1">{{ substr($item->dep_time, 0, 2) . ':' . substr($item->dep_time, 2) }}</div>
+                        <div class="col-md-auto">→</div>
                         <div class="col col-1">{{ substr($item->arr_time, 0, 2) . ':' . substr($item->arr_time, 2) }}</div>
                         <div class="col col-1">{{ $item->count > 0 ? $item->count . '석' : '-' }}</div>
                         <div class="col col-1">

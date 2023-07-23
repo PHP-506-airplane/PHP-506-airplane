@@ -13,12 +13,12 @@ a {
     max-width: 50px; 
 }
 
-.after::after {
+/* .after::after {
     display: inline-block;
     position: relative;
     left: 35px;
     content: '→';
-}
+} */
 
 nav {
     display: none !important;
@@ -112,4 +112,13 @@ input::-webkit-inner-spin-button {
     margin-top: 5px;
     margin-bottom: 0;
     color: blue;
+}
+
+#rowResult:nth-child(odd) {
+    background-color: #000000;
+}
+
+#addModalBtn {
+    position: fixed;
+    right: 350px;
 }
