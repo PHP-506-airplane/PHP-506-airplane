@@ -114,10 +114,6 @@ input::-webkit-inner-spin-button {
     color: blue;
 }
 
-#rowResult:nth-child(odd) {
-    background-color: #000000;
-}
-
 #addModalBtn {
     position: fixed;
     right: 350px;
