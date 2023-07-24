@@ -49,6 +49,7 @@ a{
 }
 .list_inner{
   display: flex;
+  flex-wrap: wrap;
 }
 .tabs .tabs-list .list_inner > li {
   width: 10%;
@@ -208,7 +209,6 @@ a{
   font-size: 24px;
 }
 .sbox{
-  width: 20% !important;
   background: url('../img/user-icon2.png') calc(100% - 7px) center no-repeat;
 }
 .dateBox{
