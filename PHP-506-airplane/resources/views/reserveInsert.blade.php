@@ -5,8 +5,12 @@
 @endsection
 
 @section('contents')
-    <h1>상세 정보 입력</h1>
+<div class="container">
+    <h1>탑승객 정보</h1>
     <br>
+    <br>
+    <p class="infop">탑승객 정보 입력</p>
+    <hr>
     <br>
     <form action="{{route('reservation.seatpost')}}" method="post">
         @csrf
@@ -20,18 +24,21 @@
         <div class="con">
         @if(isset($peoNum))
             @for($i = 0; $i < $peoNum; $i++)
-                <label>{{$pass_name[$i]}}</label>
+                <span class="title">{{$pass_name[$i]}}</span>
+                <br>
+                <br>
+                <label class="p_title">이름</label>
                 <input type="text" name="u_name" placeholder="이름{{$i}}" required>
-                <label>생년월일 {{$i}}</label>
+                <label class="p_title">생년월일</label>
                 <input type="date" name="u_birth" placeholder="생년월일" min="{{ date('Y-m-d', strtotime('-12 years')) }}" max="{{ date('Y-m-d', strtotime('-2 years')) }}" required>
-                <label>성별</label>
+                <label class="p_title">성별</label>
                 <select class="size num1" name="gender" value="{{old('gender')}}" required>
                     <option value="0">남</option>
                     <option value="1">여</option>
                 </select>
                 <br>
                 <br>
-                <span></span>
+                <span class="line"></span>
             @endfor
         @endif
         <div class="btnArea">
@@ -39,6 +46,7 @@
         </div>
         </div>
     </form>
+</div>
 @endsection
 
 @section('js')
