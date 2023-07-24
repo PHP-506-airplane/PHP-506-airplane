@@ -60,14 +60,12 @@ async function cancelClick(event) {
                 
                 // refundPay 응답을 처리
                 clickedForm.submit();
-                alert('환불되었습니다.');
+                alert('환불 되었습니다.');
                 removeLoading();
 
               } catch (e) {
-
-          console.log('환불 실패');
             removeLoading();
-            console.log(e);
+            alert('환불에 실패했습니다.');
         }
     }
 }

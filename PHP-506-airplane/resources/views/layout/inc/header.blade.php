@@ -45,8 +45,8 @@
                 @if(Auth::user()->admin_flg === '1')
                   <li><a class="dropdown-item" href="{{route('admin.index')}}" style="color: red;">관리자 페이지</a></li>
                 @endif
-                <li><a class="dropdown-item" href="{{route('users.useredit')}}">회원정보 수정</a></li>
-                <li><a class="dropdown-item" href="{{route('reservation.myreservation')}}">예약 조회</a></li>
+                {{-- <li><a class="dropdown-item" href="{{route('users.useredit')}}">회원정보 수정</a></li>
+                <li><a class="dropdown-item" href="{{route('reservation.myreservation')}}">예약 조회</a></li> --}}
                 <li><a class="dropdown-item" href="{{route('users.logout')}}">로그아웃</a></li>
             </ul>
             </li>

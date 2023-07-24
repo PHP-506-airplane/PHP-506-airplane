@@ -35,3 +35,23 @@ function removeLoading() {
     Divloading.classList.remove('svgHidden');
     svg.style.display = 'none';
 }
+// 푸터 반응형
+document.addEventListener("DOMContentLoaded", function() {
+    var accordionItems = document.querySelectorAll('.foot_menuwrap dt');
+
+    function toggleAccordion() {
+        var dd = this.nextElementSibling;
+        this.classList.toggle('active');
+
+        if (dd.style.display === 'block') {
+            dd.style.display = 'none';
+        } else {
+            dd.style.display = 'block';
+        }
+    }
+
+    // Attach click event to each accordion item
+    for (var i = 0; i < accordionItems.length; i++) {
+        accordionItems[i].addEventListener('click', toggleAccordion);
+    }
+});

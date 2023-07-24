@@ -11,6 +11,9 @@ html{
 .notosanskr * { 
     font-family: 'Noto Sans KR', sans-serif;
 }
+a{
+    text-decoration: none;
+}
 
 body {
     font-family: 'Noto Sans KR', sans-serif;
@@ -228,13 +231,75 @@ footer .sns_wrap .sns_list {
 footer .sns_wrap .sns_list li {
     margin-left: 10px;
 }
-/* .footerContainer {
-    padding-top: .8125rem; 
-    min-height: 100%;
-    padding-bottom: 1rem;
-    position: fixed;   
-    bottom: 0;
-} */
+.foot_menuwrap ul li a {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+    display: inline-block;
+}
+/* 반응형 */
+/* 화면 크기가 작을 때 아코디언 스타일 적용 */
+@media (max-width: 767px) {
+    .foot_menuwrap dt {
+        display: block;
+        position: relative;
+        width: 100%;
+        margin-bottom: 5px;
+    }
+    .foot_menuwrap dd {
+        display: none;
+    }
+    .foot_menuwrap dt.active {
+        background-color: #ddd;
+    }
+    .foot_menuwrap dt::after{
+        content: '+';
+        display: block;
+        position: absolute;
+        top: -15px;
+        right: 0px;
+        font-size: 1.5em;
+        padding: 0.5em;
+    }
+    .foot_menuwrap dt.active + dd {
+        display: block;
+    }
+}
+@media (max-width: 540px) {
+    .foot_menuwrap dt::after{
+        content: '+';
+        display: block;
+        position: absolute;
+        top: -15px;
+        right: -15px;
+        font-size: 1.5em;
+        padding: 0.5em;
+    }
+}
+@media (max-width: 480px) {
+    .foot_menuwrap dt::after{
+        content: '+';
+        display: block;
+        position: absolute;
+        top: -15px;
+        right: -25px;
+        font-size: 1.5em;
+        padding: 0.5em;
+    }
+}
+@media (max-width: 390px) {
+    .foot_menuwrap dt::after{
+        content: '+';
+        display: block;
+        position: absolute;
+        top: -15px;
+        right: -30px;
+        font-size: 1.5em;
+        padding: 0.5em;
+    }
+}
+
 /* /푸터 */
 
 /* 페이징 */

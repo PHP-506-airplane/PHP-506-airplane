@@ -78,9 +78,7 @@
                 @endif
                 
                 <ul>
-    <li><span class="possipeo" peoNums="{{ $peoNum }}" id="peoNum">좌석 선택 인원수</span></li>
-    <br>
-    <span class="possipeo">{{ $peoNum }}명</span></li>
+    <li><span class="possipeo" peoNums="{{ $peoNum }}" id="peoNum">좌석 선택 인원수 : {{ $peoNum }}명</span></li>
     <br>
     @if (isset($peoNum))
         @for ($i = 0; $i < $peoNum; $i++)
