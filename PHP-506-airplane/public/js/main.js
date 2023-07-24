@@ -453,9 +453,16 @@ function changeCount(target, v) {
 
 const selected_passenger = document.querySelector('.selected_passenger');
 const layerP = document.querySelector('.layer_passenger');
-// 라벨을 클릭시 출발지 옵션 목록이 열림/닫힘
+// 라벨을 클릭시 왕복 탭의 인원수 설정창이 열림/닫힘
 selected_passenger.addEventListener('click', function(){
     layerP.classList.toggle('on');
+});
+
+const selected_passenger_one_way = document.querySelector('.one-way .selected_passenger');
+const layerP_one_way = document.querySelector('.one-way .layer_passenger');
+// 라벨을 클릭시 편도 탭의 인원수 설정창이 열림/닫힘
+selected_passenger_one_way.addEventListener('click', function(){
+    layerP_one_way.classList.toggle('on');
 });
 
 //성인과 유아의 수 설정
