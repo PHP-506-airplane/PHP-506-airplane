@@ -54,7 +54,10 @@ input {
     height: 60px;
     border-radius: 5px;
 }
-
+.seat_input{
+    width: 60px;
+    text-align: center;
+}
 .size {
     width: 60px;
     height: 60px;

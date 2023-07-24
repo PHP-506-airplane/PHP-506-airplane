@@ -556,35 +556,56 @@ class ReservationController extends Controller
     // 예약하기
     public function seatpost(Request $req)
     {
-
+        Log::debug('--------- seatpost Start ---------');
+        Log::debug('request all', $req->all());
+        // 이메일 보내기 위한 유저 정보 저장
         $userinfo = Userinfo::where('u_email', Auth::user()->u_email)->first();
+        // 가는편 좌석
+        $dep_seats = $req->seat_no;
+        // 오는편 좌석
+        $arr_seats = $req->seats_no; 
+
+        // 왕복
         if ($req->flg == '1') {
+            Log::debug('flg : 1');
             try {
+            
                 DB::beginTransaction();
 
-                $cacheKeys = [
-                    'res_' . $req->fly_no . '_' . $req->seat_no,
-                    'res_' . $req->fly_no2 . '_' . $req->seat_no2
-                ];
-
-                $flightData = [
-                    [
-                        'seat_no' => $req->seat_no
-                        ,'fly_no' => $req->fly_no
-                        ,'plane_no' => $req->plane_no
-                        ,'merchant_uid' => $req->merchant_uid
-                        ,'merchant_uid' => $req->merchant_uid
-                        ,'merchant_uid' => $req->merchant_uid
-                        ,'merchant_uid' => $req->merchant_uid
-                    ]
-                    ,[
-                        'seat_no' => $req->seat_no2
-                        ,'fly_no' => $req->fly_no2
-                        ,'plane_no' => $req->plane_no2
-                        ,'merchant_uid' => $req->merchant_uid
-                    ]
-                ];
-
+                // 가는편
+                // for($i=0; $i<count($dep_seats); $i++){
+                    foreach ($req->all() as $data ) {
+                        $cacheKeys = [];
+                        $int_fly = strval($data->fly_no);
+                        $cacheKeys = [
+                            'res_' . $int_fly . '_' . $data->seat_no,
+                        ];
+                        Log::debug('cacheKeys',$cacheKeys);
+                        $flightData = 
+                        [
+                            'seat_no' => $data->seat_no
+                            ,'fly_no' => $int_fly
+                            ,'plane_no' => $data->plane_no
+                            ,'merchant_uid' => $data->merchant_uid
+                        ];
+                        Log::debug('flightData',$flightData);
+                    }
+                // }
+                // 오는편
+                // for($i=0; $i<count($arr_seats); $i++){
+                //     $cacheKeys1 = [];
+                //     $cacheKeys1 = [
+                //         'res_' . $req->fly_no2 . '_' . $req->seats_no[$i],
+                //     ];
+                //     Log::debug('cacheKeys1',$cacheKeys1);
+                //     $flightData = [
+                //         'seat_no' => $req->seats_no[$i]
+                //         ,'fly_no' => $req->fly_no2
+                //         ,'plane_no' => $req->plane_no2
+                //         ,'merchant_uid' => $req->merchant_uid
+                //     ];
+                // }
+                
                 $reserveNos = [];
                 foreach ($flightData as $data) {
                     $reserveNo = $this->saveReservation($data);
@@ -598,21 +619,22 @@ class ReservationController extends Controller
                     // Mail::to(Auth::user()->u_email)->send(new SendReserve($userinfo, $resData));
                     Mail::to(Auth::user()->u_email)->queue(new SendReserve($userinfo, $resData));
                 }
-
-                foreach ($cacheKeys as $cacheKey) {
-                    Cache::forget($cacheKey);
-                }
-
+                Log::debug('message',$cacheKeys);
+                // foreach ($cacheKeys as $cacheKey) {
+                    Cache::forget($cacheKeys);
+                    // Cache::forget($cacheKeys1);
+                // }
                 DB::commit();
             } catch (Exception $e) {
                 DB::rollBack();
                 Log::error($e);
-                foreach ($cacheKeys as $cacheKey) {
-                    Cache::forget($cacheKey);
-                }
+                // foreach ($cacheKeys as $cacheKey) {
+                    Cache::forget($cacheKeys);
+                // }
                 return redirect()->route('reservation.main')->with('alert', '예약중 오류가 발생했습니다.');
             }
         } else {
+            Log::debug('flg : 0');
             try {
                 DB::beginTransaction();
 
@@ -635,10 +657,12 @@ class ReservationController extends Controller
                 DB::rollBack();
                 Log::error($e);
                 Cache::forget($cacheKey);
+                Log::debug('--------- seatpost End (Error)---------');
                 return redirect()->route('reservation.main')->with('alert', '예약중 오류가 발생했습니다.');
             }
         }
-        return redirect()->route('reservation.peoInsert')->with('alert', '예약이 완료되었습니다.\n가입시 등록하신 이메일로 예약정보가 발송되었습니다.')->compact('peoNum');
+        Log::debug('--------- seatpost End ---------');
+        return redirect()->route('reservation.myreservation')->with('alert', '예약이 완료되었습니다.\n가입시 등록하신 이메일로 예약정보가 발송되었습니다.');
     }
 
     // v003 이동호 add 나의 예약 조회 페이지
@@ -784,25 +808,26 @@ class ReservationController extends Controller
         $adultCount = intval($req->ADULT);
         $childCount = intval($req->CHILD);
         $babyCount = intval($req->BABY);
-
         // 사용자가 입력한 인원에 따라 각 인원들의 이름을 담을 배열을 생성
         $names = [];
-
         // 성인, 유아, 소아 인원 수에 따라 이름 배열에 이름을 추가
         for ($i = 1; $i <= $adultCount; $i++) {
             $names[] = "성인{$i}"; // 성인 이름 추가
         }
         for ($i = 1; $i <= $childCount; $i++) {
-            $names[] = "소아{$i}"; // 유아 이름 추가
+            $names[] = "소아{$i}"; // 소아 이름 추가
         }
         for ($i = 1; $i <= $babyCount; $i++) {
             $names[] = "유아{$i}"; // 유아 이름 추가
         }
-       
         // Log::debug($req);
-        $pass_name = $names; 
+        $pass_name = $names;
+        $seat_dep_no = $req->seat_no_go;
+        $seat_arr_no = $req->seat_no_return;
 
-        return view('reserveInsert', compact('peoNum','pass_name'));
+        
+
+        return view('reserveInsert', compact('peoNum','pass_name','seat_dep_no','seat_arr_no'));
     }
 
 

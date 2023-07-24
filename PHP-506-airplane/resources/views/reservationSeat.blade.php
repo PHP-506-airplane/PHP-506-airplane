@@ -77,7 +77,7 @@
                     <input type="hidden" name="plane_no2" value="{{$_POST['arr_plane_no']}}">
                 @endif
                 
-                <ul>
+    <ul>
     <li><span class="possipeo" peoNums="{{ $peoNum }}" id="peoNum">좌석 선택 인원수 : {{ $peoNum }}명</span></li>
     <br>
     @if (isset($peoNum))
@@ -88,7 +88,7 @@
                 <span class="material-symbols-outlined">
                     chair
                 </span>
-                <input type="text" class="show_name" name="seat_no" id="show_name{{$i}}"  readonly>
+                <input type="text" class="show_name" name="seat_no_go[]" id="show_name{{$i}}"  readonly>
             </li>
             @if ($flg['hd_li_flg'] === '1')
                 <li class="s_li">
@@ -96,7 +96,7 @@
                     <span class="material-symbols-outlined">
                         chair
                     </span>
-                    <input type="text" class="show_name2" name="seat_no2" id="show_name2{{$i}}"  readonly>
+                    <input type="text" class="show_name2" name="seat_no_return[]" id="show_name2{{$i}}"  readonly>
                 </li>
             @endif
         @endfor
