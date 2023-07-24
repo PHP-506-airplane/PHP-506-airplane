@@ -106,7 +106,10 @@
 </ul>
                 {{-- <button type="button" class="chk_btn" onclick="reserveBtn();">결제하기</button> --}}
                 {{-- <button type="button" class="chk_btn" onclick="requestPay()">결제하기</button> --}}
-                <button type="submit" class="chk_btn">결제하기</button>
+                {{-- <button type="submit" class="chk_btn">결제하기</button> --}}
+                <div class="btnArea">
+                    <button type="submit" class="chk_btn">다음</button>
+                </div>
             </form>
         {{-- </div> --}}
         {{-- 왕복편 --}}
@@ -182,10 +185,10 @@
         @endif
         <input type="hidden">
         <div class="info"></div>
-        <div class="btnArea">
-            {{-- <button type="submit" class="chk_btn">다음</button> --}}
+        {{-- <div class="btnArea">
             <button type="submit" class="chk_btn">다음</button>
-        </div>
+            <button type="submit" class="chk_btn">다음</button>
+        </div> --}}
     </div>
 </div>
 @endsection
