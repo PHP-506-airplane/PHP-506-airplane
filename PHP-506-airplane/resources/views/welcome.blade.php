@@ -173,7 +173,7 @@
                                                 </dt>
                                                 <dd class="sel_passenger">
                                                     <a class="btn_minus" href="#none" onclick="changeCount('ADULT', -1); adultbaby()">빼기</a>
-                                                    <input class="booking passenger ADULT" name="ADULT" id="ADULTinput" title="인원수" type="number" onchange="adultbaby()">
+                                                    <input class="booking passenger ADULT" name="ADULT" id="ADULTinput" title="인원수" type="number" value="0" onchange="adultbaby()">
                                                     <a class="btn_plus" href="#none" onclick="changeCount('ADULT', 1);">더하기</a>
                                                 </dd>
                                             </dl>
@@ -183,7 +183,7 @@
                                                 </dt>
                                                 <dd class="sel_passenger">
                                                     <a class="btn_minus" href="#none" onclick="changeCount('CHILD', -1);">빼기</a>
-                                                    <input class="booking passenger CHILD" name="CHILD" id="CHILDinput" title="인원수" type="text">
+                                                    <input class="booking passenger CHILD" name="CHILD" id="CHILDinput" title="인원수" type="text" value="0">
                                                     <a class="btn_plus" href="#none" onclick="changeCount('CHILD', 1);">더하기</a>
                                                 </dd>
                                             </dl>
@@ -193,7 +193,7 @@
                                                 </dt>
                                                 <dd class="sel_passenger">
                                                     <a class="btn_minus" href="#none" onclick="changeCount('BABY', -1); adultbaby()">빼기</a>
-                                                    <input class="booking passenger BABY" name="BABY" id="BABYinput" title="인원수" type="text" onchange="adultbaby()">
+                                                    <input class="booking passenger BABY" name="BABY" id="BABYinput" title="인원수" type="text" value="0" onchange="adultbaby()">
                                                     <a class="btn_plus" href="#none" onclick="changeCount('BABY', 1);">더하기</a>
                                                 </dd>
                                             </dl>

@@ -118,7 +118,11 @@ button {
     margin-top: 20px;
 }
 
-@media(min-width:380px) and (max-width:767px) {
+@media(min-width:370px) and (max-width:767px) {
+    * {
+        margin: 0;
+        padding: 0;
+    }
     #login_form {
         width: 300px;
     }
@@ -127,7 +131,11 @@ button {
         width: 200px;
     }
     .btn {
-        width: 200px;
+        width: 310px;
+    }
+
+    .foot_menuwrap {
+        display: none;
     }
 
 }

@@ -307,3 +307,34 @@ ol {
     }
 }
 
+@media(min-width:370px) and (max-width:767px) {
+    .s_li input {
+    background-color: transparent;
+    width: 10rem;
+    font-size: 30px;
+    color: #661e43;
+    border: none;
+    text-align: left;
+    }
+
+    .material-symbols-outlined {
+        margin-top: 10px;
+    }
+}
+
+@media(min-width: 768px) and (max-width:1023px) {
+    .title {
+        font-size: 30px;
+    }
+
+    .s_li input {
+        background-color: transparent;
+        width: 10rem;
+        font-size: 20px;
+        color: #661e43;
+        border: none;
+        text-align: left;
+        }
+}
+
+

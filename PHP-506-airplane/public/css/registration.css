@@ -125,3 +125,16 @@ hr{
     display: inline-block;
     /* width: 100px; */
 }
+
+#answer {
+    margin-right: 50px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+@media(min-width:370px) and (max-width:767px) {
+    * {
+        margin: 0;
+        padding: 0;
+    }
+}
