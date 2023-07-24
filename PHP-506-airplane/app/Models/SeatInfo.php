@@ -11,5 +11,9 @@ class SeatInfo extends Model
     protected $table = 'seat_info';
     protected $primaryKey = 'seat_no';
 
+    protected $casts = [
+        'seat_no' => 'string'
+    ];
+
     public $timestamps = false;
 }

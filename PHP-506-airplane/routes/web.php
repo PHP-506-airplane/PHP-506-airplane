@@ -73,11 +73,12 @@ Route::put('/admin/update', [AdminController::class, 'update'])->name('admin.upd
 
 
 
+
 // 0613 add 오재훈
 // 예약 조회(항공편 선택) 페이지
 Route::get('/reservation/check', [ReservationController::class, 'check'])->name('reservation.check');
 Route::post('/reservation/checkpost', [ReservationController::class, 'checkpost'])->name('reservation.checkpost');
-Route::post('/reservation/seatpost', [ReservationController::class, 'seatpost'])->name('reservation.seatpost');
+Route::post('/reservation/reserveConfirm', [ReservationController::class, 'reserveConfirm'])->name('reservation.reserveConfirm');
 
 // social 로그인
 Route::get('/login/{provider}', [UserController::class, 'redirect']);

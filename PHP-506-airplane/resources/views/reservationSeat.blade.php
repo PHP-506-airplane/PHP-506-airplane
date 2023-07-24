@@ -77,31 +77,31 @@
                     <input type="hidden" name="plane_no2" value="{{$_POST['arr_plane_no']}}">
                 @endif
                 
-    <ul>
-    <li><span class="possipeo" peoNums="{{ $peoNum }}" id="peoNum">좌석 선택 인원수 : {{ $peoNum }}명</span></li>
-    <br>
-    @if (isset($peoNum))
-        @for ($i = 0; $i < $peoNum; $i++)
-            <li class="s_li">
-            <input type="text" name="pass_name" value="{{$pass_name[$i]}}" readonly>
-                <h3>가는편(구간1)</h3>
-                <span class="material-symbols-outlined">
-                    chair
-                </span>
-                <input type="text" class="show_name" name="seat_no_go[]" id="show_name{{$i}}"  readonly>
-            </li>
-            @if ($flg['hd_li_flg'] === '1')
-                <li class="s_li">
-                    <h3>오는편(구간2)</h3>
-                    <span class="material-symbols-outlined">
-                        chair
-                    </span>
-                    <input type="text" class="show_name2" name="seat_no_return[]" id="show_name2{{$i}}"  readonly>
-                </li>
-            @endif
-        @endfor
-    @endif
-</ul>
+                <ul>
+                    <li><span class="possipeo" peoNums="{{ $peoNum }}" id="peoNum">좌석 선택 인원수 : {{ $peoNum }}명</span></li>
+                    <br>
+                    @if (isset($peoNum))
+                        @for ($i = 0; $i < $peoNum; $i++)
+                            <li class="s_li">
+                                <input type="text" name="pass_name" value="{{$pass_name[$i]}}" readonly>
+                                <h3>가는편(구간1)</h3>
+                                <span class="material-symbols-outlined">
+                                    chair
+                                </span>
+                                <input type="text" class="show_name" name="seat_no_go[]" id="show_name{{$i}}" readonly>
+                            </li>
+                            @if ($flg['hd_li_flg'] === '1')
+                                <li class="s_li">
+                                    <h3>오는편(구간2)</h3>
+                                    <span class="material-symbols-outlined">
+                                        chair
+                                    </span>
+                                    <input type="text" class="show_name2" name="seat_no_return[]" id="show_name2{{$i}}"  readonly>
+                                </li>
+                            @endif
+                        @endfor
+                    @endif
+                </ul>
                 {{-- <button type="button" class="chk_btn" onclick="reserveBtn();">결제하기</button> --}}
                 {{-- <button type="button" class="chk_btn" onclick="requestPay()">결제하기</button> --}}
                 {{-- <button type="submit" class="chk_btn">결제하기</button> --}}

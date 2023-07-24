@@ -83,33 +83,6 @@ class ReservationController extends Controller
     }
 
     // ---------------------------------
-    // 메소드명	: getFlightInfo
-    // 기능		: 운항경로와 날짜를 기반으로 데이터를 검색
-    // 파라미터	: 
-    // 리턴값	: 
-    // ---------------------------------
-    public function getFlightInfo($depPort, $arrPort, $flyDate) {
-        return 
-            FlightInfo::
-            join('airport_info AS dep_port', 'dep_port.port_no', 'flight_info.dep_port_no')
-            ->join('airport_info AS arr_port', 'arr_port.port_no', 'flight_info.arr_port_no')
-            ->select(
-                'flight_info.*',
-                'dep_port.port_no AS dep2_port_no',
-                'dep_port.port_eng AS dep_port_eng',
-                'dep_port.port_name AS dep_port_name',
-                'arr_port.port_no AS arr2_port_no',
-                'arr_port.port_eng AS arr_port_eng',
-                'arr_port.port_name AS arr_port_name'
-            )
-            ->where('flight_info.dep_port_no', $depPort)
-            ->where('flight_info.arr_port_no', $arrPort)
-            ->whereBetween('flight_info.fly_date', [substr($flyDate, 0, -13), substr($flyDate, 13)])
-            ->limit(5)
-            ->get();
-    }
-
-    // ---------------------------------
     // 메소드명	: dupChk
     // 기능		: 예약된 좌석을 확인
     // 파라미터	: Int       $fly_no
@@ -181,12 +154,12 @@ class ReservationController extends Controller
 
     // ---------------------------------
     // 메소드명	: getSeats
-    // 기능		: 항공편 PK를 기반으로 운항정보와 예약된 좌석정보를 가져옴
+    // 기능		: 항공편 PK를 기반으로 좌석정보를 가져옴
     // 파라미터	: 
     // 리턴값	: 
     // ---------------------------------
     public function getSeats($fly_no) {
-        $req = ReserveInfo::join('flight_info as fli', 'reserve_info.fly_no', 'fli.fly_no')
+        $data = ReserveInfo::join('flight_info as fli', 'reserve_info.fly_no', 'fli.fly_no')
             ->join('airport_info as dep', 'dep.port_no', 'fli.dep_port_no')
             ->join('airport_info as arr', 'arr.port_no', 'fli.arr_port_no')
             ->select(
@@ -200,46 +173,35 @@ class ReservationController extends Controller
             ->where('fli.fly_no', $fly_no)
             ->get();
 
-            // 좌석
+            // 예약된 좌석
         $availableSeats = ReserveInfo::select('seat_no')
             ->where('fly_no', $fly_no)
             ->get();
         
-        return [$req, $availableSeats];
+        return [$data, $availableSeats];
     }
 
-    // ---------------------------------
-    // 메소드명	: getPortInfo
-    // 기능		: 공항 PK를 받아서 공항정보를 가져옴
-    // 파라미터	: 
-    // 리턴값	: 
-    // ---------------------------------
-    public function getPortInfo($airPortPK) {
-        return AirportInfo::
-            where('port_no', $airPortPK)
-            ->get();
-    }
 
     // ---------------------------------
     // 메소드명	: saveReservation
     // 기능		: 예약 정보를 저장
-    // 파라미터	: Arry      $req
+    // 파라미터	: Arry      $data
     // 리턴값	: int       $tNo
     // ---------------------------------
-    public function saveReservation($req)
+    public function saveReservation($data)
     {
         $reserveInfo = new ReserveInfo([
             'u_no'      => Auth::user()->u_no
-            ,'seat_no'  => $req['seat_no']
-            ,'fly_no'   => $req['fly_no']
-            ,'plane_no' => $req['plane_no']
+            ,'seat_no'  => $data['seat_no']
+            ,'fly_no'   => $data['fly_no']
+            ,'plane_no' => $data['plane_no']
         ]);
 
         $reserveInfo->save();
 
         $tNo = $reserveInfo->reserve_no;
         $price = FlightInfo::select('price')
-            ->where('fly_no', $req['fly_no'])
+            ->where('fly_no', $data['fly_no'])
             ->first();
         $priceInt = intval($price->price);
 
@@ -251,7 +213,7 @@ class ReservationController extends Controller
         $ticketInfo->save();
 
         $user = Auth::user()->u_no;
-        $merchant_uid = $req['merchant_uid'];
+        $merchant_uid = $data['merchant_uid'];
 
         $payment = new Payment([
             'u_no'          => $user
@@ -282,22 +244,24 @@ class ReservationController extends Controller
     public function main()
     {
         // $result = AirportInfo::select('*')->get(); //v002 del 이동호
-        $data = AirportInfo::orderby('port_name')->get();
+        $data =
+            AirportInfo::select('*')
+            ->orderby('port_name')
+            ->get();
 
         // v002 add 이동호
         // 최신 공지사항 5개 가져오기
         $notices =
-            NoticeInfo::
-            select('notice_title', 'notice_no', 'created_at')
+            NoticeInfo::select('notice_title', 'notice_no', 'created_at')
             ->orderBy('notice_no', 'desc')
             ->take(5)
             ->get();
 
         // v004 이동호
         // 최저가항공 가져오기
+
         $lowCost =
-            FlightInfo::
-            join('airport_info AS dep', 'flight_info.dep_port_no', 'dep.port_no')
+            FlightInfo::join('airport_info AS dep', 'flight_info.dep_port_no', 'dep.port_no')
             ->join('airport_info AS arr', 'flight_info.arr_port_no', 'arr.port_no')
             ->select(
                 'flight_info.fly_no'
@@ -309,20 +273,41 @@ class ReservationController extends Controller
                 ,'arr.port_no AS arr_no'
                 ,'flight_info.plane_no'
             )
-            ->where('flight_info.fly_date', '>', Carbon::now())
+            ->where('flight_info.fly_date', '>', now())
             ->orderBy('price')
             ->orderBy('flight_info.fly_date')
             ->limit(8)
             ->get();
 
-        //  return view('welcome')->with('req',$result); //v002 del 이동호
+        // $lowCost = [];
+        // for($i = 0; $i < 8; $i++) {
+        //     $price = rand(10, 30) * 1000;
+        //     $lowCost[] = 
+        //         FlightInfo::join('airport_info AS dep', 'flight_info.dep_port_no', 'dep.port_no')
+        //             ->join('airport_info AS arr', 'flight_info.arr_port_no', 'arr.port_no')
+        //             ->select(
+        //                 'flight_info.fly_no'
+        //                 ,'flight_info.fly_date'
+        //                 ,'flight_info.price'
+        //                 ,'dep.port_name AS dep_name'
+        //                 ,'dep.port_no AS dep_no'
+        //                 ,'arr.port_name AS arr_name'
+        //                 ,'arr.port_no AS arr_no'
+        //                 ,'flight_info.plane_no'
+        //             )
+        //             ->where('flight_info.fly_date', '>', now())
+        //             ->where('flight_info.price', '=', $price)
+        //             ->first();
+        // }
+
+        //  return view('welcome')->with('data',$result); //v002 del 이동호
         return view('welcome', compact('notices', 'data', 'lowCost'));
     }
 
     // 항공편 설정
     public function check(Request $req)
     {
-        // Log::debug($req);
+        Log::debug($req);
         // 0627 add 이동호
         if (empty(Auth::user())) {
             Session::put(['request' => $req->all()]);
@@ -379,28 +364,86 @@ class ReservationController extends Controller
         // 왕복
         if ($req->hd_li_flg === '1') {
 
-            $depPort = $this->getPortInfo($req->dep_port_no);
-            // Log::debug('출발공항 : ', [$depPort]);
+            $depPort = DB::table('airport_info')
+                ->select('*')
+                ->where('port_no', '=', $req->dep_port_no)->get();
 
-            $arrPort = $this->getPortInfo($req->arr_port_no);
-            // Log::debug('도착공항 : ', [$arrPort]);
+            $arrPort = DB::table('airport_info')
+                ->select('*')
+                ->where('port_no', '=', $req->arr_port_no)->get();
 
             // 가는편
-            $data = $this->getFlightInfo($req->dep_port_no, $req->arr_port_no, $req->fly_date);
-            // Log::debug('가는편 : ', [$req]);
-            
+            $data = DB::table('flight_info')
+                ->join('airport_info as dep_port', 'dep_port.port_no', '=', 'flight_info.dep_port_no')
+                ->join('airport_info as arr_port', 'arr_port.port_no', '=', 'flight_info.arr_port_no')
+                ->select(
+                    'flight_info.*',
+                    'dep_port.port_no AS dep2_port_no',
+                    'dep_port.port_eng AS dep_port_eng',
+                    'dep_port.port_name AS dep_port_name',
+                    'arr_port.port_no AS arr2_port_no',
+                    'arr_port.port_eng AS arr_port_eng',
+                    'arr_port.port_name AS arr_port_name'
+                )
+                ->where([
+                    ['flight_info.dep_port_no', '=', $req->dep_port_no],
+                    ['flight_info.arr_port_no', '=', $req->arr_port_no],
+                ])
+                ->whereBetween('flight_info.fly_date', [substr($req->fly_date, 0, -13), substr($req->fly_date, 13)])
+                ->limit(5)
+                ->get();
+
             // 오는편
-            $data2 = $this->getFlightInfo($req->arr_port_no, $req->dep_port_no, $req->fly_date);
-            // Log::debug('오는편 : ', [$data2]);
+            $data2 = DB::table('flight_info')
+                ->join('airport_info as dep_port', 'dep_port.port_no', '=', 'flight_info.dep_port_no')
+                ->join('airport_info as arr_port', 'arr_port.port_no', '=', 'flight_info.arr_port_no')
+                ->select(
+                    'flight_info.*',
+                    'dep_port.port_no AS dep2_port_no',
+                    'dep_port.port_eng AS dep_port_eng',
+                    'dep_port.port_name AS dep_port_name',
+                    'arr_port.port_no AS arr2_port_no',
+                    'arr_port.port_eng AS arr_port_eng',
+                    'arr_port.port_name AS arr_port_name'
+                )
+                ->where([
+                    ['flight_info.dep_port_no', '=', $req->arr_port_no],
+                    ['flight_info.arr_port_no', '=', $req->dep_port_no],
+                ])
+                ->whereBetween('flight_info.fly_date', [substr($req->fly_date, 0, -13), substr($req->fly_date, 13)])
+                ->limit(5)
+                ->get();
 
             return view('reservationChk', compact('data', 'data2', 'flg', 'arrPort', 'depPort'));
         } else {
-            // 출발지
-            $depPort = $this->getPortInfo($req->one_dep_port_no);
-            // 도착지
-            $arrPort = $this->getPortInfo($req->one_arr_port_no);
+            $depPort = DB::table('airport_info')
+                ->select('*')
+                ->where('port_no', '=', $req->one_dep_port_no)->get();
+
+            $arrPort = DB::table('airport_info')
+                ->select('*')
+                ->where('port_no', '=', $req->one_arr_port_no)->get();
+
             // 편도
-            $oneway = $this->getFlightInfo($req->one_dep_port_no, $req->one_arr_port_no, $req->one_fly_date);
+            $oneway = DB::table('flight_info')
+                ->join('airport_info as dep_port', 'dep_port.port_no', '=', 'flight_info.dep_port_no')
+                ->join('airport_info as arr_port', 'arr_port.port_no', '=', 'flight_info.arr_port_no')
+                ->select(
+                    'flight_info.*',
+                    'dep_port.port_no AS dep2_port_no',
+                    'dep_port.port_eng AS dep_port_eng',
+                    'dep_port.port_name AS dep_port_name',
+                    'arr_port.port_no AS arr2_port_no',
+                    'arr_port.port_eng AS arr_port_eng',
+                    'arr_port.port_name AS arr_port_name'
+                )
+                ->where([
+                    ['flight_info.dep_port_no', '=', $req->one_dep_port_no],
+                    ['flight_info.arr_port_no', '=', $req->one_arr_port_no],
+                ])
+                ->where('flight_info.fly_date', '=', $req->one_fly_date)
+                ->limit(5)
+                ->get();
 
             return view('reservationChk', compact('oneway', 'flg', 'arrPort', 'depPort'));
         }
@@ -409,18 +452,10 @@ class ReservationController extends Controller
     // 좌석 출력
     public function checkpost(Request $req)
     {
-        Log::debug('checkpost req : ', $req->all());
-
-        // 0627 add 이동호
-        if (empty(Auth::user())) {
-            return redirect()->route('users.login')->with('alert', '로그인이 필요한 기능입니다.');
-        }
-        // Log::debug($req);
-        // 왕복/편도 플래그
-        $flg = $req->only('hd_li_flg');
-
-        $adultCount = intval($req->ADULT);
-        $childCount = intval($req->CHILD);
+        Log::debug('req : ', $req->all());
+        // 예시로 사용자가 선택한 인원 수와 해당 인원들의 이름을 받아왔다고 가정
+        $adultCount = intval($_POST['ADULT']);
+        $childCount = intval($_POST['CHILD']);
 
         // 사용자가 입력한 인원에 따라 각 인원들의 이름을 담을 배열을 생성
         $names = [];
@@ -431,36 +466,90 @@ class ReservationController extends Controller
         }
 
         for ($i = 1; $i <= $childCount; $i++) {
-            $names[] = "소아{$i}"; // 소아 이름 추가
+            $names[] = "소아{$i}"; // 유아 이름 추가
         }
 
         // Log::debug($req);
-        // 총 예약 인원수(유아 제외)
+        $pass_name = $names; 
         $peoNum = $adultCount + $childCount;
-        $pass_name = $names;
-        // 출발공항
-        $depPort = $this->getPortInfo($req->dep_port_no);
+        
+
+        // 0627 add 이동호
+        if (empty(Auth::user())) {
+            return redirect()->route('users.login')->with('alert', '로그인이 필요한 기능입니다.');
+        }
+        // Log::debug($req);
+        // 왕복/편도 플래그
+        $flg = $req->only('hd_li_flg');
+
+        $depPort = DB::table('airport_info')
+            ->select('*')
+            ->where('port_no', '=', $req->dep_port_no)->get();
         // Log::debug($depPort);
 
-        // 도착공항
-        $arrPort = $this->getPortInfo($req->arr_port_no);
-
+        $arrPort = DB::table('airport_info')
+            ->select('*')
+            ->where('port_no', '=', $req->arr_port_no)->get();
         // Log::debug($arrPort);
 
         //왕복
         if ($req->hd_li_flg == '1') {
-            // 가는편 운항편 PK로 운항정보와 예약된 좌석 조회
+            // 가는편
+            // $data = DB::table('reserve_info as res')
+            //     ->join('flight_info as fli', 'res.fly_no', '=', 'fli.fly_no')
+            //     ->join('airport_info as dep', 'dep.port_no', '=', 'fli.dep_port_no')
+            //     ->join('airport_info as arr', 'arr.port_no', '=', 'fli.arr_port_no')
+            //     ->select(
+            //         'fli.*',
+            //         'res.seat_no',
+            //         'dep.port_name as dep_name',
+            //         'dep.port_eng as dep_eng',
+            //         'arr.port_name as arr_name',
+            //         'arr.port_eng as arr_eng'
+            //     )
+            //     ->where('fli.fly_no', '=', $req->dep_fly_no)
+            //     ->get();
+
+            // // 예약된 좌석
+            // $availableSeats = DB::table('reserve_info')
+            //     ->select('seat_no')
+            //     ->where('fly_no', '=', $req->dep_fly_no)
+            //     ->get();
+
             list($data, $availableSeats) = $this->getSeats($req->dep_fly_no);
-            // 오는편 운항편 PK로 운항정보와 예약된 좌석 조회
             list($data2, $availableSeats2) = $this->getSeats($req->arr_fly_no);
 
-            // Log::debug('req : ', [$req]);
+            // Log::debug('data : ', [$data]);
             // Log::debug('data2 : ', [$data2]);
             // Log::debug('availableSeats : ', [$availableSeats]);
             // Log::debug('availableSeats2 : ', [$availableSeats2]);
+            // 오는편
 
-            // 좌석 전체
-            $seat = SeatInfo::select('seat_no')->limit(108)->get();
+            // $data2 = DB::table('reserve_info as res')
+            //     ->join('flight_info as fli', 'res.fly_no', '=', 'fli.fly_no')
+            //     ->join('airport_info as dep', 'dep.port_no', '=', 'fli.dep_port_no')
+            //     ->join('airport_info as arr', 'arr.port_no', '=', 'fli.arr_port_no')
+            //     ->select(
+            //         'fli.*',
+            //         'res.seat_no',
+            //         'dep.port_name as dep_name',
+            //         'dep.port_eng as dep_eng',
+            //         'arr.port_name as arr_name',
+            //         'arr.port_eng as arr_eng'
+            //     )
+            //     ->where('fli.fly_no', '=', $req->arr_fly_no)
+            //     ->get();
+
+            // // 오는편 예약된 좌석
+            // $availableSeats2 = DB::table('reserve_info')
+            //     ->select('seat_no')
+            //     ->where('fly_no', '=', $req->arr_fly_no)
+            //     ->get();
+
+            // 좌석
+            $seat = SeatInfo::select('seat_no')
+                ->limit(108)
+                ->get();
 
             if (!isset($req->dep_fly_no)) {
                 return redirect()->back()->with('alert', '가는편 여정을 선택해주세요.');
@@ -468,27 +557,57 @@ class ReservationController extends Controller
                 return redirect()->back()->with('alert', '오는편 여정을 선택해주세요.');
             }
 
-            return view('reservationSeat', compact('req', 'data2', 'seat', 'availableSeats', 'availableSeats2', 'flg', 'depPort', 'arrPort','peoNum','pass_name'));
+            Log::debug('data : ', [$data]);
+            Log::debug('data2 : ', [$data2]);
+            Log::debug('seat : ', [$seat]);
+            Log::debug('availableSeats : ', [$availableSeats]);
+            Log::debug('availableSeats2 : ', [$availableSeats2]);
+            Log::debug('depPort : ', [$depPort]);
+            Log::debug('arrPort : ', [$arrPort]);
+            Log::debug('peoNum : ', [$peoNum]);
+            Log::debug('pass_name : ', [$pass_name]);
+
+            return view('reservationSeat', compact('data', 'data2', 'seat', 'availableSeats', 'availableSeats2', 'flg', 'depPort', 'arrPort','peoNum','pass_name'));
         } else {
             // 편도
-            list($req, $availableSeats) = $this->getSeats($req->dep_fly_no);
+            $data = DB::table('reserve_info as res')
+                ->join('flight_info as fli', 'res.fly_no', '=', 'fli.fly_no')
+                ->join('airport_info as dep', 'dep.port_no', '=', 'fli.dep_port_no')
+                ->join('airport_info as arr', 'arr.port_no', '=', 'fli.arr_port_no')
+                ->select(
+                    'fli.*',
+                    'res.seat_no',
+                    'dep.port_name as dep_name',
+                    'dep.port_eng as dep_eng',
+                    'arr.port_name as arr_name',
+                    'arr.port_eng as arr_eng'
+                )
+                ->where('fli.fly_no', '=', $req->dep_fly_no)
+                ->get();
+
+            // 예약된 좌석
+            $availableSeats = DB::table('reserve_info')
+                ->select('seat_no')
+                ->where('fly_no', '=', $req->dep_fly_no)
+                ->get();
 
             // 좌석
-            $seat = SeatInfo::select('seat_no')->limit(108)->get();
+            $seat = DB::table('seat_info')
+                ->select('seat_no')
+                ->limit(108)
+                ->get();
 
             if (!isset($req->dep_fly_no)) {
-                return redirect()->back()->with('alert', '여정을 선택해주세요.');
+                return redirect()->back()->with('alert', '가는편 여정을 선택해주세요.');
             }
-
-            return view('reservationSeat', compact('req', 'seat', 'availableSeats', 'flg', 'depPort', 'arrPort','peoNum','pass_name'));
+            return view('reservationSeat', compact('data', 'seat', 'availableSeats', 'flg','depPort','arrPort'));
         }
     }
-
     // 예약하기
-    // public function seatpost(Request $req)
-    // {
-    //     Log::debug('--------- seatpost Start ---------');
-    //     Log::debug('seatpost req : ', $req->all());
+    public function seatpost(Request $req)
+    {
+        Log::debug('--------- seatpost Start ---------');
+        Log::debug('request all', $req->all());
         // ---------------------
         // "fly_no":"5248"
         // ,"merchant_uid":"nobody_1690195146330"
@@ -502,17 +621,12 @@ class ReservationController extends Controller
         // ,"p_birth":null
         // ,"p_gender":"0","seat_no":["A02","A03"],"seats_no":["A01","A02"]
         // ---------------------
-        // try {
-        //     // 이메일 보내기 위한 유저 정보
-        //     $userinfo = Userinfo::where('u_email', Auth::user()->u_email)->first();
-        //     // 가는편 좌석
-        //     $dep_seats = $req->seat_no;
-        //     // 오는편 좌석
-        //     $arr_seats = $req->seats_no; 
-        // } catch (Exception $e) {
-        //     Log::debug('--------- seatpost catch ---------', [$e]);
-        //     return redirect()->back()->with('alert', '서버 오류가 발생했습니다.\n잠시후 다시 시도해주세요.');
-        // }
+        try {
+
+        } catch (Exception $e) {
+            Log::debug('--------- seatpost catch ---------', [$e]);
+            return redirect()->back()->with('alert', '서버 오류가 발생했습니다.\n잠시후 다시 시도해주세요.');
+        }
         // return redirect()->route('reservation.myreservation')->with('alert', '예약이 완료되었습니다.\n가입시 등록하신 이메일로 예약정보가 발송되었습니다.');
 
 
@@ -532,19 +646,19 @@ class ReservationController extends Controller
 
         //         // 가는편
         //         // for($i=0; $i<count($dep_seats); $i++){
-        //             foreach ($req->all() as $req ) {
+        //             foreach ($req->all() as $data ) {
         //                 $cacheKeys = [];
-        //                 $int_fly = strval($req->fly_no);
+        //                 $int_fly = strval($data->fly_no);
         //                 $cacheKeys = [
-        //                     'res_' . $int_fly . '_' . $req->seat_no,
+        //                     'res_' . $int_fly . '_' . $data->seat_no,
         //                 ];
         //                 Log::debug('cacheKeys',$cacheKeys);
         //                 $flightData = 
         //                 [
-        //                     'seat_no' => $req->seat_no
+        //                     'seat_no' => $data->seat_no
         //                     ,'fly_no' => $int_fly
-        //                     ,'plane_no' => $req->plane_no
-        //                     ,'merchant_uid' => $req->merchant_uid
+        //                     ,'plane_no' => $data->plane_no
+        //                     ,'merchant_uid' => $data->merchant_uid
         //                 ];
         //                 Log::debug('flightData',$flightData);
         //             }
@@ -565,8 +679,8 @@ class ReservationController extends Controller
         //         // }
                 
         //         $reserveNos = [];
-        //         foreach ($flightData as $req) {
-        //             $reserveNo = $this->saveReservation($req);
+        //         foreach ($flightData as $data) {
+        //             $reserveNo = $this->saveReservation($data);
         //             $reserveNos[] = $reserveNo;
         //         }
 
@@ -621,7 +735,7 @@ class ReservationController extends Controller
         // }
         // Log::debug('--------- seatpost End ---------');
         // return redirect()->route('reservation.myreservation')->with('alert', '예약이 완료되었습니다.\n가입시 등록하신 이메일로 예약정보가 발송되었습니다.');
-    // }
+    }
 
     // v003 이동호 add 나의 예약 조회 페이지
     public function myreservation()
@@ -632,11 +746,11 @@ class ReservationController extends Controller
             Session::put('previous_url', route('reservation.myreservation'));
             return redirect()->route('users.login');
         }
-
+        //지금 로그인 돼있는 엘로퀀트의 u_no만 뽑음
         $user  = Userinfo::find(Auth::user()->u_no);
 
         $date = Carbon::now()->subDay();
-        $req =
+        $data =
             ReserveInfo::join('flight_info AS fli', 'reserve_info.fly_no', 'fli.fly_no')
             ->join('airplane_info AS airp', 'fli.plane_no', 'airp.plane_no')
             ->join('airline_info AS airl', 'airp.line_no', 'airl.line_no')
@@ -672,20 +786,20 @@ class ReservationController extends Controller
             ->orderBy('fli.dep_time')
             ->get();
 
-        return view('myreservation', compact('req', 'user'));
+        return view('myreservation', compact('data', 'user'));
     }
 
-    // public function getToken(){
-    //     // 엑세스 토큰 발급
-    //     $result  = Http::withHeaders([
-    //         'Content-Type' => 'application/json'
-    //     ])->post('https://api.iamport.kr/users/getToken', [
-    //         'imp_key' => '0833844628848866',
-    //         'imp_secret' => 'l17oW36JAtRW7TaNjsZeBTLwdM0XbIFYJysHLDYzSBdn3yDgkDIM36G75yQ29SImMWw130HxvvbzIJNv',
-    //     ]);
-    //     $arr_result = json_decode($result, true);
-    //     return $arr_result["response"]["access_token"];
-    // }
+    public function getToken(){
+        // 엑세스 토큰 발급
+        $result  = Http::withHeaders([
+            'Content-Type' => 'application/json'
+        ])->post('https://api.iamport.kr/users/getToken', [
+            'imp_key' => '0833844628848866',
+            'imp_secret' => 'l17oW36JAtRW7TaNjsZeBTLwdM0XbIFYJysHLDYzSBdn3yDgkDIM36G75yQ29SImMWw130HxvvbzIJNv',
+        ]);
+        $arr_result = json_decode($result, true);
+        return $arr_result["response"]["access_token"];
+    }
     
 
     // v003 이동호 add 예약 취소
@@ -700,7 +814,7 @@ class ReservationController extends Controller
         try {
             // ---------------------------환불--------------------------
         // 생성된 토큰 가져옴
-        $accessToken = getToken();
+        $accessToken = $this->getToken();
         // Log::debug('access Token', [$accessToken]);
         // 환불하려는 결제 정보를 아임포트의 payment_id를 기준으로 데이터베이스에서 조회합니다.
 
@@ -760,88 +874,35 @@ class ReservationController extends Controller
         return redirect()->route('reservation.myreservation')->with('alert', '취소가 완료되었습니다.');
     }
 
-    // 탑승객 정보 입력
     public function peoInsert(Request $req) {
-        // "flg":"1","fly_no":"3469","plane_no":"44","ADULT":"1","CHILD":"1","BABY":"1"
-        // ,"fly_no2":"231","plane_no2":"20","pass_name":"소아1","seat_no_go":["B02","B03"],"seat_no_return":["D05","D11"]}
-        $allCnt = $req->ADULT + $req->CHILD;
-        if ($req->flg == 1) {
-            return view('reserveInsert')
-                ->with('allCnt', $allCnt)
-                ->with('seat_no_go', $req->seat_no_go) // 가는편 좌석
-                ->with('seat_no_return', $req->seat_no_return); // 오는편 좌석
-        } else {
-            return view('reserveInsert')
-                ->with('allCnt', $allCnt)
-                ->with('seat_no_go', $req->seat_no_go);
+        $peoNum = intval($req->ADULT) + intval($req->CHILD) + intval($req->BABY);
+        // 예시로 사용자가 선택한 인원 수와 해당 인원들의 이름을 받아왔다고 가정
+        $adultCount = intval($req->ADULT);
+        $childCount = intval($req->CHILD);
+        $babyCount = intval($req->BABY);
+        // 사용자가 입력한 인원에 따라 각 인원들의 이름을 담을 배열을 생성
+        $names = [];
+        // 성인, 유아, 소아 인원 수에 따라 이름 배열에 이름을 추가
+        for ($i = 1; $i <= $adultCount; $i++) {
+            $names[] = "성인{$i}"; // 성인 이름 추가
         }
+        for ($i = 1; $i <= $childCount; $i++) {
+            $names[] = "소아{$i}"; // 소아 이름 추가
+        }
+        for ($i = 1; $i <= $babyCount; $i++) {
+            $names[] = "유아{$i}"; // 유아 이름 추가
+        }
+        // Log::debug($req);
+        $pass_name = $names;
+        $seat_dep_no = $req->seat_no_go;
+        $seat_arr_no = $req->seat_no_return;
 
-        // Log::debug('peoInsert req : ', $req->all());
+        
+
+        return view('reserveInsert', compact('peoNum','pass_name','seat_dep_no','seat_arr_no'));
     }
 
-    public function reserveConfirm(Request $req) {
-        Log::debug('reserveConfirm req : ', $req->all());
 
-        // reserve_info : plane_no, seat_no, fly_no, u_no, name, gender, birth
-        // ticket_info : reserve_no, t_price
-
-        try {
-
-            DB::beginTransaction();
-
-            // 이메일 보내기 위한 유저 정보 저장
-            $userinfo = Userinfo::where('u_email', Auth::user()->u_email)->first();
-            
-            for ($i = 0; $i < count($req->name); $i++) {
-                // 가는편 예약
-                $depResData = new ReserveInfo([
-                    'plane_no' => $req->plane_no
-                    ,'seat_no' => $req->seatGo[$i]
-                    ,'fly_no' => $req->fly_no
-                    ,'u_no' => Auth::user()->u_no
-                    ,'p_name' => $req->name[$i]
-                    ,'p_gender' => $req->gender[$i]
-                    ,'p_birth' => $req->birth[$i]
-                ]);
-                $depResData->save();
-    
-                $depResNo = $depResData->reserve_no;
-    
-                $depTicData = new TicketInfo([
-                    'reserve_no' => $depResNo
-                    ,'t_price'   => 500
-                ]);
-                $depTicData->save();
-    
-                // 오는편 예약
-                $arrResData = new ReserveInfo([
-                    'plane_no' => $req->plane_no2
-                    ,'seat_no' => $req->seatReturn[$i]
-                    ,'fly_no' => $req->fly_no2
-                    ,'u_no' => Auth::user()->u_no
-                    ,'p_name' => $req->name[$i]
-                    ,'p_gender' => $req->gender[$i]
-                    ,'p_birth' => $req->birth[$i]
-                ]);
-                $arrResData->save();
-    
-                $arrResNo = $arrResData->reserve_no;
-    
-                $arrTicData = new TicketInfo([
-                    'reserve_no' => $arrResNo
-                    ,'t_price'   => 500
-                ]);
-                $arrTicData->save();
-            }
-
-            DB::commit();
-        } catch (Exception $e) {
-            DB::rollback();
-            Log::debug('insert err : ', [$e]);
-        }
-
-
-    }
 }
 
 

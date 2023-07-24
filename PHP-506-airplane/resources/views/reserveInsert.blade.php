@@ -7,58 +7,52 @@
 @section('contents')
 <div class="container">
     <h1>탑승객 정보</h1>
-    <br>
-    <br>
-    <p class="infop">탑승객 정보 입력</p>
-    <hr>
-    <br>
-    <form id="insertInfo" action="{{route('reservation.seatpost')}}" method="post">
+    <form method="POST" action="{{ route('reservation.reserveConfirm'); }}">
         @csrf
-        <input type="hidden" class="flg" name="flg" value="{{$_POST['flg']}}">
         <input type="hidden" name="fly_no" value="{{$_POST['fly_no']}}" id="fly_no">
         <input type="hidden" name="merchant_uid" id="merchant_uid">
         <input type="hidden" name="plane_no" value="{{$_POST['plane_no']}}">
-        <input type="hidden" name="ADULT" value="{{$_POST['ADULT']}}">
-        <input type="hidden" name="CHILD" value="{{$_POST['CHILD']}}">
-        <input type="hidden" name="BABY" value="{{$_POST['BABY']}}">
+        {{-- 왕복 --}}
         @if($_POST['flg'] === '1')
             <input type="hidden" name="fly_no2" value="{{$_POST['fly_no2']}}" id="fly_no2">
             <input type="hidden" name="plane_no2" value="{{$_POST['plane_no2']}}">
-        @endif
-
-        <div class="con">
-            @if(isset($peoNum))
-            @for($i = 0; $i < $peoNum; $i++)
-                <span class="title">{{$pass_name[$i]}}</span>
-                <br>
-                <br>
-                <label class="p_title">이름</label>
-                <input type="text" name="p_name" placeholder="이름{{$i}}" required>
-                <label class="p_title">생년월일</label>
-                <input type="date" name="p_birth" placeholder="생년월일" min="{{ date('Y-m-d', strtotime('-12 years')) }}" max="{{ date('Y-m-d', strtotime('-2 years')) }}" required>
-                <label class="p_title">성별</label>
-                <select class="size num1" name="p_gender" value="{{old('gender')}}" required>
-                    <option value="0">남</option>
-                    <option value="1">여</option>
-                </select>
-                <!-- 가는편 좌석 정보 출력 -->
-                @if(isset($seat_dep_no[$i]) && $pass_name !== "유아")
-                    가는편 <input type="text" class="seat_input" name="seat_no[]" value="{{$seat_dep_no[$i]}}">
-                @else
-                @endif
-                @if(isset($seat_arr_no[$i]) && $pass_name !== "유아")
-                    오는편 <input type="text" class="seat_input2" name="seats_no[]" value="{{$seat_arr_no[$i]}}">
-                @else
-                @endif
-                <br>
-                <br>
-                <span class="line"></span>
+            @for($i = 0; $i < $allCnt; $i++)
+                <div class="divInput">
+                    <div>이름</div>
+                    <input type="text" name="name[]">
+                    <div>성별</div>
+                    <select name="gender[]" id="">
+                        <option value="0">남</option>
+                        <option value="1">여</option>
+                    </select>
+                    <div>생일</div>
+                    <input type="date" name="birth[]">
+                    <div>가는편 좌석</div>
+                    <input type="text" name="seatGo[]" value="{{ $seat_no_go[$i] }}" readonly>
+                    <div>오는편 좌석</div>
+                    <input type="text" name="seatReturn[]" value="{{ $seat_no_return[$i] }}" readonly>
+                </div>
+            @endfor
+        @else {{-- 편도 --}}
+            @for($i = 0; $i < $allCnt; $i++)
+                <div class="divInput">
+                    <div>이름</div>
+                    <input type="text" name="name[]">
+                    <div>성별</div>
+                    <select name="gender[]" id="">
+                        <option value="0">남</option>
+                        <option value="1">여</option>
+                    </select>
+                    <div>생일</div>
+                    <input type="date" name="birth[]">
+                    <div>가는편 좌석</div>
+                    <input type="text" name="seatGo[]" value="{{ $seat_no_go[$i] }}" readonly>
+                    <div>오는편 좌석</div>
+                    <input type="text" name="seatReturn[]" value="{{ $seat_no_return[$i] }}" readonly>
+                </div>
             @endfor
         @endif
-        <div class="btnArea">
-            <button type="button" class="chk_btn" onclick="reserveBtn();">결제하기</button>
-        </div>
-        </div>
+        <button type="button" onclick="requestPay();">결제하기</button>
     </form>
 </div>
 @endsection

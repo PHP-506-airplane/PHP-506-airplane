@@ -16,6 +16,9 @@ class ReserveInfo extends Model
         ,'seat_no'
         ,'fly_no'
         ,'plane_no'
+        ,'p_name'
+        ,'p_gender'
+        ,'p_birth'
     ];
 
     public $timestamps = false;
