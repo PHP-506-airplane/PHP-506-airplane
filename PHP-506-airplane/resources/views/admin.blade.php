@@ -267,7 +267,7 @@
                                 <div class="col col-1 arrow"> : </div>
                                 <input type="text" class="col" name="arrMin" placeholder="분">
                             </div>
-                            <span class="txt">가격을</span>
+                            <span class="txt">가격</span>
                             <div class="row">
                                 <input type="text" class="col" name="price" placeholder="가격을 입력해주세요." id="price">
                             </div>

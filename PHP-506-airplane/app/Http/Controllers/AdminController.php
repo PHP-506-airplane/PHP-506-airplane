@@ -24,7 +24,11 @@ use App\Jobs\SendEmailCancel;
 use App\Mail\SendEmailDelay;
 use App\Models\AirplaneInfo;
 use App\Models\FlightInfoView;
+use App\Models\Payment;
+use App\Models\ReserveInfo;
+use App\Models\TicketInfo;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
 
 class AdminController extends Controller
 {
@@ -35,7 +39,7 @@ class AdminController extends Controller
 
     // ---------------------------------
     // 메소드명	: __construct()
-    // 기능		: 공통 데이터를 생성
+    // 기능		: 공통으로 사용하는 데이터를 생성
     // 파라미터	: 없음
     // 리턴값	: 없음
     // ---------------------------------
@@ -56,6 +60,7 @@ class AdminController extends Controller
     // 리턴값	: 
     // ---------------------------------
     public function index() {
+        // 모든(deleted_at !== null인 데이터 포함) 운항정보 데이터를 select
         $data =  FlightInfo::leftJoin('reserve_info AS res', 'flight_info.fly_no', 'res.fly_no')
             ->join('airport_info AS dep', 'flight_info.dep_port_no', 'dep.port_no')
             ->join('airport_info AS arr', 'flight_info.arr_port_no', 'arr.port_no')
@@ -84,6 +89,12 @@ class AdminController extends Controller
             ->with('data', $data);
     }
 
+    // ---------------------------------
+    // 메소드명	: search()
+    // 기능		: 리스트 페이지에 검색결과 출력
+    // 파라미터	: Request       $req
+    // 리턴값	: 
+    // ---------------------------------
     public function search(Request $req) {
         // Log::debug($req);
         try {
@@ -94,7 +105,7 @@ class AdminController extends Controller
             $arrPort = $req->arrPort;
             $state = $req->state;
     
-            // 운항 정보 검색
+            // 조건에 맞는 운항 정보 검색
             $data = FlightInfo::leftJoin('reserve_info AS res', 'flight_info.fly_no', 'res.fly_no')
                 ->join('airport_info AS dep', 'flight_info.dep_port_no', 'dep.port_no')
                 ->join('airport_info AS arr', 'flight_info.arr_port_no', 'arr.port_no')
@@ -110,20 +121,25 @@ class AdminController extends Controller
                 )
                 ->whereBetween('fly_date', [$dateStart, $dateEnd]);
 
+            // 항공사 select box가 전체가 아닐경우 해당하는 항공사만 검색
             if ($airline !== '0') {
                 $data->where('line.line_no', $airline);
             }
 
+            // 출발공항 select box가 전체가 아닐경우 해당하는 출발공항만 검색
             if ($depPort !== '0') {
                 $data->where('dep_port_no', $depPort);
             }
 
+            // 도착공항 select box가 전체가 아닐경우 해당하는 도착공항만 검색
             if ($arrPort !== '0') {
                 $data->where('arr_port_no', $arrPort);
             }
 
+            // 결항여부가 "정상"일 경우 결항되지 않은 데이터만 검색
             if ($state === '1') {
                 $data->whereNull('deleted_at');
+            // 결항여부가 "결항"일 경우 결항된 데이터만 검색
             } else if ($state === '2') {
                 $data->whereNotNull('deleted_at');
             }
@@ -160,6 +176,7 @@ class AdminController extends Controller
         try {
             DB::beginTransaction();
 
+            // fly_no로 운항정보를 찾음
             $data = FlightInfo::find($req->fly_no);
 
             if (!$data) {
@@ -170,10 +187,13 @@ class AdminController extends Controller
                     ]);
             }
 
+            // 삭제일을 오늘로 설정
             $data->deleted_at = Carbon::now();
+            // 삭제사유를 관리자가 입력한 사유로 설정
             $data->del_reason = $req->del_reason;
             $data->save();
 
+            // 메일발송을 위해 select
             $userList = FlightInfo::where('flight_info.fly_no', $data->fly_no)
                 ->join('reserve_info AS res', 'flight_info.fly_no', 'res.fly_no')
                 ->join('ticket_info AS tic', 'res.reserve_no', 'tic.reserve_no')
@@ -194,7 +214,39 @@ class AdminController extends Controller
                     ,'arr.port_name AS arr_port_name'
                 )
                 ->get();
-        
+
+            // 환불처리를 위해 select
+            $payList = Payment::join('reserve_info AS res', 'res.reserve_no', 'payment.reserve_no')
+                    ->join('flight_info AS fli', 'res.fly_no', 'fli.fly_no')
+                    ->where('fli.fly_no', $data->fly_no)
+                    ->select(
+                        'merchant_uid'
+                        ,'res.reserve_no'
+                    )
+                    ->get();
+
+            // 환불처리를 위해 토큰을 받음
+            $accessToken = getToken();
+            // Log::debug('환불할 유저 : ', [$payList]);
+            // Log::debug('토큰 : ', [$accessToken]);
+
+            // 환불처리 및 DB삭제처리
+            foreach ($payList as $val) {
+                $result = Http::withHeaders([
+                    'Content-Type' => 'application/json',
+                    'Authorization' => $accessToken
+                ])->post("https://api.iamport.kr/payments/cancel", [
+                    'merchant_uid' => $val->merchant_uid
+                    ,'reason' => '항공사 취소로 인한 환불'
+                ]);
+
+                Log::debug('pay foreach : ', [$result]);
+
+                ReserveInfo::where('reserve_no', $req->reserve_no)->delete();
+                TicketInfo::where('reserve_no', $req->reserve_no)->delete();
+                Payment::where('merchant_uid', $req->merchant_uid)->delete();
+            }
+
             // foreach ($userList as $user) {
             //     // Log::debug($user);
             //     Mail::to($user->u_email)->send(new ResCancel($user, $data->del_reason));
@@ -208,7 +260,7 @@ class AdminController extends Controller
             return response()
                 ->json([
                     'success' => true
-                    ,'message' => '결항되었습니다.'
+                    ,'message' => '결항처리 되었습니다.'
                 ]);
         } catch (Exception $e) {
             DB::rollBack();
@@ -229,13 +281,15 @@ class AdminController extends Controller
     // 리턴값	: 
     // ---------------------------------
     public function store(Request $req) {
-        Log::debug($req);
+        // Log::debug($req);
         try {
             DB::beginTransaction();
             
+            // 가격에서 ","를 제외
             $price = str_replace(',', '', $req->price);
-            Log::debug('price : ', [$price]);
+            // Log::debug('price : ', [$price]);
 
+            // 시 : 분으로 입력받은 데이터를 합침
             $depTime = $req->depHour . $req->depMin;
             $arrTime = $req->arrHour . $req->arrMin;
 
@@ -273,6 +327,7 @@ class AdminController extends Controller
         try {
             DB::beginTransaction();
 
+            // 운항정보를 찾음
             $flight = FlightInfo::find($req->fly_no);
 
             if (!$flight) {
@@ -281,8 +336,9 @@ class AdminController extends Controller
 
             // 기존에 저장된 JSON 데이터를 가져오거나, null이라면 빈 배열로 초기화
             $delayData = json_decode($flight->delay_reasons) ?? [];
+            // 오늘날짜를 가져와서 문자열로 변환
             $today = strval(Carbon::now());
-            Log::debug($delayData);
+            // Log::debug($delayData);
         
             // 새로운 지연 정보 추가
             $delayData[] = [
@@ -295,6 +351,7 @@ class AdminController extends Controller
                 ,'arr_time' => $req->arrHour . $req->arrMin
             ]);
 
+            // 메일발송을 위해 select
             $userList = FlightInfo::where('flight_info.fly_no', $flight->fly_no)
                 ->join('reserve_info AS res', 'flight_info.fly_no', 'res.fly_no')
                 ->join('user_info AS user', 'res.u_no', 'user.u_no')
@@ -314,9 +371,10 @@ class AdminController extends Controller
                     ,'arr.port_name AS arr_port_name'
                 )
                 ->get();
+
+            // Log::debug('컨트롤러 : ', [$userList]);
             
-            Log::debug('컨트롤러 : ', [$userList]);
-            
+            // 지연 알림 메일발송(큐에 작업 추가)
             foreach ($userList as $user) {
                 $userDataArray = [
                     'u_name' => $user->u_name,

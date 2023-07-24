@@ -1,4 +1,7 @@
 <?php
+
+use Illuminate\Support\Facades\Http;
+
 /**************************************************
  * 프로젝트명   : PHP-506-airplane
  * 디렉토리     : app/Helpers
@@ -37,4 +40,21 @@ function TimeCalculation($start_time, $end_time) {
     }
 
     return $minute_difference . '분';
+}
+
+// ---------------------------------
+// 메소드명	: getToken
+// 기능		: 아임포트 환불시 필요한 토큰발급
+// 파라미터	:
+// 리턴값	: Arr
+// ---------------------------------
+function getToken() {
+    $result  = Http::withHeaders([
+        'Content-Type' => 'application/json'
+    ])->post('https://api.iamport.kr/users/getToken', [
+        'imp_key' => '0833844628848866',
+        'imp_secret' => 'l17oW36JAtRW7TaNjsZeBTLwdM0XbIFYJysHLDYzSBdn3yDgkDIM36G75yQ29SImMWw130HxvvbzIJNv',
+    ]);
+    $arr_result = json_decode($result, true);
+    return $arr_result["response"]["access_token"];
 }
