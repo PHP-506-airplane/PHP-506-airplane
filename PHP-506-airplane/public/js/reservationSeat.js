@@ -171,31 +171,10 @@ async function reserveBtn(){
                 if (isDuplicate1 || isDuplicate2) {
                     alert(alertMsg);
                     removeLoading();
-                } else {
-                    let caching = await axios.post('/api/reservations/cache', {
-                        fly_no: fly_no,
-                        seat_no: s_name.value
-                    });
+                } 
 
-                    let caching2 = await axios.post('/api/reservations/cache', {
-                        fly_no: fly_no2,
-                        seat_no: s_name2.value
-                    });
+                seatForm.submit();
 
-                    if (caching.data.success && caching2.data.success) {
-                        let price1 = await getPrice(fly_no);
-                        let price2 = await getPrice(fly_no2);
-                        let totalPrice = price1 + price2;
-                        let cachedData = [
-                            [fly_no, s_name.value],
-                            [fly_no2, s_name2.value]
-                        ];
-                        requestPay(totalPrice, cachedData);
-                    } else {
-                        removeLoading();
-                        alert('이미 진행중인 예약입니다.');
-                    }
-                }
             } catch (error) {
                 console.log(error);
                 removeLoading();
@@ -213,22 +192,7 @@ async function reserveBtn(){
                     alert('이미 예약된 좌석입니다.');
                     removeLoading();
                 } else {
-                    let data = {
-                        fly_no: fly_no
-                        ,seat_no: s_name.value
-                    }
-                    let caching = await axios.post('/api/reservations/cache', data);
-
-                    if (caching.data.success) {
-                        let totalPrice = await getPrice(fly_no);
-                        let cachedData = [
-                            [fly_no, s_name.value]
-                        ];
-                        requestPay(totalPrice, cachedData);
-                    } else {
-                        removeLoading();
-                        alert('이미 진행중인 예약입니다.\n' + caching.data.msg);
-                    }
+                    seatForm.submit();
                 }
             } catch (error) {
                 removeLoading();

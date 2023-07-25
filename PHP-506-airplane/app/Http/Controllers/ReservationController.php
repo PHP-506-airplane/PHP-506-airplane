@@ -136,8 +136,9 @@ class ReservationController extends Controller
     // ---------------------------------
     public function caching(Request $req) {
         try {
+            Log::debug('req',$req->all());
             // 캐시 키 생성
-            $cacheKey = 'res_' . $req->fly_no . '_' . $req->seat_no;
+                $cacheKey = 'res_' . $req->fly_no . '_' . $req->seat_no;
             $isRes = Cache::get($cacheKey);
             Log::debug('캐시확인 : ', [Cache::get($cacheKey)]);
 

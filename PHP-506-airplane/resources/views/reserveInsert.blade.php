@@ -12,6 +12,8 @@
         <input type="hidden" name="fly_no" value="{{$_POST['fly_no']}}" id="fly_no">
         <input type="hidden" name="merchant_uid" id="merchant_uid">
         <input type="hidden" name="plane_no" value="{{$_POST['plane_no']}}">
+        <input type="hidden" id="allCnt" name="allCnt" value="{{$allCnt}}">
+
         {{-- 왕복 --}}
         @if($_POST['flg'] === '1')
             <input type="hidden" name="fly_no2" value="{{$_POST['fly_no2']}}" id="fly_no2">
@@ -28,9 +30,9 @@
                     <div>생일</div>
                     <input type="date" name="birth[]">
                     <div>가는편 좌석</div>
-                    <input type="text" name="seatGo[]" value="{{ $seat_no_go[$i] }}" readonly>
+                    <input type="text" name="seatGo[]" class="seat_no" value="{{ $seat_no_go[$i] }}" readonly>
                     <div>오는편 좌석</div>
-                    <input type="text" name="seatReturn[]" value="{{ $seat_no_return[$i] }}" readonly>
+                    <input type="text" name="seatReturn[]" class="seat_no2" value="{{ $seat_no_return[$i] }}" readonly>
                 </div>
             @endfor
         @else {{-- 편도 --}}
@@ -52,7 +54,8 @@
                 </div>
             @endfor
         @endif
-        <button type="button" onclick="requestPay();">결제하기</button>
+        <button type="button" onclick="submitReq();">결제하기</button>
+        {{-- <button type="submit">결제하기</button> --}}
     </form>
 </div>
 @endsection
@@ -60,6 +63,7 @@
 @section('js')
     <script src="{{asset('js/scripts.js')}}"></script>
     <script src="{{asset('js/reservationInsert.js')}}"></script>
+    <script src="{{asset('js/reserveInsert.js')}}"></script>
     <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 
 {{-- <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script> --}}
