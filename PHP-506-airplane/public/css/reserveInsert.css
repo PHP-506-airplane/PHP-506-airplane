@@ -168,7 +168,8 @@ input, .size {
         padding: 0;
     }
     hr {
-        width: 600px;
+        width: 650px;
+        margin-left: 40px;
     }
 
     .divInput {
