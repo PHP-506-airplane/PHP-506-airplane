@@ -41,7 +41,7 @@ footer{
     text-align: left !important;
     background: #efeff6;
     color: #2e2e2e;
-    z-index: 999999;
+    z-index: 1;
     line-height: 30px;
     position: relative;
     bottom: 0;
