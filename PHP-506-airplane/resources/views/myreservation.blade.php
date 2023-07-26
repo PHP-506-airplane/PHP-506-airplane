@@ -118,7 +118,7 @@
                     <div class="box">
                         <div class="passenger">
                             <small>passenger</small>
-                            <strong>{{$val['u_name']}}</strong>
+                            <strong>{{$val['p_name']!=null ? $val['p_name'] : $val['u_name']}}</strong>
                         </div>
                         <form action="{{route('reservation.rescancle')}}" method="POST" id="formCancel">
                             @csrf

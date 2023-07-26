@@ -156,8 +156,9 @@ class ReservationController extends Controller
     // ---------------------------------
     public function caching(Request $req) {
         try {
+            Log::debug('req',$req->all());
             // 캐시 키 생성
-            $cacheKey = 'res_' . $req->fly_no . '_' . $req->seat_no;
+                $cacheKey = 'res_' . $req->fly_no . '_' . $req->seat_no;
             $isRes = Cache::get($cacheKey);
             Log::debug('캐시확인 : ', [Cache::get($cacheKey)]);
 
@@ -199,6 +200,21 @@ class ReservationController extends Controller
         }
     }
 
+    public function resetCache($fly_no, $seat_no) {
+        try {
+            // 캐시 키 생성
+            $cacheKey = 'res_' . $fly_no . '_' . $seat_no;
+
+            // 캐시 삭제
+            Cache::forget($cacheKey);
+
+            return true;
+        } catch (Exception $e) {
+            // 예외 처리
+            Log::error('캐시 지우기 실패 : ' . $e->getMessage());
+            return false;
+        }
+    }
     // ---------------------------------
     // 메소드명	: getSeats
     // 기능		: 항공편 PK를 기반으로 운항정보와 예약된 좌석정보를 가져옴
@@ -828,14 +844,26 @@ class ReservationController extends Controller
                 ]);
                 $depResData->save();
     
+                $depPrice = FlightInfo::select('price')->where('fly_no', $req->fly_no)->first();
+                $depPriceInt = intval($depPrice->price);
+
                 $depResNo = $depResData->reserve_no;
     
                 $depTicData = new TicketInfo([
                     'reserve_no' => $depResNo
-                    ,'t_price'   => 500
+                    ,'t_price'   => $depPriceInt
                 ]);
                 $depTicData->save();
-    
+
+                $depPayData = new Payment([
+                    'u_no'          => Auth::user()->u_no
+                    ,'price'        => $depPriceInt
+                    ,'reserve_no'   => $depResData->reserve_no
+                    ,'merchant_uid' => $req->merchant_uid
+                ]);
+
+                $depPayData->save();
+                $this->resetCache($req->fly_no, $req->seatGo[$i]);
                 // 오는편 예약
                 $arrResData = new ReserveInfo([
                     'plane_no' => $req->plane_no2
@@ -848,19 +876,40 @@ class ReservationController extends Controller
                 ]);
                 $arrResData->save();
     
+                $arrPrice = FlightInfo::select('price')->where('fly_no', $req->fly_no2)->first();
+                $arrPriceInt = intval($arrPrice->price);
+
                 $arrResNo = $arrResData->reserve_no;
     
                 $arrTicData = new TicketInfo([
                     'reserve_no' => $arrResNo
-                    ,'t_price'   => 500
+                    ,'t_price'   => $arrPriceInt
                 ]);
                 $arrTicData->save();
+
+                $arrPayData = new Payment([
+                    'u_no'          => Auth::user()->u_no
+                    ,'price'        => $arrPriceInt
+                    ,'reserve_no'   => $arrResData->reserve_no
+                    ,'merchant_uid' => $req->merchant_uid
+                ]);
+                
+                $arrPayData->save();
+                $this->resetCache($req->fly_no2, $req->seatReturn[$i]);
+
+                $getDep = $this->getReserveData($depResData->reserve_no);
+                $getArr = $this->getReserveData($arrResData->reserve_no);
+                Mail::to(Auth::user()->u_email)->queue(new SendReserve($userinfo, $getDep));
+                Mail::to(Auth::user()->u_email)->queue(new SendReserve($userinfo, $getArr));
             }
 
+
             DB::commit();
+            return redirect()->route('reservation.myreservation')->with('alert', '예약이 완료되었습니다.');
         } catch (Exception $e) {
             DB::rollback();
             Log::debug('insert err : ', [$e]);
+            return redirect()->route('reservation.main')->with('alert', '예약 중 오류 발생.');
         }
 
 
