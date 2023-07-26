@@ -7,6 +7,7 @@
 @section('contents')
 <div class="container">
     <h1>탑승객 정보</h1>
+    <hr>
     <form method="POST" id="insertForm" action="{{ route('reservation.reserveConfirm'); }}">
         @csrf
         <input type="hidden" name="fly_no" value="{{$_POST['fly_no']}}" id="fly_no">
@@ -20,18 +21,18 @@
             <input type="hidden" name="plane_no2" value="{{$_POST['plane_no2']}}">
             @for($i = 0; $i < $allCnt; $i++)
                 <div class="divInput">
-                    <div>이름</div>
+                    <div class="title1">이름</div>
                     <input type="text" name="name[]">
-                    <div>성별</div>
+                    <div class="title1">성별</div>
                     <select name="gender[]" id="">
                         <option value="0">남</option>
                         <option value="1">여</option>
                     </select>
-                    <div>생일</div>
+                    <div class="title1">생일</div>
                     <input type="date" name="birth[]">
-                    <div>가는편 좌석</div>
+                    <div class="title1">가는편 좌석</div>
                     <input type="text" name="seatGo[]" class="seat_no" value="{{ $seat_no_go[$i] }}" readonly>
-                    <div>오는편 좌석</div>
+                    <div class="title1">오는편 좌석</div>
                     <input type="text" name="seatReturn[]" class="seat_no2" value="{{ $seat_no_return[$i] }}" readonly>
                 </div>
             @endfor
@@ -54,7 +55,10 @@
                 </div>
             @endfor
         @endif
-        <button type="button" onclick="submitReq();">결제하기</button>
+        <div class="btnArea">
+        <button type="button" class="submitbtn" onclick="submitReq();">결제하기</button>
+        
+        </div>
         {{-- <button type="submit">결제하기</button> --}}
     </form>
 </div>
