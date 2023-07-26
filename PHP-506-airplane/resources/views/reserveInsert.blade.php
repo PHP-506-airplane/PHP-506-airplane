@@ -7,7 +7,7 @@
 @section('contents')
 <div class="container">
     <h1>탑승객 정보</h1>
-    <form method="POST" action="{{ route('reservation.reserveConfirm'); }}">
+    <form method="POST" id="insertForm" action="{{ route('reservation.reserveConfirm'); }}">
         @csrf
         <input type="hidden" name="fly_no" value="{{$_POST['fly_no']}}" id="fly_no">
         <input type="hidden" name="merchant_uid" id="merchant_uid">
@@ -70,9 +70,9 @@
 
     <script>
         let IMP = window.IMP;
-        IMP.init("imp68041162"); // 예: imp00000000
+        IMP.init("imp11776700"); // 예: imp00000000
         let merchant_uid = document.querySelector('#merchant_uid');
-        function requestPay(totalPrice, cachedData) {
+        function requestPay(totalPrice, arrCaching) {
             // IMP.request_pay(param, callback) 결제창 호출
             IMP.request_pay({ // param
                 pg: "kakaopay" // pg사
@@ -86,10 +86,10 @@
             }, function(res) { // callback
                 if (res.success) {
                     merchant_uid.value = res.merchant_uid;
-                    seatForm.submit();
+                    insertForm.submit();
                 } else {
                     // 결제 실패 시 로직
-                    clearResCache(cachedData);
+                    clearResCache(arrCaching);
                     alert("결제에 실패했습니다.\n" +  res.error_msg);
                     removeLoading();
                 }
