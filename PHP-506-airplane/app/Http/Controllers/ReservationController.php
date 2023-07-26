@@ -821,17 +821,20 @@ class ReservationController extends Controller
                 ]);
                 $depResData->save();
     
+                $depPrice = FlightInfo::select('price')->where('fly_no', $req->fly_no)->first();
+                $depPriceInt = intval($depPrice->price);
+
                 $depResNo = $depResData->reserve_no;
     
                 $depTicData = new TicketInfo([
                     'reserve_no' => $depResNo
-                    ,'t_price'   => 500
+                    ,'t_price'   => $depPriceInt
                 ]);
                 $depTicData->save();
 
                 $depPayData = new Payment([
                     'u_no'          => Auth::user()->u_no
-                    ,'price'        => 100
+                    ,'price'        => $depPriceInt
                     ,'reserve_no'   => $depResData->reserve_no
                     ,'merchant_uid' => $req->merchant_uid
                 ]);
@@ -850,17 +853,20 @@ class ReservationController extends Controller
                 ]);
                 $arrResData->save();
     
+                $arrPrice = FlightInfo::select('price')->where('fly_no', $req->fly_no2)->first();
+                $arrPriceInt = intval($arrPrice->price);
+
                 $arrResNo = $arrResData->reserve_no;
     
                 $arrTicData = new TicketInfo([
                     'reserve_no' => $arrResNo
-                    ,'t_price'   => 500
+                    ,'t_price'   => $arrPriceInt
                 ]);
                 $arrTicData->save();
 
                 $arrPayData = new Payment([
                     'u_no'          => Auth::user()->u_no
-                    ,'price'        => 200
+                    ,'price'        => $arrPriceInt
                     ,'reserve_no'   => $arrResData->reserve_no
                     ,'merchant_uid' => $req->merchant_uid
                 ]);
