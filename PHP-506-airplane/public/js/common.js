@@ -42,6 +42,7 @@ document.addEventListener("DOMContentLoaded", function() {
     function toggleAccordion() {
         var dd = this.nextElementSibling;
         this.classList.toggle('active');
+        console.log(this);
 
         if (dd.style.display === 'block') {
             dd.style.display = 'none';

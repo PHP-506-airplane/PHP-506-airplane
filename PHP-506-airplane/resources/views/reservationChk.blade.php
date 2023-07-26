@@ -164,7 +164,7 @@
                     <td>{{TimeCalculation($val->dep_time, $val->arr_time)}}</td>
                     <td><p>({{$oneway[0]->arr_port_eng}})</p>{{substr_replace($val->arr_time,':',2,0)}}</td>
                     <td><input type="hidden" class="dep_price2" value="{{$val->price}}">{{substr_replace($val->price,',',-3,0)}}</td>
-                    <td class="dep_fly_no2"><input type="radio" id="data"name="dep_fly_no" value="{{$val->fly_no}}"></td>
+                    <td class="dep_fly_no2"><input type="radio" id="data" name="dep_fly_no" value="{{$val->fly_no}}"></td>
                 </tr>
                 @empty
                 <tr>

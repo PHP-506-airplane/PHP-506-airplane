@@ -47,9 +47,6 @@
                     <input type="date" name="birth[]">
                     <div>가는편 좌석</div>
                     <input type="text" name="seatGo[]" value="{{ $seat_no_go[$i] }}" readonly>
-                    <div>오는편 좌석</div>
-                    <input type="text" name="seatReturn[]" value="{{ $seat_no_return[$i] }}" readonly>
-                </div>
             @endfor
         @endif
         <button type="button" onclick="requestPay();">결제하기</button>
