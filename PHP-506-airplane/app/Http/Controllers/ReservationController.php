@@ -108,6 +108,26 @@ class ReservationController extends Controller
             ->limit(5)
             ->get();
     }
+    public function getFlightInfo2($depPort, $arrPort, $flyDate) {
+        return 
+            FlightInfo::
+            join('airport_info AS dep_port', 'dep_port.port_no', 'flight_info.dep_port_no')
+            ->join('airport_info AS arr_port', 'arr_port.port_no', 'flight_info.arr_port_no')
+            ->select(
+                'flight_info.*',
+                'dep_port.port_no AS dep2_port_no',
+                'dep_port.port_eng AS dep_port_eng',
+                'dep_port.port_name AS dep_port_name',
+                'arr_port.port_no AS arr2_port_no',
+                'arr_port.port_eng AS arr_port_eng',
+                'arr_port.port_name AS arr_port_name'
+            )
+            ->where('flight_info.dep_port_no', $depPort)
+            ->where('flight_info.arr_port_no', $arrPort)
+            ->where('flight_info.fly_date', $flyDate)
+            ->limit(5)
+            ->get();
+    }
 
     // ---------------------------------
     // 메소드명	: dupChk
@@ -416,7 +436,7 @@ class ReservationController extends Controller
             // 도착지
             $arrPort = $this->getPortInfo($req->one_arr_port_no);
             // 편도
-            $oneway = $this->getFlightInfo($req->one_dep_port_no, $req->one_arr_port_no, $req->one_fly_date);
+            $oneway = $this->getFlightInfo2($req->one_dep_port_no, $req->one_arr_port_no, $req->one_fly_date);
 
             return view('reservationChk', compact('oneway', 'flg', 'arrPort', 'depPort'));
         }
@@ -487,14 +507,17 @@ class ReservationController extends Controller
             return view('reservationSeat', compact('req', 'data2', 'seat', 'availableSeats', 'availableSeats2', 'flg', 'depPort', 'arrPort','peoNum','pass_name'));
         } else {
             // 편도
+            Log::debug('checkpost oneway : ', $req->all());
+
+            if (!isset($req->dep_fly_no)) {
+                return redirect()->back()->with('alert', '여정을 선택해주세요.');
+            }
+
             list($req, $availableSeats) = $this->getSeats($req->dep_fly_no);
 
             // 좌석
             $seat = SeatInfo::select('seat_no')->limit(108)->get();
 
-            if (!isset($req->dep_fly_no)) {
-                return redirect()->back()->with('alert', '여정을 선택해주세요.');
-            }
 
             return view('reservationSeat', compact('req', 'seat', 'availableSeats', 'flg', 'depPort', 'arrPort','peoNum','pass_name'));
         }

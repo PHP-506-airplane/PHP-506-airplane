@@ -48,6 +48,8 @@ Route::put('/users/chgpwpost', [UserController::class, 'chgpwpost'])->name('user
 Route::get('/reservation/main', [ReservationController::class, 'main'])->name('reservation.main');
 // 공지사항
 Route::get('/notice/baggage', [NoticeController::class, 'baggage'])->name('notice.baggage');
+// 여행자 보험
+Route::get('/notice/insurance', [NoticeController::class, 'insurance'])->name('notice.insurance');
 // Route::get('/notice/rate', [NoticeController::class, 'rateinfoget'])->name('notice.rateinfoget');
 Route::resource('/notice', NoticeController::class);
 // 나의 예약 조회 페이지

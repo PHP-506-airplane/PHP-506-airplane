@@ -228,7 +228,7 @@
                     <img src="{{asset('img/luggage-icon.png')}}" alt="">
                     <p><strong>수하물 안내</strong></p>
                 </div>
-                <div class="box box5">
+                <div class="box box5" onclick="location.href='{{ route('notice.insurance') }}'">
                     <img src="{{asset('img/insurance-icon.png')}}" alt="">
                     <p><strong>여행자 보험</strong></p>
                 </div>
