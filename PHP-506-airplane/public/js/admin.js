@@ -108,6 +108,7 @@ function setEditModalData(date, name, airline, depPort, arrPort, depTime, arrTim
 
 // 지연사유 모달
 function showDelayReasons(delayReasons) {
+    console.log(delayReasons);
     let reasonsArray = JSON.parse(delayReasons);
     let modalBody = document.getElementById('delayReasonViewBody');
     modalBody.innerHTML = ''; // 기존 내용 초기화
@@ -123,4 +124,18 @@ function showDelayReasons(delayReasons) {
     // 지연사유 보기 모달 열기
     let delayReasonViewModal = new bootstrap.Modal(document.getElementById('delayReasonViewModal'), {});
     delayReasonViewModal.show();
+}
+
+// 결항사유 모달
+function showCancelReasons(cancelReasons) {
+    let reasonsArray = JSON.stringify(cancelReasons);
+    let modalBody = document.getElementById('cancelReasonViewBody');
+    modalBody.innerHTML = ''; // 기존 내용 초기화
+
+    Body.innerHTML += '<div class="row">' + (index + 1) + '. ' + reasonString.slice(0, 11) + ' / ' + reasonString.slice(11, 20) + '<p class="spanDelayReason">' + reasonString.slice(21) + '</p></div>';
+        modalBody.innerHTML += '<div class="row">' + '사유 : ' + reasonsArray.slice(1,reasonsArray.length - 1)  +'</p></div>';
+
+    // 결항사유 보기 모달 열기
+    let cancelReasonViewModal = new bootstrap.Modal(document.getElementById('cancelReasonViewModal'), {});
+    cancelReasonViewModal.show();
 }
