@@ -53,12 +53,43 @@
                     <input type="text" name="seatGo[]" class="seat_no" value="{{ $seat_no_go[$i] }}" readonly>
             @endfor
         @endif
-        <div class="btnArea">
+        {{-- <div class="btnArea">
         <button type="button" class="submitbtn" onclick="submitReq();">결제하기</button>
         
-        </div>
+        </div> --}}
         {{-- <button type="submit">결제하기</button> --}}
     </form>
+
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        결제하기
+    </button>
+
+<!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">마일리지 사용</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                현재 마일리지 : {{session('mileage')}}
+                <br>
+                <br>
+                사용 마일리지 : <input type="text">
+                <br>
+                <br>
+                <hr>
+                <br>
+                총 결제 금액 : 
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                <button type="button" class="btn btn-primary" onclick="submitReq();">결제</button>
+            </div>
+            </div>
+        </div>
+    </div>
 </div>
 @endsection
 

@@ -66,6 +66,11 @@ class UserController extends Controller
             }
             session($user->only('u_email'));
 
+            $mileage = Userinfo::join('mileage AS mile', 'user_info.u_no', 'mile.u_no')
+                                ->where('user_info.u_no', $user->u_no)
+                                ->first();
+            Log::debug('마일리지', [$mileage]);
+            Session::put('mileage', $mileage->u_mile);
             // v002 add 이동호
             if (Session::has('previous_url')) {
                 $previousUrl = Session::get('previous_url');

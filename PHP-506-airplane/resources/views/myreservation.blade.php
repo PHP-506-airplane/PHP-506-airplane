@@ -79,8 +79,17 @@
                 <section class="infos">
                     <div class="places">
                         <div class="box">
-                            <small>Linecode</small>
-                            <strong><em>{{$val['line_code']}}</em></strong>
+                            <small>Seatlevel</small>
+                            <strong><em>
+                                {{-- {{$val['seat_no']}} --}}
+                                @if(substr($val['seat_no'],0,1) == 'A') 
+                                    {{'F'}}
+                                    @elseif(substr($val['seat_no'],0,1) == 'B' || substr($val['seat_no'],0,1) == 'C')
+                                    {{'C'}}
+                                    @else 
+                                    {{'Y'}}
+                                @endif
+                            </em></strong>
                         </div>
                         <div class="box">
                             <small>airplane</small>
