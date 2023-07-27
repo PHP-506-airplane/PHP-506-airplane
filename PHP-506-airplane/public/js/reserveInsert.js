@@ -19,30 +19,23 @@ const insertForm = document.getElementById('insertForm');
 async function submitReq() {
     showLoading();
     let seatNo = document.querySelectorAll('.seat_no');
-    let seatNo2 = document.querySelectorAll('.seat_no2');
     let flyNo = document.getElementById('fly_no');
-    let flyNo2 = document.getElementById('fly_no2');
-
+    let flg = document.getElementById('flg');
     let seats = [];
-    let seats2 = [];
 
+    
     seatNo.forEach(function(seat) {
         seats.push(seat.value);
     });
-
-    seatNo2.forEach(function(seat) {
-        seats2.push(seat.value);
-    });
-
-    console.log(seats);
-    console.log(seats2);
-
+    
     let arrCaching = [];
-    // let arrCaching2 = [];
     let seatSuc = [];
     let seatFail = [];
     let price = 0;
-
+    
+    console.log(seats);
+    console.log(flyNo.value);
+    console.log(flg.value);
     for(let i = 0; i < seats.length; i++) {
         arrCaching.push(await axios.post('/api/reservations/cache', {
             fly_no: flyNo.value,
@@ -68,8 +61,15 @@ async function submitReq() {
         }
     }
 
-    
-    
+if(flg.value =='1'){
+    let seatNo2 = document.querySelectorAll('.seat_no2');
+    let flyNo2 = document.getElementById('fly_no2');
+    let seats2 = [];
+
+    seatNo2.forEach(function(seat) {
+        seats2.push(seat.value);
+    });
+    console.log(seats2);
     for(let i = 0; i < seats2.length; i++) {
         arrCaching.push(await axios.post('/api/reservations/cache', {
             fly_no: flyNo2.value,
@@ -97,6 +97,7 @@ async function submitReq() {
             // alert('이미 진행중인 예약입니다.');
         }
     }
+}
 
     if (seatFail.length > 0 ) {
         removeLoading();

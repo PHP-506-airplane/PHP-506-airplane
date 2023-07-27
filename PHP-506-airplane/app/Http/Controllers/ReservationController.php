@@ -374,6 +374,7 @@ class ReservationController extends Controller
         if ($sessionReq !== null) {
             $req = new Request($sessionReq);
             $_GET['fly_date'] = $req->fly_date;
+            $_GET['one_fly_date'] = $req->one_fly_date;
             $_GET['ADULT'] = $req->ADULT;
             $_GET['CHILD'] = $req->CHILD;
             $_GET['BABY'] = $req->BABY;
@@ -437,7 +438,7 @@ class ReservationController extends Controller
             $arrPort = $this->getPortInfo($req->one_arr_port_no);
             // 편도
             $oneway = $this->getFlightInfo2($req->one_dep_port_no, $req->one_arr_port_no, $req->one_fly_date);
-
+            // Log::debug('편도 : ', [$oneway]);
             return view('reservationChk', compact('oneway', 'flg', 'arrPort', 'depPort'));
         }
     }
@@ -865,6 +866,8 @@ class ReservationController extends Controller
                 $depPayData->save();
                 $this->resetCache($req->fly_no, $req->seatGo[$i]);
                 // 오는편 예약
+                // 왕복일때 저장
+                if($req->flg == 1){
                 $arrResData = new ReserveInfo([
                     'plane_no' => $req->plane_no2
                     ,'seat_no' => $req->seatReturn[$i]
@@ -896,11 +899,12 @@ class ReservationController extends Controller
                 
                 $arrPayData->save();
                 $this->resetCache($req->fly_no2, $req->seatReturn[$i]);
+                $getArr = $this->getReserveData($arrResData->reserve_no);
+                Mail::to(Auth::user()->u_email)->queue(new SendReserve($userinfo, $getArr));
+            }
 
                 $getDep = $this->getReserveData($depResData->reserve_no);
-                $getArr = $this->getReserveData($arrResData->reserve_no);
                 Mail::to(Auth::user()->u_email)->queue(new SendReserve($userinfo, $getDep));
-                Mail::to(Auth::user()->u_email)->queue(new SendReserve($userinfo, $getArr));
             }
 
 
