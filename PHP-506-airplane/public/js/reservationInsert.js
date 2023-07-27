@@ -88,6 +88,18 @@ async function reserveBtn(){
                         let price1 = await getPrice(fly_no);
                         let price2 = await getPrice(fly_no2);
                         let totalPrice = price1 + price2;
+                        console.log(dep_name[i].value[0]);
+                        console.log(dep_name[i].value);
+                        if(dep_name[i].value.substr(0,1) == 'A') {
+                            totalPrice += 100000;
+                        } else if (dep_name[i].value.substr(0,1) == 'B' || dep_name[i].value.substr(0,1) == 'C') {
+                            totalPrice += 50000;
+                        }
+                        if(arr_name[i].value.substr(0,1) == 'A') {
+                            totalPrice += 100000;
+                        } else if (arr_name[i].value.substr(0,1) == 'B' || arr_name[i].value.substr(0,1) == 'C') {
+                            totalPrice += 50000;
+                        }
                         let cachedData= []; 
                         cachedData[i]= [
                             [fly_no, dep_name[i].value],

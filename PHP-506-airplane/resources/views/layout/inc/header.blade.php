@@ -17,7 +17,7 @@
     </button>
     <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
       <ul class="navbar-nav">
-        <li class="nav-item" style="font-weight:600">
+       <li class="nav-item" style="font-weight:600">
           <a class="nav-link active" aria-current="page" href="{{route('reservation.myreservation')}}">마이페이지</a>
         </li>
         @guest
@@ -34,7 +34,8 @@
        
        @auth
             <li class="nav-item justify-content-end" style="font-weight:600">
-                <a class="nav-link" href="{{route('notice.baggage')}}">수하물 안내</a>
+                {{-- <a class="nav-link" href="{{route('notice.baggage')}}">수하물 안내</a> --}}
+                <div>내 마일리지 : {{session('mileage')}}</div>
             </li>
             <li class="nav-item dropdown justify-content-end" style="font-weight:600">
              

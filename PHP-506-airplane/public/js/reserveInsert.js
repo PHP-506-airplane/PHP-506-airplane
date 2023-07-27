@@ -51,16 +51,22 @@ async function submitReq() {
         // console.log(arrCaching[i].data);
         if (arrCaching[i].data.success) {
             let price1 = await getPrice(flyNo.value);
+            let seatLevel = seats2[i].substr(0,1);
             price += price1;
             seatSuc.push([flyNo.value, seats[i]]);
-            // let totalPrice = (price1 + price2) * allCnt.value;
+            if(seatLevel == 'A') {
+                price += 100000;
+            } else if (seatLevel == 'B' || seatLevel == 'C') {
+                price += 50000;
+            }
+            // let price = (price1 + price2) * allCnt.value;
             // let cachedData=[];
     
             //     cachedData = [
             //         [flyNo, seats[i]]
             //     ];
                 
-            // requestPay(totalPrice, cachedData);
+            // requestPay(price, cachedData);
         } else {
             seatFail.push([flyNo.value, seats[i]]);
             // removeLoading();
@@ -75,11 +81,18 @@ async function submitReq() {
             fly_no: flyNo2.value,
             seat_no: seats2[i]
         }));
+        console.log(seats2[i].substr(0,1));
         if (arrCaching[i].data.success) {
             let price2 = await getPrice(flyNo2.value);
+            let seatLevel2 = seats2[i].substr(0,1);
             price += price2;
             seatSuc.push([flyNo2.value, seats2[i]]);
-            // let totalPrice = (price1 + price2) * allCnt.value;
+            if(seatLevel2 == 'A') {
+                price += 100000;
+            } else if (seatLevel2 == 'B' || seatLevel2 == 'C') {
+                price += 50000;
+            }
+            // let price = (price1 + price2) * allCnt.value;
         //     let cachedData=[];
     
         //         cachedData = [
@@ -88,7 +101,7 @@ async function submitReq() {
         //          cachedData = [
         //             [flyNo2, seats2[i]]
         //         ];
-        //     requestPay(totalPrice, cachedData);
+        //     requestPay(price, cachedData);
             
         } 
         else {
@@ -115,7 +128,7 @@ async function submitReq() {
     // if (arrCaching.data.success && arrCaching2.data.success) {
     //     let price1 = await getPrice(flyNo);
     //     let price2 = await getPrice(flyNo2);
-    //     let totalPrice = (price1 + price2) * allCnt.value;
+    //     let price = (price1 + price2) * allCnt.value;
     //     let cachedData=[];
 
     //         cachedData = [
@@ -124,7 +137,7 @@ async function submitReq() {
     //          cachedData = [
     //             [flyNo2, seats2[i]]
     //         ];
-    //     requestPay(totalPrice, cachedData);
+    //     requestPay(price, cachedData);
     // } else {
     //     removeLoading();
     //     alert('이미 진행중인 예약입니다.');
@@ -137,12 +150,12 @@ async function submitReq() {
     // if (caching.data.success && caching2.data.success) {
     //     let price1 = await getPrice(fly_no);
     //     let price2 = await getPrice(fly_no2);
-    //     let totalPrice = price1 + price2;
+    //     let price = price1 + price2;
     //     let cachedData = [
     //         [fly_no, s_name.value],
     //         [fly_no2, s_name2.value]
     //     ];
-    //     requestPay(totalPrice, cachedData);
+    //     requestPay(price, cachedData);
     // } else {
     //     removeLoading();
     //     alert('이미 진행중인 예약입니다.');
@@ -204,7 +217,7 @@ async function submitReq() {
 //     if (arrCaching.data.success && arrCaching2.data.success) {
 //         let price1 = await getPrice(flyNo);
 //         let price2 = await getPrice(flyNo2);
-//         let totalPrice = (price1 + price2) * allCnt.value;
+//         let price = (price1 + price2) * allCnt.value;
 //         let cachedData = [];
 
 //         cachedData = [
@@ -213,7 +226,7 @@ async function submitReq() {
 //         cachedData = [
 //             [flyNo2, seats2[i]]
 //         ];
-//         requestPay(totalPrice, cachedData);
+//         requestPay(price, cachedData);
 //     } else {
 //         removeLoading();
 //         alert('이미 진행중인 예약입니다.');

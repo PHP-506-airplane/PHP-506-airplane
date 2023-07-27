@@ -804,6 +804,7 @@ class ReservationController extends Controller
         // "flg":"1","fly_no":"3469","plane_no":"44","ADULT":"1","CHILD":"1","BABY":"1"
         // ,"fly_no2":"231","plane_no2":"20","pass_name":"소아1","seat_no_go":["B02","B03"],"seat_no_return":["D05","D11"]}
         $allCnt = $req->ADULT + $req->CHILD;
+
         if ($req->flg == 1) {
             return view('reserveInsert')
                 ->with('allCnt', $allCnt)
