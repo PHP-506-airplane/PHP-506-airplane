@@ -132,8 +132,7 @@ function showCancelReasons(cancelReasons) {
     let modalBody = document.getElementById('cancelReasonViewBody');
     modalBody.innerHTML = ''; // 기존 내용 초기화
 
-    Body.innerHTML += '<div class="row">' + (index + 1) + '. ' + reasonString.slice(0, 11) + ' / ' + reasonString.slice(11, 20) + '<p class="spanDelayReason">' + reasonString.slice(21) + '</p></div>';
-        modalBody.innerHTML += '<div class="row">' + '사유 : ' + reasonsArray.slice(1,reasonsArray.length - 1)  +'</p></div>';
+    modalBody.innerHTML += '<div class="row">' + '사유 : ' + reasonsArray.slice(1,reasonsArray.length - 1)  +'</p></div>';
 
     // 결항사유 보기 모달 열기
     let cancelReasonViewModal = new bootstrap.Modal(document.getElementById('cancelReasonViewModal'), {});

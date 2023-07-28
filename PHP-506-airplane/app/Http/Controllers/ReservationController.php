@@ -735,27 +735,25 @@ class ReservationController extends Controller
             return redirect()->route('users.login');
         }
 
-        // v007 add 트랜잭션
-        DB::beginTransaction();
         try {
             // ---------------------------환불--------------------------
+        // v007 add 트랜잭션
+        DB::beginTransaction();
         // 생성된 토큰 가져옴
         $accessToken = getToken();
         // Log::debug('access Token', [$accessToken]);
         // Log::debug($req);
-
-            $response = Http::withHeaders([
-                'Content-Type' => 'application/json',
-                'Authorization' => $accessToken
-            ])->post("https://api.iamport.kr/payments/cancel", [
-                'merchant_uid' => $req->merchant_uid, // 주문번호
-                'amount' => $req->price, // 환불할 금액
-                'reason' => '고객 요청에 의한 환불', // 환불 사유
-            ]);
+        Http::withHeaders([
+             'Content-Type' => 'application/json',
+             'Authorization' => $accessToken
+         ])->post("https://api.iamport.kr/payments/cancel", [
+             'merchant_uid' => $req->merchant_uid, // 주문번호
+             'amount' => $req->price, // 환불할 금액
+             'reason' => '고객 요청에 의한 환불', // 환불 사유
+         ]);
             // Log::debug($response);
        
         // end ---------------------------환불--------------------------
-
             ReserveInfo::where('reserve_no', $req->reserve_no)->delete();
             TicketInfo::where('reserve_no', $req->reserve_no)->delete();
             Payment::where('merchant_uid', $req->merchant_uid)->delete();
