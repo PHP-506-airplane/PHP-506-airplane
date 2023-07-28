@@ -238,6 +238,9 @@ footer .sns_wrap .sns_list li {
     width: 100%;
     display: inline-block;
 }
+.uesrMile {
+    margin-top: 8px;
+}
 /* 반응형 */
 /* 화면 크기가 작을 때 아코디언 스타일 적용 */
 @media (max-width: 767px) {
