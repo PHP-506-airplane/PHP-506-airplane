@@ -311,7 +311,8 @@ class ReservationController extends Controller
         }
 
         $userMile->save();
-
+        session()->forget('mileage');
+        Session::put('mileage', $userMile->u_mile);
         return $tNo;
     }
 
