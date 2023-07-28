@@ -13,6 +13,7 @@
 
 .container {
     margin: 0 auto;
+    height: 15rem;
 }
 
 .infop {
@@ -81,6 +82,7 @@ hr {
 h1 {
     text-align: left;
     margin-left: 100px;
+    margin-top: 3rem;
 }
 
 input, .size {
@@ -105,6 +107,23 @@ input, .size {
     border: 2px solid #b3b3b3;
     font-weight: 700;
     transition: all .5s;
+}
+
+.paybtn {
+    text-align: center;
+}
+
+.paybtn>button {
+    width: 150px;
+    height: 80px;
+    border-radius: 20px;
+    font-size: 24px;
+}
+.container {
+    height: 100%;
+    margin: 0 auto;
+    margin-top: 50px;
+    margin-bottom: 20px;
 }
 
 @media(min-width:370px) and (max-width:767px) {
@@ -217,8 +236,5 @@ input, .size {
         font-size: 18px;
     }
 
-    .container {
-        margin: 0 auto;
-        height: 650px;
-    }
+    
 }

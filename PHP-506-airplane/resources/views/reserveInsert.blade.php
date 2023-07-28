@@ -59,37 +59,36 @@
         {{-- <button type="submit">결제하기</button> --}}
         <input type="hidden" id="use_mile" name="use_mile">
     </form>
-    </div>
-</div>
-
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="price1(); this.onclick=''">
-        결제하기
-    </button>
-
-<!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">마일리지 사용</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <span>현재 마일리지 : </span><input type="text" id="milenow" value="{{session('mileage')}}" readonly>
-                <br>
-                <br>
-                사용 마일리지 : <input type="text" id="mileageInput">
-                <button type="button" class="btn btn-outline-primary" id="milebtn" onclick="mileageUse()">사용</button>
-                <br>
-                <br>
-                <hr>
-                <br>
-                <span> 최종 결제 금액 : <span id="totalPrice"></span>원</span>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-                <button type="button" class="btn btn-primary" onclick="submitReq();">결제</button>
-            </div>
+        <div class="paybtn">
+            <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="price1(); this.onclick=''">
+                결제하기
+            </button>
+        </div>
+    <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">마일리지 사용</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <span>현재 마일리지 : </span><input type="text" id="milenow" value="{{session('mileage')}}" readonly>
+                    <br>
+                    <br>
+                    사용 마일리지 : <input type="text" id="mileageInput">
+                    <button type="button" class="btn btn-outline-primary" id="milebtn" onclick="mileageUse()">사용</button>
+                    <br>
+                    <br>
+                    <hr>
+                    <br>
+                    <span> 최종 결제 금액 : <span id="totalPrice"></span>원</span>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                    <button type="button" class="btn btn-light" onclick="submitReq();">결제</button>
+                </div>
+                </div>
             </div>
         </div>
     </div>
