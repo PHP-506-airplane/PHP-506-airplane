@@ -742,18 +742,13 @@ class ReservationController extends Controller
         // 생성된 토큰 가져옴
         $accessToken = getToken();
         // Log::debug('access Token', [$accessToken]);
-        // 환불하려는 결제 정보를 아임포트의 payment_id를 기준으로 데이터베이스에서 조회합니다.
 
-        // Log::alert($paymentInfo);
-        // $userName = auth()->user()->u_name;
-
-        // 결제 정보가 없거나 이미 환불된 경우 등 예외 상황을 처리합니다.
-        // if (!$req->merchant_uid || $paymentInfo->refunded) {
-        //     // 환불할 수 없는 경우에 대한 처리를 여기에 추가합니다.
-        //     return response()->json(['message' => '환불할 수 없는 결제 정보입니다.'], 400);
-        // }
-        Log::debug($req);
-        // try{
+        // 결제 정보가 없거나 예외 상황을 처리합니다.
+        if (!$req->merchant_uid) {
+            // 환불할 수 없는 경우에 대한 처리를 여기에 추가합니다.
+            return response()->json(['message' => '환불할 수 없는 결제 정보입니다.'], 400);
+        }
+        // Log::debug($req);
             $response = Http::withHeaders([
                 'Content-Type' => 'application/json',
                 'Authorization' => $accessToken
@@ -765,22 +760,16 @@ class ReservationController extends Controller
             // Log::debug($response);
             // 아임포트 API로 환불 요청을 보냅니다.
             // 아임포트 API의 응답을 확인하고, 환불 결과에 따라 처리합니다.
-            // if ($response->successful()) {
-            //     // 환불 성공
-            //     // 환불 정보를 데이터베이스에 저장하거나 환불 처리를 기록하는 등의 작업을 수행합니다.
-            //     // 예를 들어, $paymentInfo->update(['refunded' => true]) 등의 코드를 추가할 수 있습니다.
-            //     return response()->json(['message' => '환불이 성공적으로 완료되었습니다.']);
-            // } else {
-            //     // 환불 실패
-            //     // 환불 실패에 대한 처리를 여기에 추가합니다.
-            //     $errorMessage = $response['message'] ?? '환불에 실패하였습니다.';
-            //     return response()->json(['message' => $errorMessage], $response->status());
-            // }
-            
-        // }catch (Exception $e){
-        //     Log::error($e);
-        //     return response()->json(['message' => '환불에 실패하였습니다.'], 500);
-        // }
+            if ($response->successful()) {
+                // 환불 성공
+                // 환불 정보를 데이터베이스에 저장하거나 환불 처리를 기록하는 등의 작업을 수행합니다.
+                return response()->json(['message' => '환불이 성공적으로 완료되었습니다.']);
+            } else {
+                // 환불 실패
+                // 환불 실패에 대한 처리를 여기에 추가합니다.
+                $errorMessage = $response['message'] ?? '환불에 실패하였습니다.';
+                return response()->json(['message' => $errorMessage], $response->status());
+            }
         // end ---------------------------환불--------------------------
 
             ReserveInfo::where('reserve_no', $req->reserve_no)->delete();
