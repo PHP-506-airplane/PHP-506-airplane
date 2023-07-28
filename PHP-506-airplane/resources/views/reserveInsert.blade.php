@@ -23,14 +23,14 @@
             @for($i = 0; $i < $allCnt; $i++)
                 <div class="divInput">
                     <div class="title1">이름</div>
-                    <input type="text" name="name[]" id="name">
+                    <input type="text" name="name[]" id="name" required>
                     <div class="title1">성별</div>
                     <select name="gender[]" id="">
                         <option value="0">남</option>
                         <option value="1">여</option>
                     </select>
                     <div class="title1">생일</div>
-                    <input type="date" name="birth[]">
+                    <input type="date" name="birth[]" required>
                     <div class="title1">가는편 좌석</div>
                     <input type="text" name="seatGo[]" class="seat_no" value="{{ $seat_no_go[$i] }}" readonly>
                     <div class="title1">오는편 좌석</div>
