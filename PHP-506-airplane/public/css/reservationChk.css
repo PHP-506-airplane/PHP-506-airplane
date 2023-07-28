@@ -124,6 +124,7 @@ table tbody tr td{
     justify-content: flex-end;
     width: 100%;
     text-align: right;
+    z-index: 99;
     right: 100px;
     bottom: 50px;
 }

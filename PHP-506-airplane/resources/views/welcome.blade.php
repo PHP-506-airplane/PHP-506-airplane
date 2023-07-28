@@ -220,7 +220,7 @@
                     <img src="{{asset('img/mileage-icon.png')}}" alt="">
                     <p><strong>마일리지 안내</strong></p>
                 </div>
-                <div class="box box3">
+                <div class="box box3" onclick="location.href='{{ route('reservation.myreservation') }}'">
                     <img src="{{asset('img/user-icon.png')}}" alt="">
                     <p><strong>마이페이지</strong></p>
                 </div>

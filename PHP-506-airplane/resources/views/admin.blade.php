@@ -118,7 +118,8 @@
                         </div>
                         <div class="col">
                             @if($item->deleted_at)
-                                <span class="colorRed">{{ $item->del_reason }}</span>
+                                {{-- <span class="colorRed">{{ $item->del_reason }}</span> --}}
+                                <button type="button" class="btn btn-outline-danger btn-sm" onclick="showCancelReasons('{{ $item->del_reason }}')">결항사유</button>
                             @else
                                 <button 
                                     type="button" 
@@ -360,6 +361,24 @@
         </div>
     </div>
     {{-- /모달 창: 지연사유 보기 --}}
+    {{-- 모달 창: 결항사유 보기 --}}
+    <div class="modal fade" id="cancelReasonViewModal" tabindex="-1" aria-labelledby="cancelReasonViewModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="cancelReasonViewModalLabel">항공편 결항사유</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="cancelReasonViewBody">
+                    
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{-- /모달 창: 결항사유 보기 --}}
 @endsection
 
 @section('js')
