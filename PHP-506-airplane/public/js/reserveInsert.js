@@ -42,7 +42,7 @@ async function price1() {
     });
 
     price += getGo + getCome;
-    allPrice.innerHTML = price;
+    allPrice.innerHTML = price.toLocaleString("ko-KR");
 }
 
 //마일리지 사용

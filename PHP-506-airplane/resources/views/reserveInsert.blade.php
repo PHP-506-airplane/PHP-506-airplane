@@ -79,7 +79,7 @@
                 <br>
                 <br>
                 사용 마일리지 : <input type="text" id="mileageInput">
-                <button type="button" id="milebtn" onclick="mileageUse()">사용</button>
+                <button type="button" class="btn btn-outline-primary" id="milebtn" onclick="mileageUse()">사용</button>
                 <br>
                 <br>
                 <hr>
