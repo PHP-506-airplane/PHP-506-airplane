@@ -190,11 +190,12 @@ ol {
 }
 .s_li{
     margin: 20px 0;
+    width: 210px;
 }
 .s_li input{
     background-color: transparent;
     text-align: center;
-    width: 10rem;
+    width: 7rem;
     font-size: 48px;
     color: #661e43;
     border: none;
@@ -308,9 +309,14 @@ ol {
 }
 
 @media(min-width:370px) and (max-width:767px) {
+    *{
+        margin: 0;
+        padding: 0;
+    }
+
     .s_li input {
     background-color: transparent;
-    width: 10rem;
+    width: 7rem;
     font-size: 30px;
     color: #661e43;
     border: none;
@@ -323,13 +329,18 @@ ol {
 }
 
 @media(min-width: 768px) and (max-width:1023px) {
+    *{
+        margin: 0;
+        padding: 0;
+    }
+    
     .title {
         font-size: 30px;
     }
 
     .s_li input {
         background-color: transparent;
-        width: 10rem;
+        width: 7rem;
         font-size: 20px;
         color: #661e43;
         border: none;
