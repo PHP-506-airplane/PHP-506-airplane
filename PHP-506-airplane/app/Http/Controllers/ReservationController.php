@@ -20,7 +20,6 @@ use App\Models\NoticeInfo;
 use App\Models\AirportInfo;
 use App\Models\FlightInfo;
 use App\Models\Mileage;
-use App\Models\MileHistory;
 use App\Models\Payment;
 use App\Models\ReserveInfo;
 use App\Models\SeatInfo;
@@ -743,13 +742,8 @@ class ReservationController extends Controller
         // 생성된 토큰 가져옴
         $accessToken = getToken();
         // Log::debug('access Token', [$accessToken]);
-
-        // 결제 정보가 없거나 예외 상황을 처리합니다.
-        if (!$req->merchant_uid) {
-            // 환불할 수 없는 경우에 대한 처리를 여기에 추가합니다.
-            return response()->json(['message' => '환불할 수 없는 결제 정보입니다.'], 400);
-        }
         // Log::debug($req);
+
             $response = Http::withHeaders([
                 'Content-Type' => 'application/json',
                 'Authorization' => $accessToken
@@ -759,18 +753,7 @@ class ReservationController extends Controller
                 'reason' => '고객 요청에 의한 환불', // 환불 사유
             ]);
             // Log::debug($response);
-            // 아임포트 API로 환불 요청을 보냅니다.
-            // 아임포트 API의 응답을 확인하고, 환불 결과에 따라 처리합니다.
-            if ($response->successful()) {
-                // 환불 성공
-                // 환불 정보를 데이터베이스에 저장하거나 환불 처리를 기록하는 등의 작업을 수행합니다.
-                return response()->json(['message' => '환불이 성공적으로 완료되었습니다.']);
-            } else {
-                // 환불 실패
-                // 환불 실패에 대한 처리를 여기에 추가합니다.
-                $errorMessage = $response['message'] ?? '환불에 실패하였습니다.';
-                return response()->json(['message' => $errorMessage], $response->status());
-            }
+       
         // end ---------------------------환불--------------------------
 
             ReserveInfo::where('reserve_no', $req->reserve_no)->delete();
@@ -783,9 +766,6 @@ class ReservationController extends Controller
             return redirect()->route('reservation.main')->with('alert', '예약 취소중 오류가 발생했습니다.');
         }
 
-        // ReserveInfo::destroy($req->reserve_no);
-        // TicketInfo::destroy($req->t_no);
-        // TicketInfo::where('t_no', $req->t_no)->delete();
 
         return redirect()->route('reservation.myreservation')->with('alert', '취소가 완료되었습니다.');
     }
@@ -822,9 +802,7 @@ class ReservationController extends Controller
 
             // 이메일 보내기 위한 유저 정보 저장
             $userinfo = Userinfo::where('u_email', Auth::user()->u_email)->first();
-            $priceAll = 0;
-
-
+            
             for ($i = 0; $i < count($req->name); $i++) {
                 // 가는편 예약
                 $depResData = new ReserveInfo([
@@ -857,7 +835,6 @@ class ReservationController extends Controller
                 ]);
 
                 $depPayData->save();
-                $priceAll += $depPriceInt;
                 $this->resetCache($req->fly_no, $req->seatGo[$i]);
                 // 오는편 예약
                 // 왕복일때 저장
@@ -872,7 +849,7 @@ class ReservationController extends Controller
                     ,'p_birth' => $req->birth[$i]
                 ]);
                 $arrResData->save();
-               
+    
                 $arrPrice = FlightInfo::select('price')->where('fly_no', $req->fly_no2)->first();
                 $arrPriceInt = intval($arrPrice->price);
 
@@ -883,7 +860,7 @@ class ReservationController extends Controller
                     ,'t_price'   => $arrPriceInt
                 ]);
                 $arrTicData->save();
-                $priceAll += $arrPriceInt;
+
                 $arrPayData = new Payment([
                     'u_no'          => Auth::user()->u_no
                     ,'price'        => $arrPriceInt
@@ -901,29 +878,6 @@ class ReservationController extends Controller
                 Mail::to(Auth::user()->u_email)->queue(new SendReserve($userinfo, $getDep));
             }
 
-
-            $mileage = $priceAll * 0.05;
-            $userMile = Mileage::where('u_no', Auth::user()->u_no)->first();
-            
-
-            if ($userMile) {
-                $userMile->u_mile += $mileage;
-
-                $milehis = new MileHistory([
-                    'u_no' => Auth::user()->u_no
-                    ,'mile_his' => $req->use_mile
-                ]);
-                $milehis->save();
-            } else {
-                $userMile = new Mileage([
-                    'u_no' => Auth::user()->u_no
-                    ,'u_mile' => $mileage
-                ]);
-                
-                $userMile->save();
-            }
-
-            
 
             DB::commit();
             return redirect()->route('reservation.myreservation')->with('alert', '예약이 완료되었습니다.');

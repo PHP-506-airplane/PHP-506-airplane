@@ -93,7 +93,7 @@ async function submitReq() {
         // console.log(arrCaching[i].data);
         if (arrCaching[i].data.success) {
             let price1 = await getPrice(flyNo.value);
-            let seatLevel = seats2[i].substr(0,1);
+            let seatLevel = seats[i].substr(0,1);
             price += price1;
             seatSuc.push([flyNo.value, seats[i]]);
             if(seatLevel == 'A') {
