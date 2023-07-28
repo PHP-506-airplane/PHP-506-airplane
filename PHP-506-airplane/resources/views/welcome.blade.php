@@ -216,7 +216,7 @@
                     <img src="{{asset('img/reserve-icon.png')}}" alt="">
                     <p><strong>예약 조회</strong></p>
                 </div>
-                <div class="box box2">
+                <div class="box box2" onclick="location.href='{{ route('notice.mileage') }}'">
                     <img src="{{asset('img/mileage-icon.png')}}" alt="">
                     <p><strong>마일리지 안내</strong></p>
                 </div>
