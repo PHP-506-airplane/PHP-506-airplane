@@ -1,4 +1,5 @@
 // 가격 가져오는 api
+// 항공편 pk넣어서 가격 가져옴
 async function getPrice(pk) {
     try {
         // const res = await axios.post('/api/pay/price', { pk: pk });
@@ -11,8 +12,56 @@ async function getPrice(pk) {
     }
 }
 
-const insertForm = document.getElementById('insertForm');
+//가격 출력
+//todo : 편도
+const getGoFly = document.getElementById('fly_no').value;
+const getComeFly = document.getElementById('fly_no2').value;
+const allPrice = document.getElementById('totalPrice');
+let price = 0;
 
+async function price1() {
+    let getGo = await getPrice(getGoFly);
+    let getCome = await getPrice(getComeFly);
+    let seatGo = document.querySelectorAll('.seat_no');
+    let seatCome = document.querySelectorAll('.seat_no2');
+    
+    seatGo.forEach(element => {
+        if(element.value.substr(0,1) == 'A') {
+            price += 100000;
+        } else if (element.value.substr(0,1) == 'B' || element.value.substr(0,1) == 'C') {
+            price += 50000;
+        }
+    });
+
+    seatCome.forEach(element => {
+        if(element.value.substr(0,1) == 'A') {
+            price += 100000;
+        } else if (element.value.substr(0,1) == 'B' || element.value.substr(0,1) == 'C') {
+            price += 50000;
+        }
+    });
+
+    price += getGo + getCome;
+    allPrice.innerHTML = price.toLocaleString("ko-KR");
+}
+
+//마일리지 사용
+const mileageInput = document.getElementById('mileageInput');
+const mileBtn = document.getElementById('milebtn');
+const mileNow = document.getElementById('milenow');
+
+function mileageUse() {
+    let usemile = mileageInput.value;
+
+    mileNow.value -= usemile;
+    allPrice.innerHTML = price-usemile;
+    // console.log(mileNow.value - usemile);
+}
+
+
+
+const insertForm = document.getElementById('insertForm');
+const useMile = document.getElementById('use_mile');
 
 // 항공편 pk, 좌석 이름을 보내서 캐시가 있는지 확인
 // reservationController의 caching으로 넘어감
@@ -52,6 +101,7 @@ async function submitReq() {
             } else if (seatLevel == 'B' || seatLevel == 'C') {
                 price += 50000;
             }
+            price -= mileageInput.value;
             // let price = (price1 + price2) * allCnt.value;
             // let cachedData=[];
     
@@ -116,7 +166,7 @@ if(flg.value =='1'){
         removeLoading();
         alert('이미 진행중인 예약입니다.'+seatFail);
     } else {
-
+        useMile.value = mileageInput.value;
         requestPay(price, seatSuc);
     }
 
@@ -252,6 +302,52 @@ async function clearResCache(cachedData) {
             console.log(error);
         }
     });
+}
+
+//유효성 검사
+const chkNameMsg = document.getElementById('chk_name_msg');
+
+function chkName() {
+    const p1 = document.getElementById('name');
+    const p2 = /^[가-힣]{2,30}$/u;
+
+    if(p2.test(p1.value)===false) {
+        chkNameMsg.style.color = 'red'
+        chkNameMsg.style.fontSize = '12px';
+        chkNameMsg.innerHTML = '❕한글 2~30글자 사이로 입력해주세요.'
+    }
+    else {
+        chkNameMsg.style.color = 'green';
+        chkNameMsg.style.fontSize = '12px';
+        chkNameMsg.innerHTML = '✔️';
+    }
+}
+
+//마일리지 사용
+let totalPrice = document.getElementById('totalPrice');
+
+// totalPrice.innerHTML = 
+
+function useMileage() {
+
+    // 입력한 사용 마일리지 가져오기
+    let usedMileage = parseInt(document.getElementById('mileageInput').value);
+
+    if (isNaN(usedMileage)) {
+        alert('유효한 숫자를 입력하세요.');
+        return;
+    }
+
+    // 현재 마일리지에서 사용 마일리지 차감
+    if (usedMileage <= currentMileage) {
+        currentMileage -= usedMileage;
+    } else {
+        alert('보유한 마일리지보다 더 많은 마일리지를 사용할 수 없습니다.');
+        return;
+    }
+
+    // 업데이트된 마일리지 출력
+    document.getElementById('chk_use').innerText = '현재 마일리지 : ' + currentMileage;
 }
 
 

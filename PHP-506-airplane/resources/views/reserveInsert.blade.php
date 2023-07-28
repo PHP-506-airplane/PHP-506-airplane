@@ -23,7 +23,7 @@
             @for($i = 0; $i < $allCnt; $i++)
                 <div class="divInput">
                     <div class="title1">이름</div>
-                    <input type="text" name="name[]">
+                    <input type="text" name="name[]" id="name">
                     <div class="title1">성별</div>
                     <select name="gender[]" id="">
                         <option value="0">남</option>
@@ -35,58 +35,60 @@
                     <input type="text" name="seatGo[]" class="seat_no" value="{{ $seat_no_go[$i] }}" readonly>
                     <div class="title1">오는편 좌석</div>
                     <input type="text" name="seatReturn[]" class="seat_no2" value="{{ $seat_no_return[$i] }}" readonly>
-                </div>
+    </div>
             @endfor
         @else {{-- 편도 --}}
             @for($i = 0; $i < $allCnt; $i++)
                 <div class="divInput">
-                    <div>이름</div>
-                    <input type="text" name="name[]">
-                    <div>성별</div>
+                    <div class="title1">이름</div>
+                    <input type="text" name="name[]" id="name">
+                    <div class="title1">성별</div>
                     <select name="gender[]" id="">
                         <option value="0">남</option>
                         <option value="1">여</option>
                     </select>
-                    <div>생일</div>
+                    <div class="title1">생일</div>
                     <input type="date" name="birth[]">
                     <div>가는편 좌석</div>
                     <input type="text" name="seatGo[]" class="seat_no" value="{{ $seat_no_go[$i] }}" readonly>
             @endfor
         @endif
-        {{-- <div class="btnArea">
-        <button type="button" class="submitbtn" onclick="submitReq();">결제하기</button>
-        
-        </div> --}}
+        <div class="btnArea">
+            {{-- <button type="button" class="submitbtn" onclick="submitReq();">결제하기</button> --}}
+        </div>
         {{-- <button type="submit">결제하기</button> --}}
+        <input type="hidden" id="use_mile" name="use_mile">
     </form>
-
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-        결제하기
-    </button>
-
-<!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">마일리지 사용</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                현재 마일리지 : {{session('mileage')}}
-                <br>
-                <br>
-                사용 마일리지 : <input type="text">
-                <br>
-                <br>
-                <hr>
-                <br>
-                총 결제 금액 : 
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-                <button type="button" class="btn btn-primary" onclick="submitReq();">결제</button>
-            </div>
+        <div class="paybtn">
+            <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="price1(); this.onclick=''">
+                결제하기
+            </button>
+        </div>
+    <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">마일리지 사용</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <span>현재 마일리지 : </span><input type="text" id="milenow" value="{{session('mileage')}}" readonly>
+                    <br>
+                    <br>
+                    사용 마일리지 : <input type="text" id="mileageInput">
+                    <button type="button" class="btn btn-outline-primary" id="milebtn" onclick="mileageUse()">사용</button>
+                    <br>
+                    <br>
+                    <hr>
+                    <br>
+                    <span> 최종 결제 금액 : <span id="totalPrice"></span>원</span>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                    <button type="button" class="btn btn-light" onclick="submitReq();">결제</button>
+                </div>
+                </div>
             </div>
         </div>
     </div>

@@ -22,17 +22,17 @@ function throttle(btn, form) {
 }
 
 // 로딩이미지
-const Divloading = document.getElementById('Divloading');
+const divLoading = document.getElementById('divLoading');
 const svg = document.getElementById('svgImg');
 const loadingImg = document.getElementsByClassName('svg-calLoader');
 
 function showLoading() {
-    Divloading.classList.add('svgHidden');
+    divLoading.classList.add('svgHidden');
     svg.style.display = 'block';
 }
 
 function removeLoading() {
-    Divloading.classList.remove('svgHidden');
+    divLoading.classList.remove('svgHidden');
     svg.style.display = 'none';
 }
 // 푸터 반응형

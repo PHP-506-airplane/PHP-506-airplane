@@ -71,9 +71,9 @@ const input = document.getElementById('price');
 input.addEventListener('keydown', function(e) {
     let value = e.target.value;
     value = Number(value.replaceAll(',', ''));
-    if(isNaN(value)) {
+    if (isNaN(value)) {
         input.value = 0;
-    }else {
+    } else {
         const formatValue = value.toLocaleString('ko-KR');
         input.value = formatValue;
     }
