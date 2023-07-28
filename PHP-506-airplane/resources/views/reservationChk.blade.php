@@ -176,7 +176,7 @@
         @endif
         <div class="total_price">
         </div>
-        <div class="btnArea">
+        <div class="btnArea"> 
             {{-- <div class="price">
                 <a href="#"></a>
                 <p><span class="tit">총금액(KRW)</span><strong class="sum_price">0</strong></p>
