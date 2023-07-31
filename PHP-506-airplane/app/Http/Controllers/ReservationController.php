@@ -815,7 +815,7 @@ class ReservationController extends Controller
 
             // 이메일 보내기 위한 유저 정보 저장
             $userinfo = Userinfo::where('u_email', Auth::user()->u_email)->first();
-            
+            $priceAll = 0;
             for ($i = 0; $i < count($req->name); $i++) {
                 // 가는편 예약
                 $depResData = new ReserveInfo([
@@ -846,6 +846,8 @@ class ReservationController extends Controller
                     ,'reserve_no'   => $depResData->reserve_no
                     ,'merchant_uid' => $req->merchant_uid
                 ]);
+
+                $priceAll += $depPriceInt;
 
                 $depPayData->save();
                 $this->resetCache($req->fly_no, $req->seatGo[$i]);
@@ -882,6 +884,7 @@ class ReservationController extends Controller
                 ]);
                 
                 $arrPayData->save();
+                $priceAll += $arrPriceInt;
                 $this->resetCache($req->fly_no2, $req->seatReturn[$i]);
                 $getArr = $this->getReserveData($arrResData->reserve_no);
                 Mail::to(Auth::user()->u_email)->queue(new SendReserve($userinfo, $getArr));
@@ -891,6 +894,21 @@ class ReservationController extends Controller
                 Mail::to(Auth::user()->u_email)->queue(new SendReserve($userinfo, $getDep));
             }
 
+            $mileage = $priceAll * 0.05;
+            $userMile = Mileage::where('u_no', $userinfo)->first();
+    
+            if ($userMile) {
+                $userMile->u_mile += $mileage;
+            } else {
+                $userMile = new Mileage([
+                    'u_no' => $userinfo
+                    ,'u_mile' => $mileage
+                ]);
+            }
+    
+            $userMile->save();
+            session()->forget('mileage');
+            Session::put('mileage', $userMile->u_mile);
 
             DB::commit();
             return redirect()->route('reservation.myreservation')->with('alert', '예약이 완료되었습니다.');
