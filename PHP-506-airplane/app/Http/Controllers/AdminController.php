@@ -46,11 +46,10 @@ class AdminController extends Controller
     public function __construct() {
         // 미들웨어로 관리자권한 체크
         $this->middleware(AdminPageMiddleware::class);
-        $this->today = Carbon::now()->toDateString();
-        $this->airLine = AirLineInfo::get();
-        $this->airPlanes = AirplaneInfo::join('airline_info AS airl', 'airplane_info.line_no', 'airl.line_no')
-            ->get();
-        $this->port = AirportInfo::get();
+        $this->today        = Carbon::now()->toDateString();
+        $this->airLine      = AirLineInfo::get();
+        $this->airPlanes    = AirplaneInfo::join('airline_info AS airl', 'airplane_info.line_no', 'airl.line_no')->get();
+        $this->port         = AirportInfo::get();
     }
 
     // ---------------------------------
@@ -98,12 +97,12 @@ class AdminController extends Controller
     public function search(Request $req) {
         // Log::debug($req);
         try {
-            $dateStart = $req->dateStart;
-            $dateEnd = $req->dateEnd;
-            $airline = $req->airline;
-            $depPort = $req->depPort;
-            $arrPort = $req->arrPort;
-            $state = $req->state;
+            $dateStart  = $req->dateStart;
+            $dateEnd    = $req->dateEnd;
+            $airline    = $req->airline;
+            $depPort    = $req->depPort;
+            $arrPort    = $req->arrPort;
+            $state      = $req->state;
     
             // 조건에 맞는 운항 정보 검색
             $data = FlightInfo::leftJoin('reserve_info AS res', 'flight_info.fly_no', 'res.fly_no')
@@ -233,11 +232,11 @@ class AdminController extends Controller
             // 환불처리 및 DB삭제처리
             foreach ($payList as $val) {
                 $result = Http::withHeaders([
-                    'Content-Type' => 'application/json',
+                    'Content-Type'  => 'application/json',
                     'Authorization' => $accessToken
                 ])->post("https://api.iamport.kr/payments/cancel", [
-                    'merchant_uid' => $val->merchant_uid
-                    ,'reason' => '항공사 취소로 인한 환불'
+                    'merchant_uid'  => $val->merchant_uid
+                    ,'reason'       => '결항으로 인한 환불'
                 ]);
 
                 Log::debug('pay foreach : ', [$result]);
@@ -259,8 +258,8 @@ class AdminController extends Controller
             DB::commit();
             return response()
                 ->json([
-                    'success' => true
-                    ,'message' => '결항처리 되었습니다.'
+                    'success'   => true
+                    ,'message'  => '결항처리 되었습니다.'
                 ]);
         } catch (Exception $e) {
             DB::rollBack();
@@ -268,8 +267,8 @@ class AdminController extends Controller
 
             return response()
                 ->json([
-                    'success' => false
-                    ,'message' => '서버 에러'
+                    'success'   => false
+                    ,'message'  => '서버 에러'
                 ]);
         }
     }
@@ -336,19 +335,21 @@ class AdminController extends Controller
 
             // 기존에 저장된 JSON 데이터를 가져오거나, null이라면 빈 배열로 초기화
             $delayData = json_decode($flight->delay_reasons) ?? [];
+
             // 오늘날짜를 가져와서 문자열로 변환
             $today = strval(Carbon::now());
             // Log::debug($delayData);
-        
+
             // 새로운 지연 정보 추가
             $delayData[] = [
                 $today => $req->delayReason
             ];
-        
+
             $flight->update([
                 'delay_reasons' => $delayData
-                ,'dep_time' => $req->depHour . $req->depMin
-                ,'arr_time' => $req->arrHour . $req->arrMin
+                ,'fly_date'     => $req->flyDate
+                ,'dep_time'     => $req->depHour . $req->depMin
+                ,'arr_time'     => $req->arrHour . $req->arrMin
             ]);
 
             // 메일발송을 위해 select
@@ -377,14 +378,14 @@ class AdminController extends Controller
             // 지연 알림 메일발송(큐에 작업 추가)
             foreach ($userList as $user) {
                 $userDataArray = [
-                    'u_name' => $user->u_name,
-                    'u_email' => $user->u_email,
-                    'line_name' => $user->line_name,
-                    'dep_time' => $user->dep_time,
-                    'arr_time' => $user->arr_time,
-                    'fly_date' => $user->fly_date,
-                    'dep_port_name' => $user->dep_port_name,
-                    'arr_port_name' => $user->arr_port_name,
+                    'u_name'         => $user->u_name
+                    ,'u_email'       => $user->u_email
+                    ,'line_name'     => $user->line_name
+                    ,'dep_time'      => $user->dep_time
+                    ,'arr_time'      => $user->arr_time
+                    ,'fly_date'      => $user->fly_date
+                    ,'dep_port_name' => $user->dep_port_name
+                    ,'arr_port_name' => $user->arr_port_name
                 ];
                 Mail::to($user->u_email)->queue(new SendEmailDelay($userDataArray, $req->delayReason));
             }

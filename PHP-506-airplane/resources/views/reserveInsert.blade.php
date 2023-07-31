@@ -37,6 +37,21 @@
                     <input type="text" name="seatReturn[]" class="seat_no2" value="{{ $seat_no_return[$i] }}" readonly>
     </div>
             @endfor
+            @for($i = 0; $i < $babyCnt; $i++)
+                <div class="divInput">
+                    <div class="title1">이름</div>
+                    <input type="text" name="name[]" id="name" required placeholder="유아">
+                    <div class="title1">성별</div>
+                    <select name="gender[]" id="">
+                        <option value="0">남</option>
+                        <option value="1">여</option>
+                    </select>
+                    <div class="title1">생일</div>
+                    <input type="date" name="birth[]" required>
+                    <input type="hidden" name="seatGo[]" class="seat_no" value="baby" readonly>
+                    <input type="hidden" name="seatReturn[]" class="seat_no2" value="baby" readonly>
+                </div>
+            @endfor
         @else {{-- 편도 --}}
             @for($i = 0; $i < $allCnt; $i++)
                 <div class="divInput">
@@ -51,6 +66,20 @@
                     <input type="date" name="birth[]">
                     <div>가는편 좌석</div>
                     <input type="text" name="seatGo[]" class="seat_no" value="{{ $seat_no_go[$i] }}" readonly>
+            @endfor
+            @for($i = 0; $i < $babyCnt; $i++)
+                <div class="divInput">
+                    <div class="title1">이름</div>
+                    <input type="text" name="name[]" id="name" required placeholder="유아">
+                    <div class="title1">성별</div>
+                    <select name="gender[]" id="">
+                        <option value="0">남</option>
+                        <option value="1">여</option>
+                    </select>
+                    <div class="title1">생일</div>
+                    <input type="date" name="birth[]" required>
+                    <input type="hidden" name="seatGo[]" class="seat_no" value="baby" readonly>
+                </div>
             @endfor
         @endif
         <div class="btnArea">

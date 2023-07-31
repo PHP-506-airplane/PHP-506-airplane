@@ -164,7 +164,7 @@ if(flg.value =='1'){
 
     if (seatFail.length > 0 ) {
         removeLoading();
-        alert('이미 진행중인 예약입니다.'+seatFail);
+        alert('이미 진행중인 예약입니다.\n' + seatFail);
     } else {
         useMile.value = mileageInput.value;
         requestPay(price, seatSuc);
@@ -288,11 +288,11 @@ if(flg.value =='1'){
 async function clearResCache(cachedData) {
     cachedData.forEach(async (data) => {
         // console.log('캐시클리어데이터'+data);
-        data.forEach(
-            function(aa) {
-                console.log('클리어데이터 : ' + aa);
-            }
-        );
+        // data.forEach(
+        //     function(aa) {
+        //         console.log('클리어데이터 : ' + aa);
+        //     }
+        // );
         try {
             await axios.post('/api/reservations/clearCache', {
                 fly_no: data[0],

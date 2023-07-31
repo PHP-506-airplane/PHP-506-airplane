@@ -93,7 +93,7 @@ const editFlightId          = document.getElementById('editFlightId');
 
 // 지연 버튼 클릭 시 모달에 데이터를 설정
 function setEditModalData(date, name, airline, depPort, arrPort, depTime, arrTime, seatCount, flightId) {
-    editModalDate.textContent       = date;
+    editModalDate.value             = date;
     editModalFlightNum.textContent  = name;
     editModalAirline.textContent    = airline;
     editModalDepPort.textContent    = depPort;
@@ -127,12 +127,12 @@ function showDelayReasons(delayReasons) {
 }
 
 // 결항사유 모달
-function showCancelReasons(cancelReasons) {
+function showCancelReasons(cancelReasons, delDate) {
     let reasonsArray = JSON.stringify(cancelReasons);
     let modalBody = document.getElementById('cancelReasonViewBody');
     modalBody.innerHTML = ''; // 기존 내용 초기화
 
-    modalBody.innerHTML += '<div class="row">' + '사유 : ' + reasonsArray.slice(1,reasonsArray.length - 1)  +'</p></div>';
+    modalBody.innerHTML += '<div class="row">' + delDate + ' : ' + reasonsArray.slice(1,reasonsArray.length - 1)  +'</p></div>';
 
     // 결항사유 보기 모달 열기
     let cancelReasonViewModal = new bootstrap.Modal(document.getElementById('cancelReasonViewModal'), {});

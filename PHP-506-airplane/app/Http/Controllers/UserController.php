@@ -87,6 +87,11 @@ class UserController extends Controller
             // }
             // /cookie ver. --------------------------------------------------
 
+            // 관리자 계정일경우 관리자 페이지로 리다이렉트
+            if ($user->admin_flg === '1') {
+                return redirect()->intended(route('admin.index'));
+            }
+
             return redirect()->intended(route('reservation.main'));
         } else {
             $errors = '인증작업 에러';

@@ -94,7 +94,7 @@
                         </div>
                         <div class="col">
                             @if($item->deleted_at)
-                                <span class="colorRed">결항</span>
+                                <span>-</span>
                             @else
                             <button 
                                 type="button" 
@@ -119,7 +119,7 @@
                         <div class="col">
                             @if($item->deleted_at)
                                 {{-- <span class="colorRed">{{ $item->del_reason }}</span> --}}
-                                <button type="button" class="btn btn-outline-danger btn-sm" onclick="showCancelReasons('{{ $item->del_reason }}')">결항사유</button>
+                                <button type="button" class="btn btn-outline-danger btn-sm" onclick="showCancelReasons('{{ $item->del_reason }}', '{{ $item->deleted_at }}')">결항사유</button>
                             @else
                                 <button 
                                     type="button" 
@@ -299,7 +299,8 @@
                     <div class="modal-body">
                         <div class="row">
                             <div class="col col-3">날짜</div>
-                            <div class="col col-6"><span id="delayItemDate"></span></div>
+                            {{-- <div class="col col-6"><span id="delayItemDate"></span></div> --}}
+                            <div class="col col-6"><input type="date" name="flyDate" id="delayItemDate"></input></div>
                         </div>
                         <div class="row">
                             <div class="col col-3">편명</div>

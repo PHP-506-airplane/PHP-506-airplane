@@ -457,8 +457,18 @@ class ReservationController extends Controller
         // 왕복/편도 플래그
         $flg = $req->only('hd_li_flg');
 
-        $adultCount = intval($req->ADULT);
-        $childCount = intval($req->CHILD);
+        if (!$req->ADULT) {
+            $_POST['ADULT'] = 1;
+            $_POST['CHILD'] = 0;
+            $_POST['BABY'] = 0;
+            $adultCount = 1;
+            $childCount = 0;
+            $babyCount = 0;
+        } else {
+            $adultCount = intval($req->ADULT);
+            $childCount = intval($req->CHILD);
+            $babyCount  = intval($req->BABY);
+        }
 
         // 사용자가 입력한 인원에 따라 각 인원들의 이름을 담을 배열을 생성
         $names = [];
@@ -506,7 +516,7 @@ class ReservationController extends Controller
                 return redirect()->back()->with('alert', '오는편 여정을 선택해주세요.');
             }
 
-            return view('reservationSeat', compact('req', 'data2', 'seat', 'availableSeats', 'availableSeats2', 'flg', 'depPort', 'arrPort','peoNum','pass_name'));
+            return view('reservationSeat', compact('req', 'data2', 'seat', 'availableSeats', 'availableSeats2', 'flg', 'depPort', 'arrPort','peoNum','pass_name', 'babyCount'));
         } else {
             // 편도
             Log::debug('checkpost oneway : ', $req->all());
@@ -521,7 +531,7 @@ class ReservationController extends Controller
             $seat = SeatInfo::select('seat_no')->limit(108)->get();
 
 
-            return view('reservationSeat', compact('req', 'seat', 'availableSeats', 'flg', 'depPort', 'arrPort','peoNum','pass_name'));
+            return view('reservationSeat', compact('req', 'seat', 'availableSeats', 'flg', 'depPort', 'arrPort','peoNum','pass_name', 'babyCount'));
         }
     }
 
@@ -771,18 +781,22 @@ class ReservationController extends Controller
 
     // 탑승객 정보 입력
     public function peoInsert(Request $req) {
+        Log::debug('peoInsert : ', $req->all());
         // "flg":"1","fly_no":"3469","plane_no":"44","ADULT":"1","CHILD":"1","BABY":"1"
         // ,"fly_no2":"231","plane_no2":"20","pass_name":"소아1","seat_no_go":["B02","B03"],"seat_no_return":["D05","D11"]}
         $allCnt = $req->ADULT + $req->CHILD;
+        $babyCnt = $req->BABY;
 
         if ($req->flg == 1) {
             return view('reserveInsert')
                 ->with('allCnt', $allCnt)
+                ->with('babyCnt', $babyCnt)
                 ->with('seat_no_go', $req->seat_no_go) // 가는편 좌석
                 ->with('seat_no_return', $req->seat_no_return); // 오는편 좌석
         } else {
             return view('reserveInsert')
                 ->with('allCnt', $allCnt)
+                ->with('babyCnt', $babyCnt)
                 ->with('seat_no_go', $req->seat_no_go);
         }
 
