@@ -70,7 +70,11 @@ class UserController extends Controller
                                 ->where('user_info.u_no', $user->u_no)
                                 ->first();
             Log::debug('마일리지', [$mileage]);
-            Session::put('mileage', $mileage->u_mile);
+            if(!isset($mileage->u_mile)) {
+                Session::put('mileage', 0);
+            } else {
+                Session::put('mileage', $mileage->u_mile);
+            }
             // v002 add 이동호
             if (Session::has('previous_url')) {
                 $previousUrl = Session::get('previous_url');
