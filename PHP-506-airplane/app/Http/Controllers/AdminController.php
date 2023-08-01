@@ -71,6 +71,7 @@ class AdminController extends Controller
                 ,'arr.port_name AS arr_port_name'
                 ,'line.line_name'
                 ,DB::raw('COUNT(res.fly_no) AS count')
+                ,'plane.total_seat_num'
             )
             ->where('flight_info.fly_date', '>', Carbon::now()->subDay())
             ->withTrashed()

@@ -68,7 +68,7 @@ delBtn.addEventListener('click', function() {
 });
 
 const input = document.getElementById('price');
-input.addEventListener('keydown', function(e) {
+input.addEventListener('keyup', function(e) {
     let value = e.target.value;
     value = Number(value.replaceAll(',', ''));
     if (isNaN(value)) {
