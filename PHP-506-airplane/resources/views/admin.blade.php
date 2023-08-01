@@ -84,7 +84,7 @@
                         <div class="col after col-1">{{ substr($item->dep_time, 0, 2) . ':' . substr($item->dep_time, 2) }}</div>
                         <div class="col-md-auto">→</div>
                         <div class="col col-1">{{ substr($item->arr_time, 0, 2) . ':' . substr($item->arr_time, 2) }}</div>
-                        <div class="col col-1">{{ $item->count > 0 ? $item->count . '석' : '-' }} / {{ $item->total_seat_num }}석</div>
+                        <div class="col col-1">{{ $item->count > 0 ? $item->count . '' : '-' }} / {{ $item->total_seat_num }}석</div>
                         <div class="col col-1">
                             @if ($item->delay_reasons === null)
                                 -
