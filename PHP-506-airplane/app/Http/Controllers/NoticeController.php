@@ -220,9 +220,11 @@ class NoticeController extends Controller
     public function baggage() {
         return view('baggageinfo');
     }
+
     public function insurance() {
         return view('travelinsurance');
     }
+
     public function mileage() {
         return view('mileage');
     }
