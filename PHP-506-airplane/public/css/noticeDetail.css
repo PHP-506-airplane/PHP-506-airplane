@@ -41,7 +41,7 @@ hr {
 
 /* 버튼 */
 .nButtons {
-    width: 500px;
+    /* width: 500px; */
     margin: 20px auto;
     text-align: center;
     display: flex;
@@ -66,12 +66,24 @@ img {
         font-size: 24px;
     }
     .created_date {
-        font-size: 15px;
+        font-size: 10px;
     }
     .nTitleText {
-        font-size:18px;
+        font-size:15px;
     }
     .nContent {
         font-size: 12px;
+    }
+
+    .nContent {
+        margin: 15px 15px 30px;
+    }
+
+    .nButtons {
+        margin: 20px auto;
+        text-align: center;
+        display: flex;
+        justify-content: center;
+        gap: 10px;
     }
 }
