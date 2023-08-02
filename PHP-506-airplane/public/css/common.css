@@ -384,6 +384,9 @@ footer .sns_wrap .sns_list li {
     .stick {
         display: none;
     }
+    .foot_menuwrap {
+        display: none;
+    }
 }
 
 @media(min-width: 768px) and (max-width:1023px) {
