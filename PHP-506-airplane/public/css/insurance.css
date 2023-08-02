@@ -88,3 +88,38 @@ ul {
     width: 82%;
 }
 
+@media(min-width:370px) and (max-width:767px) {
+    .noticeH1 {
+        font-size: 30px;
+    }
+
+    .noticeH5 {
+        font-size: 20px;
+    }
+
+    .h2 {
+        font-size: 18px;
+    }
+
+    .h3 {
+        font-size: 18px;
+    }
+
+    .ttld .timeline .imgbox img {
+        width: 15px;
+        height: 15px;
+    }
+
+    .ttld .timeline .imgbox {
+        width: 10%;
+        min-width: 3rem;
+        max-width: 6.4rem;
+        width: 3rem;
+        height: 3rem;
+    }
+}
+
+@media(min-width: 768px) and (max-width:1023px){
+
+}
+

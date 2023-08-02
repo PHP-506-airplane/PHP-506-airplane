@@ -66,3 +66,16 @@ tbody {
     /* border-bottom: 1px solid #adadad; */
 }
 
+
+@media(min-width:370px) and (max-width:767px){
+    .noticeH1 {
+        padding-top: 3.125rem;
+        font-size: 30px;
+        text-shadow: -1px 0px black, 0px 1px black, 1px 0px black, 0px -1px black;
+    }
+
+    .noticeH5 {
+        font-size: 20px;
+        text-shadow: -1px 0px black, 0px 1px black, 1px 0px black, 0px -1px black;
+    }
+}
