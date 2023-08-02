@@ -109,6 +109,7 @@
                     <button type="button" class="btn btn-outline-primary" id="milebtn" onclick="mileageUse()">사용</button>
                     <br>
                     <br>
+                    <span style="color:red;">※마일리지는 환불이 불가합니다.※</span>
                     <hr>
                     <br>
                     <span> 최종 결제 금액 : <span id="totalPrice"></span>원</span>

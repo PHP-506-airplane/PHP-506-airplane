@@ -20,20 +20,20 @@
        <li class="nav-item" style="font-weight:600">
           <a class="nav-link active" aria-current="page" href="{{route('reservation.myreservation')}}">마이페이지</a>
         </li>
-        <span class="stick">|</span>
         @guest
-             <li class="nav-item justify-content-end" style="font-weight:600">
-            <a class="nav-link" href="{{route('notice.baggage')}}">수하물 안내</a>
-            </li>
-            <li class="nav-item" style="font-weight:600">
-            <a class="nav-link" href="{{route('users.login')}}">로그인</a>
-            </li>
-            <li class="nav-item" style="font-weight:600">
-            <a class="nav-link" href="{{route('users.registration')}}">회원가입</a>
-            </li>
+        <li class="nav-item justify-content-end" style="font-weight:600">
+          <a class="nav-link" href="{{route('notice.baggage')}}">수하물 안내</a>
+        </li>
+        <li class="nav-item" style="font-weight:600">
+          <a class="nav-link" href="{{route('users.login')}}">로그인</a>
+        </li>
+        <li class="nav-item" style="font-weight:600">
+          <a class="nav-link" href="{{route('users.registration')}}">회원가입</a>
+        </li>
         @endguest
-       
-       @auth
+        
+        @auth
+        <span class="stick">|</span>
             <li class="nav-item justify-content-end uesrMile" style="font-weight:600;">
                 {{-- <a class="nav-link" href="{{route('notice.baggage')}}">수하물 안내</a> --}}
                 <div>내 마일리지 : {{number_format(session('mileage'))}}</div>
