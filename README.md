@@ -23,5 +23,7 @@ SHOONG : 항공 예약 서비스
 ![image](https://github.com/PHP-506-airplane/PHP-506-airplane/assets/126548025/4ed9d1f0-ef21-4e1f-ab29-1b0f40527871)
 
 PPT : 
-      3차 프로젝트 - bit.ly/3KfqUAM
-      2차 프로젝트 - bit.ly/44L9K6z
+<br>
+      3차 프로젝트 - <a href="bit.ly/3KfqUAM">보기</a>
+      <br>
+      2차 프로젝트 - <a href="bit.ly/44L9K6z">보기</a>
