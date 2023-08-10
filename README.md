@@ -24,6 +24,6 @@ SHOONG : 항공 예약 서비스
 
 PPT : 
 <br>
-      3차 프로젝트 - <a href="bit.ly/3KfqUAM">보기</a>
+      3차 프로젝트 - <a href="https://www.canva.com/design/DAFpsj82YXU/Hc7XI8i9ZYnJeciYjWgoEw/edit?utm_content=DAFpsj82YXU&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton">보기</a>
       <br>
-      2차 프로젝트 - <a href="bit.ly/44L9K6z">보기</a>
+      2차 프로젝트 - <a href="https://www.canva.com/design/DAFnEX5iQKM/-WBYP7QO0kpcYiApSAmmCw/edit?utm_content=DAFnEX5iQKM&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton">보기</a>
